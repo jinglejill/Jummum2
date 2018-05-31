@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface SharedDispute : NSObject
+@property (retain, nonatomic) NSMutableArray *disputeList;
 
++ (SharedDispute *)sharedDispute;
 @end

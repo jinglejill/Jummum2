@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface SharedUserRewardRedemptionUsed : NSObject
+@property (retain, nonatomic) NSMutableArray *userRewardRedemptionUsedList;
 
++ (SharedUserRewardRedemptionUsed *)sharedUserRewardRedemptionUsed;
 @end

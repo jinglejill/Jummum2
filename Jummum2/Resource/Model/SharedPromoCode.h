@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface SharedPromoCode : NSObject
+@property (retain, nonatomic) NSMutableArray *promoCodeList;
+
++ (SharedPromoCode *)sharedPromoCode;
 
 @end

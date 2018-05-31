@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface Message : NSObject
-
+@property (retain, nonatomic) NSString * text;
 @end

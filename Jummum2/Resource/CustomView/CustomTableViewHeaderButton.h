@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomTableViewHeaderButton : UITableViewHeaderFooterView
+@property (strong, nonatomic) IBOutlet UIButton *btnValue;
 
 @end

@@ -7,31 +7,822 @@
 //
 
 #import "DisputeFormViewController.h"
+#import "CustomTableViewCellLabelText.h"
+#import "CustomTableViewCellLabelTextView.h"
+#import "CustomTableViewHeaderFooterOkCancel.h"
+#import "Dispute.h"
+#import "DisputeReason.h"
+#import "Receipt.h"
+#import "Branch.h"
+
+
 
 @interface DisputeFormViewController ()
-
+{
+    Dispute *_dispute;
+    NSMutableArray *_disputeReasonList;
+    NSInteger _selectedIndexPicker;
+}
 @end
 
 @implementation DisputeFormViewController
+static NSString * const reuseIdentifierLabelText = @"CustomTableViewCellLabelText";
+static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabelTextView";
+static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewHeaderFooterOkCancel";
 
-- (void)viewDidLoad {
+
+@synthesize lblTitle;
+@synthesize tbvData;
+@synthesize pickerVw;
+@synthesize receipt;
+@synthesize fromType;
+@synthesize tbvAction;
+
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return YES;
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    textView.textColor = [UIColor blackColor];
+    if([textView.text isEqualToString:@"ใส่เหตุผลในการขอเงินคืน"])
+    {
+        textView.text = @"";
+    }
+    
+    [textView becomeFirstResponder];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    _dispute.detail = [Utility trimString:textView.text];
+    if([textView.text isEqualToString:@""])
+    {
+        textView.text = @"ใส่เหตุผลในการขอเงินคืน";
+        textView.textColor = mPlaceHolder;
+    }
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (textField.tag)
+    {
+        case 1:
+        {
+            DisputeReason *disputeReason = [DisputeReason getDisputeReasonWithText:textField.text];
+            _dispute.disputeReasonID = disputeReason.disputeReasonID;
+        }
+            break;
+        case 2:
+        {
+            _dispute.refundAmount = [Utility floatValue:textField.text];
+        }
+            break;
+        case 4:
+        {
+            _dispute.phoneNo = [Utility trimString:textField.text];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.tag == 1)
+    {
+        DisputeReason *disputeReason = _disputeReasonList[_selectedIndexPicker];
+        textField.text = disputeReason.text;
+        [pickerVw selectRow:_selectedIndexPicker inComponent:0 animated:NO];
+    }
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    
+    [pickerVw removeFromSuperview];
+    pickerVw.delegate = self;
+    pickerVw.dataSource = self;
+    pickerVw.showsSelectionIndicator = YES;
+    
+    
+    
+    
+    tbvData.delegate = self;
+    tbvData.dataSource = self;
+    tbvData.separatorColor = [UIColor clearColor];
+    tbvData.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _dispute = [[Dispute alloc]init];
+    
+    
+    
+    tbvAction.delegate = self;
+    tbvAction.dataSource = self;
+    tbvAction.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    tbvAction.scrollEnabled = NO;
+    
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelText bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelText];
+    }
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelTextView bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelTextView];
+    }
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierHeaderFooterOkCancel bundle:nil];
+        [tbvAction registerNib:nib forHeaderFooterViewReuseIdentifier:reuseIdentifierHeaderFooterOkCancel];
+    }
+    
+    
+    
+    [self loadingOverlayView];
+    if(fromType == 1)
+    {
+        lblTitle.text = @"Cancel order";
+        [self.homeModel downloadItems:dbDisputeReasonList withData:@(1)];
+    }
+    else if(fromType == 2)
+    {
+        lblTitle.text = @"Open dispute";
+        [self.homeModel downloadItems:dbDisputeReasonList withData:@(2)];
+    }
+  
+    
+    
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture setCancelsTouchesInView:NO];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+///tableview section
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    
+    if([tableView isEqual:tbvData])
+    {
+        if(fromType == 1)
+        {
+            return 3;
+        }
+        else if(fromType == 2)
+        {
+            return 5;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+    return 0;
 }
-*/
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger section = indexPath.section;
+    NSInteger item = indexPath.item;
+    
+    if([tableView isEqual:tbvData])
+    {
+        if(fromType == 1)
+        {
+            if(item == 0)
+            {
+                UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"cell"];
+                if (!cell) {
+                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+                }
+                cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                
+                
+                cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
+                cell.textLabel.font = [UIFont systemFontOfSize:15];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                
+                
+                return cell;
+            }
+            else if(item == 1)
+            {
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"เหตุผลในการขอเงินคืน";
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txtValue.tag = item;
+                cell.txtValue.placeholder = @"กรุณาเลือกเหตุผลในการขอเงินคืน";
+                cell.txtValue.delegate = self;
+                cell.txtValue.inputView = pickerVw;
+                
+                DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
+                cell.txtValue.text = disputeReason.text;
+                cell.lblRemark.text = @"";
+                
+                
+                return cell;
+            }
+            else if(item == 2)
+            {
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"เบอร์โทร.";
+                NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน";
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txtValue.tag = 4;
+                cell.txtValue.delegate = self;
+                cell.txtValue.text = _dispute.phoneNo;
+                cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
+                cell.lblRemark.text = strRemark;
+                [cell.lblRemark sizeToFit];
+                cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                
+                return cell;
+            }
+        }
+        else if(fromType == 2)
+        {
+            if(item == 0)
+            {
+                UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"cell"];
+                if (!cell) {
+                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+                }
+                cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                
+                
+                cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
+                cell.textLabel.font = [UIFont systemFontOfSize:15];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                
+                
+                return cell;
+            }
+            else if(item == 1)
+            {
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"เหตุผลในการขอเงินคืน";
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txtValue.tag = item;
+                cell.txtValue.placeholder = @"กรุณาเลือกเหตุผลในการขอเงินคืน";
+                cell.txtValue.delegate = self;
+                cell.txtValue.inputView = pickerVw;
+                
+                DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
+                cell.txtValue.text = disputeReason.text;
+                cell.lblRemark.text = @"";
+                
+                
+                return cell;
+            }
+            else if(item == 2)
+            {
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"จำนวนเงิน";
+                NSString *strTotalAmount = [Utility formatDecimal:[Receipt getTotalAmount:receipt] withMinFraction:2 andMaxFraction:2];
+                NSString *strRemark = [NSString stringWithFormat:@"จำนวนเงิน: THB 0.01 to %@",strTotalAmount];
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txtValue.tag = item;
+                cell.txtValue.delegate = self;
+                cell.txtValue.placeholder = @"THB";
+                cell.txtValue.keyboardType = UIKeyboardTypeDecimalPad;
+                cell.txtValue.text = [Utility formatDecimal:_dispute.refundAmount withMinFraction:0 andMaxFraction:2];
+                if(_dispute.refundAmount == 0)
+                {
+                    cell.txtValue.text = @"";
+                }
+                
+                
+                cell.lblRemark.text = strRemark;
+                
+                
+                return cell;
+            }
+            else if(item == 3)
+            {
+                CustomTableViewCellLabelTextView *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelTextView];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"เหตุผลเพิ่มเติมในการขอเงินคืน";
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txvValue.tag = 3;
+                cell.txvValue.delegate = self;
+                cell.txvValue.text = _dispute.detail;
+                if([cell.txvValue.text isEqualToString:@""])
+                {
+                    cell.txvValue.text = @"ใส่เหตุผลในการขอเงินคืน";
+                    cell.txvValue.textColor = mPlaceHolder;
+                }
+                else
+                {
+                    cell.txvValue.textColor = [UIColor blackColor];
+                }
+                [cell.txvValue.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+                [cell.txvValue.layer setBorderWidth:0.5];
+                
+                //The rounded corner part, where you specify your view's corner radius:
+                cell.txvValue.layer.cornerRadius = 5;
+                cell.txvValue.clipsToBounds = YES;
+                
+                
+                
+                return cell;
+            }
+            else if(item == 4)
+            {
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                NSString *strTitle = @"เบอร์โทร.";
+                NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน";
+                
+                
+                
+                UIFont *font = [UIFont systemFontOfSize:15];
+                UIColor *color = mRed;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+                
+                
+                UIFont *font2 = [UIFont systemFontOfSize:15];
+                UIColor *color2 = [UIColor darkGrayColor];
+                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+                
+                
+                [attrString appendAttributedString:attrString2];
+                cell.lblTitle.attributedText = attrString;
+                
+                
+                
+                cell.txtValue.tag = item;
+                cell.txtValue.delegate = self;
+                cell.txtValue.text = _dispute.phoneNo;
+                cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
+                cell.lblRemark.text = strRemark;
+                [cell.lblRemark sizeToFit];
+                cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                
+                return cell;
+            }
+        }
+        
+    }
+    
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger item = indexPath.item;
+    if([tableView isEqual:tbvData])
+    {
+        if(fromType == 1)
+        {
+            if(item == 0)
+            {
+                return 44;
+            }
+            else if(item == 1)
+            {
+                return 122-8-16-8;
+            }
+            else if(item == 2)
+            {
+                CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+                NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินของท่านคืน";
+                
+                
+                cell.lblRemark.text = strRemark;
+                [cell.lblRemark sizeToFit];
+                return 122-16+cell.lblRemark.frame.size.height-8;
+            }
+        }
+        else if(fromType == 2)
+        {
+            if(item == 0)
+            {
+                return 44;
+            }
+            else if(item == 1)
+            {
+                return 122-8-16-8;
+            }
+            else if(item == 2)
+            {
+                return 122-8;
+            }
+            else if(item == 3)
+            {
+                return 108+20-8;
+            }
+            else if(item == 4)
+            {
+                CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+                NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินของท่านคืน";
+                
+                
+                cell.lblRemark.text = strRemark;
+                [cell.lblRemark sizeToFit];
+                return 122-16+cell.lblRemark.frame.size.height-8;
+            }
+        }
+        
+    }
+    
+    return 0;
+}
+
+- (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
+{
+    [cell setSeparatorInset:UIEdgeInsetsMake(16, 16, 16, 16)];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if([tableView isEqual:tbvAction])
+    {
+        CustomTableViewHeaderFooterOkCancel *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifierHeaderFooterOkCancel];
+        
+        
+        
+        [footerView.btnOk addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
+        [footerView.btnCancel addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        
+        return footerView;
+    }
+    return nil;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if([tableView isEqual:tbvAction])
+    {
+        return 8+44+8+44;
+    }
+    return 0;
+    
+}
+
+- (IBAction)goBack:(id)sender
+{
+    [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
+}
+
+-(void)itemsDownloaded:(NSArray *)items
+{
+    if(self.homeModel.propCurrentDB == dbDisputeReasonList)
+    {
+        [self removeOverlayViews];
+        
+        
+        _disputeReasonList = items[0];
+        [DisputeReason setSharedData:items[0]];
+        [tbvData reloadData];
+    }
+    else if(self.homeModel.propCurrentDB == dbReceipt)
+    {
+        [self removeOverlayViews];
+        NSMutableArray *receiptList = items[0];
+        Receipt *downloadReceipt = receiptList[0];
+        if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
+        {
+            receipt.status = downloadReceipt.status;
+            receipt.statusRoute = downloadReceipt.statusRoute;
+            NSString *strMessage = downloadReceipt.status == 5?@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ":@"อาหารได้ส่งถึงคุณแล้วค่ะ";
+            [self showAlert:@"" message:strMessage method:@selector(goBack:)];            
+        }
+        else
+        {
+            [self submit];
+        }
+    }
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component
+{
+    // Handle the selection
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        _selectedIndexPicker = row;
+        DisputeReason *disputeReason = _disputeReasonList[row];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+        cell.txtValue.text = disputeReason.text;
+        
+        
+        [cell.txtValue resignFirstResponder];
+    }
+}
+
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        return [_disputeReasonList count];
+    }
+    
+    return 0;
+}
+
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *strText = @"";
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        DisputeReason *disputeReason = _disputeReasonList[row];
+        strText = disputeReason.text;
+    }
+    
+    return strText;
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return self.view.frame.size.width;
+}
+
+-(void)submit:(id)sender
+{
+    if(fromType == 1)
+    {
+        self.homeModel = [[HomeModel alloc]init];
+        self.homeModel.delegate = self;
+        
+        
+        [self loadingOverlayView];
+        [self.homeModel downloadItems:dbReceipt withData:receipt];
+    }
+    else
+    {
+        [self submit];
+    }
+}
+
+-(void)submit
+{
+    [self.view endEditing:YES];
+    
+    
+    if(![self validate])
+    {
+        return;
+    }
+    [self loadingOverlayView];
+    
+    
+    _dispute.receiptID = receipt.receiptID;
+    _dispute.type = fromType;
+    _dispute.modifiedUser = [Utility modifiedUser];
+    _dispute.modifiedDate = [Utility currentDateTime];
+    
+    Branch *branch = [Branch getBranch:receipt.branchID];
+    [self.homeModel insertItems:dbDispute withData:@[_dispute,branch] actionScreen:@"insert dispute"];
+}
+
+-(void)cancel:(id)sender
+{
+    [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
+}
+
+-(void)itemsInserted
+{
+    [self removeOverlayViews];
+    
+    
+    receipt.status = 8;
+    [self showAlert:@"" message:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า" method:@selector(unwindToReceiptSummary)];
+}
+
+-(BOOL)validate
+{
+    if(fromType == 1)
+    {
+        {
+            UITextField *textField = [self.view viewWithTag:1];
+            if([Utility isStringEmpty:textField.text])
+            {
+                [self blinkAlertMsg:@"กรุณาเลือกเหตุผลที่ขอเงินคืน"];
+                return NO;
+            }
+        }       
+        
+        {
+            UITextField *textField = [self.view viewWithTag:4];
+            if([Utility isStringEmpty:textField.text])
+            {
+                [self blinkAlertMsg:@"กรุณาใส่เบอร์โทร"];
+                return NO;
+            }
+        }
+    }
+    else if(fromType == 2)
+    {
+        {
+            UITextField *textField = [self.view viewWithTag:1];
+            if([Utility isStringEmpty:textField.text])
+            {
+                [self blinkAlertMsg:@"กรุณาเลือกเหตุผลที่ขอเงินคืน"];
+                return NO;
+            }
+        }
+        
+        {
+            UITextField *textField = [self.view viewWithTag:2];
+            if([Utility isStringEmpty:textField.text])
+            {
+                [self blinkAlertMsg:@"กรุณาใส่จำนวนเงิน"];
+                return NO;
+            }
+            
+            
+            float totalAmount = [Receipt getTotalAmount:receipt];
+            NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
+            NSString *strRemark = [NSString stringWithFormat:@"THB 0.01 to %@",strTotalAmount];
+            NSString *strMessage = [NSString stringWithFormat:@"กรุณาใส่จำนวนเงินระหว่าง %@",strRemark];
+            if([Utility floatValue:textField.text] > totalAmount)
+            {
+                [self blinkAlertMsg:strMessage];
+                return NO;
+            }
+        }
+        
+        {
+            UITextView *textView = [self.view viewWithTag:3];
+            if([Utility isStringEmpty:textView.text])
+            {
+                [self blinkAlertMsg:@"กรุณาใส่เหตุผลเพิ่มเติม"];
+                return NO;
+            }
+        }
+        
+        {
+            UITextField *textField = [self.view viewWithTag:4];
+            if([Utility isStringEmpty:textField.text])
+            {
+                [self blinkAlertMsg:@"กรุณาใส่เบอร์โทร"];
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
+-(void)unwindToReceiptSummary
+{
+    [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
+}
 @end

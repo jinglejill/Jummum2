@@ -7,7 +7,16 @@
 //
 
 #import "CustomViewController.h"
+#import "RewardPoint.h"
 
-@interface MyRewardViewController : CustomViewController
 
+@interface MyRewardViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segConValue;
+@property (strong, nonatomic) IBOutlet UITableView *tbvData;
+@property (strong, nonatomic) RewardPoint *rewardPoint;
+
+
+-(IBAction)unwindToMyReward:(UIStoryboardSegue *)segue;
+- (IBAction)goBack:(id)sender;
+- (IBAction)segmentControlChanged:(id)sender;
 @end

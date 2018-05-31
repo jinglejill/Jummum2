@@ -7,7 +7,17 @@
 //
 
 #import "CustomViewController.h"
+#import "Receipt.h"
 
-@interface OrderDetailViewController : CustomViewController
+
+@interface OrderDetailViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UITableView *tbvData;
+@property (strong, nonatomic) Receipt *receipt;
+
+
+
+-(IBAction)unwindToOrderDetail:(UIStoryboardSegue *)segue;
+- (IBAction)goBack:(id)sender;
+
 
 @end

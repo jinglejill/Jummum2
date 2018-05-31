@@ -9,5 +9,15 @@
 #import "SharedRewardRedemption.h"
 
 @implementation SharedRewardRedemption
+@synthesize rewardRedemptionList;
 
++(SharedRewardRedemption *)sharedRewardRedemption {
+    static dispatch_once_t pred;
+    static SharedRewardRedemption *shared = nil;
+    dispatch_once(&pred, ^{
+        shared = [[SharedRewardRedemption alloc] init];
+        shared.rewardRedemptionList = [[NSMutableArray alloc]init];
+    });
+    return shared;
+}
 @end

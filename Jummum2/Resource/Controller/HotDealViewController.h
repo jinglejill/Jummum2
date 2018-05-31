@@ -8,6 +8,7 @@
 
 #import "CustomViewController.h"
 
-@interface HotDealViewController : CustomViewController
-
+@interface HotDealViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *tbvData;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @end

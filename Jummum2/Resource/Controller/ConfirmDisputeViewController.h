@@ -7,7 +7,25 @@
 //
 
 #import "CustomViewController.h"
+#import "Receipt.h"
+
 
 @interface ConfirmDisputeViewController : CustomViewController
+
+@property (strong, nonatomic) IBOutlet UILabel *lblDisputeMessage;
+@property (strong, nonatomic) IBOutlet UIView *vwAlert;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *vwAlertHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblDisputeMessageHeight;
+
+
+@property (nonatomic) NSInteger fromType;
+@property (strong, nonatomic) Receipt *receipt;
+
+
+
+- (IBAction)yesDispute:(id)sender;
+- (IBAction)noDispute:(id)sender;
+
+
 
 @end

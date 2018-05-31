@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface SharedHotDeal : NSObject
+@property (retain, nonatomic) NSMutableArray *hotDealList;
 
++ (SharedHotDeal *)sharedHotDeal;
 @end

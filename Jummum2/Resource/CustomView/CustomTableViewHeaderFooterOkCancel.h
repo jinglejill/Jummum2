@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomTableViewHeaderFooterOkCancel : UITableViewHeaderFooterView
+@property (strong, nonatomic) IBOutlet UIButton *btnOk;
+@property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 
 @end
