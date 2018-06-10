@@ -329,7 +329,7 @@ enum enumUrl
 + (NSString *)getPrimaryKeyFromClassName:(NSString *)className;
 + (NSString *)getMasterClassName:(NSInteger)i;
 + (NSString *)getMasterClassName:(NSInteger)i from:(NSArray *)arrClassName;
-+ (NSString *)getDecryptedHexString:(NSString *)hexString;
+//+ (NSString *)getDecryptedHexString:(NSString *)hexString;
 + (BOOL)isNumeric:(NSString *)text;
 + (NSString *)getSqlFailTitle;
 + (NSString *)getSqlFailMessage;

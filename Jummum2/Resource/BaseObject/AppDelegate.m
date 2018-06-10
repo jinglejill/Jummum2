@@ -63,14 +63,12 @@ void myExceptionHandler(NSException *exception)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    NSString *matchText = @"#start#jill#end#";
-//    NSRange needleRange = NSMakeRange(7,[matchText length]-7);
-//    NSString *strTrimText = [matchText substringWithRange:needleRange];
-//
-//
-//    needleRange = NSMakeRange(0,[strTrimText length]-5);
-//    strTrimText = [strTrimText substringWithRange:needleRange];
-//    NSLog(@"test trim string: %@",strTrimText);
+    NSString *text = @"shop:1,tableNo:2";
+    NSData *enData = [Utility encryptString:text withKey:@"jmmjmm"];
+    NSString *decryptedMessage = @"f0965edd3a8192eee707f66a4453d953c27e889c1b0126962ae989563ccfc774";//@"afb20ffc 70a806bf 2c6aaea4 628b84d6 620a175d 281fea6c e2bd34af b388acf6";
+    NSData *data = [Utility dataFromHexString:decryptedMessage];
+    NSString *strMessage = [Utility decryptData:data withKey:@"jmmjmm"];
+    NSLog(@"ori text: %@",strMessage);
     
     
     UIBarButtonItem *barButtonAppearance = [UIBarButtonItem appearance];

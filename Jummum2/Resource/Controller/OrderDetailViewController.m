@@ -93,7 +93,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
 
     [self.homeModel downloadItems:dbReceiptWithModifiedDate withData:receipt];
@@ -722,7 +722,6 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     cell.lblRemark.textColor = mRed;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
                     cell.lblRemark.text = @"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -761,7 +760,6 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     cell.lblRemark.textColor = mRed;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     cell.lblRemark.text = @"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -801,7 +799,6 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     cell.lblRemark.textColor = mRed;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
                     cell.lblRemark.text = @"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -839,8 +836,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
+                    cell.lblRemark.textColor = mRed;                    
                     cell.lblRemark.text = @"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
