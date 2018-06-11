@@ -625,6 +625,14 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
       }]];
     
     
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        UIButton *button = sender;
+        UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
+        popPresenter.sourceView = button;
+        popPresenter.sourceRect = button.bounds;
+    }
     [self presentViewController:alert animated:YES completion:nil];
     
 }
@@ -738,7 +746,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     CGPoint point = [gestureRecognizer locationInView:tbvOrder];
     NSIndexPath * tappedIP = [tbvOrder indexPathForRowAtPoint:point];
     CustomTableViewCellOrder *cell = [tbvOrder cellForRowAtIndexPath:tappedIP];
-
+    
     
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
@@ -754,10 +762,11 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
           NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
           
           
+          
           {
-              CGPoint point = [gestureRecognizer locationInView:cell.tbvNote];
-              NSIndexPath * tappedIP = [cell.tbvNote indexPathForRowAtPoint:point];
-              _copyOrderTaking = orderTakingList[tappedIP.item];
+              CGPoint pointTbvNote = [gestureRecognizer locationInView:cell.tbvNote];
+              NSIndexPath * indexPath = [cell.tbvNote indexPathForRowAtPoint:pointTbvNote];
+              _copyOrderTaking = orderTakingList[indexPath.item];
           }
           
           
@@ -779,7 +788,16 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     
 
-    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        CGPoint pointTbvNote = [gestureRecognizer locationInView:cell.tbvNote];
+        NSIndexPath * indexPath = [cell.tbvNote indexPathForRowAtPoint:pointTbvNote];
+        CustomTableViewCellNote *cellNote = [cell.tbvNote cellForRowAtIndexPath:indexPath];
+        
+        UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
+        popPresenter.sourceView = cellNote.txtNote;
+        popPresenter.sourceRect = cellNote.txtNote.bounds;
+    }
     [self presentViewController:alert animated:YES completion:nil];
 }
 

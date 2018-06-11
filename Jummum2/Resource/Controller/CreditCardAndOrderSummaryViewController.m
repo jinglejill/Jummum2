@@ -1190,7 +1190,13 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
           }]];
         
         
-        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+        {
+            CustomTableViewCellLabelLabel *cell = [tableView cellForRowAtIndexPath:indexPath];            
+            UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
+            popPresenter.sourceView = cell.lblValue;
+            popPresenter.sourceRect = cell.lblValue.bounds;
+        }
         [self presentViewController:alert animated:YES completion:nil];
     }
     else if(section == 1 && item == 1)

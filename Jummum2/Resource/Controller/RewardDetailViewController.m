@@ -245,6 +245,15 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
       }]];
     
     
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        UIButton *button = sender;
+        UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
+        popPresenter.sourceView = button;
+        popPresenter.sourceRect = button.bounds;
+    }
+    
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
