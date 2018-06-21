@@ -212,7 +212,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
-                cell.textLabel.font = [UIFont systemFontOfSize:15];
+                cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.textLabel.textColor = [UIColor lightGrayColor];
                 
                 
@@ -228,14 +228,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 
@@ -268,14 +268,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 
@@ -308,7 +308,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
-                cell.textLabel.font = [UIFont systemFontOfSize:15];
+                cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.textLabel.textColor = [UIColor lightGrayColor];
                 
                 
@@ -324,14 +324,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 
@@ -365,14 +365,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 
@@ -408,14 +408,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 
@@ -459,14 +459,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:15];
-                UIColor *color = mRed;
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color = cSystem1;;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:15];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
                 

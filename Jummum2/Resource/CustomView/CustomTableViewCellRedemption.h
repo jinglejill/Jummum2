@@ -18,4 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblRedeemDate;
 @property (strong, nonatomic) IBOutlet UIImageView *imgQrCode;
 @property (strong, nonatomic) IBOutlet UILabel *lblPromoCode;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblRemarkWidth;
+
 @end

@@ -9,7 +9,6 @@
 #import "MenuSelectionViewController.h"
 #import "BasketViewController.h"
 #import "CustomTableViewCellMenu.h"
-#import "CustomTableViewCellQuantity.h"
 #import "CustomTableViewCellSearchBar.h"
 #import "Menu.h"
 #import "MenuType.h"
@@ -47,7 +46,6 @@
 @implementation MenuSelectionViewController
 static float const SEARCH_BAR_HEIGHT = 56;
 static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
-static NSString * const reuseIdentifierQuantity = @"CustomTableViewCellQuantity";
 static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBar";
 
 
@@ -220,6 +218,18 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.sbText.delegate = self;
             cell.sbText.tag = 300;
+            UITextField *textField = [cell.sbText valueForKey:@"searchField"];
+            textField.layer.borderColor = [cTextFieldBorder CGColor];
+            textField.layer.borderWidth = 1;
+            textField.font = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+            [self setTextFieldDesign:textField];
+            
+            
+            //cancel button in searchBar
+            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+            [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+             setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cSystem1, NSForegroundColorAttributeName,font, NSFontAttributeName, nil]
+             forState:UIControlStateNormal];
             
             
             return cell;
@@ -244,7 +254,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             {
                 NSString *strPrice = [Utility formatDecimal:menu.price withMinFraction:2 andMaxFraction:2];
                 strPrice = [NSString stringWithFormat:@"฿ %@",strPrice];
-                UIFont *font = [UIFont systemFontOfSize:15];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 NSDictionary *attribute = @{NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:strPrice attributes:attribute];
                 cell.lblPrice.attributedText = attrString;
@@ -258,7 +268,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             {
                 NSString *strPrice = [Utility formatDecimal:menu.price withMinFraction:2 andMaxFraction:2];
                 strPrice = [NSString stringWithFormat:@"฿ %@",strPrice];
-                UIFont *font = [UIFont systemFontOfSize:15];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 NSDictionary *attribute = @{NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:strPrice attributes:attribute];
                 cell.lblPrice.attributedText = attrString;
@@ -277,6 +287,9 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
                  }
              }];
             cell.imgMenuPic.contentMode = UIViewContentModeScaleAspectFit;
+            [self setImageDesign:cell.imgMenuPic];
+            
+            
             NSMutableArray *orderTakingList = [OrderTaking getCurrentOrderTakingList];
             NSMutableArray *orderTakingListWithMenuID = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:orderTakingList];
             if([orderTakingListWithMenuID count]==0)
@@ -341,7 +354,12 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             [orderTakingList addObject:orderTaking];
             
             
-            [tbvMenu reloadData];
+            
+            CustomTableViewCellMenu *cell = [tableView cellForRowAtIndexPath:indexPath];
+            NSMutableArray *orderTakingListWithMenuID = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:orderTakingList];
+            cell.lblQuantity.text = [Utility formatDecimal:[orderTakingListWithMenuID count] withMinFraction:0 andMaxFraction:0];
+            cell.imgTriangle.hidden = [orderTakingListWithMenuID count]==0;
+//            [tbvMenu reloadData];
             [self updateTotalAmount];
             [self blinkAddedNotiView];
         }
@@ -411,14 +429,14 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     {
         MenuType *menuType = _menuTypeList[i];
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 0, 100, 44)];
-        button.titleLabel.font = [UIFont systemFontOfSize:15];
+        button.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
         if(i==0)
         {
-            [button setTitleColor:mOrange forState:UIControlStateNormal];
+            [button setTitleColor:cSystem1 forState:UIControlStateNormal];
         }
         else
         {
-            [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [button setTitleColor:cSystem4 forState:UIControlStateNormal];
         }
         [button setTitle:menuType.name forState:UIControlStateNormal];
         [button sizeToFit];
@@ -432,7 +450,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         frame.origin.y = button.frame.origin.y + button.frame.size.height-2;
     
         UIView *highlightBottomBorder = [[UIView alloc]initWithFrame:frame];
-        highlightBottomBorder.backgroundColor = mGreen;
+        highlightBottomBorder.backgroundColor = cSystem2;
         highlightBottomBorder.tag = i+1+100;
         highlightBottomBorder.hidden = i!=0;
         [scrollView addSubview:highlightBottomBorder];
@@ -453,7 +471,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     for(int i=1; i<=[_menuTypeList count]; i++)
     {
         UIButton *eachButton = [self.view viewWithTag:i];
-        [eachButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [eachButton setTitleColor:cSystem4 forState:UIControlStateNormal];
         
         
         UIView *highlightBottomBorder = [self.view viewWithTag:i+100];
@@ -461,7 +479,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     
     
-    [button setTitleColor:mOrange forState:UIControlStateNormal];
+    [button setTitleColor:cSystem1 forState:UIControlStateNormal];
     UIView *highlightBottomBorder = [self.view viewWithTag:button.tag+100];
     highlightBottomBorder.hidden = NO;
     

@@ -179,7 +179,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
     
     cell.textLabel.text = @"กรอกบัตรเครดิต";
-    cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+    cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
     
     return cell;
 }

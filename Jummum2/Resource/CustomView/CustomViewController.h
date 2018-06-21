@@ -19,6 +19,7 @@
 @property (nonatomic,retain) UIView *waitingView;
 @property (nonatomic,retain) UIImageView *addedNotiView;
 @property (nonatomic,retain) UIImageView *removedNotiView;
+@property (nonatomic,retain) UIImageView *takeAwayNotiView;
 @property (nonatomic,retain) UILabel *lblAlertMsg;
 @property (nonatomic,retain) UILabel *lblWaiting;
 
@@ -26,6 +27,7 @@
 -(void)setCurrentVc;
 -(void) blinkAddedNotiView;
 -(void) blinkRemovedNotiView;
+-(void) blinkTakeAwayNotiView;
 -(void) blinkAlertMsg:(NSString *)alertMsg;
 -(void)loadingOverlayView;
 -(void)loadWaitingView;
@@ -45,6 +47,8 @@
 -(void)setShadow:(UIView *)view;
 -(void)setShadow:(UIView *)view radius:(NSInteger)radius;
 -(void)setButtonDesign:(UIView *)view;
+-(void)setImageDesign:(UIView *)view;
+-(void)setTextFieldDesign:(UIView *)view;
 -(void)setCornerAndShadow:(UIView *)view cornerRadius:(NSInteger)cornerRadius;
 -(CGSize)suggestedSizeWithFont:(UIFont *)font size:(CGSize)size lineBreakMode:(NSLineBreakMode)lineBreakMode forString:(NSString *)text;
 -(void)setImageAndTitleCenter:(UIButton *)button;

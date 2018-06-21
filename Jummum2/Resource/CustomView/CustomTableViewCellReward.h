@@ -19,4 +19,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblCountDown;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblCountDownTop;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblCountDownHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblRemarkWidth;
+
 @end

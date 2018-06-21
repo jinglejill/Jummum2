@@ -56,6 +56,13 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     
 }
 
+-(void)viewDidLayoutSubviews
+{
+    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:12.0f];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+    [segConValue setTitleTextAttributes:attributes forState:UIControlStateNormal];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -64,6 +71,9 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     
     tbvData.dataSource = self;
     tbvData.delegate = self;
+    [tbvData setSeparatorColor:cTextFieldBorder];
+    
+    
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierReward bundle:nil];
@@ -95,13 +105,14 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         if([_rewardRedemptionList count] > 0)
         {
             tableView.backgroundView = nil;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             return 1;
         }
         else
         {
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
             noDataLabel.text             = @"คุณยังไม่มีรางวัล";
-            noDataLabel.textColor        = [UIColor darkGrayColor];
+            noDataLabel.textColor        = cSystem4;
             noDataLabel.textAlignment    = NSTextAlignmentCenter;
             tableView.backgroundView = noDataLabel;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -113,13 +124,14 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         if([_rewardRedemptionUsedList count] > 0)
         {
             tableView.backgroundView = nil;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             return 1;
         }
         else
         {
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
             noDataLabel.text             = @"คุณยังไม่มีรางวัล";
-            noDataLabel.textColor        = [UIColor darkGrayColor];
+            noDataLabel.textColor        = cSystem4;
             noDataLabel.textAlignment    = NSTextAlignmentCenter;
             tableView.backgroundView = noDataLabel;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -163,7 +175,9 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"🍄 %ld points",rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
@@ -174,6 +188,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         if(rewardRedemption.withInPeriod == 0)
@@ -212,7 +227,10 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"🍄 %ld points",rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
+        
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
@@ -223,6 +241,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         if(rewardRedemption.withInPeriod == 0)
@@ -256,7 +275,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     NSInteger section = indexPath.section;
 
     {
-        return 112+25;
+//        return 112+25;
+        return 139;
     }
     
 }

@@ -22,7 +22,6 @@
 @end
 
 @implementation HotDealViewController
-static float const SEARCH_BAR_HEIGHT = 56;
 static NSString * const reuseIdentifierPromoBanner = @"CustomTableViewCellPromoBanner";
 static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPromoThumbNail";
 
@@ -40,8 +39,17 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     [self.homeModel downloadItems:dbHotDeal withData:userAccount];
     tbvData.delegate = self;
     tbvData.dataSource = self;
+//    tbvData.backgroundColor = cSystem4_10;
+    
+    
     
     searchBar.delegate = self;
+    UITextField *textField = [searchBar valueForKey:@"searchField"];
+    textField.layer.borderColor = [cTextFieldBorder CGColor];
+    textField.layer.borderWidth = 1;
+    textField.font = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+    [self setTextFieldDesign:textField];
+    
 
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierPromoBanner bundle:nil];
@@ -81,7 +89,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.lblHeader.text = hotDeal.header;
         [cell.lblHeader sizeToFit];
-        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>34?34:cell.lblHeader.frame.size.height;
+        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>43?43:cell.lblHeader.frame.size.height;
         
         
         
@@ -89,8 +97,8 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         cell.lblSubTitle.text = hotDeal.subTitle;
         [cell.lblSubTitle sizeToFit];
-        cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>29?29:cell.lblSubTitle.frame.size.height;
-        
+        cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
+
         
         
         NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
@@ -102,8 +110,10 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
                  cell.imgVwValue.image = image;
              }
          }];
+        
         cell.imgVwValueHeight.constant = (cell.frame.size.width -2*16)/16*9;
         cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
+        NSLog(@"imgVwValueTop :%f",cell.imgVwValueTop.constant);
         
         
         return cell;
@@ -155,7 +165,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
         cell.lblHeader.text = hotDeal.header;
         [cell.lblHeader sizeToFit];
-        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>34?34:cell.lblHeader.frame.size.height;
+        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>43?43:cell.lblHeader.frame.size.height;
         
         
         
@@ -163,7 +173,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         cell.lblSubTitle.text = hotDeal.subTitle;
         [cell.lblSubTitle sizeToFit];
-        cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>29?29:cell.lblSubTitle.frame.size.height;
+        cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
         
         
         

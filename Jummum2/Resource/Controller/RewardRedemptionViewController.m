@@ -9,6 +9,7 @@
 #import "RewardRedemptionViewController.h"
 #import "CustomTableViewCellRedemption.h"
 #import "CustomTableViewCellLabel.h"
+#import "CustomTableViewCellLabelDetailLabelWithImage.h"
 
 @interface RewardRedemptionViewController ()
 {
@@ -22,6 +23,7 @@
 @implementation RewardRedemptionViewController
 static NSString * const reuseIdentifierRedemption = @"CustomTableViewCellRedemption";
 static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
+static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTableViewCellLabelDetailLabelWithImage";
 
 
 @synthesize lblCountDown;
@@ -50,6 +52,10 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierLabel bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabel];
+    }
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelDetailLabelWithImage bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelDetailLabelWithImage];
     }
     
     
@@ -87,18 +93,21 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     
     if(item == 0)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-        }
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+//        if (!cell) {
+//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+//        }
+        CustomTableViewCellLabelDetailLabelWithImage *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelDetailLabelWithImage];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        
-        cell.textLabel.text = @"แต้มคงเหลือ";
-        cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+        cell.lblText.text = @"แต้มคงเหลือ";
+        cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
         NSInteger point = floor(rewardPoint.point);
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"🍄 %ld points",point];
+        cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+        cell.lblValue.textColor = cSystem2;
+        [cell.lblValue sizeToFit];
+        cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
         
-        cell.detailTextLabel.textColor = mGreen;
         
         return cell;
     }
@@ -118,7 +127,11 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"🍄 %ld points",rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
+        
+        
         cell.lblRedeemDate.text = [Utility dateToString:rewardPointSpent.modifiedDate toFormat:@"d MMM yyyy HH:mm"];
         cell.lblPromoCode.text = promoCode.code;
         cell.imgQrCode.image = [self generateQRCodeWithString:promoCode.code scale:5];

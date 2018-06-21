@@ -194,7 +194,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
             cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
             cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
-            cell.lblBranchName.textColor = mGreen;
+            cell.lblBranchName.textColor = cSystem1;
             
             
             
@@ -210,7 +210,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             cell.tbvOrderDetail.tag = receipt.receiptID;
             [cell.tbvOrderDetail reloadData];
             [cell.btnOrderItAgain addTarget:self action:@selector(orderItAgain:) forControlEvents:UIControlEventTouchUpInside];
-            
+            [self setButtonDesign:cell.btnOrderItAgain];
             
             
             return cell;
@@ -237,10 +237,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return  cell;
@@ -262,10 +262,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -285,10 +285,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         
@@ -314,10 +314,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return  cell;
@@ -340,10 +340,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem2;
                         
                         
                         return cell;
@@ -363,10 +363,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         return  cell;
                     }
@@ -387,9 +387,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -409,6 +409,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return cell;
@@ -433,10 +437,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return  cell;
@@ -458,9 +462,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strServiceChargePercent;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -482,9 +486,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -504,6 +508,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return cell;
@@ -528,10 +536,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return  cell;
@@ -555,10 +563,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem2;
                         
                         
                         return cell;
@@ -578,10 +586,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strTitle;
                         cell.lblAmount.text = strTotal;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblTitle.textColor = [UIColor darkGrayColor];
-                        cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                        cell.lblAmount.textColor = mGreen;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         return  cell;
                     }
@@ -602,9 +610,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = strServiceChargePercent;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -626,9 +634,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
-                        cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                        cell.lblAmount.textColor = [UIColor darkGrayColor];
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                        cell.lblAmount.textColor = cSystem4;
                         
                         
                         return cell;
@@ -648,6 +656,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                         cell.lblAmount.text = strAmount;
                         cell.vwTopBorder.hidden = YES;
+                        cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblTitle.textColor = cSystem4;
+                        cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                        cell.lblAmount.textColor = cSystem1;
                         
                         
                         return cell;
@@ -665,17 +677,17 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 
                 
                 NSString *strStatus = [Receipt getStrStatus:receipt];
-                UIColor *color = [Receipt getStatusColor:receipt];
+                UIColor *color = cSystem2;//[Receipt getStatusColor:receipt];
                 
                 
                 
-                UIFont *font = [UIFont systemFontOfSize:14];
+                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrStringStatus = [[NSMutableAttributedString alloc] initWithString:strStatus attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:14];
-                UIColor *color2 = [UIColor darkGrayColor];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                UIColor *color2 = cSystem4;
                 NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
                 NSMutableAttributedString *attrStringStatusLabel = [[NSMutableAttributedString alloc] initWithString:@"Status: " attributes:attribute2];
                 
@@ -697,8 +709,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     cell.btnValue.hidden = NO;
                     [cell.btnValue setTitle:@"Cancel order" forState:UIControlStateNormal];
-                    cell.btnValue.backgroundColor = mRed;
+                    cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue addTarget:self action:@selector(cancelOrder:) forControlEvents:UIControlEventTouchUpInside];
+                    [self setButtonDesign:cell.btnValue];
+                    
                     
                     return cell;
                 }
@@ -709,7 +723,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     cell.btnValue.hidden = NO;
                     [cell.btnValue setTitle:@"Open dispute" forState:UIControlStateNormal];
-                    cell.btnValue.backgroundColor = mRed;
+                    cell.btnValue.backgroundColor = cSystem1;;
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];
                     
                     return cell;
@@ -721,7 +735,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -759,7 +773,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -798,7 +812,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -836,7 +850,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;                    
+                    cell.lblRemark.textColor = cSystem1;;                    
                     cell.lblRemark.text = @"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -875,7 +889,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -941,7 +955,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         
                         
-                        cell.lblRemark.textColor = mRed;
+                        cell.lblRemark.textColor = cSystem1;;
                         cell.lblRemark.text = @"หลังจากคุยกับเจ้าหน้าที่ Jummum แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                         [cell.lblRemark sizeToFit];
                         cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -980,7 +994,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         cell.btnValue.hidden = NO;
                         [cell.btnValue setTitle:@"Confirm" forState:UIControlStateNormal];
-                        cell.btnValue.backgroundColor = mGreen;
+                        cell.btnValue.backgroundColor = cSystem2;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(confirmNegotiate:) forControlEvents:UIControlEventTouchUpInside];
                         
@@ -996,7 +1010,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         cell.btnValue.hidden = NO;
                         [cell.btnValue setTitle:@"Negotiate" forState:UIControlStateNormal];
-                        cell.btnValue.backgroundColor = mRed;
+                        cell.btnValue.backgroundColor = cSystem1;;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(negotiate:) forControlEvents:UIControlEventTouchUpInside];
                         
@@ -1013,7 +1027,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.btnValue.hidden = NO;
                         [cell.btnValue setTitle:@"Cancel" forState:UIControlStateNormal];
                         cell.btnValue.backgroundColor = [UIColor groupTableViewBackgroundColor];
-                        [cell.btnValue setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                        [cell.btnValue setTitleColor:cSystem4 forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
                         
                         
@@ -1028,7 +1042,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -1064,7 +1078,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     cell.lblRemark.text = @"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
@@ -1118,7 +1132,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             //menu
             if(orderTaking.takeAway)
             {
-                UIFont *font = [UIFont systemFontOfSize:15];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ใส่ห่อ"
                                                                                                attributes:attribute];
@@ -1151,12 +1165,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
             if(![Utility isStringEmpty:strRemoveTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                 
@@ -1165,12 +1179,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             }
             if(![Utility isStringEmpty:strAddTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                 
@@ -1264,12 +1278,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
                 if(![Utility isStringEmpty:strRemoveTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                     
@@ -1278,12 +1292,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 }
                 if(![Utility isStringEmpty:strAddTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                     
@@ -1314,8 +1328,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 
                 
                 
-                UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
-                UIFont *fontNote = [UIFont systemFontOfSize:11.0];
+                UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
+                UIFont *fontNote = [UIFont fontWithName:@"Prompt-Regular" size:11.0];
                 
                 
                 
@@ -1353,7 +1367,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
                     cell.lblRemark.text = @"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า";
                     [cell.lblRemark sizeToFit];
@@ -1392,7 +1406,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     cell.lblRemark.text = @"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
                     [cell.lblRemark sizeToFit];
@@ -1432,7 +1446,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
                     cell.lblRemark.text = @"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
@@ -1471,7 +1485,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     cell.lblRemark.text = @"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
@@ -1511,7 +1525,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     cell.lblRemark.text = @"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม.";
                     [cell.lblRemark sizeToFit];
@@ -1551,7 +1565,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"หลังจากคุยกับเจ้าหน้าที่ Jummum แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -1587,7 +1601,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -1627,8 +1641,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = mRed;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
+                    cell.lblRemark.textColor = cSystem1;;
                     cell.lblRemark.text = @"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -1699,12 +1712,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
             if(![Utility isStringEmpty:strRemoveTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                 
@@ -1713,12 +1726,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             }
             if(![Utility isStringEmpty:strAddTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                 
@@ -1749,8 +1762,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             
             
             
-            UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
-            UIFont *fontNote = [UIFont systemFontOfSize:11.0];
+            UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
+            UIFont *fontNote = [UIFont fontWithName:@"Prompt-Regular" size:11.0];
             
             
             

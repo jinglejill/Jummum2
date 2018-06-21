@@ -281,7 +281,7 @@ extern NSString *globalModifiedUser;
             url = @"/JMM/JUMMUM2/JMMUserAccountInsert.php";
             break;
         case urlTermsOfService:
-            url = @"/JMM/JUMMUM2/JMMTermsOfService.html";
+            url = @"/JMM/JUMMUM2/HtmlTermsOfService.html";
             break;
         case urlUserAccountForgotPasswordInsert:
             url = @"/JMM/JUMMUM2/JMMUserAccountForgotPasswordInsert.php";
@@ -308,7 +308,7 @@ extern NSString *globalModifiedUser;
             url = @"/JMM/JUMMUM2/JMMRewardPointGet.php";
             break;
         case urlPrivacyPolicy:
-            url = @"/JMM/JUMMUM2/JMMPrivacyPolicy.html";
+            url = @"/JMM/JUMMUM2/HtmlPrivacyPolicy.html";
             break;
         case urlPushReminder:
             url = @"/JMM/JUMMUM2/JMMPushReminder.php";

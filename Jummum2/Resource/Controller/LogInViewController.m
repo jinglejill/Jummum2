@@ -41,11 +41,11 @@
     _rememberMe = !_rememberMe;
     if(_rememberMe)
     {
-        [btnRememberMe setTitle:@"■ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
     }
     else
     {
-        [btnRememberMe setTitle:@"□ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
     }
 }
 
@@ -94,7 +94,7 @@
     }
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
     {
-        [btnRememberMe setTitle:@"■ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
         _rememberMe = YES;
         
         
@@ -104,7 +104,7 @@
     }
     else
     {
-        [btnRememberMe setTitle:@"□ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
         _rememberMe = NO;
     }
 }
@@ -115,10 +115,10 @@
     // Do any additional setup after loading the view.
     
 
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"tosAgree"];
+    [self setButtonDesign:btnLogIn];
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
     {
-        [btnRememberMe setTitle:@"■ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
         _rememberMe = YES;
         
         
@@ -128,7 +128,7 @@
     }
     else
     {
-        [btnRememberMe setTitle:@"□ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
         _rememberMe = NO;
     }
     

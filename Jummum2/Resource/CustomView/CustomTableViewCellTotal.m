@@ -27,8 +27,8 @@
     [super prepareForReuse];
     //    NSLog(@"reuse");
     
-    self.lblTitle.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
-    self.lblAmount.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
-    self.lblAmount.textColor = mGreen;
+    self.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+    self.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+    self.lblAmount.textColor = cSystem1;
 }
 @end

@@ -112,8 +112,9 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"🍄 %ld points",rewardRedemption.point];
-        
+        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         return cell;
@@ -219,30 +220,37 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"ยืนยันการรับสิทธิ์"
-                              style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-      {
-          if(rewardPoint.point < rewardRedemption.point)
-          {
-              [self showAlert:@"จำนวนแต้มสะสมไม่เพียงพอ" message:@""];
-          }
-          else
-          {
-              UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-              _rewardPointSpent = [[RewardPoint alloc]initWithMemberID:userAccount.userAccountID receiptID:0 point:rewardRedemption.point status:-1 promoCodeID:0];
-              [self.homeModel insertItems:dbRewardPoint withData:@[_rewardPointSpent,rewardRedemption] actionScreen:@"insert rewardPointSpent"];
-              [self loadingOverlayView];
-          }
-          
-          
-          
-      }]];
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"ยกเลิก"
-                              style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
-      {
-      }]];
+    
+
+    
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"ยืนยันการรับสิทธิ์"
+                                                     style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                             {
+                                 if(rewardPoint.point < rewardRedemption.point)
+                                 {
+                                     [self showAlert:@"จำนวนแต้มสะสมไม่เพียงพอ" message:@""];
+                                 }
+                                 else
+                                 {
+                                     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+                                     _rewardPointSpent = [[RewardPoint alloc]initWithMemberID:userAccount.userAccountID receiptID:0 point:rewardRedemption.point status:-1 promoCodeID:0];
+                                     [self.homeModel insertItems:dbRewardPoint withData:@[_rewardPointSpent,rewardRedemption] actionScreen:@"insert rewardPointSpent"];
+                                     [self loadingOverlayView];
+                                 }
+                             }];
+//    [action1 setValue:@"" forKey:@"attributedTitle"];
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    [[UIButton appearanceWhenContainedIn:[UIAlertController class], nil] setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [alert addAction:action1];
+    
+    
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ยกเลิก"
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                              {
+                              }];
+    [alert addAction:action2];
     
     
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
@@ -255,6 +263,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     
     
     [self presentViewController:alert animated:YES completion:nil];
+    alert.view.tintColor = cSystem1;
 }
 
 - (IBAction)goBack:(id)sender

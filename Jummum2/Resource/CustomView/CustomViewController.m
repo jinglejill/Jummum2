@@ -37,6 +37,7 @@ CGFloat animatedDistance;
 @synthesize waitingView;
 @synthesize addedNotiView;
 @synthesize removedNotiView;
+@synthesize takeAwayNotiView;
 @synthesize lblAlertMsg;
 @synthesize lblWaiting;
 
@@ -86,6 +87,10 @@ CGFloat animatedDistance;
     
     removedNotiView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"removed.png"]];
     removedNotiView.center = self.view.center;
+    
+    
+    takeAwayNotiView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"takeAwayNoti.png"]];
+    takeAwayNotiView.center = self.view.center;
     
     
     lblAlertMsg = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-16*2, 44)];
@@ -166,7 +171,7 @@ CGFloat animatedDistance;
 -(void) blinkAlertMsg:(NSString *)alertMsg
 {
     lblAlertMsg.text = alertMsg;
-    lblAlertMsg.backgroundColor = [UIColor darkGrayColor];
+    lblAlertMsg.backgroundColor = cSystem4;
     lblAlertMsg.textColor = [UIColor whiteColor];
     lblAlertMsg.textAlignment = NSTextAlignmentCenter;
     lblAlertMsg.layer.cornerRadius = 8;
@@ -187,6 +192,30 @@ CGFloat animatedDistance;
                                         completion:^(BOOL finished){
                                             dispatch_async(dispatch_get_main_queue(),^ {
                                                 [lblAlertMsg removeFromSuperview];
+                                            } );
+                                        }
+                        ];
+                   });
+}
+
+-(void) blinkTakeAwayNotiView
+{
+    takeAwayNotiView.alpha = 1;
+    [self.view addSubview:takeAwayNotiView];
+    
+    
+    
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
+                   {
+                       [UIView animateWithDuration:0.5
+                                        animations:^{
+                                            takeAwayNotiView.alpha = 0.0;
+                                        }
+                                        completion:^(BOOL finished){
+                                            dispatch_async(dispatch_get_main_queue(),^ {
+                                                [takeAwayNotiView removeFromSuperview];
                                             } );
                                         }
                         ];
@@ -751,11 +780,20 @@ CGFloat animatedDistance;
 -(void)setButtonDesign:(UIView *)view
 {
     UIButton *button = (UIButton *)view;
-    button.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [button setTitleColor:mBlueColor forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    button.layer.cornerRadius = 4;
-    
+    button.layer.cornerRadius = 14;
+}
+
+-(void)setImageDesign:(UIView *)view
+{
+    UIImageView *imgView = (UIImageView *)view;
+    imgView.layer.cornerRadius = 14;
+    imgView.clipsToBounds = YES;
+}
+
+-(void)setTextFieldDesign:(UIView *)view
+{
+    UITextField *textField = (UITextField *)view;
+    textField.layer.cornerRadius = 14;
 }
 
 -(void)setCornerAndShadow:(UIView *)view cornerRadius:(NSInteger)cornerRadius
@@ -966,7 +1004,7 @@ CGFloat animatedDistance;
 
 -(void)showStatus:(NSString *)status
 {
-    [_lblStatus setFont:[UIFont systemFontOfSize:14]];
+    [_lblStatus setFont:[UIFont fontWithName:@"Prompt-Regular" size:14]];
     [_lblStatus setText:@"กำลังพิมพ์..."];
     [_lblStatus sizeToFit];
     _lblStatus.center = self.view.center;
@@ -1220,14 +1258,16 @@ CGFloat animatedDistance;
     {
         text = @"";
     }
-    UIFont *font = [UIFont boldSystemFontOfSize:15];
-    UIColor *color = [UIColor darkGrayColor];
+    
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:14.0f];
+    UIColor *color = cSystem4;
     NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:title attributes:attribute];
     
     
-    UIFont *font2 = [UIFont systemFontOfSize:15];
-    UIColor *color2 = [UIColor darkGrayColor];
+    
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+    UIColor *color2 = cSystem4;
     NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:text attributes:attribute2];
     

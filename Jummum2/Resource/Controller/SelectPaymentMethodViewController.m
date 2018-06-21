@@ -122,7 +122,7 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
         
         NSString *strCreditCardNo = [Utility hideCreditCardNo:creditCard.creditCardNo];
         cell.lblValue.text = strCreditCardNo;
-        cell.lblValue.font = [UIFont systemFontOfSize:15];
+        cell.lblValue.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
         
         
         

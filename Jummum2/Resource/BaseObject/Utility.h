@@ -39,6 +39,14 @@
 #define mButtonText     [UIColor colorWithRed:21/255.0 green:126/255.0 blue:251/255.0 alpha:1]
 #define mSelectionStyleGray     [UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1]
 #define mPlaceHolder     [UIColor colorWithRed:199/255.0 green:199/255.0 blue:205/255.0 alpha:1]
+#define cSystem1     [UIColor colorWithRed:255/255.0 green:60/255.0 blue:75/255.0 alpha:1]
+#define cSystem2     [UIColor colorWithRed:100/255.0 green:220/255.0 blue:200/255.0 alpha:1]
+#define cSystem3     [UIColor colorWithRed:0/255.0 green:90/255.0 blue:80/255.0 alpha:1]
+#define cSystem4     [UIColor colorWithRed:70/255.0 green:70/255.0 blue:70/255.0 alpha:1]
+#define cSystem4_10     [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]
+#define cSystem1_10     [UIColor colorWithRed:255/255.0 green:234/255.0 blue:236/255.0 alpha:1]
+#define cSystem1_20     [UIColor colorWithRed:255/255.0 green:215/255.0 blue:218/255.0 alpha:1]
+#define cTextFieldBorder     [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]
 #define UIColorFromRGB(rgbValue) \
 [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \

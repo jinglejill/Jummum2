@@ -8,6 +8,7 @@
 
 #import "CreditCardAndOrderSummaryViewController.h"
 #import "SaveToCameraRollViewController.h"
+#import "PaymentCompleteViewController.h"
 #import "SelectPaymentMethodViewController.h"
 #import "QRCodeScanTableViewController.h"
 #import "CustomerTableSearchViewController.h"
@@ -402,7 +403,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.lblText.text = branch.name;
-            cell.lblText.font = [UIFont boldSystemFontOfSize:15];
+            cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
             [cell.lblText sizeToFit];
             
             
@@ -410,12 +411,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             if(customerTable)
             {
                 cell.lblValue.text = [NSString stringWithFormat:@"เลขโต๊ะ: %@",customerTable.tableName];
-                cell.lblValue.textColor = mGreen;
+                cell.lblValue.textColor = cSystem4;
             }
             else
             {
                 cell.lblValue.text = @"เลือกโต๊ะ";
-                cell.lblValue.textColor = mRed;
+                cell.lblValue.textColor = cSystem2;
             }
             
             
@@ -434,7 +435,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     
                     
                     cell.textLabel.text = @"การชำระเงิน";
-                    cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+                    cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+                    cell.textLabel.textColor = cSystem1;
+                    
                     
                     return cell;
                 }
@@ -566,7 +569,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                         
                         NSString *strCreditCardNo = [Utility hideCreditCardNo:_creditCard.creditCardNo];
                         cell.lblValue.text = strCreditCardNo;
-                        cell.lblValue.font = [UIFont systemFontOfSize:15];
+                        cell.lblValue.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                         
                         
                         
@@ -588,9 +591,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     
                     
                     cell.textLabel.text = @"เลือกบัตรเครดิต";
-                    cell.textLabel.font = [UIFont systemFontOfSize:15];
+                    cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                     cell.detailTextLabel.text = @">";
-                    cell.detailTextLabel.textColor = mGreen;
+                    cell.detailTextLabel.textColor = cSystem4;
                     
                     
                     
@@ -612,7 +615,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 
                 
                 cell.textLabel.text = @"สรุปรายการอาหาร";
-                cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+                cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+                cell.textLabel.textColor = cSystem1;
+                
                 
                 return cell;
             }
@@ -630,7 +635,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 //menu
                 if(orderTaking.takeAway)
                 {
-                    UIFont *font = [UIFont systemFontOfSize:15];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
                     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ใส่ห่อ"
                                                                                                    attributes:attribute];
@@ -663,12 +668,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
                 if(![Utility isStringEmpty:strRemoveTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                     
@@ -677,12 +682,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 }
                 if(![Utility isStringEmpty:strAddTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                     
@@ -753,6 +758,11 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = NO;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
+                
                 
                 return  cell;
             }
@@ -767,8 +777,13 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.txtVoucherCode.tag = 31;
                 cell.txtVoucherCode.delegate = self;
                 cell.txtVoucherCode.text = @"";
+                [self setTextFieldDesign:cell.txtVoucherCode];
+                
+                
                 cell.btnConfirmVoucherCodeWidthConstant.constant = (self.view.frame.size.width - 16*2 - 8)/2;
                 [cell.btnConfirmVoucherCode addTarget:self action:@selector(confirmVoucherCode:) forControlEvents:UIControlEventTouchUpInside];
+                [self setButtonDesign:cell.btnConfirmVoucherCode];
+                
 
                 return cell;
 
@@ -788,6 +803,11 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
+                
 
                 return  cell;
             }
@@ -823,9 +843,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     cell.lblTitle.text = strTitle;
                     cell.lblAmount.text = strTotal;
                     cell.vwTopBorder.hidden = YES;
-                    cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.textColor = [UIColor darkGrayColor];
+                    cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.textColor = cSystem4;
                     
                     
                     return  cell;
@@ -863,9 +883,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     cell.lblTitle.text = branch.percentVat==0?@"Vat":strPercentVat;
                     cell.lblAmount.text = strAmount;
                     cell.vwTopBorder.hidden = YES;
-                    cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.textColor = [UIColor darkGrayColor];
+                    cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.textColor = cSystem4;
                     
                     
                     return cell;
@@ -907,9 +927,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     cell.lblTitle.text = branch.percentVat==0?@"Vat":strPercentVat;
                     cell.lblAmount.text = strAmount;
                     cell.vwTopBorder.hidden = YES;
-                    cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                    cell.lblAmount.textColor = [UIColor darkGrayColor];
+                    cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.lblAmount.textColor = cSystem4;
                     
                     
                     return cell;
@@ -946,7 +966,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     cell.lblAmount.text = strAmount;
                     cell.vwTopBorder.hidden = YES;
                     _netTotal = netTotalAmount;
-//                    cell.lblAmount.font = [UIFont boldSystemFontOfSize:16];
+//                    cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:16];
 
 
                     return cell;
@@ -984,6 +1004,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 _netTotal = netTotalAmount;
 
 
@@ -1063,12 +1087,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
                 if(![Utility isStringEmpty:strRemoveTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                     
@@ -1077,12 +1101,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 }
                 if(![Utility isStringEmpty:strAddTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                     
@@ -1113,8 +1137,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 
                 
                 
-                UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
-                UIFont *fontNote = [UIFont systemFontOfSize:11.0];
+                UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
+                UIFont *fontNote = [UIFont fontWithName:@"Prompt-Regular" size:11.0];
                 
                 
                 
@@ -1284,35 +1308,35 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         [self blinkAlertMsg:@"กรุณาใส่ชื่อ"];
         UIView *vwInvalid = [self.view viewWithTag:11];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     if([Utility isStringEmpty:_creditCard.lastName])
     {
         [self blinkAlertMsg:@"กรุณาใส่นามสกุล"];
         UIView *vwInvalid = [self.view viewWithTag:12];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     if(![OMSCardNumber validate:_creditCard.creditCardNo])
     {
         [self blinkAlertMsg:@"หมายเลขบัตรเครดิตไม่ถูกต้อง"];
         UIView *vwInvalid = [self.view viewWithTag:13];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     if(_creditCard.month < 1 || _creditCard.month > 12)
     {
         [self blinkAlertMsg:@"เดือนไม่ถูกต้อง กรุณาใส่เดือนระหว่าง 01 ถึง 12"];
         UIView *vwInvalid = [self.view viewWithTag:14];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     if([[NSString stringWithFormat:@"%ld",_creditCard.year] length] < 4)
     {
         [self blinkAlertMsg:@"ปีไม่ถูกต้อง กรุณาใส่ปีจำนวน 4 หลัก"];
         UIView *vwInvalid = [self.view viewWithTag:15];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     NSString *strExpiredDate = [NSString stringWithFormat:@"%04ld%02ld01 00:00:00",_creditCard.year,_creditCard.month];
@@ -1321,14 +1345,14 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         [self blinkAlertMsg:@"บัตรใบนี้หมดอายุแล้ว"];
         UIView *vwInvalid = [self.view viewWithTag:15];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     if([_creditCard.ccv length] < 3)
     {
         [self blinkAlertMsg:@"กรุณาใส่รหัสความปลอดภัย 3 หลัก"];
         UIView *vwInvalid = [self.view viewWithTag:16];
-        vwInvalid.backgroundColor = mRed;
+        vwInvalid.backgroundColor = cSystem1;;
         return;
     }
     
@@ -1528,7 +1552,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     Receipt *receipt = receiptList[0];
     _receipt = receipt;
     [self.homeModel insertItems:dbPushReminder withData:@[branch,receipt] actionScreen:@"push reminder"];
-    [self performSegueWithIdentifier:@"segSaveToCameraRoll" sender:self];
+    [self performSegueWithIdentifier:@"segPaymentComplete" sender:self];
+//    [self performSegueWithIdentifier:@"segSaveToCameraRoll" sender:self];
 }
 
 -(void)alertMsg:(NSString *)msg
@@ -1568,9 +1593,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         vc.branch = branch;
         vc.customerTable = customerTable;
     }
-    else if([[segue identifier] isEqualToString:@"segSaveToCameraRoll"])
+    else if([[segue identifier] isEqualToString:@"segPaymentComplete"])
     {
-        SaveToCameraRollViewController *vc = segue.destinationViewController;
+//        SaveToCameraRollViewController *vc = segue.destinationViewController;
+        PaymentCompleteViewController *vc = segue.destinationViewController;
         vc.receipt = _receipt;
     }
 }
@@ -1742,9 +1768,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strTotal = [Utility formatDecimal:serviceChargeValue withMinFraction:2 andMaxFraction:2];
             strTotal = [Utility addPrefixBahtSymbol:strTotal];
             cell.lblAmount.text = strTotal;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //vat
@@ -1772,9 +1798,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAmount = [Utility formatDecimal:vatAmount withMinFraction:2 andMaxFraction:2];
             strAmount = [Utility addPrefixBahtSymbol:strAmount];
             cell.lblAmount.text = strAmount;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //net total amount
@@ -1836,9 +1862,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAmount = [Utility formatDecimal:vatAmount withMinFraction:2 andMaxFraction:2];
             strAmount = [Utility addPrefixBahtSymbol:strAmount];
             cell.lblAmount.text = strAmount;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //net total amount
@@ -1924,9 +1950,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strTotal = [Utility formatDecimal:serviceChargeValue withMinFraction:2 andMaxFraction:2];
             strTotal = [Utility addPrefixBahtSymbol:strTotal];
             cell.lblAmount.text = strTotal;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //vat
@@ -1954,9 +1980,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAmount = [Utility formatDecimal:vatAmount withMinFraction:2 andMaxFraction:2];
             strAmount = [Utility addPrefixBahtSymbol:strAmount];
             cell.lblAmount.text = strAmount;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //net total amount
@@ -2018,9 +2044,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAmount = [Utility formatDecimal:vatAmount withMinFraction:2 andMaxFraction:2];
             strAmount = [Utility addPrefixBahtSymbol:strAmount];
             cell.lblAmount.text = strAmount;
-            cell.lblTitle.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.font = [UIFont systemFontOfSize:15];
-            cell.lblAmount.textColor = [UIColor darkGrayColor];
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            cell.lblAmount.textColor = cSystem4;
         }
         {
             //net total amount

@@ -16,4 +16,5 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblHeaderHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblSubTitleHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwValueHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwValueTop;
 @end

@@ -69,14 +69,14 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
     NSString *strMessageHeader = @"ชำระเงินสำเร็จ";
     NSString *strMessageSubTitle = @"ขอบคุณที่ใช้บริการ";
 
-    UIFont *font = [UIFont boldSystemFontOfSize:22];
-    UIColor *color = [UIColor darkGrayColor];
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:22];
+    UIColor *color = cSystem4;
     NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
     NSMutableAttributedString *attrStringHeader = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n",strMessageHeader] attributes:attribute];
 
 
-    UIFont *font2 = [UIFont systemFontOfSize:15];
-    UIColor *color2 = [UIColor darkGrayColor];
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+    UIColor *color2 = cSystem4;
     NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:strMessageSubTitle attributes:attribute2];
 
@@ -116,7 +116,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
     cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
     cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
     cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
-    cell.lblBranchName.textColor = mGreen;
+    cell.lblBranchName.textColor = cSystem1;
     cell.btnOrderItAgain.hidden = YES;
     
     
@@ -148,7 +148,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
         //menu
         if(orderTaking.takeAway)
         {
-            UIFont *font = [UIFont systemFontOfSize:15];
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
             NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
             NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ใส่ห่อ"
                                                                                            attributes:attribute];
@@ -181,12 +181,12 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
         NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
         if(![Utility isStringEmpty:strRemoveTypeNote])
         {
-            UIFont *font = [UIFont systemFontOfSize:11];
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
             NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
             attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
             
             
-            UIFont *font2 = [UIFont systemFontOfSize:11];
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
             NSDictionary *attribute2 = @{NSFontAttributeName: font2};
             NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
             
@@ -195,12 +195,12 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
         }
         if(![Utility isStringEmpty:strAddTypeNote])
         {
-            UIFont *font = [UIFont systemFontOfSize:11];
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
             NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
             attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
             
             
-            UIFont *font2 = [UIFont systemFontOfSize:11];
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
             NSDictionary *attribute2 = @{NSFontAttributeName: font2};
             NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
             
@@ -280,10 +280,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -302,10 +302,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -321,10 +321,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -344,10 +344,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -367,10 +367,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem2;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -386,10 +386,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -408,9 +408,9 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -443,10 +443,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -465,9 +465,9 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strServiceChargePercent;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -486,9 +486,9 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -521,10 +521,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -545,10 +545,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem2;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -564,10 +564,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblTitle.textColor = [UIColor darkGrayColor];
-                cell.lblAmount.font = [UIFont boldSystemFontOfSize:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -586,9 +586,9 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = strServiceChargePercent;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -607,9 +607,9 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = receipt.vatPercent==0?@"Vat":strPercentVat;
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
-                cell.lblTitle.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.font = [UIFont systemFontOfSize:15];
-                cell.lblAmount.textColor = [UIColor darkGrayColor];
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblAmount.textColor = cSystem4;
                 
                 
                 UIImage *image = [self imageFromView:cell];

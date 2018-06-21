@@ -11,7 +11,7 @@
 #import "MyRewardViewController.h"
 #import "CustomTableViewCellSearchBar.h"
 #import "CustomTableViewCellReward.h"
-#import "CustomTableViewHeaderButton.h"
+#import "CustomTableViewCellLabelDetailLabelWithImage.h"
 #import "RewardPoint.h"
 #import "UserAccount.h"
 #import "RewardRedemption.h"
@@ -34,7 +34,7 @@
 static float const SEARCH_BAR_HEIGHT = 56;
 static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBar";
 static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
-static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderButton";
+static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTableViewCellLabelDetailLabelWithImage";
 
 
 @synthesize tbvData;
@@ -43,9 +43,11 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
 -(IBAction)unwindToReward:(UIStoryboardSegue *)segue
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    UITableViewCell *cell = [tbvData cellForRowAtIndexPath:indexPath];
+    CustomTableViewCellLabelDetailLabelWithImage *cell = [tbvData cellForRowAtIndexPath:indexPath];
     NSInteger point = (int)floor(_rewardPoint.point);
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"🍄 %ld points",point];
+    cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+    [cell.lblValue sizeToFit];
+    cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
 }
 
 -(void)loadView
@@ -74,8 +76,8 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierReward];
     }
     {
-        UINib *nib = [UINib nibWithNibName:reuseIdentifierHeaderButton bundle:nil];
-        [tbvData registerNib:nib forHeaderFooterViewReuseIdentifier:reuseIdentifierHeaderButton];
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelDetailLabelWithImage bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelDetailLabelWithImage];
     }
 }
 
@@ -84,7 +86,6 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
     // Return the number of sections.
     
     return 3;
-   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -117,6 +118,18 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
         cell.sbText.delegate = self;
         cell.sbText.tag = 300;
         cell.sbText.placeholder = @"ค้นหา Reward";
+        UITextField *textField = [cell.sbText valueForKey:@"searchField"];
+        textField.layer.borderColor = [cTextFieldBorder CGColor];
+        textField.layer.borderWidth = 1;
+        textField.font = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+        [self setTextFieldDesign:textField];
+        
+        
+        //cancel button in searchBar
+        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+         setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cSystem1, NSForegroundColorAttributeName,font, NSFontAttributeName, nil]
+         forState:UIControlStateNormal];
         
         
         return cell;
@@ -125,19 +138,17 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
     {
         if(item == 0)
         {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-            if (!cell) {
-                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-            }
-            
-            
+            CustomTableViewCellLabelDetailLabelWithImage *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelDetailLabelWithImage];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = @"แต้มสะสม";
-            cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
-            NSInteger point = (int)floor(_rewardPoint.point);
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"🍄 %ld points",point];
             
-            cell.detailTextLabel.textColor = mGreen;
+
+            cell.lblText.text = @"แต้มสะสม";
+            cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+            NSInteger point = (int)floor(_rewardPoint.point);
+            cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+            cell.lblValue.textColor = cSystem2;
+            [cell.lblValue sizeToFit];
+            cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
             
             
             return cell;
@@ -152,7 +163,9 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = @"รางวัลของฉัน";
-            cell.textLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+            cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+            cell.textLabel.textColor = cSystem4;
+            
             
             cell.detailTextLabel.text = @"";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -178,7 +191,9 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"🍄 %ld points",rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
@@ -189,6 +204,7 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         
@@ -233,7 +249,6 @@ static NSString * const reuseIdentifierHeaderButton = @"CustomTableViewHeaderBut
     }
 
     return CGFLOAT_MIN;
-//    return section == 0?0:35;
 }
 
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath

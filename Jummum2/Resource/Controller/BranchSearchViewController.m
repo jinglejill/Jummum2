@@ -136,6 +136,19 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     tbvBranch.delegate = self;
     tbvBranch.dataSource = self;
     sbText.delegate = self;
+    UITextField *textField = [sbText valueForKey:@"searchField"];
+    textField.layer.borderColor = [cTextFieldBorder CGColor];
+    textField.layer.borderWidth = 1;
+    textField.font = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+    [self setTextFieldDesign:textField];
+    
+    
+    //cancel button in searchBar
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cSystem1, NSForegroundColorAttributeName,font, NSFontAttributeName, nil]
+     forState:UIControlStateNormal];
+    
     
     
     {
@@ -191,6 +204,8 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
              }
          }];
         cell.imgMenuPic.contentMode = UIViewContentModeScaleAspectFit;
+        [self setImageDesign:cell.imgMenuPic];
+        
         
         return cell;
     }

@@ -78,7 +78,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     
     tbvCustomerTable.delegate = self;
     tbvCustomerTable.dataSource = self;
-    
+//    tbvCustomerTable.separatorColor = [UIColor clearColor];
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierMenu bundle:nil];
@@ -135,6 +135,19 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             cell.sbText.delegate = self;
             cell.sbText.tag = 300;
             cell.sbText.placeholder = @"ค้นหาเบอร์โต๊ะ";
+            UITextField *textField = [cell.sbText valueForKey:@"searchField"];
+            textField.layer.borderColor = [cTextFieldBorder CGColor];
+            textField.layer.borderWidth = 1;
+            textField.font = [UIFont fontWithName:@"Prompt-Regular" size:14.0f];
+            [self setTextFieldDesign:textField];
+            
+            
+            //cancel button in searchBar
+            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+            [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+             setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cSystem1, NSForegroundColorAttributeName,font, NSFontAttributeName, nil]
+             forState:UIControlStateNormal];
+            
             
             
             return cell;
@@ -332,14 +345,14 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     {
         NSString *zone = _customerTableZoneList[i];
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 0, 100, 44)];
-        button.titleLabel.font = [UIFont systemFontOfSize:15];
+        button.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
         if(i==0)
         {
-            [button setTitleColor:mOrange forState:UIControlStateNormal];
+            [button setTitleColor:cSystem1 forState:UIControlStateNormal];
         }
         else
         {
-            [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [button setTitleColor:cSystem4 forState:UIControlStateNormal];
         }
         [button setTitle:zone forState:UIControlStateNormal];
         [button sizeToFit];
@@ -353,7 +366,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         frame.origin.y = button.frame.origin.y + button.frame.size.height-2;
         
         UIView *highlightBottomBorder = [[UIView alloc]initWithFrame:frame];
-        highlightBottomBorder.backgroundColor = mGreen;
+        highlightBottomBorder.backgroundColor = cSystem2;
         highlightBottomBorder.tag = i+1+100;
         highlightBottomBorder.hidden = i!=0;
         [scrollView addSubview:highlightBottomBorder];
@@ -374,7 +387,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     for(int i=1; i<=[_customerTableZoneList count]; i++)
     {
         UIButton *eachButton = [self.view viewWithTag:i];
-        [eachButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [eachButton setTitleColor:cSystem4 forState:UIControlStateNormal];
         
         
         UIView *highlightBottomBorder = [self.view viewWithTag:i+100];
@@ -382,7 +395,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     
     
-    [button setTitleColor:mOrange forState:UIControlStateNormal];
+    [button setTitleColor:cSystem1 forState:UIControlStateNormal];
     UIView *highlightBottomBorder = [self.view viewWithTag:button.tag+100];
     highlightBottomBorder.hidden = NO;
     

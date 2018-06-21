@@ -99,7 +99,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         {
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
             noDataLabel.text             = @"คุณไม่มีประวัติการสั่งอาหาร";
-            noDataLabel.textColor        = [UIColor darkGrayColor];
+            noDataLabel.textColor        = cSystem4;
             noDataLabel.textAlignment    = NSTextAlignmentCenter;
             tableView.backgroundView = noDataLabel;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -147,7 +147,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
         cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
         cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
-        cell.lblBranchName.textColor = mGreen;
+        cell.lblBranchName.textColor = cSystem1;
         
         
         
@@ -170,6 +170,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         cell.tbvOrderDetail.tag = receipt.receiptID;
         [cell.tbvOrderDetail reloadData];
         [cell.btnOrderItAgain addTarget:self action:@selector(orderItAgain:) forControlEvents:UIControlEventTouchUpInside];
+        [self setButtonDesign:cell.btnOrderItAgain];
         
         
 
@@ -202,7 +203,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             //menu
             if(orderTaking.takeAway)
             {
-                UIFont *font = [UIFont systemFontOfSize:15];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ใส่ห่อ"
                                                                                                attributes:attribute];
@@ -235,12 +236,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
             if(![Utility isStringEmpty:strRemoveTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                 
@@ -249,12 +250,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             }
             if(![Utility isStringEmpty:strAddTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                 
@@ -330,8 +331,11 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             strTotalAmount = [Utility addPrefixBahtSymbol:strTotalAmount];
             cell.lblAmount.text = strTotalAmount;
             cell.lblTitle.text = @"รวมทั้งหมด";
-            cell.lblTitle.textColor = mGreen;
             cell.lblTitleTop.constant = 8;
+            cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+            cell.lblTitle.textColor = cSystem4;
+            cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+            cell.lblAmount.textColor = cSystem1;
             
             
             
@@ -345,17 +349,17 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             
             Receipt *receipt = [Receipt getReceipt:receiptID];
             NSString *strStatus = [Receipt getStrStatus:receipt];
-            UIColor *color = [Receipt getStatusColor:receipt];
+            UIColor *color = cSystem2; //[Receipt getStatusColor:receipt];
             
             
             
-            UIFont *font = [UIFont systemFontOfSize:14];
+            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
             NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
             NSMutableAttributedString *attrStringStatus = [[NSMutableAttributedString alloc] initWithString:strStatus attributes:attribute];
             
             
-            UIFont *font2 = [UIFont systemFontOfSize:14];
-            UIColor *color2 = [UIColor darkGrayColor];
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            UIColor *color2 = cSystem4;
             NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
             NSMutableAttributedString *attrStringStatusLabel = [[NSMutableAttributedString alloc] initWithString:@"Status: " attributes:attribute2];
             
@@ -406,12 +410,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
             if(![Utility isStringEmpty:strRemoveTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                 
@@ -420,12 +424,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             }
             if(![Utility isStringEmpty:strAddTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                 
@@ -456,8 +460,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             
             
             
-            UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
-            UIFont *fontNote = [UIFont systemFontOfSize:11.0];
+            UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
+            UIFont *fontNote = [UIFont fontWithName:@"Prompt-Regular" size:11.0];
             
             
             
@@ -504,12 +508,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
             if(![Utility isStringEmpty:strRemoveTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                 
@@ -518,12 +522,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             }
             if(![Utility isStringEmpty:strAddTypeNote])
             {
-                UIFont *font = [UIFont systemFontOfSize:11];
+                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                 attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                 
                 
-                UIFont *font2 = [UIFont systemFontOfSize:11];
+                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                 NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                 NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                 
@@ -554,8 +558,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             
             
             
-            UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
-            UIFont *fontNote = [UIFont systemFontOfSize:11.0];
+            UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
+            UIFont *fontNote = [UIFont fontWithName:@"Prompt-Regular" size:11.0];
             
             
             

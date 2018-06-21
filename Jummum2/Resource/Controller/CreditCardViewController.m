@@ -61,7 +61,7 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
     
     UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
     noDataLabel.text             = @"คุณไม่ได้บันทึกบัตรเครดิตไว้";
-    noDataLabel.textColor        = [UIColor darkGrayColor];
+    noDataLabel.textColor        = cSystem4;
     noDataLabel.textAlignment    = NSTextAlignmentCenter;
     tableView.backgroundView = noDataLabel;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

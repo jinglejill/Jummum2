@@ -43,9 +43,7 @@
     frame.size.width = view.frame.size.width;
     frame.size.height = view.frame.size.height;
     self.webView.frame = frame;
-//    self.webView.frame = view.frame;
     self.webView.center = [view convertPoint:view.center fromView:view.superview];
-//    self.webView.layer.borderWidth = 1;
 }
 
 -(void)webViewLoadUrl:(NSString *)stringUrl

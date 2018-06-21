@@ -14,6 +14,7 @@
 #import "SharedCurrentUserAccount.h"
 #import <objc/runtime.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "UILabel+FontAppearance.h"
 
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -69,6 +70,12 @@ void myExceptionHandler(NSException *exception)
 //    NSData *data = [Utility dataFromHexString:decryptedMessage];
 //    NSString *strMessage = [Utility decryptData:data withKey:@"jmmjmm"];
 //    NSLog(@"ori text: %@",strMessage);
+    
+    
+    [[UILabel appearanceWhenContainedIn:UIAlertController.class, nil] setAppearanceFont:nil];
+    
+
+    
     
     
     UIBarButtonItem *barButtonAppearance = [UIBarButtonItem appearance];

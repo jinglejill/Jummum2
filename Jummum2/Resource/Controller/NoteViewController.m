@@ -44,6 +44,9 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    
+    [self setButtonDesign:btnConfirm];
+    [self setButtonDesign:btnCancel];
 }
 
 - (void)viewDidLoad
@@ -155,23 +158,23 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
         {
             cell.selected = YES;
             [colVwNote selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            [cell.btnCheckBox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+            [cell.btnCheckBox setImage:[UIImage imageNamed:@"checkbox_gray.png"] forState:UIControlStateNormal];
             cell.layer.backgroundColor = [mLightBlueColor CGColor];
         }
         else
         {
             cell.selected = NO;
-            [cell.btnCheckBox setImage:[UIImage imageNamed:@"uncheckbox.png"] forState:UIControlStateNormal];
+            [cell.btnCheckBox setImage:[UIImage imageNamed:@"uncheckbox_gray.png"] forState:UIControlStateNormal];
             cell.layer.backgroundColor = [[UIColor clearColor]CGColor];
         }
         if(note.type == 1)//เพิ่ม
         {
-            UIFont *font = [UIFont systemFontOfSize:14];
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:14];
             NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
             NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
             
             
-            UIFont *font2 = [UIFont systemFontOfSize:14];
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:14];
             NSDictionary *attribute2 = @{NSFontAttributeName: font2};
             NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",note.name] attributes:attribute2];
             
@@ -237,8 +240,8 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
     
     
     CustomCollectionViewCellNote *cell = (CustomCollectionViewCellNote *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.btnCheckBox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-    cell.layer.backgroundColor = [mLightBlueColor CGColor];
+    [cell.btnCheckBox setImage:[UIImage imageNamed:@"checkbox_gray.png"] forState:UIControlStateNormal];
+    cell.layer.backgroundColor = [cSystem1_20 CGColor];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -265,7 +268,7 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
     
     
     CustomCollectionViewCellNote *cell = (CustomCollectionViewCellNote *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.btnCheckBox setImage:[UIImage imageNamed:@"uncheckbox.png"] forState:UIControlStateNormal];
+    [cell.btnCheckBox setImage:[UIImage imageNamed:@"uncheckbox_gray.png"] forState:UIControlStateNormal];
     cell.layer.backgroundColor = [[UIColor clearColor] CGColor];
 }
 
@@ -325,7 +328,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
         
         
         headerView.lblHeaderName.text = noteType.name;
-        headerView.lblHeaderName.textColor = [UIColor blackColor];
+        headerView.lblHeaderName.textColor = cSystem1;
         headerView.vwBottomLine.backgroundColor = [UIColor clearColor];
         
         
@@ -334,7 +337,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
             if(previousNoteType.noteTypeID == noteType.noteTypeID)
             {
                 headerView.lblHeaderName.text = @"";
-                headerView.lblHeaderName.textColor = [UIColor blackColor];
+                headerView.lblHeaderName.textColor = cSystem1;
                 headerView.vwBottomLine.backgroundColor = [UIColor clearColor];
             }
         }
@@ -348,8 +351,8 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
         CustomCollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reuseHeaderViewIdentifier forIndexPath:indexPath];
         
         footerView.lblHeaderName.text = @"";
-        footerView.lblHeaderName.textColor = [UIColor blackColor];
-        footerView.vwBottomLine.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        footerView.lblHeaderName.textColor = cSystem1;
+        footerView.vwBottomLine.backgroundColor = cSystem4_10;
         
         
         reusableview = footerView;

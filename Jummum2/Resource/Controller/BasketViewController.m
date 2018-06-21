@@ -298,6 +298,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
              }
          }];
         cell.imgMenuPic.contentMode = UIViewContentModeScaleAspectFit;
+        [self setImageDesign:cell.imgMenuPic];
         
         
         cell.tbvNote.tag = menu.menuID;
@@ -349,6 +350,11 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
                 cell.lblTitle.text = strTitle;
                 cell.lblAmount.text = strTotal;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
+                
                 
                 return  cell;
             }
@@ -387,12 +393,12 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
                 NSString *strAddTypeNote = [OrderNote getNoteNameListInTextWithOrderTakingID:orderTaking.orderTakingID noteType:1];
                 if(![Utility isStringEmpty:strRemoveTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringRemove = [[NSMutableAttributedString alloc] initWithString:@"ไม่ใส่" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strRemoveTypeNote] attributes:attribute2];
                     
@@ -401,12 +407,12 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
                 }
                 if(![Utility isStringEmpty:strAddTypeNote])
                 {
-                    UIFont *font = [UIFont systemFontOfSize:11];
+                    UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),NSFontAttributeName: font};
                     attrStringAdd = [[NSMutableAttributedString alloc] initWithString:@"เพิ่ม" attributes:attribute];
                     
                     
-                    UIFont *font2 = [UIFont systemFontOfSize:11];
+                    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:11];
                     NSDictionary *attribute2 = @{NSFontAttributeName: font2};
                     NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",strAddTypeNote] attributes:attribute2];
                     
@@ -515,7 +521,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         
         
         
-        UIFont *fontMenuName = [UIFont systemFontOfSize:14.0];
+        UIFont *fontMenuName = [UIFont fontWithName:@"Prompt-Regular" size:14.0];
         CGSize menuNameLabelSize = [self suggestedSizeWithFont:fontMenuName size:CGSizeMake(tbvOrder.frame.size.width - 70 - 68 - 8*2 - 16*2, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping forString:strMenuName];
         
 
@@ -922,6 +928,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     {
         UIImage *image = [UIImage imageNamed:@"takeAway2.png"];
         [button setBackgroundImage:image forState:UIControlStateNormal];
+        [self blinkTakeAwayNotiView];
     }
     else
     {
