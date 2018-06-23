@@ -120,7 +120,7 @@ void myExceptionHandler(NSException *exception)
     }
     
     
-    [[NSUserDefaults standardUserDefaults] setValue:@"JUMMUM2" forKey:BRANCH];
+    [[NSUserDefaults standardUserDefaults] setValue:@"JUMMUM3" forKey:BRANCH];
     
     
     
@@ -214,10 +214,10 @@ void myExceptionHandler(NSException *exception)
     NSLog(@"Userinfo %@",notification.request.content.userInfo);
     
     
-    if(![Utility finishLoadSharedData])
-    {
-        return;
-    }
+//    if(![Utility finishLoadSharedData])
+//    {
+//        return;
+//    }
     
     NSDictionary *userInfo = notification.request.content.userInfo;
     NSLog(@"Received notification: %@", userInfo);
@@ -230,15 +230,15 @@ void myExceptionHandler(NSException *exception)
     }
     
     
-    NSNumber *badge = [myAps objectForKey:@"badge"];
-    if([badge integerValue] == 0)
-    {
-        //check timesynced = null where devicetoken = [Utility deviceToken];
-        PushSync *pushSync = [[PushSync alloc]init];
-        pushSync.deviceToken = [Utility deviceToken];
-        [_homeModel syncItems:dbPushSync withData:pushSync];
-        NSLog(@"syncitems");
-    }
+//    NSNumber *badge = [myAps objectForKey:@"badge"];
+//    if([badge integerValue] == 0)
+//    {
+//        //check timesynced = null where devicetoken = [Utility deviceToken];
+//        PushSync *pushSync = [[PushSync alloc]init];
+//        pushSync.deviceToken = [Utility deviceToken];
+//        [_homeModel syncItems:dbPushSync withData:pushSync];
+//        NSLog(@"syncitems");
+//    }
 }
 
 
@@ -294,22 +294,22 @@ void myExceptionHandler(NSException *exception)
     
     
     NSLog(@"Received notification: %@", userInfo);
-    NSDictionary *myAps;
-    for(id key in userInfo)
-    {
-        myAps = [userInfo objectForKey:key];
-    }
-    
-    
-    NSNumber *badge = [myAps objectForKey:@"badge"];
-    if([badge integerValue] == 0)
-    {
-        //check timesynced = null where devicetoken = [Utility deviceToken];
-        PushSync *pushSync = [[PushSync alloc]init];
-        pushSync.deviceToken = [Utility deviceToken];
-        [_homeModel syncItems:dbPushSync withData:pushSync];
-        NSLog(@"syncitems");
-    }
+//    NSDictionary *myAps;
+//    for(id key in userInfo)
+//    {
+//        myAps = [userInfo objectForKey:key];
+//    }
+//    
+//    
+//    NSNumber *badge = [myAps objectForKey:@"badge"];
+//    if([badge integerValue] == 0)
+//    {
+//        //check timesynced = null where devicetoken = [Utility deviceToken];
+//        PushSync *pushSync = [[PushSync alloc]init];
+//        pushSync.deviceToken = [Utility deviceToken];
+//        [_homeModel syncItems:dbPushSync withData:pushSync];
+//        NSLog(@"syncitems");
+//    }
 }
 
 - (void)itemsSynced:(NSArray *)items
@@ -629,26 +629,26 @@ void myExceptionHandler(NSException *exception)
     NSString *strCurrentDate = [Utility dateToString:[Utility currentDateTime] toFormat:@"yyyy-MM-dd"];
     NSString *alreadyLoaded = [todayLoadShared objectForKey:strCurrentDate];
     
-    if(!alreadyLoaded)
-    {
-        //download dbMaster
-//        UINavigationController * navigationController = self.navController;
-//        UIViewController *viewController = navigationController.visibleViewController;
-        SEL s = NSSelectorFromString(@"loadingOverlayView");
-        [self.vc performSelector:s];
-        
-        [_homeModel downloadItems:dbMaster];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:@"1" forKey:strCurrentDate] forKey:@"todayLoadShared"];
-        
-    }
-    else
-    {
-        //check timesynced = null where devicetoken = [Utility deviceToken];
-        PushSync *pushSync = [[PushSync alloc]init];
-        pushSync.deviceToken = [Utility deviceToken];
-        [_homeModel syncItems:dbPushSync withData:pushSync];
-        NSLog(@"syncitems");
-    }
+//    if(!alreadyLoaded)
+//    {
+//        //download dbMaster
+////        UINavigationController * navigationController = self.navController;
+////        UIViewController *viewController = navigationController.visibleViewController;
+//        SEL s = NSSelectorFromString(@"loadingOverlayView");
+//        [self.vc performSelector:s];
+//
+//        [_homeModel downloadItems:dbMaster];
+//        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:@"1" forKey:strCurrentDate] forKey:@"todayLoadShared"];
+//
+//    }
+//    else
+//    {
+//        //check timesynced = null where devicetoken = [Utility deviceToken];
+//        PushSync *pushSync = [[PushSync alloc]init];
+//        pushSync.deviceToken = [Utility deviceToken];
+//        [_homeModel syncItems:dbPushSync withData:pushSync];
+//        NSLog(@"syncitems");
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
