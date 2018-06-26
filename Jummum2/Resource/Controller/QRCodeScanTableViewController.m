@@ -39,6 +39,11 @@
     
 }
 
+- (IBAction)branchSearch:(id)sender
+{
+    [self performSegueWithIdentifier:@"segBranchSearch" sender:self];
+}
+
 - (IBAction)goBack:(id)sender
 {
     [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];

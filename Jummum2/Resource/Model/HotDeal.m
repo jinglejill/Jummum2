@@ -13,7 +13,7 @@
 
 @implementation HotDeal
 
--(HotDeal *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl orderNo:(NSInteger)orderNo status:(NSInteger)status
+-(HotDeal *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl termsConditions:(NSString *)termsConditions orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
@@ -25,6 +25,7 @@
         self.header = header;
         self.subTitle = subTitle;
         self.imageUrl = imageUrl;
+        self.termsConditions = termsConditions;
         self.orderNo = orderNo;
         self.status = status;
         self.modifiedUser = [Utility modifiedUser];
@@ -112,6 +113,7 @@
         [copy setHeader:self.header];
         [copy setSubTitle:self.subTitle];
         [copy setImageUrl:self.imageUrl];
+        [copy setTermsConditions:self.termsConditions];
         ((HotDeal *)copy).orderNo = self.orderNo;
         ((HotDeal *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
@@ -132,6 +134,7 @@
        && [self.header isEqualToString:editingHotDeal.header]
        && [self.subTitle isEqualToString:editingHotDeal.subTitle]
        && [self.imageUrl isEqualToString:editingHotDeal.imageUrl]
+       && [self.termsConditions isEqualToString:editingHotDeal.termsConditions]
        && self.orderNo == editingHotDeal.orderNo
        && self.status == editingHotDeal.status
        )
@@ -150,6 +153,7 @@
     toHotDeal.header = fromHotDeal.header;
     toHotDeal.subTitle = fromHotDeal.subTitle;
     toHotDeal.imageUrl = fromHotDeal.imageUrl;
+    toHotDeal.termsConditions = fromHotDeal.termsConditions;
     toHotDeal.orderNo = fromHotDeal.orderNo;
     toHotDeal.status = fromHotDeal.status;
     toHotDeal.modifiedUser = [Utility modifiedUser];

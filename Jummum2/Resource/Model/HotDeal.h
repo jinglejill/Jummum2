@@ -16,6 +16,7 @@
 @property (retain, nonatomic) NSString * header;
 @property (retain, nonatomic) NSString * subTitle;
 @property (retain, nonatomic) NSString * imageUrl;
+@property (retain, nonatomic) NSString * termsConditions;
 @property (nonatomic) NSInteger orderNo;
 @property (nonatomic) NSInteger status;
 @property (retain, nonatomic) NSString * modifiedUser;
@@ -27,7 +28,7 @@
 @property (retain, nonatomic) NSString * branchName;
 
 
--(HotDeal *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl orderNo:(NSInteger)orderNo status:(NSInteger)status;
+-(HotDeal *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl termsConditions:(NSString *)termsConditions orderNo:(NSInteger)orderNo status:(NSInteger)status;
 +(NSInteger)getNextID;
 +(void)addObject:(HotDeal *)hotDeal;
 +(void)removeObject:(HotDeal *)hotDeal;

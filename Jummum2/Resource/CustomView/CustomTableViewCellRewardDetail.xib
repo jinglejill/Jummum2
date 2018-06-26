@@ -84,6 +84,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="5UA-Bb-WUC"/>
             <connections>
+                <outlet property="imgRemark" destination="a3k-XJ-KYC" id="7XS-3X-K1e"/>
                 <outlet property="imgVwValue" destination="r6D-1a-5g8" id="R2i-HE-3kh"/>
                 <outlet property="imgVwValueHeight" destination="Yk6-vf-LFP" id="g5w-SO-9fd"/>
                 <outlet property="lblHeader" destination="aLX-S8-zzO" id="wfq-IK-Kta"/>

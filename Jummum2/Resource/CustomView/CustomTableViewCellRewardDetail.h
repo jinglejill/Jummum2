@@ -17,5 +17,6 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblSubTitleHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwValueHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblRemarkWidth;
+@property (strong, nonatomic) IBOutlet UIImageView *imgRemark;
 
 @end

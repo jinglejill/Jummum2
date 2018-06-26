@@ -1,47 +1,35 @@
 //
-//  RewardDetailViewController.m
+//  HotDealDetailViewController.m
 //  Jummum2
 //
-//  Created by Thidaporn Kijkamjai on 30/4/2561 BE.
+//  Created by Thidaporn Kijkamjai on 26/6/2561 BE.
 //  Copyright © 2561 Appxelent. All rights reserved.
 //
 
-#import "RewardDetailViewController.h"
-#import "RewardRedemptionViewController.h"
+#import "HotDealDetailViewController.h"
 #import "CustomTableViewCellRewardDetail.h"
 #import "CustomTableViewCellLabel.h"
-#import "PromoCode.h"
 
 
-@interface RewardDetailViewController ()
+@interface HotDealDetailViewController ()
 {
-    RewardPoint *_rewardPointSpent;
-    PromoCode *_promoCode;
     NSInteger _expandCollapse;//1=expand,0=collapse
 }
 @end
 
-@implementation RewardDetailViewController
+@implementation HotDealDetailViewController
 static NSString * const reuseIdentifierRewardDetail = @"CustomTableViewCellRewardDetail";
 static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 
 
-
 @synthesize tbvData;
-@synthesize rewardPoint;
-@synthesize rewardRedemption;
+@synthesize hotDeal;
 
-
--(IBAction)unwindToRewardDetail:(UIStoryboardSegue *)segue
-{
-    
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     
     
     _expandCollapse = 1;
@@ -85,10 +73,10 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-    
         
         
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":rewardRedemption.imageUrl;
+        
+        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -103,20 +91,23 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        cell.lblHeader.text = rewardRedemption.header;
+        cell.lblHeader.text = hotDeal.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height;
         
         
-        cell.lblSubTitle.text = rewardRedemption.subTitle;
+        cell.lblSubTitle.text = hotDeal.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        cell.lblRemark.hidden = YES;
+        cell.lblRemark.text = @"";//[NSString stringWithFormat:@"%ld points",rewardRedemption.point];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
+
         
+        cell.imgRemark.hidden = YES;
         
         return cell;
     }
@@ -126,10 +117,10 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        cell.lblTextLabel.text = rewardRedemption.termsConditions;
+        cell.lblTextLabel.text = hotDeal.termsConditions;
         [cell.lblTextLabel sizeToFit];        
         cell.lblTextLabelHeight.constant = _expandCollapse?cell.lblTextLabel.frame.size.height:0;
-
+        
         
         
         UIImage *image = _expandCollapse?[UIImage imageNamed:@"collapse2.png"]:[UIImage imageNamed:@"expand2.png"];
@@ -150,7 +141,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":rewardRedemption.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -160,22 +151,22 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
              }
          }];
         float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
-        cell.imgVwValueHeight.constant = imageWidth/16*9;        
+        cell.imgVwValueHeight.constant = imageWidth/16*9;
         
         
         
-        cell.lblHeader.text = rewardRedemption.header;
+        cell.lblHeader.text = hotDeal.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height;
         
         
-        cell.lblSubTitle.text = rewardRedemption.subTitle;
+        cell.lblSubTitle.text = hotDeal.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
         
-       
+        
         return 11+cell.imgVwValueHeight.constant+20+cell.lblHeaderHeight.constant+8+cell.lblSubTitleHeight.constant+8+18+11;
     }
     else
@@ -183,7 +174,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellLabel *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabel];
         
         
-        cell.lblTextLabel.text = rewardRedemption.termsConditions;
+        cell.lblTextLabel.text = hotDeal.termsConditions;
         [cell.lblTextLabel sizeToFit];
         cell.lblTextLabelHeight.constant = cell.lblTextLabel.frame.size.height;
         
@@ -201,91 +192,13 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-
+    
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"segRewardRedemption"])
-    {
-        RewardRedemptionViewController *vc = segue.destinationViewController;
-        vc.rewardPoint = rewardPoint;
-        vc.rewardRedemption = rewardRedemption;
-        vc.rewardPointSpent = _rewardPointSpent;
-        vc.promoCode = _promoCode;
-    }
-}
-
-- (IBAction)redeemReward:(id)sender
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    
-
-    
-    
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"ยืนยันการรับสิทธิ์"
-                                                     style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                             {
-                                 if(rewardPoint.point < rewardRedemption.point)
-                                 {
-                                     [self showAlert:@"จำนวนแต้มสะสมไม่เพียงพอ" message:@""];
-                                 }
-                                 else
-                                 {
-                                     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-                                     _rewardPointSpent = [[RewardPoint alloc]initWithMemberID:userAccount.userAccountID receiptID:0 point:rewardRedemption.point status:-1 promoCodeID:0];
-                                     [self.homeModel insertItems:dbRewardPoint withData:@[_rewardPointSpent,rewardRedemption] actionScreen:@"insert rewardPointSpent"];
-                                     [self loadingOverlayView];
-                                 }
-                             }];
-//    [action1 setValue:@"" forKey:@"attributedTitle"];
-    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-    [[UIButton appearanceWhenContainedIn:[UIAlertController class], nil] setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-    [alert addAction:action1];
-    
-    
-    
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ยกเลิก"
-                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
-                              {
-                              }];
-    [alert addAction:action2];
-    
-    
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
-        UIButton *button = sender;
-        UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
-        popPresenter.sourceView = button;
-        popPresenter.sourceRect = button.bounds;
-    }
-    
-    
-    [self presentViewController:alert animated:YES completion:nil];
-    alert.view.tintColor = cSystem1;
-}
 
 - (IBAction)goBack:(id)sender
 {
-    [self performSegueWithIdentifier:@"segUnwindToReward" sender:self];
-}
-
--(void)itemsInsertedWithReturnData:(NSArray *)items
-{
-    [self removeOverlayViews];
-    NSMutableArray *promoCodeList = items[0];
-    if([promoCodeList count]>0)
-    {
-        rewardPoint.point -= rewardRedemption.point;
-        _promoCode = promoCodeList[0];
-        [self performSegueWithIdentifier:@"segRewardRedemption" sender:self];
-    }
-    else
-    {
-        [self showAlert:@"จำนวนสิทธิ์ครบแล้ว" message:@""];
-    }
+    [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
 }
 
 -(void)expandCollapse:(id)sender

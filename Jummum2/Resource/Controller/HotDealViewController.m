@@ -7,6 +7,7 @@
 //
 
 #import "HotDealViewController.h"
+#import "HotDealDetailViewController.h"
 #import "CustomTableViewCellPromoBanner.h"
 #import "CustomTableViewCellPromoThumbNail.h"
 #import "HotDeal.h"
@@ -17,6 +18,8 @@
 {
     NSMutableArray *_hotDealList;
     NSMutableArray *_filterHotDealList;
+    
+    HotDeal *_hotDeal;
 }
 @property (nonatomic)        BOOL           searchBarActive;
 @end
@@ -29,6 +32,11 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 @synthesize tbvData;
 @synthesize searchBar;
 
+
+-(IBAction)unwindToHotDeal:(UIStoryboardSegue *)segue
+{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -110,8 +118,8 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
                  cell.imgVwValue.image = image;
              }
          }];
-        
-        cell.imgVwValueHeight.constant = (cell.frame.size.width -2*16)/16*9;
+        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
+        cell.imgVwValueHeight.constant = imageWidth/16*9;
         cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
         NSLog(@"imgVwValueTop :%f",cell.imgVwValueTop.constant);
         
@@ -186,7 +194,8 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
                  cell.imgVwValue.image = image;
              }
          }];
-        cell.imgVwValueHeight.constant = (cell.frame.size.width -2*16)/16*9;
+        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
+        cell.imgVwValueHeight.constant = imageWidth/16*9;        
 
         
         return 11+cell.lblHeaderHeight.constant+8+cell.lblSubTitleHeight.constant+8+cell.imgVwValueHeight.constant+11;
@@ -209,13 +218,18 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     NSInteger section = indexPath.section;
     NSInteger item = indexPath.item;
     
-    
+    _hotDeal = _filterHotDealList[section];
+    [self performSegueWithIdentifier:@"segHotDealDetail" sender:self];
     
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    if([[segue identifier] isEqualToString:@"segHotDealDetail"])
+    {
+        HotDealDetailViewController *vc = segue.destinationViewController;
+        vc.hotDeal = _hotDeal;
+    }
 }
 
 #pragma mark - search

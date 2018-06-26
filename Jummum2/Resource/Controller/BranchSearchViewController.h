@@ -14,4 +14,5 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *sbText;
 -(IBAction)goBackHome:(id)sender;
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue;
+- (IBAction)goBack:(id)sender;
 @end

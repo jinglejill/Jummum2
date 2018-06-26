@@ -53,7 +53,7 @@
     float _discountAmount;
     NSInteger _promotionOrRewardRedemption;//1=promotion,2=rewardRedemption
     Receipt *_receipt;
-    
+    NSIndexPath *_currentScrollIndexPath;
 }
 @end
 
@@ -104,11 +104,28 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     }
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    _currentScrollIndexPath = tbvData.indexPathsForVisibleRows.firstObject;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [UIView animateWithDuration:.25 animations:^{
+        if(_currentScrollIndexPath)
+        {
+            [tbvData scrollToRowAtIndexPath:_currentScrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+    }];
+}
+
 - (IBAction)goBack:(id)sender
 {
     if(fromReceiptSummaryMenu)
     {
-        [self performSegueWithIdentifier:@"segUnwindToBranchSearch" sender:self];
+        [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
     }
     else
     {
@@ -1565,7 +1582,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 -(void)segueToBranchSearch
 {
-    [self performSegueWithIdentifier:@"segUnwindToBranchSearch" sender:self];
+    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 -(void)addCreditCard:(id)sender

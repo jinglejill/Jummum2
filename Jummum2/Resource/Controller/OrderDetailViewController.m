@@ -725,6 +725,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     [cell.btnValue setTitle:@"Open dispute" forState:UIControlStateNormal];
                     cell.btnValue.backgroundColor = cSystem1;;
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];
+                    [self setButtonDesign:cell.btnValue];
+                    
                     
                     return cell;
                 }
@@ -997,6 +999,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.btnValue.backgroundColor = cSystem2;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(confirmNegotiate:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
                         
                         
                         return cell;
@@ -1010,9 +1013,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         cell.btnValue.hidden = NO;
                         [cell.btnValue setTitle:@"Negotiate" forState:UIControlStateNormal];
-                        cell.btnValue.backgroundColor = cSystem1;;
+                        cell.btnValue.backgroundColor = cSystem1;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(negotiate:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
                         
                         
                         return cell;
@@ -1026,9 +1030,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         cell.btnValue.hidden = NO;
                         [cell.btnValue setTitle:@"Cancel" forState:UIControlStateNormal];
-                        cell.btnValue.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                        cell.btnValue.backgroundColor = cSystem4_10;
                         [cell.btnValue setTitleColor:cSystem4 forState:UIControlStateNormal];
                         [cell.btnValue addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
                         
                         
                         return cell;
@@ -1358,7 +1363,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             {
                 if(receipt.status == 2 || receipt.status == 5 || receipt.status == 6)
                 {
-                    return 44+8;
+                    return 38;
+//                    return 44+8;
                 }
                 else if(receipt.status == 7)
                 {
@@ -1676,7 +1682,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             }
             else
             {
-                return 44+8;
+                return 38;
+//                return 44+8;
             }
         }
     }

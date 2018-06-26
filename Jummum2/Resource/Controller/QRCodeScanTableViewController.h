@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnBack;
 
 
+- (IBAction)branchSearch:(id)sender;
 - (IBAction)goBack:(id)sender;
 - (IBAction)unwindToQRCodeScanTable:(UIStoryboardSegue *)segue;
 @end

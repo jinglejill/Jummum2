@@ -17,7 +17,9 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblSubTitleHeight;
 @property (strong, nonatomic) IBOutlet UILabel *lblRedeemDate;
 @property (strong, nonatomic) IBOutlet UIImageView *imgQrCode;
-@property (strong, nonatomic) IBOutlet UILabel *lblPromoCode;
+//@property (strong, nonatomic) IBOutlet UILabel *lblPromoCode;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblRemarkWidth;
+@property (strong, nonatomic) IBOutlet UITextField *txtPromoCode;
+@property (strong, nonatomic) IBOutlet UITextView *txvPromoCode;
 
 @end

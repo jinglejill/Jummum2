@@ -40,8 +40,8 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 {
     [super loadView];
     
-    _meList = @[@"ประวัติการสั่งอาหาร",@"แต้มสะสม/แลกของรางวัล",@"บัตรเครดิต/เดบิต"];//,@"ข้อมูลส่วนตัว"
-    _meImageList = @[@"history.png",@"gift.png",@"creditCard.png"];//,@"personalData.png"
+    _meList = @[@"ประวัติการสั่งอาหาร",@"บัตรเครดิต/เดบิต"];//,@"ข้อมูลส่วนตัว",,@"แต้มสะสม/แลกของรางวัล"
+    _meImageList = @[@"history.png",@"creditCard.png"];//,@"personalData.png",@"gift.png"
     _aboutUsList = @[@"ข้อกำหนดและเงื่อนไข",@"นโยบายความเป็นส่วนตัว",@"Log out"];
     _aboutUsImageList = @[@"termsOfService.png",@"privacyPolicy.png",@"logOut.png"];
     tbvMe.delegate = self;
@@ -190,12 +190,12 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                 }
                     break;
                     
+//                case 1:
+//                {
+//                    [self performSegueWithIdentifier:@"segReward" sender:self];
+//                }
+//                    break;
                 case 1:
-                {
-                    [self performSegueWithIdentifier:@"segReward" sender:self];
-                }
-                    break;
-                case 2:
                 {
                     [self performSegueWithIdentifier:@"segCreditCard" sender:self];
                 }

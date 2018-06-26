@@ -110,6 +110,11 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
         UINib *nib = [UINib nibWithNibName:reuseIdentifierText bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierText];
     }
+    
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture setCancelsTouchesInView:NO];
 }
 ///tableview section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

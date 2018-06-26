@@ -46,6 +46,11 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     }
 }
 
+- (IBAction)goBack:(id)sender
+{
+    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -61,71 +66,8 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     [super loadView];
     
     _branchList = [Branch getBranchList];
-    _filterBranchList = _branchList;
+//    _filterBranchList = _branchList;
     
-    
-    
-//    ///test
-//    {
-//        
-//        NSMutableArray *dataList = [SharedTestMemberMini sharedTestMemberMini].testMemberMiniList;
-//        for(int i=0; i<[dataList count]; i++)
-//        {
-//            NSMutableArray *passwordList = [[NSMutableArray alloc]init];
-//            NSMutableArray *memberIDList = [[NSMutableArray alloc]init];
-//            TestMemberMini *item = dataList[i];
-//            
-//            
-//            NSString *searchedString = item.content;
-//            NSRange   searchedRange = NSMakeRange(0, [searchedString length]);
-//            NSString *pattern = @"#start#(.+)#end#";
-//            NSError  *error = nil;
-//            
-//            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: pattern options:0 error:&error];
-//            NSArray* matches = [regex matchesInString:searchedString options:0 range: searchedRange];
-//            int j=1;
-//            for (NSTextCheckingResult* match in matches)
-//            {
-//                NSString* matchText = [searchedString substringWithRange:[match range]];
-//                
-//                
-//                
-//                NSRange needleRange = NSMakeRange(7,[matchText length]-7);
-//                NSString *strTrimText = [matchText substringWithRange:needleRange];
-//                
-//                
-//                needleRange = NSMakeRange(0,[strTrimText length]-5);
-//                strTrimText = [strTrimText substringWithRange:needleRange];
-//                if(j%2 == 1)
-//                {
-//                    [passwordList addObject:strTrimText];
-//                }
-//                else
-//                {
-//                    [memberIDList addObject:strTrimText];
-//                }
-//                j++;
-//            }
-//            
-//            
-//            
-//            NSMutableArray *testPasswordList = [[NSMutableArray alloc]init];
-//            
-//            for(int i=0; i<[passwordList count]; i++)
-//            {
-//                TestPassword *testPassword = [[TestPassword alloc]init];
-//                testPassword.password = passwordList[i];
-//                testPassword.memberID = [memberIDList[i] integerValue];
-//                
-//                [testPasswordList addObject:testPassword];
-//            }
-//            
-//            
-//            [self.homeModel insertItems:dbTestPasswordList withData:testPasswordList actionScreen:@"insert into TestPassword"];
-//        }
-//        
-//        
-//    }
 }
 
 - (void)viewDidLoad
@@ -322,12 +264,10 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     self.searchBarActive = NO;
     [sbText resignFirstResponder];
     sbText.text  = @"";
-    [self filterContentForSearchText:sbText.text scope:@""];
+    _filterBranchList = nil;
+    [tbvBranch reloadData];
+//    [self filterContentForSearchText:sbText.text scope:@""];
     
 }
 
-- (IBAction)goBackHome:(id)sender
-{
-
-}
 @end

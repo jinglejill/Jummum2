@@ -383,6 +383,7 @@
             Receipt *receipt = filterArray[0];
             receipt.status = item.status;
             receipt.statusRoute = item.statusRoute;
+            receipt.modifiedUser = item.modifiedUser;
             receipt.modifiedDate = item.modifiedDate;
             
         }

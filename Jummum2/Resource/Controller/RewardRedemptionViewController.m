@@ -33,7 +33,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 @synthesize rewardPointSpent;
 @synthesize promoCode;
 @synthesize fromMenuMyReward;
-
+//
+//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    if(textField.tag == 20)
+//    {
+//        return NO;
+//    }
+//    return YES;
+//}
 
 - (void)viewDidLoad
 {
@@ -133,7 +141,10 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         cell.lblRedeemDate.text = [Utility dateToString:rewardPointSpent.modifiedDate toFormat:@"d MMM yyyy HH:mm"];
-        cell.lblPromoCode.text = promoCode.code;
+//        cell.lblPromoCode.text = promoCode.code;
+        cell.txvPromoCode.text = promoCode.code;
+//        cell.txtPromoCode.delegate = self;
+//        cell.txtPromoCode.tag = 20;
         cell.imgQrCode.image = [self generateQRCodeWithString:promoCode.code scale:5];
         
         

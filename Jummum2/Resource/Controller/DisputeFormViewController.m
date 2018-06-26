@@ -120,14 +120,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];
-    tbvData.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    tbvData.backgroundColor = [UIColor whiteColor];
     _dispute = [[Dispute alloc]init];
     
     
     
     tbvAction.delegate = self;
     tbvAction.dataSource = self;
-    tbvAction.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    tbvAction.backgroundColor = [UIColor whiteColor];
     tbvAction.scrollEnabled = NO;
     
     {
@@ -208,7 +208,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 if (!cell) {
                     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
                 }
-                cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                cell.backgroundColor = [UIColor whiteColor];
                 
                 
                 cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
@@ -287,6 +287,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 cell.txtValue.tag = 4;
                 cell.txtValue.delegate = self;
+                cell.txtValue.placeholder = @"xxx-xxx-xxxx";
                 cell.txtValue.text = _dispute.phoneNo;
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.lblRemark.text = strRemark;
@@ -304,7 +305,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 if (!cell) {
                     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
                 }
-                cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                cell.backgroundColor = [UIColor whiteColor];
                 
                 
                 cell.textLabel.text = @"กรุณากรอกรายละเอียดด้านล่างนี้";
@@ -460,7 +461,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                UIColor *color = cSystem1;;
+                UIColor *color = cSystem1;
                 NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
                 NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
                 
@@ -478,6 +479,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 cell.txtValue.tag = item;
                 cell.txtValue.delegate = self;
+                cell.txtValue.placeholder = @"xxx-xxx-xxxx";
                 cell.txtValue.text = _dispute.phoneNo;
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.lblRemark.text = strRemark;
@@ -507,17 +509,19 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             }
             else if(item == 1)
             {
-                return 122-8-16-8;
+                return 102-8-16;
+//                return 122-8-16-8;
             }
             else if(item == 2)
             {
-                CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];//[tbvData cellForRowAtIndexPath:indexPath];
                 NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินของท่านคืน";
                 
                 
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
-                return 122-16+cell.lblRemark.frame.size.height-8;
+                return 102-16+cell.lblRemark.frame.size.height;
+//                return 122-16+cell.lblRemark.frame.size.height-8;
             }
         }
         else if(fromType == 2)
@@ -528,25 +532,29 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             }
             else if(item == 1)
             {
-                return 122-8-16-8;
+                return 102-8-16;
+//                return 122-8-16-8;
             }
             else if(item == 2)
             {
-                return 122-8;
+                return 102;
+//                return 122-8;
             }
             else if(item == 3)
             {
-                return 108+20-8;
+                return 108;
+//                return 108+20-8;
             }
             else if(item == 4)
             {
-                CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
                 NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินของท่านคืน";
                 
                 
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
-                return 122-16+cell.lblRemark.frame.size.height-8;
+                return 102-16+cell.lblRemark.frame.size.height;
+//                return 122-16+cell.lblRemark.frame.size.height-8;
             }
         }
         
@@ -575,7 +583,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         
         [footerView.btnOk addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
         [footerView.btnCancel addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [self setButtonDesign:footerView.btnOk];
+        [self setButtonDesign:footerView.btnCancel];
         
         
         return footerView;
@@ -619,6 +628,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         {
             receipt.status = downloadReceipt.status;
             receipt.statusRoute = downloadReceipt.statusRoute;
+            receipt.modifiedUser = downloadReceipt.modifiedUser;
+            receipt.modifiedDate = downloadReceipt.modifiedDate;
             NSString *strMessage = downloadReceipt.status == 5?@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ":@"อาหารได้ส่งถึงคุณแล้วค่ะ";
             [self showAlert:@"" message:strMessage method:@selector(goBack:)];            
         }

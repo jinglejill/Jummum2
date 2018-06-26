@@ -315,6 +315,9 @@
 		EFCB3ADA20D8BA1F007E0896 /* takeAwayNoti.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCB3AD920D8BA1F007E0896 /* takeAwayNoti.png */; };
 		EFCB3ADD20DA0D47007E0896 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCB3ADB20DA0D47007E0896 /* MainTabBarController.m */; };
 		EFCB3ADF20DA1061007E0896 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCB3ADE20DA1060007E0896 /* history.png */; };
+		EFD5B0CB20DE249F00D9434A /* search_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CA20DE249E00D9434A /* search_white.png */; };
+		EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CC20DE29E300D9434A /* gift_small.png */; };
+		EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */; };
 		EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */; };
 		EFE8BFE220A5C508005E0746 /* party.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE8BFE120A5C507005E0746 /* party.png */; };
 /* End PBXBuildFile section */
@@ -794,6 +797,10 @@
 		EFCB3ADB20DA0D47007E0896 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		EFCB3ADC20DA0D47007E0896 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		EFCB3ADE20DA1060007E0896 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
+		EFD5B0CA20DE249E00D9434A /* search_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_white.png; sourceTree = "<group>"; };
+		EFD5B0CC20DE29E300D9434A /* gift_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift_small.png; sourceTree = "<group>"; };
+		EFD9BA2E20E233E400A0A874 /* HotDealDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotDealDetailViewController.h; sourceTree = "<group>"; };
+		EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotDealDetailViewController.m; sourceTree = "<group>"; };
 		EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+FontAppearance.h"; sourceTree = "<group>"; };
 		EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FontAppearance.m"; sourceTree = "<group>"; };
 		EFE8BFE120A5C507005E0746 /* party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = party.png; sourceTree = "<group>"; };
@@ -1053,6 +1060,8 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EFD5B0CC20DE29E300D9434A /* gift_small.png */,
+				EFD5B0CA20DE249E00D9434A /* search_white.png */,
 				EFCB3ADE20DA1060007E0896 /* history.png */,
 				EFCB3AD920D8BA1F007E0896 /* takeAwayNoti.png */,
 				EFB02F6320D65B020018E878 /* white.png */,
@@ -1129,8 +1138,6 @@
 		EF5C2F8C2080C00400084B7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EFCB3ADC20DA0D47007E0896 /* MainTabBarController.h */,
-				EFCB3ADB20DA0D47007E0896 /* MainTabBarController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
@@ -1147,6 +1154,8 @@
 				EFA9632920A68C6400E2DB9C /* DisputeFormViewController.m */,
 				EF5C2FA42080C00400084B7E /* ForgotPasswordViewController.h */,
 				EF5C2F8E2080C00400084B7E /* ForgotPasswordViewController.m */,
+				EFD9BA2E20E233E400A0A874 /* HotDealDetailViewController.h */,
+				EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */,
 				EFB91860208DDE800079FC15 /* HotDealViewController.h */,
 				EFB91861208DDE800079FC15 /* HotDealViewController.m */,
 				EF5C2FA22080C00400084B7E /* LaunchScreenViewController.h */,
@@ -1155,6 +1164,8 @@
 				EF5C2F972080C00400084B7E /* LogInViewController.m */,
 				EF5C2F912080C00400084B7E /* LogOutViewController.h */,
 				EF5C2FA12080C00400084B7E /* LogOutViewController.m */,
+				EFCB3ADC20DA0D47007E0896 /* MainTabBarController.h */,
+				EFCB3ADB20DA0D47007E0896 /* MainTabBarController.m */,
 				EF5C2F9F2080C00400084B7E /* MenuSelectionViewController.h */,
 				EF5C2FB32080C00400084B7E /* MenuSelectionViewController.m */,
 				EF5C2F932080C00400084B7E /* MeViewController.h */,
@@ -1675,6 +1686,7 @@
 				EF13B69120D212E5008CF35C /* Prompt-Bold.ttf in Resources */,
 				EF13B67D20D212E5008CF35C /* Kanit-Thin.otf in Resources */,
 				EF13B67720D212E5008CF35C /* Kanit-BoldItalic.ttf in Resources */,
+				EFD5B0CB20DE249F00D9434A /* search_white.png in Resources */,
 				EFB918432086E8620079FC15 /* CustomTableViewCellVoucherCode.xib in Resources */,
 				EF5C30B32080C00500084B7E /* me.png in Resources */,
 				EF13B67A20D212E5008CF35C /* Prompt-Medium.ttf in Resources */,
@@ -1706,6 +1718,7 @@
 				EF5C31642080C00500084B7E /* CustomViewVoucher.xib in Resources */,
 				EF5C31662080C00500084B7E /* CustomTableViewCellReceiptSummary.xib in Resources */,
 				EF13B62820CFCB8E008CF35C /* jummumLogoCrop2.png in Resources */,
+				EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */,
 				EF13B67920D212E5008CF35C /* Prompt-BoldItalic.ttf in Resources */,
 				EF13B6A220D212E5008CF35C /* Prompt-Italic.ttf in Resources */,
 				EF13B67620D212E5008CF35C /* Kanit-Bold.otf in Resources */,
@@ -1812,6 +1825,7 @@
 				EF13B6DA20D227BC008CF35C /* CustomTableViewCellProfile.m in Sources */,
 				EFBBEEAE2096DB71003884A9 /* RewardDetailViewController.m in Sources */,
 				EF5C30FC2080C00500084B7E /* ForgotPasswordViewController.m in Sources */,
+				EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */,
 				EFBBEEC3209A5A24003884A9 /* PromoCode.m in Sources */,
 				EF5C30B22080C00500084B7E /* KeychainWrapper.m in Sources */,
 				EF5C31032080C00500084B7E /* PersonalDataViewController.m in Sources */,

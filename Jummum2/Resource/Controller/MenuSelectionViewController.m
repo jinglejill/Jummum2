@@ -164,8 +164,8 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 
 - (IBAction)goBackHome:(id)sender
 {
-//    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
-    [self performSegueWithIdentifier:@"segUnwindToBranchSearch" sender:self];
+    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+//    [self performSegueWithIdentifier:@"segUnwindToBranchSearch" sender:self];
 }
 
 - (IBAction)viewBasket:(id)sender

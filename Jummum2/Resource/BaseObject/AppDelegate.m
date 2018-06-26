@@ -71,8 +71,8 @@ void myExceptionHandler(NSException *exception)
 //    NSString *strMessage = [Utility decryptData:data withKey:@"jmmjmm"];
 //    NSLog(@"ori text: %@",strMessage);
     
-    
-    [[UILabel appearanceWhenContainedIn:UIAlertController.class, nil] setAppearanceFont:nil];
+    [UILabel appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]];
+//    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setAppearanceFont:nil];
     
 
     
@@ -127,18 +127,42 @@ void myExceptionHandler(NSException *exception)
     //write exception of latest app crash to log file
     NSSetUncaughtExceptionHandler(&myExceptionHandler);
     NSString *stackTrace = [[NSUserDefaults standardUserDefaults] stringForKey:@"exception"];
-    if(![stackTrace isEqualToString:@""])
+    if(!stackTrace)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"exception"];
+    }
+    else if(![stackTrace isEqualToString:@""])
     {
         [_homeModel insertItems:dbWriteLog withData:stackTrace actionScreen:@"Logging"];
         [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"exception"];
     }
     
     
+    
+    //push notification
     //push notification
     {
         if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0"))
         {
-      
+            
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            center.delegate = self;
+            [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error)
+             {
+                 if( !error )
+                 {
+                     [[UIApplication sharedApplication] registerForRemoteNotifications];  // required to get the app to do anything at all about push notifications
+                     NSLog( @"Push registration success." );
+                 }
+                 else
+                 {
+                     NSLog( @"Push registration FAILED" );
+                     NSLog( @"ERROR: %@ - %@", error.localizedFailureReason, error.localizedDescription );
+                     NSLog( @"SUGGESTIONS: %@ - %@", error.localizedRecoveryOptions, error.localizedRecoverySuggestion );
+                 }
+             }];
+            
+            
             UNNotificationAction *notificationAction1 = [UNNotificationAction actionWithIdentifier:@"Print"
                                                                                              title:@"Print"
                                                                                            options:UNNotificationActionOptionForeground];
@@ -146,14 +170,14 @@ void myExceptionHandler(NSException *exception)
                                                                                              title:@"View"
                                                                                            options:UNNotificationActionOptionForeground];
             UNNotificationCategory *notificationCategory = [UNNotificationCategory categoryWithIdentifier:@"Print"                                                                                                     actions:@[notificationAction1,notificationAction2] intentIdentifiers:@[] options:UNNotificationCategoryOptionNone];
-
-
-            // Register the notification categories.
-            UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
-            center.delegate = self;
-//            [center setNotificationCategories:[NSSet setWithObjects:notificationCategory,nil]];
             
-        
+            
+            // Register the notification categories.
+            UNUserNotificationCenter* center2 = [UNUserNotificationCenter currentNotificationCenter];
+            center2.delegate = self;
+            [center2 setNotificationCategories:[NSSet setWithObjects:notificationCategory,nil]];
+            
+            
         }
         else
         {
@@ -161,21 +185,19 @@ void myExceptionHandler(NSException *exception)
             UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
             [application registerUserNotificationSettings:settings];
             [application registerForRemoteNotifications];
-        }
-        
-        
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        }   
     }
     
     
-    //load shared at the begining of everyday
-    NSDictionary *todayLoadShared = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"todayLoadShared"];
-    NSString *strCurrentDate = [Utility dateToString:[Utility currentDateTime] toFormat:@"yyyy-MM-dd"];
-    NSString *alreadyLoaded = [todayLoadShared objectForKey:strCurrentDate];
-    if(!alreadyLoaded)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:@"1" forKey:strCurrentDate] forKey:@"todayLoadShared"];
-    }
+//    //load shared at the begining of everyday
+//    NSDictionary *todayLoadShared = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"todayLoadShared"];
+//    NSString *strCurrentDate = [Utility dateToString:[Utility currentDateTime] toFormat:@"yyyy-MM-dd"];
+//    NSString *alreadyLoaded = [todayLoadShared objectForKey:strCurrentDate];
+//    if(!alreadyLoaded)
+//    {
+//        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:@"1" forKey:strCurrentDate] forKey:@"todayLoadShared"];
+//    }
     
     
     #if (TARGET_OS_SIMULATOR)

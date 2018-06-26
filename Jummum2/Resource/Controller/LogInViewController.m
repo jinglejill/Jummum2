@@ -26,6 +26,7 @@
     BOOL _rememberMe;
     NSString *_username;
     NSMutableArray *allComments;
+    BOOL _autoLogIn;
 }
 @end
 
@@ -51,7 +52,10 @@
 
 - (IBAction)logIn:(id)sender
 {
-
+    if(!sender)
+    {
+        _autoLogIn = YES;
+    }
     txtEmail.text = [Utility trimString:txtEmail.text];
     txtPassword.text = [Utility trimString:txtPassword.text];
     [Utility setModifiedUser:txtEmail.text];
@@ -114,7 +118,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
+    
     [self setButtonDesign:btnLogIn];
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
     {
@@ -197,7 +201,7 @@
     }
     else if(_appLogIn)
     {
-        [self logIn:btnLogIn];
+        [self logIn:nil];
     }
 }
 
@@ -276,7 +280,20 @@
                     }
                     else
                     {
-                        [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+                        if(_autoLogIn)
+                        {
+//
+                            [UIView setAnimationsEnabled:NO];
+                            self.view.hidden = YES;
+                            
+                            [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+                            
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [UIView setAnimationsEnabled:YES];
+                                self.view.hidden = NO;
+                            });
+                        }
+//                        [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
                     }
                 }
             }
