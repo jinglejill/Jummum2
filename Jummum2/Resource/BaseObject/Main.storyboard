@@ -228,6 +228,103 @@
             </objects>
             <point key="canvasLocation" x="56.799999999999997" y="132.68365817091455"/>
         </scene>
+        <!--Alert View Controller-->
+        <scene sceneID="cXP-Yp-IvE">
+            <objects>
+                <viewController id="FCG-tI-fuZ" customClass="AlertViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YCa-8b-JKh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pH-z6-uxZ">
+                                <rect key="frame" x="67" y="183.5" width="240" height="300"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjT-TB-zab">
+                                        <rect key="frame" x="8" y="262" width="224" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="OQI-9A-WCQ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="15"/>
+                                        <state key="normal" title="Dismiss">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss:" destination="FCG-tI-fuZ" eventType="touchUpInside" id="xqI-1I-7mc"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6Z-EQ-fXs">
+                                        <rect key="frame" x="8" y="66" width="224" height="140"/>
+                                        <string key="text">The Jummum app you currently running (5.3) may not work for certain photo products, and a newer version of the app is available for you</string>
+                                        <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It's time to update" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tk7-HQ-USU">
+                                        <rect key="frame" x="8" y="24" width="224" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="257-eS-3cM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-1Z-M6l">
+                                        <rect key="frame" x="8" y="224" width="224" height="30"/>
+                                        <color key="backgroundColor" red="0.3921568627" green="0.86274509799999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Dos-X7-dAe"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="15"/>
+                                        <state key="normal" title="Update">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="update:" destination="FCG-tI-fuZ" eventType="touchUpInside" id="MUe-rc-LdM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ZjT-TB-zab" secondAttribute="trailing" constant="8" id="3sy-b2-qDF"/>
+                                    <constraint firstAttribute="height" constant="300" id="9Uu-tM-x6G"/>
+                                    <constraint firstItem="ChV-1Z-M6l" firstAttribute="leading" secondItem="3pH-z6-uxZ" secondAttribute="leading" constant="8" id="NBU-xa-0sf"/>
+                                    <constraint firstItem="O6Z-EQ-fXs" firstAttribute="top" secondItem="tk7-HQ-USU" secondAttribute="bottom" constant="8" id="NMd-n6-7MH"/>
+                                    <constraint firstItem="ChV-1Z-M6l" firstAttribute="top" secondItem="O6Z-EQ-fXs" secondAttribute="bottom" constant="18" id="RIf-Nu-Muz"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZjT-TB-zab" secondAttribute="bottom" constant="8" id="aiU-Tl-3fJ"/>
+                                    <constraint firstAttribute="width" constant="240" id="awB-l8-Eow"/>
+                                    <constraint firstAttribute="trailing" secondItem="ChV-1Z-M6l" secondAttribute="trailing" constant="8" id="dgU-NY-HpW"/>
+                                    <constraint firstAttribute="trailing" secondItem="O6Z-EQ-fXs" secondAttribute="trailing" constant="8" id="eCW-JT-c7K"/>
+                                    <constraint firstItem="ZjT-TB-zab" firstAttribute="leading" secondItem="3pH-z6-uxZ" secondAttribute="leading" constant="8" id="egm-JX-Op3"/>
+                                    <constraint firstItem="tk7-HQ-USU" firstAttribute="top" secondItem="3pH-z6-uxZ" secondAttribute="top" constant="24" id="h3A-eG-ROZ"/>
+                                    <constraint firstItem="O6Z-EQ-fXs" firstAttribute="leading" secondItem="3pH-z6-uxZ" secondAttribute="leading" constant="8" id="iSm-gT-dMU"/>
+                                    <constraint firstItem="tk7-HQ-USU" firstAttribute="leading" secondItem="3pH-z6-uxZ" secondAttribute="leading" constant="8" id="kwZ-fC-hBk"/>
+                                    <constraint firstItem="ZjT-TB-zab" firstAttribute="top" secondItem="ChV-1Z-M6l" secondAttribute="bottom" constant="8" id="ouM-pE-g6Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="tk7-HQ-USU" secondAttribute="trailing" constant="8" id="u4X-1j-9wt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3pH-z6-uxZ" firstAttribute="centerX" secondItem="YCa-8b-JKh" secondAttribute="centerX" id="KIn-o4-pkc"/>
+                            <constraint firstItem="3pH-z6-uxZ" firstAttribute="centerY" secondItem="YCa-8b-JKh" secondAttribute="centerY" id="Sp2-SC-97I"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9AK-8u-vfe"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnDismiss" destination="ZjT-TB-zab" id="Gk2-bn-pfB"/>
+                        <outlet property="btnUpdate" destination="ZjT-TB-zab" id="byH-39-aog"/>
+                        <outlet property="lblHeader" destination="tk7-HQ-USU" id="sfW-V8-jvB"/>
+                        <outlet property="lblSubtitle" destination="O6Z-EQ-fXs" id="vTO-KB-lBc"/>
+                        <outlet property="vwAlert" destination="3pH-z6-uxZ" id="XFL-lh-23c"/>
+                        <segue destination="r1i-sb-EyU" kind="unwind" identifier="segUnwindToLaunchScreen" unwindAction="unwindToLaunchScreen:" id="Ozf-iC-anh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eYe-he-Gwb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="r1i-sb-EyU" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="56.799999999999997" y="840.62968515742136"/>
+        </scene>
         <!--QR Code-->
         <scene sceneID="kGO-K6-847">
             <objects>

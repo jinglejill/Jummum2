@@ -318,6 +318,7 @@
 		EFD5B0CB20DE249F00D9434A /* search_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CA20DE249E00D9434A /* search_white.png */; };
 		EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CC20DE29E300D9434A /* gift_small.png */; };
 		EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */; };
+		EFD9BA7820E3BE1000A0A874 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */; };
 		EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */; };
 		EFE8BFE220A5C508005E0746 /* party.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE8BFE120A5C507005E0746 /* party.png */; };
 /* End PBXBuildFile section */
@@ -801,6 +802,8 @@
 		EFD5B0CC20DE29E300D9434A /* gift_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift_small.png; sourceTree = "<group>"; };
 		EFD9BA2E20E233E400A0A874 /* HotDealDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotDealDetailViewController.h; sourceTree = "<group>"; };
 		EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotDealDetailViewController.m; sourceTree = "<group>"; };
+		EFD9BA7620E3BE1000A0A874 /* AlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
+		EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
 		EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+FontAppearance.h"; sourceTree = "<group>"; };
 		EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FontAppearance.m"; sourceTree = "<group>"; };
 		EFE8BFE120A5C507005E0746 /* party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = party.png; sourceTree = "<group>"; };
@@ -1200,6 +1203,8 @@
 				EF5C2FA32080C00400084B7E /* TermsOfServiceViewController.m */,
 				EF5C2F982080C00400084B7E /* TosAndPrivacyPolicyViewController.h */,
 				EF5C2FAB2080C00400084B7E /* TosAndPrivacyPolicyViewController.m */,
+				EFD9BA7620E3BE1000A0A874 /* AlertViewController.h */,
+				EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1892,6 +1897,7 @@
 				EF5C314C2080C00500084B7E /* CustomTableViewHeaderFooterButton.m in Sources */,
 				EF5C314D2080C00500084B7E /* CustomTableViewCellCreditCard.m in Sources */,
 				EF5C30962080C00500084B7E /* NSData+AES.m in Sources */,
+				EFD9BA7820E3BE1000A0A874 /* AlertViewController.m in Sources */,
 				EF5C31342080C00500084B7E /* TableNo.m in Sources */,
 				EF5C31422080C00500084B7E /* SharedMenuType.m in Sources */,
 				EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */,

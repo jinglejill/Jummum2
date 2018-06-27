@@ -10,4 +10,7 @@
 
 @interface LaunchScreenViewController : CustomViewController
 @property (strong, nonatomic) UIProgressView *progressBar;
+
+
+-(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue;
 @end

@@ -341,7 +341,7 @@
         NSNumber *tosAgree = [dicTosAgree objectForKey:username];
         if(tosAgree)
         {
-            NSLog(@"perform segue");
+//            NSLog(@"perform segue");
             [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
         }
         else

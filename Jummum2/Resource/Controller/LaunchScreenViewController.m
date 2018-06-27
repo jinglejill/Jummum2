@@ -16,6 +16,11 @@
 @synthesize progressBar;
 
 
+-(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue
+{
+    
+}
+
 -(void)loadView
 {
     [super loadView];
@@ -75,8 +80,34 @@
         
         
         
-        [Utility setFinishLoadSharedData:YES];
-        [self performSegueWithIdentifier:@"segLogIn" sender:self];
+//        if([self needsUpdate])
+//        {
+//
+//            [self performSegueWithIdentifier:@"segUpdateVersion" sender:self];
+//        }
+//        else
+//        {
+            [self performSegueWithIdentifier:@"segLogIn" sender:self];
+//        }
     }
+}
+
+-(BOOL) needsUpdate
+{
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    if ([lookup[@"resultCount"] integerValue] == 1){
+        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+        if (![appStoreVersion isEqualToString:currentVersion]){
+            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+            return YES;
+        }
+    }
+    return NO;
 }
 @end
