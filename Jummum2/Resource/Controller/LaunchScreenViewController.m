@@ -9,7 +9,9 @@
 #import "LaunchScreenViewController.h"
 
 @interface LaunchScreenViewController ()
-
+{
+    BOOL _redirectToLogin;
+}
 @end
 
 @implementation LaunchScreenViewController
@@ -21,6 +23,7 @@
     
 }
 
+//-(void)viewdi
 -(void)loadView
 {
     [super loadView];
