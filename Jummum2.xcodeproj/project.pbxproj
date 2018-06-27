@@ -1060,11 +1060,6 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				EFD5B0CC20DE29E300D9434A /* gift_small.png */,
-				EFD5B0CA20DE249E00D9434A /* search_white.png */,
-				EFCB3ADE20DA1060007E0896 /* history.png */,
-				EFCB3AD920D8BA1F007E0896 /* takeAwayNoti.png */,
-				EFB02F6320D65B020018E878 /* white.png */,
 				EF5C2F702080C00400084B7E /* added.png */,
 				EF5C2F5A2080C00400084B7E /* americanExpress.png */,
 				EF5C2F6D2080C00400084B7E /* basket.png */,
@@ -1080,7 +1075,9 @@
 				EF5C2F5D2080C00400084B7E /* creditCard.png */,
 				EFAF78F820A53FA00069D6DA /* deleteAll3.png */,
 				EF5C2F812080C00400084B7E /* expand2.png */,
+				EFD5B0CC20DE29E300D9434A /* gift_small.png */,
 				EF5C2F732080C00400084B7E /* gift.png */,
+				EFCB3ADE20DA1060007E0896 /* history.png */,
 				EF13B62920D169C7008CF35C /* home_icon_red.png */,
 				EF5C2F552080C00400084B7E /* home_icon.png */,
 				EF5C2F6C2080C00400084B7E /* hotDeal.png */,
@@ -1123,14 +1120,17 @@
 				EFB91848208C7CFC0079FC15 /* remove light color.png */,
 				EFB91847208C7CFC0079FC15 /* remove.png */,
 				EF5C2F752080C00400084B7E /* removed.png */,
+				EFD5B0CA20DE249E00D9434A /* search_white.png */,
 				EF5C2F692080C00400084B7E /* search.png */,
 				EF5C2F7F2080C00400084B7E /* security_code_back-512.png */,
 				EF93803920A0539B00A714A3 /* takeAway2.png */,
 				EF93803B20A053E600A714A3 /* takeAwayGrayOut.png */,
+				EFCB3AD920D8BA1F007E0896 /* takeAwayNoti.png */,
 				EF5C2F582080C00400084B7E /* termsOfService.png */,
 				EFB02F6120D41A040018E878 /* triangle_pink.png */,
 				EFB02F5E20D40FE10018E878 /* uncheckbox_gray.png */,
 				EF5C2F5E2080C00400084B7E /* visa.png */,
+				EFB02F6320D65B020018E878 /* white.png */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -2125,7 +2125,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appxelent.Jummum2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JummumTech.Jummum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2145,7 +2145,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appxelent.Jummum2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JummumTech.Jummum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

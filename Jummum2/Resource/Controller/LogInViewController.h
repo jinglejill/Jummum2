@@ -18,10 +18,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnLogIn;
 @property (strong, nonatomic) IBOutlet UIButton *btnRegisterNow;
 @property (strong, nonatomic) IBOutlet UIButton *btnForgotPassword;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwValueHeight;
 - (IBAction)rememberMe:(id)sender;
 - (IBAction)logIn:(id)sender;
 - (IBAction)registerNow:(id)sender;
 - (IBAction)forgotPassword:(id)sender;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblOrBottom;
 -(IBAction)unwindToLogIn:(UIStoryboardSegue *)segue;
 @end
