@@ -61,11 +61,6 @@
     _loginButton.frame = frame;
     NSLog(@"facebook y: %f",_loginButton.frame.origin.y);
     
-    
-//    _loginButton.center = self.view.center;
-//    CGRect frame = _loginButton.frame;
-//    frame.origin.y = lblOrBottom.constant-22;//frame.origin.y + 33;
-//    _loginButton.frame = frame;
 }
 
 - (IBAction)rememberMe:(id)sender
@@ -187,25 +182,6 @@
 //    _loginButton.readPermissions = @[@"public_profile", @"email",@"user_friends",@"user_birthday",@"user_about_me",@"user_likes",@"user_work_history"];
     
     
-//    imgVwValueHeight.constant = self.view.frame.size.width/375*255;
-//    float bottom = 0;
-//    if(imgVwValueHeight.constant + 70 + 323 > self.view.frame.size.height)
-//    {
-//        bottom = 323;
-//    }
-//    else
-//    {
-//        bottom = imgVwValueHeight.constant + 70;
-//    }
-//
-//
-    
-    
-//    _loginButton.center = self.view.center;
-//    CGRect frame = _loginButton.frame;
-//    frame.origin.y = self.view.frame.size.height - bottom + 11;//frame.origin.y + 33;
-//    _loginButton.frame = frame;
-//    NSLog(@"facebook y: %f",_loginButton.frame.origin.y);
 
     // Optional: Place the button in the center of your view.
     [self.view addSubview:_loginButton];
@@ -365,6 +341,7 @@
         NSNumber *tosAgree = [dicTosAgree objectForKey:username];
         if(tosAgree)
         {
+            NSLog(@"perform segue");
             [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
         }
         else

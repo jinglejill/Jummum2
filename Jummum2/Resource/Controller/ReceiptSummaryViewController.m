@@ -198,7 +198,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             OrderTaking *orderTaking = orderTakingList[item];
             Menu *menu = [Menu getMenu:orderTaking.menuID branchID:orderTaking.branchID];
             cell.lblQuantity.text = [Utility formatDecimal:orderTaking.quantity withMinFraction:0 andMaxFraction:0];
-            
+            NSLog(@"%f, %f, %f, %f: ",cell.lblQuantity.frame.origin.x,cell.lblQuantity.frame.origin.y, cell.lblQuantity.frame.size.width,cell.lblQuantity.frame.size.height);
             
             //menu
             if(orderTaking.takeAway)
@@ -225,7 +225,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             frame.size.height = menuNameLabelSize.height;
             cell.lblMenuNameHeight.constant = menuNameLabelSize.height;
             cell.lblMenuName.frame = frame;
-            
+            NSLog(@"%f, %f, %f, %f: ",frame.origin.x,frame.origin.y, frame.size.width,frame.size.height);
             
             
             //note

@@ -21,36 +21,36 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fab-K4-BFl">
-                    <rect key="frame" x="16" y="8" width="28" height="18"/>
+                    <rect key="frame" x="16" y="8" width="28" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="18" id="gfI-gS-hMj"/>
+                        <constraint firstAttribute="height" constant="23" id="gfI-gS-hMj"/>
                         <constraint firstAttribute="width" constant="28" id="m7N-wd-60e"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
                     <color key="textColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0h-oD-LYc">
-                    <rect key="frame" x="52" y="8" width="219" height="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="บะหมี่" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0h-oD-LYc">
+                    <rect key="frame" x="52" y="8" width="219" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="18" id="gvO-sv-Ye0"/>
+                        <constraint firstAttribute="height" constant="23" id="gvO-sv-Ye0"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
                     <color key="textColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="b 9,999.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPw-d8-nec">
-                    <rect key="frame" x="279" y="8" width="80" height="18"/>
+                    <rect key="frame" x="279" y="8" width="80" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="98t-eM-lHj"/>
-                        <constraint firstAttribute="height" constant="18" id="Kv1-f2-SMi"/>
+                        <constraint firstAttribute="height" constant="23" id="Kv1-f2-SMi"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
                     <color key="textColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aed-d2-2xt">
-                    <rect key="frame" x="52" y="28" width="219" height="20"/>
+                    <rect key="frame" x="52" y="33" width="219" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="pav-Fd-4aS"/>
                     </constraints>

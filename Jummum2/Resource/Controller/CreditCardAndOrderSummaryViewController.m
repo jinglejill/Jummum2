@@ -451,7 +451,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     }
                     
                     
-                    cell.textLabel.text = @"การชำระเงิน";
+                    cell.textLabel.text = @"การชำระเงิน ด้วยบัตรเครดิต";
                     cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
                     cell.textLabel.textColor = cSystem1;
                     
@@ -1570,7 +1570,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     _receipt = receipt;
     [self.homeModel insertItems:dbPushReminder withData:@[branch,receipt] actionScreen:@"push reminder"];
     [self performSegueWithIdentifier:@"segPaymentComplete" sender:self];
-//    [self performSegueWithIdentifier:@"segSaveToCameraRoll" sender:self];
+
 }
 
 -(void)alertMsg:(NSString *)msg
@@ -1578,11 +1578,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     [self removeWaitingView];
     
     [self showAlert:@"" message:msg];
-}
-
--(void)segueToBranchSearch
-{
-    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 -(void)addCreditCard:(id)sender

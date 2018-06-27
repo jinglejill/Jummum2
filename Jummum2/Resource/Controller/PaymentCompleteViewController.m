@@ -351,7 +351,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
                 cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-                cell.lblAmount.textColor = mGreen;
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -413,8 +413,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.lblAmount.textColor = cSystem4;
+                
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -430,6 +432,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -470,8 +476,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.lblAmount.textColor = cSystem4;
+                
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -491,6 +499,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.lblAmount.textColor = cSystem4;
                 
@@ -508,6 +517,11 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
+                
                 
                 
                 UIImage *image = [self imageFromView:cell];
@@ -591,6 +605,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.lblAmount.textColor = cSystem4;
                 
@@ -612,6 +627,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
                 cell.lblTitle.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                cell.lblTitle.textColor = cSystem4;
                 cell.lblAmount.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
                 cell.lblAmount.textColor = cSystem4;
                 
@@ -629,6 +645,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 cell.lblTitle.text = @"ยอดรวมทั้งสิ้น";
                 cell.lblAmount.text = strAmount;
                 cell.vwTopBorder.hidden = YES;
+                cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblTitle.textColor = cSystem4;
+                cell.lblAmount.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                cell.lblAmount.textColor = cSystem1;
                 
                 
                 UIImage *image = [self imageFromView:cell];
