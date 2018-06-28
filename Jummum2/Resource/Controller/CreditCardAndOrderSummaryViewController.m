@@ -1207,28 +1207,35 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     if(section == 0 && item == 0)
     {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                       message:nil
-                                                                preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert addAction:
-         [UIAlertAction actionWithTitle:@"QR code"
-                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-          {
-              [self performSegueWithIdentifier:@"segQRCodeScanTable" sender:self];
-              
-          }]];
-        [alert addAction:
-         [UIAlertAction actionWithTitle:@"ค้นหา"
-                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-          {
-              [self performSegueWithIdentifier:@"segCustomerTableSearch" sender:self];
-          }]];
-        [alert addAction:
-         [UIAlertAction actionWithTitle:@"ยกเลิก"
-                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-          {
-              
-              
-          }]];
+                                                                       message:nil                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"QR code"
+                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                  {
+                                      [self performSegueWithIdentifier:@"segQRCodeScanTable" sender:self];
+                                  }];
+        
+        [alert addAction:action1];
+        
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ค้นหา"
+                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                  {
+                                      [self performSegueWithIdentifier:@"segCustomerTableSearch" sender:self];
+                                  }];
+        
+        [alert addAction:action2];
+        
+        
+        
+        UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"ยกเลิก"
+                                                          style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                                  {
+                                  }];
+        
+        [alert addAction:action3];
+        
+        
         
         
         if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
@@ -1239,6 +1246,35 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             popPresenter.sourceRect = cell.lblValue.bounds;
         }
         [self presentViewController:alert animated:YES completion:nil];
+        
+        
+        
+        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+        UIColor *color = cSystem1;
+        NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"QR code" attributes:attribute];
+        
+        UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+        label.attributedText = attrString;
+        
+        
+        
+        UIFont *font2 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+        UIColor *color2 = cSystem1;
+        NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+        NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:@"ค้นหา" attributes:attribute2];
+        
+        UILabel *label2 = [[action2 valueForKey:@"__representer"] valueForKey:@"label"];
+        label2.attributedText = attrString2;
+        
+        
+        UIFont *font3 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+        UIColor *color3 = cSystem4;
+        NSDictionary *attribute3 = @{NSForegroundColorAttributeName:color3 ,NSFontAttributeName: font3};
+        NSMutableAttributedString *attrString3 = [[NSMutableAttributedString alloc] initWithString:@"ยกเลิก" attributes:attribute3];
+        
+        UILabel *label3 = [[action3 valueForKey:@"__representer"] valueForKey:@"label"];
+        label3.attributedText = attrString3;
     }
     else if(section == 1 && item == 1)
     {

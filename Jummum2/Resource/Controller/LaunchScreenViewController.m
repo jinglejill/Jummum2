@@ -59,19 +59,50 @@
     {
         if([items count] == 0)
         {
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Warning"
-                                                                           message:@"Memory fail"
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            NSString *title = @"Warning";
+            NSString *message = @"Memory fail";
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                           message:message                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            
+            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+            [attrStringTitle addAttribute:NSFontAttributeName
+                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                                    range:NSMakeRange(0, title.length)];
+            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                                    value:cSystem4
+                                    range:NSMakeRange(0, title.length)];
+            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+            
+            
+            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+            [attrStringMsg addAttribute:NSFontAttributeName
+                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                                  range:NSMakeRange(0, message.length)];
+            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                                    value:cSystem4
+                                    range:NSMakeRange(0, title.length)];
+            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+            
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction * action)
                                             {
                                                 
                                             }];
-            
             [alert addAction:defaultAction];
             dispatch_async(dispatch_get_main_queue(),^ {
                 [self presentViewController:alert animated:YES completion:nil];
+                
+                
+                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                UIColor *color = cSystem1;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+                
+                UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+                label.attributedText = attrString;
+                
             } );
             return;
         }

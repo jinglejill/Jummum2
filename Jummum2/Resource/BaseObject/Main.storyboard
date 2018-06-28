@@ -480,7 +480,7 @@
                                     <constraint firstAttribute="height" constant="44" id="8zz-WW-Rna"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="15"/>
-                                <state key="normal" title="VIEW YOUR CART">
+                                <state key="normal" title="รถเข็น">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>

@@ -71,8 +71,11 @@ void myExceptionHandler(NSException *exception)
 //    NSString *strMessage = [Utility decryptData:data withKey:@"jmmjmm"];
 //    NSLog(@"ori text: %@",strMessage);
     
-    [UILabel appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]];
-//    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setAppearanceFont:nil];
+
+    
+    
+//     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:cSystem2];
+    
     
 
     
@@ -706,9 +709,6 @@ void myExceptionHandler(NSException *exception)
 
 - (void)itemsFail
 {
-//    UINavigationController * navigationController = self.navController;
-//    UIViewController *viewController = navigationController.visibleViewController;
-    
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:[Utility getConnectionLostTitle]
                                                                    message:[Utility getConnectionLostMessage]
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -716,9 +716,7 @@ void myExceptionHandler(NSException *exception)
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action)
                                     {
-                                        SEL s = NSSelectorFromString(@"loadingOverlayView");
-                                        [self.vc performSelector:s];
-                                        [_homeModel downloadItems:dbMaster];
+                                        [self alertMsg:@"database transaction fail"];
                                     }];
     
     [alert addAction:defaultAction];
@@ -729,9 +727,6 @@ void myExceptionHandler(NSException *exception)
 
 - (void) connectionFail
 {
-//    UINavigationController * navigationController = self.navController;
-//    UIViewController *viewController = navigationController.visibleViewController;
-    
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:[Utility subjectNoConnection]
                                                                    message:[Utility detailNoConnection]
                                                             preferredStyle:UIAlertControllerStyleAlert];

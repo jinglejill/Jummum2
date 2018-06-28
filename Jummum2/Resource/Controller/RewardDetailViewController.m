@@ -240,9 +240,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
                                      [self loadingOverlayView];
                                  }
                              }];
-//    [action1 setValue:@"" forKey:@"attributedTitle"];
-    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-    [[UIButton appearanceWhenContainedIn:[UIAlertController class], nil] setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    
     [alert addAction:action1];
     
     
@@ -264,7 +262,26 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     
     
     [self presentViewController:alert animated:YES completion:nil];
-    alert.view.tintColor = cSystem1;
+
+    
+    // this has to be set after presenting the alert, otherwise the internal property __representer is nil
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color = cSystem1;
+    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ยืนยันการรับสิทธิ์" attributes:attribute];
+
+    UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+    label.attributedText = attrString;
+
+
+
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color2 = cSystem4;
+    NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+    NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:@"ยกเลิก" attributes:attribute2];
+
+    UILabel *label2 = [[action2 valueForKey:@"__representer"] valueForKey:@"label"];
+    label2.attributedText = attrString2;
 }
 
 - (IBAction)goBack:(id)sender

@@ -584,7 +584,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         CustomTableViewHeaderFooterButton *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifierHeaderFooterButton];
         
         
-        [footerView.btnValue setTitle:@"CHECK OUT" forState:UIControlStateNormal];
+        [footerView.btnValue setTitle:@"ยืนยันการสั่งอาหาร" forState:UIControlStateNormal];
         [footerView.btnValue addTarget:self action:@selector(checkOut:) forControlEvents:UIControlEventTouchUpInside];
         
         
@@ -613,22 +613,26 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 - (IBAction)deleteAll:(id)sender
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"ลบทั้งหมด"
-                              style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
-      {
-          [OrderTaking removeCurrentOrderTakingList];
-          [tbvOrder reloadData];
-          [tbvTotal reloadData];
-          
-      }]];
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"ยกเลิก"
-                              style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
-      {
-      }]];
+                                                                   message:nil                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"ลบทั้งหมด"
+                                                      style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
+                              {
+                                  [OrderTaking removeCurrentOrderTakingList];
+                                  [tbvOrder reloadData];
+                                  [tbvTotal reloadData];
+                              }];
+    
+    [alert addAction:action1];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ยกเลิก"
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                              {
+                                  
+                              }];
+    
+    [alert addAction:action2];
+    
     
     
     
@@ -641,6 +645,25 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     }
     [self presentViewController:alert animated:YES completion:nil];
     
+    
+    // this has to be set after presenting the alert, otherwise the internal property __representer is nil
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color = cSystem1;
+    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"ลบทั้งหมด" attributes:attribute];
+    
+    UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+    label.attributedText = attrString;
+    
+    
+    
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color2 = cSystem4;
+    NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+    NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:@"ยกเลิก" attributes:attribute2];
+    
+    UILabel *label2 = [[action2 valueForKey:@"__representer"] valueForKey:@"label"];
+    label2.attributedText = attrString2;
 }
 
 -(void)stepperValueChanged:(id)sender
@@ -756,40 +779,43 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"คัดลอก"
-                              style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-      {
-        
-          Menu *menu = _menuList[tappedIP.item];
-          NSMutableArray *currentOrderTakingList = [OrderTaking getCurrentOrderTakingList];
-          NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
-          
-          
-          
-          {
-              CGPoint pointTbvNote = [gestureRecognizer locationInView:cell.tbvNote];
-              NSIndexPath * indexPath = [cell.tbvNote indexPathForRowAtPoint:pointTbvNote];
-              _copyOrderTaking = orderTakingList[indexPath.item];
-          }
-          
-          
-      }]];
+                                                                   message:nil                                                            preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"ยกเลิก"
-                              style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-      {
-      }]];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"คัดลอก"
+                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                              {
+                                  Menu *menu = _menuList[tappedIP.item];
+                                  NSMutableArray *currentOrderTakingList = [OrderTaking getCurrentOrderTakingList];
+                                  NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
+                                  
+                                  
+                                  
+                                  {
+                                      CGPoint pointTbvNote = [gestureRecognizer locationInView:cell.tbvNote];
+                                      NSIndexPath * indexPath = [cell.tbvNote indexPathForRowAtPoint:pointTbvNote];
+                                      _copyOrderTaking = orderTakingList[indexPath.item];
+                                  }
+                              }];
+    
+    [alert addAction:action1];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ยกเลิก"
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                              {
+                                  
+                              }];
+    
+    [alert addAction:action2];
+    
+    
+    
     
     UIAlertAction *pasteHowTo = [UIAlertAction actionWithTitle:@"Double tap at note to paste"
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *action)
                                  {
                                  }];
-    [pasteHowTo setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+    [pasteHowTo setValue:cSystem4 forKey:@"titleTextColor"];
     [alert addAction:pasteHowTo];
     
     
@@ -805,6 +831,38 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         popPresenter.sourceRect = cellNote.txtNote.bounds;
     }
     [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color = cSystem1;
+    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"คัดลอก" attributes:attribute];
+    
+    UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+    label.attributedText = attrString;
+    
+    
+    
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color2 = cSystem4;
+    NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+    NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:@"ยกเลิก" attributes:attribute2];
+    
+    UILabel *label2 = [[action2 valueForKey:@"__representer"] valueForKey:@"label"];
+    label2.attributedText = attrString2;
+    
+    
+    
+    UIFont *font3 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color3 = mPlaceHolder;
+    NSDictionary *attribute3 = @{NSForegroundColorAttributeName:color3 ,NSFontAttributeName: font3};
+    NSMutableAttributedString *attrString3 = [[NSMutableAttributedString alloc] initWithString:@"Double tap at note to paste" attributes:attribute3];
+    
+    UILabel *label3 = [[pasteHowTo valueForKey:@"__representer"] valueForKey:@"label"];
+    label3.attributedText = attrString;
+    
+    
+    
 }
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
