@@ -66,7 +66,7 @@
         strMessageHeader = [Setting getSettingValueWithKeyName:@"MessageHeaderDispute"];
         strMessageSubTitle = [Setting getSettingValueWithKeyName:@"MessageSubTitleDispute"];
     }
-    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:22];
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:17];
     UIColor *color = cSystem4;
     NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
     NSMutableAttributedString *attrStringHeader = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n",strMessageHeader] attributes:attribute];

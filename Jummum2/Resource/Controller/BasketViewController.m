@@ -289,7 +289,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         
 
         
-        NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":menu.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)

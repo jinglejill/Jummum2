@@ -141,6 +141,20 @@ void myExceptionHandler(NSException *exception)
     }
     
     
+    //write app version of to log file
+    NSSetUncaughtExceptionHandler(&myExceptionHandler);
+    NSString *stackTrace2 = [[NSUserDefaults standardUserDefaults] stringForKey:@"appVersion"];
+    if(!stackTrace2)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"appVersion"];
+    }
+    else if(![stackTrace2 isEqualToString:@""])
+    {
+        [_homeModel insertItems:dbWriteLog withData:stackTrace2 actionScreen:@"appVersion test"];
+        [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"appVersion"];
+    }
+    
+    
     
     //push notification
     //push notification
@@ -381,10 +395,33 @@ void myExceptionHandler(NSException *exception)
             }
             
 
-
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"มีการปรับปรุงแอพ"
-                                                                           message:@"กรุณาเปิดแอพใหม่อีกครั้งเพื่อใช้งาน"
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            NSString *title = @"มีการปรับปรุงแอพ";
+            NSString *message = @"กรุณาเปิดแอพใหม่อีกครั้งเพื่อใช้งาน";
+            
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                           message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
+            
+            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+            [attrStringTitle addAttribute:NSFontAttributeName
+                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
+                                    range:NSMakeRange(0, title.length)];
+            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                                    value:cSystem4
+                                    range:NSMakeRange(0, title.length)];
+            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+            
+            
+            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+            [attrStringMsg addAttribute:NSFontAttributeName
+                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                                  range:NSMakeRange(0, message.length)];
+            [attrStringMsg addAttribute:NSForegroundColorAttributeName
+                                  value:cSystem4
+                                  range:NSMakeRange(0, message.length)];
+            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+            
+            
+            
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction * action)
@@ -394,6 +431,15 @@ void myExceptionHandler(NSException *exception)
             
             [alert addAction:defaultAction];
             [self.vc presentViewController:alert animated:YES completion:nil];
+            
+            
+            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+            UIColor *color = cSystem1;
+            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+            
+            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+            label.attributedText = attrString;
         }
     }
     
@@ -427,11 +473,33 @@ void myExceptionHandler(NSException *exception)
             }
             
         
+            NSString *title = [Utility getSqlFailTitle];
+            NSString *message = [NSString stringWithFormat:@"%@ is fail",[(NSDictionary *)data objectForKey:@"alert"]];
             
-            NSString *alertMsg = [NSString stringWithFormat:@"%@ is fail",[(NSDictionary *)data objectForKey:@"alert"]];
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:[Utility getSqlFailTitle]
-                                                                           message:alertMsg
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                           message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
+            
+            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+            [attrStringTitle addAttribute:NSFontAttributeName
+                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
+                                    range:NSMakeRange(0, title.length)];
+            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                                    value:cSystem4
+                                    range:NSMakeRange(0, title.length)];
+            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+            
+            
+            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+            [attrStringMsg addAttribute:NSFontAttributeName
+                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                                  range:NSMakeRange(0, message.length)];
+            [attrStringMsg addAttribute:NSForegroundColorAttributeName
+                                  value:cSystem4
+                                  range:NSMakeRange(0, message.length)];
+            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+            
+            
+            
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction * action)
@@ -443,6 +511,17 @@ void myExceptionHandler(NSException *exception)
             
             [alert addAction:defaultAction];
             [self.vc presentViewController:alert animated:YES completion:nil];
+            
+            
+            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+            UIColor *color = cSystem1;
+            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+            
+            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+            label.attributedText = attrString;
+            
+            
         }
     }
     
@@ -476,20 +555,56 @@ void myExceptionHandler(NSException *exception)
             //you have login in another device และ unwind to หน้า sign in
             if(![self.vc isMemberOfClass:[LogInViewController class]])
             {
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                               message:@"Username นี้กำลังถูกใช้เข้าระบบที่เครื่องอื่น"
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                NSString *title = @"";
+                NSString *message = @"Username นี้กำลังถูกใช้เข้าระบบที่เครื่องอื่น";
+                
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                               message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
+                
+                NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+                [attrStringTitle addAttribute:NSFontAttributeName
+                                        value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
+                                        range:NSMakeRange(0, title.length)];
+                [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                                        value:cSystem4
+                                        range:NSMakeRange(0, title.length)];
+                [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+                
+                
+                NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+                [attrStringMsg addAttribute:NSFontAttributeName
+                                      value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                                      range:NSMakeRange(0, message.length)];
+                [attrStringMsg addAttribute:NSForegroundColorAttributeName
+                                      value:cSystem4
+                                      range:NSMakeRange(0, message.length)];
+                [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+                
+                
+                
                 
                 UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                       handler:^(UIAlertAction * action)
-                {
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    LogInViewController *logInViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogInViewController"];
-                                        [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
-                }];
+                                                {
+                                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                                    LogInViewController *logInViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogInViewController"];
+                                                    [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
+                                                }];
                 
                 [alert addAction:defaultAction];
                 [self.vc presentViewController:alert animated:YES completion:nil];
+                
+                
+                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                UIColor *color = cSystem1;
+                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+                
+                UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+                label.attributedText = attrString;
+                
+                
+                
             }
         }
     }
@@ -707,39 +822,99 @@ void myExceptionHandler(NSException *exception)
     }
 }
 
-- (void)itemsFail
+- (void) connectionFail
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:[Utility getConnectionLostTitle]
-                                                                   message:[Utility getConnectionLostMessage]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    NSString *title = [Utility subjectNoConnection];
+    NSString *message = [Utility detailNoConnection];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+    [attrStringTitle addAttribute:NSFontAttributeName
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
+                            range:NSMakeRange(0, title.length)];
+    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                            value:cSystem4
+                            range:NSMakeRange(0, title.length)];
+    [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+    
+    
+    NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+    [attrStringMsg addAttribute:NSFontAttributeName
+                          value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                          range:NSMakeRange(0, message.length)];
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
+                          value:cSystem4
+                          range:NSMakeRange(0, message.length)];
+    [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+    
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action)
                                     {
-                                        [self alertMsg:@"database transaction fail"];
                                     }];
     
     [alert addAction:defaultAction];
     dispatch_async(dispatch_get_main_queue(),^ {
         [self.vc presentViewController:alert animated:YES completion:nil];
-    });
+        
+        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+        UIColor *color = cSystem1;
+        NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+        
+        UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+        label.attributedText = attrString;
+    } );
 }
 
-- (void) connectionFail
+- (void)itemsFail
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:[Utility subjectNoConnection]
-                                                                   message:[Utility detailNoConnection]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    NSString *title = [Utility getConnectionLostTitle];
+    NSString *message = [Utility getConnectionLostMessage];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
+    [attrStringTitle addAttribute:NSFontAttributeName
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
+                            range:NSMakeRange(0, title.length)];
+    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                            value:cSystem4
+                            range:NSMakeRange(0, title.length)];
+    [alert setValue:attrStringTitle forKey:@"attributedTitle"];
+    
+    
+    NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
+    [attrStringMsg addAttribute:NSFontAttributeName
+                          value:[UIFont fontWithName:@"Prompt-Regular" size:15]
+                          range:NSMakeRange(0, message.length)];
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
+                          value:cSystem4
+                          range:NSMakeRange(0, attrStringMsg.length)];
+    [alert setValue:attrStringMsg forKey:@"attributedMessage"];
+    
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              //                                                              exit(0);
+                                                              
                                                           }];
     
     [alert addAction:defaultAction];
     dispatch_async(dispatch_get_main_queue(),^ {
         [self.vc presentViewController:alert animated:YES completion:nil];
+        
+        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+        UIColor *color = cSystem1;
+        NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
+        
+        UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
+        label.attributedText = attrString;
     } );
 }
+
 
 @end

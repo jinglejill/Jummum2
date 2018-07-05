@@ -9,6 +9,7 @@
 #import "HotDealDetailViewController.h"
 #import "CustomTableViewCellRewardDetail.h"
 #import "CustomTableViewCellLabel.h"
+#import "Branch.h"
 
 
 @interface HotDealDetailViewController ()
@@ -23,7 +24,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 
 
 @synthesize tbvData;
-@synthesize hotDeal;
+@synthesize promotion;
 
 
 - (void)viewDidLoad
@@ -74,9 +75,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        
-        
-        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
+        Branch *branch = [Branch getBranch:promotion.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -91,12 +91,12 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        cell.lblHeader.text = hotDeal.header;
+        cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height;
         
         
-        cell.lblSubTitle.text = hotDeal.subTitle;
+        cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
@@ -117,7 +117,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        cell.lblTextLabel.text = hotDeal.termsConditions;
+        cell.lblTextLabel.text = promotion.termsConditions;
         [cell.lblTextLabel sizeToFit];        
         cell.lblTextLabelHeight.constant = _expandCollapse?cell.lblTextLabel.frame.size.height:0;
         
@@ -141,7 +141,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
+        Branch *branch = [Branch getBranch:promotion.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -155,12 +156,12 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        cell.lblHeader.text = hotDeal.header;
+        cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height;
         
         
-        cell.lblSubTitle.text = hotDeal.subTitle;
+        cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
@@ -174,7 +175,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellLabel *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabel];
         
         
-        cell.lblTextLabel.text = hotDeal.termsConditions;
+        cell.lblTextLabel.text = promotion.termsConditions;
         [cell.lblTextLabel sizeToFit];
         cell.lblTextLabelHeight.constant = cell.lblTextLabel.frame.size.height;
         

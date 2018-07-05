@@ -175,13 +175,15 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+    
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":branch.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -227,14 +229,15 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":branch.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)

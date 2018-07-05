@@ -7,6 +7,7 @@
 //
 
 #import "RegisterNowViewController.h"
+#import "TermsOfServiceViewController.h"
 #import "CustomTableViewCellText.h"
 #import "UserAccount.h"
 
@@ -16,6 +17,8 @@
     UserAccount *_userAccount;
     BOOL _validate;
     UIToolbar *_toolBar;
+    BOOL _updateBirthDateAndPhoneNo;
+    
 }
 @end
 
@@ -25,6 +28,32 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 
 @synthesize tbvData;
 @synthesize dtPicker;
+@synthesize topButtonHeight;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
+@synthesize userAccount;
+
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.bottom;
+    topButtonHeight.constant = topPadding == 0?20:topPadding;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(userAccount && !_updateBirthDateAndPhoneNo)
+    {
+        _userAccount = userAccount;
+        [tbvData reloadData];
+        [self showAlert:@"" message:@"คุณล็อคอินผ่าน facebook สำเร็จแล้ว กรุณาใส่วันเกิดและเบอร์โทรศัพท์ เพื่อเราจะได้สร้างบัญชีสำหรับใช้งานให้คุณ"];
+    }
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField;
 {
@@ -76,6 +105,11 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
             _userAccount.fullName = [Utility trimString:textField.text];
         }
             break;
+        case 5:
+        {
+            _userAccount.phoneNo = [Utility trimString:textField.text];
+        }
+            break;
         default:
             break;
     }
@@ -87,9 +121,12 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     // Do any additional setup after loading the view.
     
     
+    
     _userAccount = [[UserAccount alloc]init];
     tbvData.delegate = self;
     tbvData.dataSource = self;
+    tbvData.scrollEnabled = NO;
+    
     
     
     [dtPicker setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
@@ -99,8 +136,9 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
     
     _toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    [_toolBar setTintColor:[UIColor grayColor]];
-    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(hideDatePicker)];
+    [_toolBar setTintColor:cSystem4_10];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissKeyboard)];
+    doneBtn.tintColor = cSystem1;
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [_toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     
@@ -126,7 +164,14 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    return 4;
+    if(userAccount)
+    {
+        return 4;
+    }
+    else
+    {
+        return 5;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -139,52 +184,119 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     CustomTableViewCellText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierText];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    switch (item)
+    if(userAccount)
     {
-        case 0:
+        switch (item)
         {
-            cell.textValue.tag = 1;
-            cell.textValue.delegate = self;
-            cell.textValue.placeholder = @"อีเมลล์";
-            cell.textValue.text = _userAccount.username;
+            case 0:
+            {
+                cell.textValue.tag = 1;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"อีเมลล์";
+                cell.textValue.text = _userAccount.email;
+                cell.textValue.enabled = NO;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 1:
+            {
+                cell.textValue.tag = 3;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"ชื่อเต็ม";
+                cell.textValue.text = _userAccount.fullName;
+                cell.textValue.enabled = NO;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 2:
+            {
+                cell.textValue.tag = 4;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"วันเกิด";
+                cell.textValue.inputView = dtPicker;
+                cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 3:
+            {
+                cell.textValue.tag = 5;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"เบอร์โทร.";
+                cell.textValue.text = _userAccount.phoneNo;
+                cell.textValue.keyboardType = UIKeyboardTypePhonePad;
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 1:
+    }
+    else
+    {
+        switch (item)
         {
-            cell.textValue.tag = 2;
-            cell.textValue.delegate = self;
-            cell.textValue.placeholder = @"พาสเวิร์ด";
-            cell.textValue.text = _userAccount.password;
-            cell.textValue.secureTextEntry = YES;
+            case 0:
+            {
+                cell.textValue.tag = 1;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"อีเมลล์";
+                cell.textValue.text = _userAccount.username;
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 1:
+            {
+                cell.textValue.tag = 2;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"พาสเวิร์ด";
+                cell.textValue.text = _userAccount.password;
+                cell.textValue.secureTextEntry = YES;
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 2:
+            {
+                cell.textValue.tag = 3;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"ชื่อเต็ม";
+                cell.textValue.text = _userAccount.fullName;
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 3:
+            {
+                cell.textValue.tag = 4;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"วันเกิด";
+                cell.textValue.inputView = dtPicker;
+                cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            case 4:
+            {
+                cell.textValue.tag = 5;
+                cell.textValue.delegate = self;
+                cell.textValue.placeholder = @"เบอร์โทร.";
+                cell.textValue.text = _userAccount.phoneNo;
+                cell.textValue.keyboardType = UIKeyboardTypePhonePad;
+                cell.textValue.enabled = YES;
+                [cell.textValue setInputAccessoryView:_toolBar];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 2:
-        {
-            cell.textValue.tag = 3;
-            cell.textValue.delegate = self;
-            cell.textValue.placeholder = @"ชื่อเต็ม";
-            cell.textValue.text = _userAccount.fullName;
-        }
-            break;
-        case 3:
-        {
-            cell.textValue.tag = 4;
-            cell.textValue.delegate = self;
-            cell.textValue.placeholder = @"วันเกิด";
-            cell.textValue.inputView = dtPicker;
-            cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
-            [cell.textValue setInputAccessoryView:_toolBar];
-        }
-            break;
-        default:
-            break;
     }
     
     
-    
-    
-    cell.textLabel.text = @"กรอกบัตรเครดิต";
-    cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
     
     return cell;
 }
@@ -205,25 +317,34 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-}
-
-//-(void)validate
-//{
-//    
-//
-////    [self loadingOverlayView];
-//
-//}
-
 - (IBAction)createAccount:(id)sender
 {
-//    [self validate];
-    [self loadingOverlayView];
-
-    [self.homeModel downloadItems:dbUserAccount withData:_userAccount.username];
+    if(userAccount)//facebook login
+    {
+        if(!_userAccount.birthDate)
+        {
+            [self showAlert:@"" message:@"กรุณาระบุวันเกิด"];
+            return;
+        }
+        
+        
+        if([Utility isStringEmpty:_userAccount.phoneNo])
+        {
+            [self showAlert:@"" message:@"กรุณาระบุเบอร์โทร."];
+            return;
+        }
+        
+        _userAccount.modifiedUser = [Utility modifiedUser];
+        _userAccount.modifiedDate = [Utility currentDateTime];
+        [self.homeModel updateItems:dbUserAccount withData:userAccount actionScreen:@"update userAccount login via facebook"];
+        [self loadingOverlayView];
+    }
+    else//normal register
+    {
+        [self loadingOverlayView];
+        [self.homeModel downloadItems:dbUserAccount withData:_userAccount.username];
+    }
+    
 }
 
 - (IBAction)goBack:(id)sender
@@ -237,10 +358,16 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
     
     //validate
+    if([Utility isStringEmpty:_userAccount.username])
+    {
+        [self showAlert:@"" message:@"กรุณาระบุอีเมลล์"];
+        return;
+    }
+    
+    
     if(![Utility validateEmailWithString:_userAccount.username])
     {
-//        _validate = NO;
-        [self showAlert:@"" message:@"กรุณาระบุอีเมลล์"];
+        [self showAlert:@"" message:@"อีเมลล์ไม่ถูกต้อง"];
         return;
     }
     
@@ -266,15 +393,23 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     }
     
     
-    if([_userAccount.birthDate isEqual:[Utility notIdentifiedDate]])
+//    if([_userAccount.birthDate isEqual:[Utility notIdentifiedDate]])
+    if(!_userAccount.birthDate)
     {
         [self showAlert:@"" message:@"กรุณาระบุวันเกิด"];
+        return;
+    }
+    
+    
+    if([Utility isStringEmpty:_userAccount.phoneNo])
+    {
+        [self showAlert:@"" message:@"กรุณาระบุเบอร์โทร."];
         return;
     }
     //-----
     
     
-    UserAccount *userAccount = [[UserAccount alloc]initWithUsername:_userAccount.username password:[Utility hashTextSHA256:_userAccount.password] deviceToken:[Utility deviceToken] fullName:_userAccount.fullName nickName:@"" birthDate:_userAccount.birthDate email:_userAccount.email phoneNo:@"" lineID:@"" roleID:0];
+    UserAccount *userAccount = [[UserAccount alloc]initWithUsername:_userAccount.username password:[Utility hashTextSHA256:_userAccount.password] deviceToken:[Utility deviceToken] fullName:_userAccount.fullName nickName:@"" birthDate:_userAccount.birthDate email:_userAccount.email phoneNo:_userAccount.phoneNo lineID:@"" roleID:0];
     [self.homeModel insertItems:dbUserAccount withData:userAccount actionScreen:@"create new account"];
     [self loadingOverlayView];
 }
@@ -285,16 +420,49 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     [self showAlert:@"" message:@"สร้างบัญชีสำเร็จ" method:@selector(segUnwindToLogIn)];
 }
 
+-(void)itemsUpdated
+{
+    [self removeOverlayViews];
+    _updateBirthDateAndPhoneNo = YES;
+    
+    
+    
+    //show terms of service
+    NSDictionary *dicTosAgree = [[NSUserDefaults standardUserDefaults] valueForKey:@"tosAgree"];
+    NSString *username = _userAccount.username; //[[FBSDKAccessToken currentAccessToken] userID];
+    NSNumber *tosAgree = [dicTosAgree objectForKey:username];
+    if(tosAgree)
+    {
+        [self performSegueWithIdentifier:@"segHotDeal" sender:self];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"segTermsOfService" sender:self];
+    }
+}
+
 -(void)segUnwindToLogIn
 {
     [self performSegueWithIdentifier:@"segUnwindToLogIn" sender:self];
 }
 
--(void)hideDatePicker
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [dtPicker removeFromSuperview];
-    [_toolBar removeFromSuperview];
-    UITextField *txtBirthDate = [self.view viewWithTag:4];
-    [txtBirthDate resignFirstResponder];
+    if([[segue identifier] isEqualToString:@"segTermsOfService"])
+    {
+        TermsOfServiceViewController *vc = segue.destinationViewController;
+        vc.username = _userAccount.email;
+    }
+}
+//-(void)hideDatePicker
+//{
+//    [dtPicker removeFromSuperview];
+//    [_toolBar removeFromSuperview];
+//    UITextField *txtBirthDate = [self.view viewWithTag:4];
+//    [txtBirthDate resignFirstResponder];
+//}
+-(void)dismissKeyboard
+{
+    [self.view endEditing:YES];
 }
 @end

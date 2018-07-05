@@ -10,6 +10,7 @@
 
 @interface LaunchScreenViewController : CustomViewController
 @property (strong, nonatomic) UIProgressView *progressBar;
+@property (strong, nonatomic) IBOutlet UILabel *lblAppStoreVersion;
 
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue;

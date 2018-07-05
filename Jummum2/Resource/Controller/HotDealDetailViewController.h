@@ -7,12 +7,12 @@
 //
 
 #import "CustomViewController.h"
-#import "HotDeal.h"
+#import "Promotion.h"
 
 
 @interface HotDealDetailViewController : CustomViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
-@property (strong, nonatomic) HotDeal *hotDeal;
+@property (strong, nonatomic) Promotion *promotion;
 
 
 - (IBAction)goBack:(id)sender;

@@ -10,16 +10,19 @@
 #import "HotDealDetailViewController.h"
 #import "CustomTableViewCellPromoBanner.h"
 #import "CustomTableViewCellPromoThumbNail.h"
-#import "HotDeal.h"
+#import "Promotion.h"
 #import "Branch.h"
+#import "Receipt.h"
 
 
 @interface HotDealViewController ()
 {
-    NSMutableArray *_hotDealList;
-    NSMutableArray *_filterHotDealList;
+    NSMutableArray *_promotionList;
+    NSMutableArray *_filterPromotionList;
+    HomeModel *_homeModelDownload;
     
-    HotDeal *_hotDeal;
+    Promotion *_promotion;
+    BOOL _lastItemReached;
 }
 @property (nonatomic)        BOOL           searchBarActive;
 @end
@@ -38,16 +41,30 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    //เพิ่งสั่งอาหารร้านนี้ไปครั้งแรก ในหน้านี้ก็จะ โหลดข้อมูล hotdeal จาก db ของร้านนี้มาแสดง
+    NSInteger branchID = [Receipt getBranchIDWithMaxModifiedDateWithMemberID:userAccount.userAccountID];
+    [self.homeModel downloadItems:dbHotDealWithBranchID withData:@[userAccount,@(branchID),@([_promotionList count])]];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    [self.homeModel downloadItems:dbHotDeal withData:userAccount];
+    [self.homeModel downloadItems:dbHotDeal withData:@[userAccount,@0]];
     tbvData.delegate = self;
     tbvData.dataSource = self;
-//    tbvData.backgroundColor = cSystem4_10;
+
     
     
     
@@ -74,7 +91,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     
-    return [_filterHotDealList count];
+    return [_filterPromotionList count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -90,12 +107,13 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     NSInteger item = indexPath.item;
     
     
-    HotDeal *hotDeal = _filterHotDealList[section];
-    if(hotDeal.branchID == 0)
+
+    Promotion *promotion = _filterPromotionList[section];
+    if(promotion.type == 0)
     {
         CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.lblHeader.text = hotDeal.header;
+        cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>43?43:cell.lblHeader.frame.size.height;
         
@@ -103,13 +121,14 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        cell.lblSubTitle.text = hotDeal.subTitle;
+        cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
 
         
         
-        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
+        Branch *branch = [Branch getBranch:promotion.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -124,24 +143,32 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         NSLog(@"imgVwValueTop :%f",cell.imgVwValueTop.constant);
         
         
+        if (!_lastItemReached && section == [_filterPromotionList count]-1)
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbHotDeal withData:@[userAccount,@([_promotionList count])]];
+        }
         return cell;
     }
     else
     {
         CustomTableViewCellPromoThumbNail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoThumbNail];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.lblHeader.text = hotDeal.header;
+        cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>90?90:cell.lblHeader.frame.size.height;
         
         
-        cell.lblSubTitle.text = hotDeal.subTitle;
+        cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = 90-8-cell.lblHeaderHeight.constant<0?0:90-8-cell.lblHeaderHeight.constant;
         
         
         
-        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
+        Branch *branch = [Branch getBranch:promotion.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -152,6 +179,14 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
          }];
         
         
+        
+        if (!_lastItemReached && section == [_filterPromotionList count]-1)
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbHotDeal withData:@[userAccount,@([_promotionList count])]];
+        }
         return cell;
     }
     
@@ -165,13 +200,11 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     NSInteger item = indexPath.item;
     
     
-    HotDeal *hotDeal = _filterHotDealList[section];
-    if(hotDeal.branchID == 0)
+    Promotion *promotion = _filterPromotionList[section];
+    if(promotion.type == 0)
     {
-        HotDeal *hotDeal = _filterHotDealList[section];
-        
-        CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
-        cell.lblHeader.text = hotDeal.header;
+       CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
+        cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>43?43:cell.lblHeader.frame.size.height;
         
@@ -179,13 +212,14 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        cell.lblSubTitle.text = hotDeal.subTitle;
+        cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
         
         
         
-        NSString *imageFileName = [Utility isStringEmpty:hotDeal.imageUrl]?@"NoImage.jpg":hotDeal.imageUrl;
+        Branch *branch = [Branch getBranch:promotion.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -218,7 +252,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     NSInteger section = indexPath.section;
     NSInteger item = indexPath.item;
     
-    _hotDeal = _filterHotDealList[section];
+    _promotion = _filterPromotionList[section];
     [self performSegueWithIdentifier:@"segHotDealDetail" sender:self];
     
 }
@@ -228,7 +262,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     if([[segue identifier] isEqualToString:@"segHotDealDetail"])
     {
         HotDealDetailViewController *vc = segue.destinationViewController;
-        vc.hotDeal = _hotDeal;
+        vc.promotion = _promotion;
     }
 }
 
@@ -238,13 +272,13 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 {
     if([Utility isStringEmpty:searchText])
     {
-        _filterHotDealList = _hotDealList;
+        _filterPromotionList = _promotionList;
         [tbvData reloadData];
     }
     else
     {
         NSPredicate *resultPredicate   = [NSPredicate predicateWithFormat:@"(_branchName contains[c] %@)", searchText];
-        _filterHotDealList = [[_hotDealList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+        _filterPromotionList = [[_promotionList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
     }
     
 }
@@ -272,11 +306,13 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 {
     [self cancelSearching];
 }
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.searchBarActive = YES;
     [self.view endEditing:YES];
 }
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     // we used here to set self.searchBarActive = YES
@@ -286,6 +322,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     UISearchBar *sbText = [self.view viewWithTag:300];
     [sbText setShowsCancelButton:YES animated:YES];
 }
+
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     // this method is being called when search btn in the keyboard tapped
@@ -297,6 +334,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     UISearchBar *sbText = [self.view viewWithTag:300];
     [sbText setShowsCancelButton:NO animated:YES];
 }
+
 -(void)cancelSearching
 {
     UISearchBar *sbText = [self.view viewWithTag:300];
@@ -304,19 +342,37 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     [sbText resignFirstResponder];
     sbText.text  = @"";
     [self filterContentForSearchText:sbText.text scope:@""];
-    
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    _hotDealList = items[0];
-    _filterHotDealList = _hotDealList;
-    for(HotDeal *item in _filterHotDealList)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbHotDeal)
     {
-        Branch *branch = [Branch getBranch:item.branchID];
-        item.branchName = branch.name;
+        if([items[0] count] == 0)
+        {
+            _lastItemReached = YES;
+            return;
+        }
+        if(!_promotionList)
+        {
+            _promotionList = [[NSMutableArray alloc]init];
+        }
+        [_promotionList addObjectsFromArray:items[0]];
+        _promotionList = [Promotion sortWithdataList:_promotionList];
+        [self searchBar:searchBar textDidChange:searchBar.text];
     }
-    
-    [tbvData reloadData];
+    else if(homeModel.propCurrentDB == dbHotDealWithBranchID)
+    {
+        //add update
+        NSMutableArray *promotionList = items[0];
+        BOOL update = [Utility updateDataList:promotionList dataList:_promotionList];
+        _promotionList = [Promotion sortWithdataList:_promotionList];
+        if(update)
+        {
+            [self searchBar:searchBar textDidChange:searchBar.text];
+        }
+    }
 }
+
 @end

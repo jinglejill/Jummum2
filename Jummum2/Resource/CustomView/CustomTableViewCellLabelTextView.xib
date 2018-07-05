@@ -58,6 +58,7 @@
             <connections>
                 <outlet property="lblTitle" destination="aPv-0F-OAf" id="X7e-fu-Rdc"/>
                 <outlet property="txvValue" destination="YDC-eN-9bU" id="SNo-tf-FNT"/>
+                <outlet property="txvValueHeight" destination="Akc-Zc-37S" id="w8c-i3-uZk"/>
             </connections>
             <point key="canvasLocation" x="34" y="190.5"/>
         </tableViewCell>

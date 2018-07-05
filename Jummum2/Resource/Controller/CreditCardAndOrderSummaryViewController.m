@@ -125,7 +125,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 {
     if(fromReceiptSummaryMenu)
     {
-        [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+//        [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+        //go back in order to add more menu from selected bill
+        [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
     }
     else
     {
@@ -254,7 +256,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    NSLog(@"self.view: %f,%f,%f,%f",self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.size.width,self.view.frame.size.height);
+//    NSLog(@"self.view: %f,%f,%f,%f",self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.size.width,self.view.frame.size.height);
 }
 
 -(void)loadView

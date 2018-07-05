@@ -28,7 +28,8 @@
 #import "UserRewardRedemptionUsed.h"
 #import "DisputeReason.h"
 #import "Dispute.h"
-//#import "TestPassword.h"
+#import "Comment.h"
+#import "RecommendShop.h"
 
 
 @interface HomeModel()
@@ -123,13 +124,15 @@
         }
             break;
         case dbRewardPoint:
+        case dbRewardRedemptionWithBranchID:
         {
             arrClassName = @[@"RewardPoint",@"RewardRedemption"];
         }
             break;
         case dbHotDeal:
+        case dbHotDealWithBranchID:
         {
-            arrClassName = @[@"HotDeal"];
+            arrClassName = @[@"Promotion"];
         }
             break;
         case dbRewardPointSpent:
@@ -173,6 +176,11 @@
             arrClassName = @[@"Dispute"];
         }
         break;
+        case dbBranch:
+        {
+            arrClassName = @[@"Branch",@"CustomerTable"];
+        }
+            break;
         default:
             break;
     }
@@ -238,7 +246,14 @@
             // Ready to notify delegate that data is ready and pass back items
             if (self.delegate)
             {
-                [self.delegate itemsDownloaded:arrItem];
+                if(propCurrentDB == dbHotDeal || propCurrentDB == dbHotDealWithBranchID || propCurrentDB == dbReceiptSummary || propCurrentDB == dbReceiptMaxModifiedDate ||propCurrentDB == dbRewardPoint || propCurrentDB == dbRewardRedemptionWithBranchID)
+                {
+                    [self.delegate itemsDownloaded:arrItem manager:self];
+                }
+                else
+                {
+                    [self.delegate itemsDownloaded:arrItem];
+                }
             }
         }
     }
@@ -430,7 +445,7 @@
             UserAccount *userAccount = dataList[1];
             Branch *branch = dataList[2];
             float totalAmount = [dataList[3] floatValue];
-            noteDataString = [NSString stringWithFormat:@"voucherCode=%@&userAccountID=%ld&mainBranchID=%ld&totalAmount=%f",strVoucherCode,userAccount.userAccountID,branch.mainBranchID,totalAmount];
+            noteDataString = [NSString stringWithFormat:@"voucherCode=%@&userAccountID=%ld&branchID=%ld&totalAmount=%f",strVoucherCode,userAccount.userAccountID,branch.branchID,totalAmount];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlPromotionGetList]]];
         }
             break;
@@ -442,8 +457,10 @@
             break;
         case dbRewardPoint:
         {
-            UserAccount *userAccount = (UserAccount *)data;
-            noteDataString = [NSString stringWithFormat:@"memberID=%ld",userAccount.userAccountID];
+            NSArray *dataList = (NSArray *)data;
+            UserAccount *userAccount = (UserAccount *)dataList[0];
+            NSNumber *rewardRedemptionListCount = dataList[1];
+            noteDataString = [NSString stringWithFormat:@"memberID=%ld&rewardRedemptionListCount=%ld",userAccount.userAccountID,[rewardRedemptionListCount integerValue]];            
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardPointGet]]];
         }
             break;
@@ -481,9 +498,33 @@
         break;
         case dbHotDeal:
         {
-            UserAccount *userAccount = (UserAccount *)data;
-            noteDataString = [NSString stringWithFormat:@"memberID=%ld",userAccount.userAccountID];
+            NSArray *dataList = (NSArray *)data;
+            UserAccount *userAccount = (UserAccount *)dataList[0];
+            NSNumber *promotionListCount = dataList[1];
+            noteDataString = [NSString stringWithFormat:@"memberID=%ld&promotionListCount=%ld",userAccount.userAccountID,[promotionListCount integerValue]];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlHotDealGetList]]];
+        }
+            break;
+        case dbHotDealWithBranchID:
+        {
+            NSArray *dataList = (NSArray *)data;
+            UserAccount *userAccount = (UserAccount *)dataList[0];
+//            Receipt *receipt = (Receipt *)dataList[1];
+            NSNumber *objBranchID = (NSNumber *)dataList[1];
+            NSNumber *promotionListCount = dataList[2];
+            noteDataString = [NSString stringWithFormat:@"memberID=%ld&branchID=%ld&promotionListCount=%ld",userAccount.userAccountID,[objBranchID integerValue],[promotionListCount integerValue]];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlHotDealWithBranchGetList]]];
+        }
+            break;
+        case dbRewardRedemptionWithBranchID:
+        {
+            NSArray *dataList = (NSArray *)data;
+            UserAccount *userAccount = (UserAccount *)dataList[0];
+//            Receipt *receipt = (Receipt *)dataList[1];
+            NSNumber *objBranchID = (NSNumber *)dataList[1];
+            NSNumber *rewardRedemptionListCount = dataList[2];
+            noteDataString = [NSString stringWithFormat:@"memberID=%ld&branchID=%ld&rewardRedemptionListCount=%ld",userAccount.userAccountID,[objBranchID integerValue],[rewardRedemptionListCount integerValue]];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardRedemptionWithBranchGetList]]];
         }
             break;
         case dbReceiptMaxModifiedDate:
@@ -523,6 +564,14 @@
             Receipt *receipt = (Receipt *)data;
             noteDataString = [NSString stringWithFormat:@"receiptID=%ld&status=%ld",receipt.receiptID,receipt.status];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlDisputeGetList]]];
+        }
+            break;
+        case dbBranch:
+        {
+//            Branch *branch = (Branch *)data;
+            NSDate *modifiedDate = (NSDate *)data;
+            noteDataString = [NSString stringWithFormat:@"modifiedDate=%@",modifiedDate];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchGetList]]];
         }
             break;
         default:
@@ -878,22 +927,48 @@
             url = [NSURL URLWithString:[Utility url:urlDisputeInsertList]];
         }
             break;
-//        case dbTestPasswordList:
-//        {
-//            NSMutableArray *testPasswordList = (NSMutableArray *)data;
-//            NSInteger countTestPassword = 0;
-//
-//            noteDataString = [NSString stringWithFormat:@"countTestPassword=%ld",[testPasswordList count]];
-//            for(TestPassword *item in testPasswordList)
-//            {
-//                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countTestPassword]];
-//                countTestPassword++;
-//            }
-//
-//            url = [NSURL URLWithString:[Utility url:urlTestPasswordInsertList]];
-//        }
-//
-//            break;
+        case dbComment:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlCommentInsert]];
+        }
+            break;
+        case dbCommentList:
+        {
+            NSMutableArray *commentList = (NSMutableArray *)data;
+            NSInteger countComment = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countComment=%ld",[commentList count]];
+            for(Comment *item in commentList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countComment]];
+                countComment++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlCommentInsertList]];
+        }
+            break;
+        case dbRecommendShop:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopInsert]];
+        }
+            break;
+        case dbRecommendShopList:
+        {
+            NSMutableArray *recommendShopList = (NSMutableArray *)data;
+            NSInteger countRecommendShop = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRecommendShop=%ld",[recommendShopList count]];
+            for(RecommendShop *item in recommendShopList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRecommendShop]];
+                countRecommendShop++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopInsertList]];
+        }
+            break;
         default:
             break;
     }
@@ -1267,6 +1342,54 @@
             url = [NSURL URLWithString:[Utility url:urlReceiptUpdate]];
         }
         break;
+        case dbComment:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlCommentUpdate]];
+        }
+            break;
+        case dbCommentList:
+        {
+            NSMutableArray *commentList = (NSMutableArray *)data;
+            NSInteger countComment = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countComment=%ld",[commentList count]];
+            for(Comment *item in commentList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countComment]];
+                countComment++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlCommentUpdateList]];
+        }
+            break;
+        case dbRecommendShop:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopUpdate]];
+        }
+            break;
+        case dbRecommendShopList:
+        {
+            NSMutableArray *recommendShopList = (NSMutableArray *)data;
+            NSInteger countRecommendShop = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRecommendShop=%ld",[recommendShopList count]];
+            for(RecommendShop *item in recommendShopList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRecommendShop]];
+                countRecommendShop++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopUpdateList]];
+        }
+            break;
+        case dbUserAccount:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlUserAccountUpdate]];
+        }
+            break;
         default:
             break;
     }
@@ -1561,7 +1684,27 @@
             url = [NSURL URLWithString:[Utility url:urlDisputeDeleteList]];
         }
             break;
-
+        case dbRecommendShop:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopDelete]];
+        }
+            break;
+        case dbRecommendShopList:
+        {
+            NSMutableArray *recommendShopList = (NSMutableArray *)data;
+            NSInteger countRecommendShop = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRecommendShop=%ld",[recommendShopList count]];
+            for(RecommendShop *item in recommendShopList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRecommendShop]];
+                countRecommendShop++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRecommendShopDeleteList]];
+        }
+            break;
         default:
             break;
     }

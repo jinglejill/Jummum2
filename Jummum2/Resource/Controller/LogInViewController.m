@@ -8,6 +8,7 @@
 
 #import "LogInViewController.h"
 #import "TermsOfServiceViewController.h"
+#import "RegisterNowViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
@@ -27,6 +28,7 @@
     NSString *_username;
     NSMutableArray *allComments;
     BOOL _autoLogIn;
+    UserAccount *_userAccount;
 }
 @end
 
@@ -82,6 +84,11 @@
     {
         _autoLogIn = YES;
     }
+    if([Utility isStringEmpty:txtEmail.text] && [Utility isStringEmpty:txtPassword.text])
+    {
+        [self showAlert:@"" message:@"กรุณาใส่อีเมลและพาสเวิร์ด"];
+        return;
+    }
     txtEmail.text = [Utility trimString:txtEmail.text];
     txtPassword.text = [Utility trimString:txtPassword.text];
     [Utility setModifiedUser:txtEmail.text];
@@ -98,8 +105,15 @@
     
 }
 
+
 - (IBAction)registerNow:(id)sender
 {
+    //test
+//    BOOL turnOnRemote = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+//    NSLog(@"turn on remote push: %ld",turnOnRemote);
+//    NSString *iTunesLink = @"https://itunes.apple.com/th/app/the-1-card/id442873215?mt=8";
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    
     [self performSegueWithIdentifier:@"segRegisterNow" sender:self];
 }
 
@@ -111,9 +125,17 @@
 -(IBAction)unwindToLogIn:(UIStoryboardSegue *)segue
 {
     if([segue.sourceViewController isMemberOfClass:[TermsOfServiceViewController class]])
-    {        
+    {
+        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logInSession"];
         [FBSDKAccessToken setCurrentAccessToken:nil];
     }
+    else if([segue.sourceViewController isMemberOfClass:[RegisterNowViewController class]])
+    {
+        [FBSDKAccessToken setCurrentAccessToken:nil];
+        _faceBookLogIn = NO;
+    }
+        
+        
     if (![FBSDKAccessToken currentAccessToken])
     {
         _faceBookLogIn = NO;
@@ -136,6 +158,10 @@
     {
         [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
         _rememberMe = NO;
+        
+        
+        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
+        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
     }
 }
 
@@ -178,7 +204,7 @@
     //facebook
     _loginButton = [[FBSDKLoginButton alloc] init];
     _loginButton.delegate = self;
-    _loginButton.readPermissions = @[@"public_profile", @"email",@"user_friends",@"user_birthday",@"user_likes",];
+    _loginButton.readPermissions = @[@"public_profile", @"email"];
 //    _loginButton.readPermissions = @[@"public_profile", @"email",@"user_friends",@"user_birthday",@"user_about_me",@"user_likes",@"user_work_history"];
     
     
@@ -194,6 +220,13 @@
     {
         _appLogIn = YES;
     }
+    
+    
+    
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture setCancelsTouchesInView:NO];
 }
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
@@ -245,7 +278,7 @@
                  
                  //1.insert userlogin
                  //2.insert useraccount if not exist
-                 NSString *modifiedUser = [NSString stringWithFormat:@"%@",result[@"id"]];
+                 NSString *modifiedUser = [NSString stringWithFormat:@"%@",result[@"email"]];
                  [Utility setModifiedUser:modifiedUser];
                  LogIn *logIn = [[LogIn alloc]initWithUsername:result[@"id"] status:1 deviceToken:[Utility deviceToken]];
                  UserAccount *userAccount = [[UserAccount alloc]initWithUsername:result[@"id"] password:txtPassword.text deviceToken:[Utility deviceToken] fullName:result[@"name"] nickName:@"" birthDate:birthday email:result[@"email"] phoneNo:@"" lineID:@"" roleID:0];
@@ -265,7 +298,7 @@
 -(void)itemsInsertedWithReturnData:(NSArray *)items;
 {
     [self removeOverlayViews];
-    if(self.homeModel.propCurrentDBInsert == dbUserAccountValidate)
+    if(self.homeModel.propCurrentDBInsert == dbUserAccountValidate)//jummum login
     {
         if([items count] > 0 && [items[0] count] == 0)
         {
@@ -303,13 +336,13 @@
                     }
                     else
                     {
-                        if(_autoLogIn)
+//                        if(_autoLogIn)
                         {
 //
                             [UIView setAnimationsEnabled:NO];
                             self.view.hidden = YES;
                             
-                            [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+                            [self performSegueWithIdentifier:@"segHotDeal" sender:self];
                             
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                 [UIView setAnimationsEnabled:YES];
@@ -326,23 +359,29 @@
             }
         }
     }
-    else if(self.homeModel.propCurrentDBInsert == dbLogInUserAccount)
+    else if(self.homeModel.propCurrentDBInsert == dbLogInUserAccount)//facebook
     {
         //insert useraccount,receipt,ordertaking,ordernote,menu to sharedObject
         NSMutableArray *userAccountList = items[0];
-        [UserAccount setCurrentUserAccount:userAccountList[0]];
+        UserAccount *userAccount = userAccountList[0];
+        _userAccount = userAccount;
+        [UserAccount setCurrentUserAccount:userAccount];
         [Utility addToSharedDataList:items];
-        
+        if([Utility isStringEmpty:userAccount.phoneNo] || !userAccount.birthDate)
+        {
+            //go to register page
+            [self performSegueWithIdentifier:@"segRegisterNowFacebook" sender:self];
+            return;
+        }
         
         
         //show terms of service
         NSDictionary *dicTosAgree = [[NSUserDefaults standardUserDefaults] valueForKey:@"tosAgree"];
-        NSString *username = [[FBSDKAccessToken currentAccessToken] userID];
+        NSString *username = _userAccount.username;
         NSNumber *tosAgree = [dicTosAgree objectForKey:username];
         if(tosAgree)
         {
-//            NSLog(@"perform segue");
-            [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+            [self performSegueWithIdentifier:@"segHotDeal" sender:self];
         }
         else
         {
@@ -365,8 +404,12 @@
             vc.username = txtEmail.text;
         }
     }
+    else if([[segue identifier] isEqualToString:@"segRegisterNowFacebook"])
+    {
+        RegisterNowViewController *vc = segue.destinationViewController;
+        vc.userAccount = _userAccount;
+    }
 }
-
 
 @end
 

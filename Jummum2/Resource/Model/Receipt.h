@@ -73,4 +73,5 @@
 +(NSString *)getStrStatus:(Receipt *)receipt;
 +(UIColor *)getStatusColor:(Receipt *)receipt;
 +(NSInteger)getStateBeforeLast:(Receipt *)receipt;
++(NSInteger)getBranchIDWithMaxModifiedDateWithMemberID:(NSInteger)memberID;
 @end

@@ -71,7 +71,8 @@ extern NSString *globalModifiedUser;
 
 + (BOOL)validateEmailWithString:(NSString*)email
 {
-    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+//    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSString *emailRegex = @"\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:email];
 }
@@ -280,6 +281,9 @@ extern NSString *globalModifiedUser;
         case urlUserAccountInsert:
             url = @"/JMM/JUMMUM3/JMMUserAccountInsert.php";
             break;
+        case urlUserAccountUpdate:
+            url = @"/JMM/JUMMUM3/JMMUserAccountUpdate.php";
+            break;
         case urlTermsOfService:
             url = @"/JMM/JUMMUM3/HtmlTermsOfService.html";
             break;
@@ -454,9 +458,48 @@ extern NSString *globalModifiedUser;
         case urlReceiptUpdate:
             url = @"/JMM/JUMMUM3/JMMReceiptUpdate.php";
             break;
-//        case urlTestPasswordInsertList:
-//            url = @"/JMM/JUMMUM3/JMMTestPasswordInsertList.php";
-//            break;
+        case urlBranchGetList:
+            url = @"/JMM/JUMMUM3/JMMBranchGetList.php";
+            break;
+        case urlHotDealWithBranchGetList:
+            url = @"/JMM/JUMMUM3/JMMHotDealWithBranchIDGetList.php";
+            break;
+        case urlCommentInsert:
+            url = @"/JMM/JUMMUM3/JMMCommentInsert.php";
+            break;
+        case urlCommentUpdate:
+            url = @"/JMM/JUMMUM3/JMMCommentUpdate.php";
+            break;
+        case urlCommentDelete:
+            url = @"/JMM/JUMMUM3/JMMCommentDelete.php";
+            break;
+        case urlCommentInsertList:
+            url = @"/JMM/JUMMUM3/JMMCommentInsertList.php";
+            break;
+        case urlCommentUpdateList:
+            url = @"/JMM/JUMMUM3/JMMCommentUpdateList.php";
+            break;
+        case urlCommentDeleteList:
+            url = @"/JMM/JUMMUM3/JMMCommentDeleteList.php";
+            break;
+        case urlRecommendShopInsert:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopInsert.php";
+            break;
+        case urlRecommendShopUpdate:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopUpdate.php";
+            break;
+        case urlRecommendShopDelete:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopDelete.php";
+            break;
+        case urlRecommendShopInsertList:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopInsertList.php";
+            break;
+        case urlRecommendShopUpdateList:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopUpdateList.php";
+            break;
+        case urlRecommendShopDeleteList:
+            url = @"/JMM/JUMMUM3/JMMRecommendShopDeleteList.php";
+            break;
         default:
             break;
     }
@@ -1782,6 +1825,186 @@ extern NSString *globalModifiedUser;
     return [NSString stringWithFormat:@"XXXX XXXX XXXX %@",last4Digit];
 }
 
++(void)updateSharedObject:(NSArray *)arrOfObjectList
+{
+    for(NSArray *itemList in arrOfObjectList)
+    {
+        for(NSObject *object in itemList)
+        {
+            [self addUpdateObject:object];
+        }
+    }
+}
+
++ (void)addUpdateObject:(NSObject *)object
+{
+    Class classDB = [object class];
+    NSString *className = NSStringFromClass(classDB);
+    Class class = NSClassFromString([NSString stringWithFormat:@"Shared%@",className]);
+    SEL selector = NSSelectorFromString([NSString stringWithFormat:@"shared%@",className]);
+    SEL selectorList = NSSelectorFromString([NSString stringWithFormat:@"%@List",[Utility makeFirstLetterLowerCase:className]]);
+    NSMutableArray *dataList = [[class performSelector:selector] performSelector:selectorList];
+    
+    
+    NSString *propertyName = [NSString stringWithFormat:@"%@ID",[Utility makeFirstLetterLowerCase:className]];
+    NSString *propertyNamePredicate = [NSString stringWithFormat:@"_%@",propertyName];
+    NSInteger value = [[object valueForKey:propertyName] integerValue];
+
+
+    NSArray *filterArray;
+    if(![className isEqualToString:@"Branch"])
+    {
+        NSNumber *objBranchID = [object valueForKey:@"branchID"];
+        if(!objBranchID)
+        {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %ld",propertyNamePredicate,value];
+            filterArray = [dataList filteredArrayUsingPredicate:predicate];
+        }
+        else
+        {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %ld and branchID = %ld",propertyNamePredicate,value,[objBranchID integerValue]];
+            filterArray = [dataList filteredArrayUsingPredicate:predicate];
+        }
+    }
+    else
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %ld",propertyNamePredicate,value];
+        filterArray = [dataList filteredArrayUsingPredicate:predicate];
+    }
+    
+    
+    
+    if([filterArray count]==0)
+    {
+        [dataList addObject:object];
+    }
+    else
+    {
+        NSObject *filterObject = filterArray[0];
+        NSDate *dateObject = [object valueForKey:@"modifiedDate"];
+        NSDate *dateFilterObject = [filterObject valueForKey:@"modifiedDate"];
+        NSComparisonResult result = [dateFilterObject compare:dateObject];
+        if(result == NSOrderedAscending)
+        {
+            //update
+            unsigned int propertyCount = 0;
+            objc_property_t * properties = class_copyPropertyList([object class], &propertyCount);
+            
+            for (unsigned int i = 0; i < propertyCount; ++i)
+            {
+                objc_property_t property = properties[i];
+                const char * name = property_getName(property);
+                NSString *key = [NSString stringWithUTF8String:name];
+                
+                
+                [filterObject setValue:[object valueForKey:key] forKey:key];
+            }
+        }
+    }
+}
+
++(BOOL)updateDataList:(NSArray *)itemList dataList:(NSMutableArray *)dataList
+{
+    BOOL update = 0;
+    for(NSObject *object in itemList)
+    {
+//        [self addUpdateObject:object dataList:dataList];
+        Class classDB = [object class];
+        NSString *className = NSStringFromClass(classDB);
+        
+        
+        NSString *propertyName = [NSString stringWithFormat:@"%@ID",[Utility makeFirstLetterLowerCase:className]];
+        NSString *propertyNamePredicate = [NSString stringWithFormat:@"_%@",propertyName];
+        NSInteger value = [[object valueForKey:propertyName] integerValue];
+        
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %ld",propertyNamePredicate,value];
+        NSArray *filterArray = [dataList filteredArrayUsingPredicate:predicate];
+        
+        
+        
+        if([filterArray count]==0)
+        {
+            update = 1;
+            [dataList addObject:object];
+        }
+        else
+        {
+            NSObject *filterObject = filterArray[0];
+            NSDate *dateObject = [object valueForKey:@"modifiedDate"];
+            NSDate *dateFilterObject = [filterObject valueForKey:@"modifiedDate"];
+            NSComparisonResult result = [dateFilterObject compare:dateObject];
+            if(result == NSOrderedAscending)
+            {
+                //update
+                update = 1;
+                unsigned int propertyCount = 0;
+                objc_property_t * properties = class_copyPropertyList([object class], &propertyCount);
+                
+                for (unsigned int i = 0; i < propertyCount; ++i)
+                {
+                    objc_property_t property = properties[i];
+                    const char * name = property_getName(property);
+                    NSString *key = [NSString stringWithUTF8String:name];
+                    
+                    
+                    [filterObject setValue:[object valueForKey:key] forKey:key];
+                }
+            }
+        }
+    }
+    return update;
+}
+
++ (void)addUpdateObject:(NSObject *)object dataList:(NSMutableArray *)dataList
+{
+    
+}
+
++(void)updateItemIfModify:(NSObject *)object
+{
+    Class classDB = [object class];
+    NSString *className = NSStringFromClass(classDB);
+    Class class = NSClassFromString([NSString stringWithFormat:@"Shared%@",className]);
+    SEL selector = NSSelectorFromString([NSString stringWithFormat:@"shared%@",className]);
+    SEL selectorList = NSSelectorFromString([NSString stringWithFormat:@"%@List",[Utility makeFirstLetterLowerCase:className]]);
+    NSMutableArray *dataList = [[class performSelector:selector] performSelector:selectorList];
+    
+    
+    NSString *propertyName = [NSString stringWithFormat:@"%@ID",[Utility makeFirstLetterLowerCase:className]];
+    NSString *propertyNamePredicate = [NSString stringWithFormat:@"_%@",propertyName];
+    NSInteger value = [[object valueForKey:propertyName] integerValue];
+    
+    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %ld",propertyNamePredicate,value];
+    NSArray *filterArray = [dataList filteredArrayUsingPredicate:predicate];
+    
+    
+    if([filterArray count]>0)
+    {
+        NSObject *filterObject = filterArray[0];
+        NSDate *dateObject = [object valueForKey:@"modifiedDate"];
+        NSDate *dateFilterObject = [filterObject valueForKey:@"modifiedDate"];
+        NSComparisonResult result = [dateFilterObject compare:dateObject];
+        if(result == NSOrderedAscending)
+        {
+            //update
+            unsigned int propertyCount = 0;
+            objc_property_t * properties = class_copyPropertyList([object class], &propertyCount);
+            
+            for (unsigned int i = 0; i < propertyCount; ++i)
+            {
+                objc_property_t property = properties[i];
+                const char * name = property_getName(property);
+                NSString *key = [NSString stringWithUTF8String:name];
+                
+                
+                [filterObject setValue:[object valueForKey:key] forKey:key];
+            }
+        }
+    }
+}
 @end
 
 

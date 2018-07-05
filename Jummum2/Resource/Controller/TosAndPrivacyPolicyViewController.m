@@ -61,15 +61,18 @@
     
     if(pageType == 1)
     {
-        lblNavTitle.text = @"ข้อกำหนดและเงื่อนไขของ Jummum";
+        lblNavTitle.text = @"ข้อกำหนดและเงื่อนไขของ JUMMUM";
         [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlTermsOfService.html"];
-//        [self webViewLoadUrl:[Utility url:urlTermsOfService]];
     }
-    else
+    else if(pageType == 2)
     {
         lblNavTitle.text = @"นโยบายความเป็นส่วนตัว";
         [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlPrivacyPolicy.html"];
-        //        [self webViewLoadUrl:[Utility url:urlPrivacyPolicy]];
+    }
+    else if(pageType == 3)
+    {
+        lblNavTitle.text = @"ติดต่อ JUMMUM";
+        [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlContactUs.html"];
     }
     
     [self addWebView:webViewContainer];

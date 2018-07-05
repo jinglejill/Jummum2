@@ -19,6 +19,8 @@
     NSArray *_meImageList;
     NSArray *_aboutUsList;
     NSArray *_aboutUsImageList;
+    NSArray *_logOutList;
+    NSArray *_logOutImageList;
     NSInteger _pageType;
 }
 @end
@@ -40,10 +42,12 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 {
     [super loadView];
     
-    _meList = @[@"ประวัติการสั่งอาหาร",@"บัตรเครดิต/เดบิต"];//,@"ข้อมูลส่วนตัว",,@"แต้มสะสม/แลกของรางวัล"
-    _meImageList = @[@"history.png",@"creditCard.png"];//,@"personalData.png",@"gift.png"
-    _aboutUsList = @[@"ข้อกำหนดและเงื่อนไข",@"นโยบายความเป็นส่วนตัว",@"Log out"];
-    _aboutUsImageList = @[@"termsOfService.png",@"privacyPolicy.png",@"logOut.png"];
+    _meList = @[@"ประวัติการสั่งอาหาร",@"บัตรเครดิต/เดบิต",@"ข้อกำหนดและเงื่อนไข",@"นโยบายความเป็นส่วนตัว"];//,@"ข้อมูลส่วนตัว",,@"แต้มสะสม/แลกของรางวัล"
+    _meImageList = @[@"history.png",@"creditCard.png",@"termsOfService.png",@"privacyPolicy.png"];//,@"personalData.png",@"gift.png"
+    _aboutUsList = @[@"แนะนำร้านอาหาร",@"แนะนำติชม",@"ติดต่อ JUMMUM",@"Log out"];
+    _aboutUsImageList = @[@"recommendShop.png",@"comment.png",@"contactUs.png",@"logOut.png"];
+    _logOutList = @[@"Log out"];
+    _logOutImageList = @[@"logOut.png"];
     tbvMe.delegate = self;
     tbvMe.dataSource = self;
     
@@ -85,10 +89,14 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         {
             return [_meList count];
         }
-        else
+        else if (section == 2)
         {
             return [_aboutUsList count];
         }
+//        else if (section == 3)
+//        {
+//            return [_logOutList count];
+//        }
     }
     return 0;
 }
@@ -101,18 +109,19 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     
     if([tableView isEqual:tbvMe])
     {
-        
-        
-        
+     
         if(section == 0)
         {
             CustomTableViewCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierProfile];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            //            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
             
             cell.imgValue.layer.cornerRadius = 35;
             cell.imgValue.layer.masksToBounds = YES;
             cell.imgValue.layer.borderWidth = 0;
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            cell.lblEmail.text = userAccount.email;
+            
             
             return cell;
         }
@@ -127,7 +136,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
             cell.lblText.textColor = cSystem1;
             return cell;
         }
-        else
+        else if (section == 2)
         {
             CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -138,6 +147,17 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
             cell.lblText.textColor = cSystem1;
             return cell;
         }
+//        else if (section == 3)
+//        {
+//            CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//
+//            cell.imgVwIcon.image = [UIImage imageNamed:_logOutImageList[item]];
+//            cell.lblText.text = _logOutList[item];
+//            cell.lblText.textColor = cSystem1;
+//            return cell;
+//        }
     }
     
     return nil;
@@ -189,42 +209,59 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     
                 }
                     break;
-                    
-//                case 1:
-//                {
-//                    [self performSegueWithIdentifier:@"segReward" sender:self];
-//                }
-//                    break;
                 case 1:
                 {
                     [self performSegueWithIdentifier:@"segCreditCard" sender:self];
+                }
+                    break;
+                case 2:
+                {
+                    _pageType = 1;
+                    [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
+                }
+                    break;
+                case 3:
+                {
+                    _pageType = 2;
+                    [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
                 }
                     break;
                 default:
                     break;
             }
         }
-        else
+        else if(indexPath.section == 2)
         {
             switch (indexPath.item)
             {
                     //                _meList = @[@"ประวัติการสั่งอาหาร",@"ข้อมูลส่วนตัว",@"แต้มสะสม",@"My Credit Cards"];
+                
                 case 0:
                 {
-                    _pageType = 1;
-                    [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
+                    [self performSegueWithIdentifier:@"segRecommendShop" sender:self];
                 }
                     break;
                 case 1:
                 {
-                    _pageType = 2;
-                    [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
+                    [self performSegueWithIdentifier:@"segComment" sender:self];
                 }
                     break;
                 case 2:
                 {
+                    _pageType = 3;
+                    [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
+                }
+                    break;
+                case 3:
+                {
                     [FBSDKAccessToken setCurrentAccessToken:nil];
                     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logInSession"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"rememberMe"];
+                    [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"rememberEmail"];
+                    [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"rememberPassword"];
+                    
+                    
+                    
                     [self removeMemberData];
                     [self showAlert:@"" message:@"ออกจากระบบสำเร็จ" method:@selector(unwindToLogIn)];
                 }
@@ -233,13 +270,39 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     break;
             }
         }
+//        else if(indexPath.section == 3)
+//        {
+//            [FBSDKAccessToken setCurrentAccessToken:nil];
+//            [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logInSession"];
+//            [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"rememberMe"];
+//            [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"rememberEmail"];
+//            [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"rememberPassword"];
+//
+//
+//
+//            [self removeMemberData];
+//            [self showAlert:@"" message:@"ออกจากระบบสำเร็จ" method:@selector(unwindToLogIn)];
+//        }
     }
 }
+//
+//- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if (section == 0)
+//        return CGFLOAT_MIN;
+//    return tableView.sectionHeaderHeight;
+//}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
+    {
         return CGFLOAT_MIN;
+    }
+//    else if(section == 1)
+//    {
+//        return 8;
+//    }
     return tableView.sectionHeaderHeight;
 }
 

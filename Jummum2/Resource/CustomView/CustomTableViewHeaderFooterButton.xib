@@ -26,7 +26,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="nDA-iP-8gV"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="17"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>

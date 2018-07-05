@@ -12,7 +12,7 @@
 @interface BranchSearchViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tbvBranch;
 @property (strong, nonatomic) IBOutlet UISearchBar *sbText;
--(IBAction)goBackHome:(id)sender;
+//-(IBAction)goBackHome:(id)sender;
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;
 @end

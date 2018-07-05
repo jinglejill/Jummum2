@@ -11,6 +11,7 @@
 #import "CustomTableViewCellRewardDetail.h"
 #import "CustomTableViewCellLabel.h"
 #import "PromoCode.h"
+#import "Branch.h"
 
 
 @interface RewardDetailViewController ()
@@ -87,8 +88,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
     
         
-        
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":rewardRedemption.imageUrl;
+        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Reward/%@",branch.dbName,rewardRedemption.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -102,7 +103,6 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
         
         
-        
         cell.lblHeader.text = rewardRedemption.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height;
@@ -113,7 +113,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
@@ -150,7 +151,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":rewardRedemption.imageUrl;
+        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
+        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Reward/%@",branch.dbName,rewardRedemption.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -230,7 +232,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
                              {
                                  if(rewardPoint.point < rewardRedemption.point)
                                  {
-                                     [self showAlert:@"จำนวนแต้มสะสมไม่เพียงพอ" message:@""];
+                                     [self showAlert:@"" message:@"จำนวนแต้มสะสมไม่เพียงพอ"];
                                  }
                                  else
                                  {
@@ -301,7 +303,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     }
     else
     {
-        [self showAlert:@"จำนวนสิทธิ์ครบแล้ว" message:@""];
+        [self showAlert:@"" message:@"จำนวนสิทธิ์ครบแล้ว"];
     }
 }
 

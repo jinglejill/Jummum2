@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "UserAccount.h"
+#import "HomeModel.h"
 #import <UIKit/UIKit.h>
 
 @protocol HomeModelProtocol <NSObject>
 
 @optional
 - (void)itemsDownloaded:(NSArray *)items;
+- (void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel;
 - (void)applicationExpired;
 - (void)itemsInserted;
 - (void)itemsUpdated;

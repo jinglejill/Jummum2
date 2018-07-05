@@ -11,5 +11,6 @@
 @interface CustomTableViewCellLabelTextView : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UITextView *txvValue;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *txvValueHeight;
 
 @end

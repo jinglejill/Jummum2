@@ -101,12 +101,14 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 {
     //save to camera roll
     [self screenCaptureBill:receipt];
-    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+    [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
+//    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 - (IBAction)button2Clicked:(id)sender
 {
-    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+    [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
+//    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 -(void)screenCaptureBill:(Receipt *)receipt

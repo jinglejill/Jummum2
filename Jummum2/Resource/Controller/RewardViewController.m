@@ -16,6 +16,7 @@
 #import "UserAccount.h"
 #import "RewardRedemption.h"
 #import "Branch.h"
+#import "Receipt.h"
 #import "Utility.h"
 
 
@@ -25,6 +26,7 @@
     NSMutableArray *_rewardRedemptionList;
     NSMutableArray *_filterRewardRedemptionList;
     RewardRedemption *_rewardRedemption;
+    BOOL _lastItemReached;
 }
 
 @property (nonatomic)        BOOL           searchBarActive;
@@ -45,7 +47,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     CustomTableViewCellLabelDetailLabelWithImage *cell = [tbvData cellForRowAtIndexPath:indexPath];
     NSInteger point = (int)floor(_rewardPoint.point);
-    cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+    NSString *strPoint = [Utility formatDecimal:point];
+    cell.lblValue.text = [NSString stringWithFormat:@"%@ points",strPoint];
     [cell.lblValue sizeToFit];
     cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
 }
@@ -53,16 +56,33 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 -(void)loadView
 {
     [super loadView];
-    [self loadingOverlayView];
-    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    [self.homeModel downloadItems:dbRewardPoint withData:userAccount];
+    
 
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    
+    //เพิ่งสั่งอาหารร้านนี้ไปครั้งแรก ในหน้านี้ก็จะ โหลดข้อมูล rewardRedemption จาก db ของร้านนี้มาแสดง
+    NSInteger branchID = [Receipt getBranchIDWithMaxModifiedDateWithMemberID:userAccount.userAccountID];
+    [self.homeModel downloadItems:dbRewardRedemptionWithBranchID withData:@[userAccount,@(branchID),@([_rewardRedemptionList count])]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    [self loadingOverlayView];
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    [self.homeModel downloadItems:dbRewardPoint withData:@[userAccount,@0]];
     tbvData.delegate = self;
     tbvData.dataSource = self;
 
@@ -145,7 +165,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             cell.lblText.text = @"แต้มสะสม";
             cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
             NSInteger point = (int)floor(_rewardPoint.point);
-            cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+            NSString *strPoint = [Utility formatDecimal:point];
+            cell.lblValue.text = [NSString stringWithFormat:@"%@ points",strPoint];
             cell.lblValue.textColor = cSystem2;
             [cell.lblValue sizeToFit];
             cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
@@ -191,13 +212,14 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":branch.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -211,6 +233,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         cell.lblCountDownTop.constant = 0;
         cell.lblCountDownHeight.constant = 0;
+        
+        
+        if (!_lastItemReached && item == [_filterRewardRedemptionList count]-1)
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbRewardPoint withData:@[userAccount,@([_rewardRedemptionList count])]];
+        }
         
         
         return cell;
@@ -292,22 +323,80 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     [self performSegueWithIdentifier:@"segUnwindToMe" sender:self];
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    [self removeOverlayViews];
-    NSMutableArray *rewardPointList = items[0];
-    _rewardPoint = rewardPointList[0];
     
-    
-    _rewardRedemptionList = [items[1] mutableCopy];
-    _filterRewardRedemptionList = _rewardRedemptionList;
-    for(RewardRedemption *item in _filterRewardRedemptionList)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbRewardPoint)
     {
-        Branch *branch = [Branch getBranch:item.branchID];
-        item.branchName = branch.name;
+        [self removeOverlayViews];
+        
+        //rewardPoint
+        NSMutableArray *rewardPointList = items[0];
+        _rewardPoint = rewardPointList[0];
+        NSRange range = NSMakeRange(1, 1);
+        NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+        [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+        
+        
+        
+        
+        //rewardRedemptionList
+        NSMutableArray *rewardRedemptionList = items[1];
+        if([rewardRedemptionList count] == 0)
+        {
+            _lastItemReached = YES;
+            return;
+        }
+        if(!_rewardRedemptionList)
+        {
+            _rewardRedemptionList = [[NSMutableArray alloc]init];
+        }
+        [_rewardRedemptionList addObjectsFromArray:rewardRedemptionList];
+        _rewardRedemptionList = [RewardRedemption sortWithdataList:_rewardRedemptionList];
+        UISearchBar *sbText = [self.view viewWithTag:300];
+        [self searchBar:sbText textDidChange:sbText.text];
     }
-    [tbvData reloadData];
+    else if(homeModel.propCurrentDB == dbRewardRedemptionWithBranchID)
+    {
+        //rewardPoint
+        NSMutableArray *rewardPointList = items[0];
+        _rewardPoint = rewardPointList[0];
+        NSRange range = NSMakeRange(1, 1);
+        NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+        [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+        
+        
+        
+        //rewardRedemptionList
+        //add update
+        NSMutableArray *rewardRedemptionList = items[1];
+        BOOL update = [Utility updateDataList:rewardRedemptionList dataList:_rewardRedemptionList];
+        _rewardRedemptionList = [RewardRedemption sortWithdataList:_rewardRedemptionList];
+        if(update)
+        {
+            UISearchBar *sbText = [self.view viewWithTag:300];
+            [self searchBar:sbText textDidChange:sbText.text];
+        }
+    }
 }
+
+//-(void)itemsDownloaded:(NSArray *)items
+//{
+//    [self removeOverlayViews];
+//    NSMutableArray *rewardPointList = items[0];
+//    _rewardPoint = rewardPointList[0];
+//
+//
+//    _rewardRedemptionList = [items[1] mutableCopy];
+//    _filterRewardRedemptionList = _rewardRedemptionList;
+//    for(RewardRedemption *item in _filterRewardRedemptionList)
+//    {
+//        Branch *branch = [Branch getBranch:item.branchID];
+//        item.branchName = branch.name;
+//    }
+//    [tbvData reloadData];
+//}
 
 #pragma mark - search
 

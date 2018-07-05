@@ -37,13 +37,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue
 {
-    if([segue.sourceViewController isMemberOfClass:[CreditCardAndOrderSummaryViewController class]])
-    {
-        CreditCardAndOrderSummaryViewController *vc = segue.sourceViewController;
-        _fromReceiptSummaryMenu = vc.fromReceiptSummaryMenu;
-        _customerTable = vc.customerTable;
-        _selectedBranch = vc.branch;
-    }
+
 }
 
 - (IBAction)goBack:(id)sender
@@ -54,11 +48,12 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if(_fromReceiptSummaryMenu)
-    {
-        _fromReceiptSummaryMenu = 0;
-        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
-    }
+    
+    
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
+    [self.homeModel downloadItems:dbBranch withData:branchWithMaxModifiedDate.modifiedDate];
 }
 
 -(void)loadView
@@ -137,7 +132,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
         cell.lblQuantity.hidden = YES;
         cell.imgTriangle.hidden = YES;
         cell.lblMenuName.text = branch.name;
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":branch.imageUrl;
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -194,6 +189,15 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
         MenuSelectionViewController *vc = segue.destinationViewController;
         vc.branch = _selectedBranch;
         vc.customerTable = _customerTable;
+    }
+}
+
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
+{
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbBranch)
+    {
+        [Utility updateSharedObject:items];
     }
 }
 

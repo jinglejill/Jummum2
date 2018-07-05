@@ -13,13 +13,12 @@
 
 @implementation RewardRedemption
 
--(RewardRedemption *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType orderNo:(NSInteger)orderNo status:(NSInteger)status
+-(RewardRedemption *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
     {
         self.rewardRedemptionID = [RewardRedemption getNextID];
-        self.branchID = branchID;
         self.startDate = startDate;
         self.endDate = endDate;
         self.header = header;
@@ -120,7 +119,6 @@
     if (copy)
     {
         ((RewardRedemption *)copy).rewardRedemptionID = self.rewardRedemptionID;
-        ((RewardRedemption *)copy).branchID = self.branchID;
         [copy setStartDate:self.startDate];
         [copy setEndDate:self.endDate];
         [copy setHeader:self.header];
@@ -154,7 +152,6 @@
 -(BOOL)editRewardRedemption:(RewardRedemption *)editingRewardRedemption
 {
     if(self.rewardRedemptionID == editingRewardRedemption.rewardRedemptionID
-       && self.branchID == editingRewardRedemption.branchID
        && [self.startDate isEqual:editingRewardRedemption.startDate]
        && [self.endDate isEqual:editingRewardRedemption.endDate]
        && [self.header isEqualToString:editingRewardRedemption.header]
@@ -186,7 +183,6 @@
 +(RewardRedemption *)copyFrom:(RewardRedemption *)fromRewardRedemption to:(RewardRedemption *)toRewardRedemption
 {
     toRewardRedemption.rewardRedemptionID = fromRewardRedemption.rewardRedemptionID;
-    toRewardRedemption.branchID = fromRewardRedemption.branchID;
     toRewardRedemption.startDate = fromRewardRedemption.startDate;
     toRewardRedemption.endDate = fromRewardRedemption.endDate;
     toRewardRedemption.header = fromRewardRedemption.header;
@@ -220,6 +216,18 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_sortDate" ascending:NO];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     NSArray *sortArray = [rewardRedemptionList sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return [sortArray mutableCopy];
+}
+
++(NSMutableArray *)sortWithdataList:(NSMutableArray *)dataList
+{
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_type" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_frequency" ascending:NO];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"_sales" ascending:NO];
+    NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:@"_orderNo" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptor2,sortDescriptor3, nil];
+    NSArray *sortArray = [dataList sortedArrayUsingDescriptors:sortDescriptors];
     
     return [sortArray mutableCopy];
 }

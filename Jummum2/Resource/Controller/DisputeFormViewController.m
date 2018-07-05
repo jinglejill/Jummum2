@@ -22,6 +22,8 @@
     Dispute *_dispute;
     NSMutableArray *_disputeReasonList;
     NSInteger _selectedIndexPicker;
+    NSString *_strPlaceHolder;
+    
 }
 @end
 
@@ -47,7 +49,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     textView.textColor = [UIColor blackColor];
-    if([textView.text isEqualToString:@"ใส่เหตุผลในการขอเงินคืน"])
+    if([textView.text isEqualToString:_strPlaceHolder])
     {
         textView.text = @"";
     }
@@ -60,7 +62,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     _dispute.detail = [Utility trimString:textView.text];
     if([textView.text isEqualToString:@""])
     {
-        textView.text = @"ใส่เหตุผลในการขอเงินคืน";
+        textView.text = _strPlaceHolder;
         textView.textColor = mPlaceHolder;
     }
 }
@@ -108,7 +110,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     // Do any additional setup after loading the view.
     
     
-    
+    _strPlaceHolder = @"กรุณาใส่รายละเอียดเหตุผลในการขอเงินคืน";
     [pickerVw removeFromSuperview];
     pickerVw.delegate = self;
     pickerVw.dataSource = self;
@@ -405,7 +407,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 
-                NSString *strTitle = @"เหตุผลเพิ่มเติมในการขอเงินคืน";
+                NSString *strTitle = @"รายละเอียดเหตุผลในการขอเงินคืน";
                 
                 
                 
@@ -431,7 +433,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txvValue.text = _dispute.detail;
                 if([cell.txvValue.text isEqualToString:@""])
                 {
-                    cell.txvValue.text = @"ใส่เหตุผลในการขอเงินคืน";
+                    cell.txvValue.text = _strPlaceHolder;
                     cell.txvValue.textColor = mPlaceHolder;
                 }
                 else
@@ -510,18 +512,16 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             else if(item == 1)
             {
                 return 102-8-16;
-//                return 122-8-16-8;
             }
             else if(item == 2)
             {
-                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];//[tbvData cellForRowAtIndexPath:indexPath];
+                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
                 NSString *strRemark = @"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินของท่านคืน";
                 
                 
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
                 return 102-16+cell.lblRemark.frame.size.height;
-//                return 122-16+cell.lblRemark.frame.size.height-8;
             }
         }
         else if(fromType == 2)
@@ -533,17 +533,14 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             else if(item == 1)
             {
                 return 102-8-16;
-//                return 122-8-16-8;
             }
             else if(item == 2)
             {
                 return 102;
-//                return 122-8;
             }
             else if(item == 3)
             {
                 return 108;
-//                return 108+20-8;
             }
             else if(item == 4)
             {
@@ -554,7 +551,6 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
                 return 102-16+cell.lblRemark.frame.size.height;
-//                return 122-16+cell.lblRemark.frame.size.height-8;
             }
         }
         
@@ -597,7 +593,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 {
     if([tableView isEqual:tbvAction])
     {
-        return 8+44+8+44;
+        return 8+30+8+30;
     }
     return 0;
     
@@ -812,9 +808,9 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         
         {
             UITextView *textView = [self.view viewWithTag:3];
-            if([Utility isStringEmpty:textView.text])
+            if([textView.text isEqualToString:_strPlaceHolder])
             {
-                [self blinkAlertMsg:@"กรุณาใส่เหตุผลเพิ่มเติม"];
+                [self blinkAlertMsg:@"กรุณาใส่รายละเอียดเหตุผลในการขอเงินคืน"];
                 return NO;
             }
         }

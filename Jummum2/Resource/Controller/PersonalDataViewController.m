@@ -54,7 +54,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     // Return the number of rows in the section.
     
     
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,7 +96,15 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             cell.lblValue.text = [Utility dateToString:userAccount.birthDate toFormat:@"d MMM yyyy"];
         }
             break;
-        
+        case 3:
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            cell.lblText.text = @"เบอร์โทร.";
+            [cell.lblText sizeToFit];
+            cell.lblTextWidthConstant.constant = cell.lblText.frame.size.width;
+            cell.lblValue.text = [Utility setPhoneNoFormat:userAccount.phoneNo];;
+        }
+            break;
         default:
             break;
     }
@@ -106,7 +114,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     return 44;
 }
 

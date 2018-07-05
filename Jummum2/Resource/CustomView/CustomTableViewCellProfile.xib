@@ -65,11 +65,12 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="imgValue" destination="6Kt-Vt-Ozl" id="fRE-v0-4Au"/>
+                <outlet property="lblEmail" destination="rff-m8-u3H" id="fq9-Km-IwA"/>
             </connections>
             <point key="canvasLocation" x="67" y="75"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="profilePic.png" width="288" height="288"/>
+        <image name="profilePic.png" width="228" height="228"/>
     </resources>
 </document>

@@ -111,7 +111,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         cell.lblText.text = @"แต้มคงเหลือ";
         cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
         NSInteger point = floor(rewardPoint.point);
-        cell.lblValue.text = [NSString stringWithFormat:@"%ld points",point];
+        NSString *strPoint = [Utility formatDecimal:point];
+        cell.lblValue.text = [NSString stringWithFormat:@"%@ points",strPoint];        
         cell.lblValue.textColor = cSystem2;
         [cell.lblValue sizeToFit];
         cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
@@ -135,7 +136,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height;
         
         
-        cell.lblRemark.text = [NSString stringWithFormat:@"%ld points",rewardRedemption.point];
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
         [cell.lblRemark sizeToFit];
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         

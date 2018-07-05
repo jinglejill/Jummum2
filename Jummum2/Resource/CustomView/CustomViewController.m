@@ -325,7 +325,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                             range:NSMakeRange(0, title.length)];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
@@ -337,9 +337,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                           value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                           range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, message.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -372,7 +372,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                             range:NSMakeRange(0, title.length)];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
@@ -384,9 +384,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                           value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                           range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, attrStringMsg.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -437,7 +437,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                  value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                  value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                   range:NSMakeRange(0, title.length)];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
@@ -449,9 +449,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                             value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                             range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, message.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -483,7 +483,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                             range:NSMakeRange(0, title.length)];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
@@ -495,9 +495,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                           value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                           range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, message.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -541,7 +541,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                             range:NSMakeRange(0, title.length)];
     [alert setValue:attrStringTitle forKey:@"attributedTitle"];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -553,9 +553,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                           value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                           range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, message.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -587,7 +587,7 @@ CGFloat animatedDistance;
     
     NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
     [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                             range:NSMakeRange(0, title.length)];
     [alert setValue:attrStringTitle forKey:@"attributedTitle"];
     [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -599,9 +599,9 @@ CGFloat animatedDistance;
     [attrStringMsg addAttribute:NSFontAttributeName
                           value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                           range:NSMakeRange(0, message.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
+    [attrStringMsg addAttribute:NSForegroundColorAttributeName
                             value:cSystem4
-                            range:NSMakeRange(0, title.length)];
+                            range:NSMakeRange(0, message.length)];
     [alert setValue:attrStringMsg forKey:@"attributedMessage"];
     
     
@@ -667,7 +667,7 @@ CGFloat animatedDistance;
             
             NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
             [attrStringTitle addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                                     range:NSMakeRange(0, title.length)];
             [alert setValue:attrStringTitle forKey:@"attributedTitle"];
             [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -679,9 +679,9 @@ CGFloat animatedDistance;
             [attrStringMsg addAttribute:NSFontAttributeName
                                   value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                                   range:NSMakeRange(0, message.length)];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+            [attrStringMsg addAttribute:NSForegroundColorAttributeName
                                     value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
+                                    range:NSMakeRange(0, message.length)];
             [alert setValue:attrStringMsg forKey:@"attributedMessage"];
             
             
@@ -740,7 +740,7 @@ CGFloat animatedDistance;
             
             NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
             [attrStringTitle addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                                     range:NSMakeRange(0, title.length)];
             [alert setValue:attrStringTitle forKey:@"attributedTitle"];
             [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -752,9 +752,9 @@ CGFloat animatedDistance;
             [attrStringMsg addAttribute:NSFontAttributeName
                                   value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                                   range:NSMakeRange(0, message.length)];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
+            [attrStringMsg addAttribute:NSForegroundColorAttributeName
                                     value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
+                                    range:NSMakeRange(0, message.length)];
             [alert setValue:attrStringMsg forKey:@"attributedMessage"];
             
             
@@ -818,7 +818,7 @@ CGFloat animatedDistance;
                 
                 NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
                 [attrStringTitle addAttribute:NSFontAttributeName
-                                        value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                                        value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                                         range:NSMakeRange(0, title.length)];
                 [alert setValue:attrStringTitle forKey:@"attributedTitle"];
                 [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -830,9 +830,9 @@ CGFloat animatedDistance;
                 [attrStringMsg addAttribute:NSFontAttributeName
                                       value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                                       range:NSMakeRange(0, message.length)];
-                [attrStringTitle addAttribute:NSForegroundColorAttributeName
+                [attrStringMsg addAttribute:NSForegroundColorAttributeName
                                         value:cSystem4
-                                        range:NSMakeRange(0, title.length)];
+                                        range:NSMakeRange(0, message.length)];
                 [alert setValue:attrStringMsg forKey:@"attributedMessage"];
                 
                 
@@ -1181,7 +1181,7 @@ CGFloat animatedDistance;
         
         NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
         [attrStringTitle addAttribute:NSFontAttributeName
-                                value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
+                                value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
                                 range:NSMakeRange(0, title.length)];
         [alert setValue:attrStringTitle forKey:@"attributedTitle"];
         [attrStringTitle addAttribute:NSForegroundColorAttributeName
@@ -1193,9 +1193,9 @@ CGFloat animatedDistance;
         [attrStringMsg addAttribute:NSFontAttributeName
                               value:[UIFont fontWithName:@"Prompt-Regular" size:15]
                               range:NSMakeRange(0, message.length)];
-        [attrStringTitle addAttribute:NSForegroundColorAttributeName
+        [attrStringMsg addAttribute:NSForegroundColorAttributeName
                                 value:cSystem4
-                                range:NSMakeRange(0, title.length)];
+                                range:NSMakeRange(0, message.length)];
         [alert setValue:attrStringMsg forKey:@"attributedMessage"];
         
         

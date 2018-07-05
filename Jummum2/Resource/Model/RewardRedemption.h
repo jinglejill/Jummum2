@@ -10,7 +10,6 @@
 
 @interface RewardRedemption : NSObject
 @property (nonatomic) NSInteger rewardRedemptionID;
-@property (nonatomic) NSInteger branchID;
 @property (retain, nonatomic) NSDate * startDate;
 @property (retain, nonatomic) NSDate * endDate;
 @property (retain, nonatomic) NSString * header;
@@ -40,9 +39,16 @@
 
 
 
-@property (retain, nonatomic) NSString * branchName;
 @property (retain, nonatomic) NSDate * sortDate;
--(RewardRedemption *)initWithBranchID:(NSInteger)branchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType orderNo:(NSInteger)orderNo status:(NSInteger)status;
+@property (nonatomic) NSInteger branchID;
+@property (retain, nonatomic) NSString * branchName;
+@property (nonatomic) float frequency;
+@property (nonatomic) float sales;
+
+
+
+
+-(RewardRedemption *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType orderNo:(NSInteger)orderNo status:(NSInteger)status;
 +(NSInteger)getNextID;
 +(void)addObject:(RewardRedemption *)rewardRedemption;
 +(void)removeObject:(RewardRedemption *)rewardRedemption;
@@ -52,5 +58,5 @@
 -(BOOL)editRewardRedemption:(RewardRedemption *)editingRewardRedemption;
 +(RewardRedemption *)copyFrom:(RewardRedemption *)fromRewardRedemption to:(RewardRedemption *)toRewardRedemption;
 +(NSMutableArray *)sort:(NSMutableArray *)rewardRedemptionList;
-
++(NSMutableArray *)sortWithdataList:(NSMutableArray *)dataList;
 @end

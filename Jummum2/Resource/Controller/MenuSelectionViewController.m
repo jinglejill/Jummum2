@@ -276,8 +276,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             }
             
             
-            NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":menu.imageUrl;
-            NSLog(@"image file name: %@" , imageFileName);
+            NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
             [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
              {
                  if (succeeded)

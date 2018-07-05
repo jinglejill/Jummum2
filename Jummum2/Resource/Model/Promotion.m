@@ -16,7 +16,7 @@
 
 @implementation Promotion
 
--(Promotion *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode status:(NSInteger)status
+-(Promotion *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
@@ -24,6 +24,11 @@
         self.promotionID = [Promotion getNextID];
         self.startDate = startDate;
         self.endDate = endDate;
+        self.usingStartDate = usingStartDate;
+        self.usingEndDate = usingEndDate;
+        self.header = header;
+        self.subTitle = subTitle;
+        self.imageUrl = imageUrl;
         self.discountType = discountType;
         self.discountAmount = discountAmount;
         self.minimumSpending = minimumSpending;
@@ -34,6 +39,9 @@
         self.noOfLimitUsePerUser = noOfLimitUsePerUser;
         self.noOfLimitUsePerUserPerDay = noOfLimitUsePerUserPerDay;
         self.voucherCode = voucherCode;
+        self.termsConditions = termsConditions;
+        self.type = type;
+        self.orderNo = orderNo;
         self.status = status;
         self.modifiedUser = [Utility modifiedUser];
         self.modifiedDate = [Utility currentDateTime];
@@ -116,6 +124,11 @@
         ((Promotion *)copy).promotionID = self.promotionID;
         [copy setStartDate:self.startDate];
         [copy setEndDate:self.endDate];
+        [copy setUsingStartDate:self.usingStartDate];
+        [copy setUsingEndDate:self.usingEndDate];
+        [copy setHeader:self.header];
+        [copy setSubTitle:self.subTitle];
+        [copy setImageUrl:self.imageUrl];
         ((Promotion *)copy).discountType = self.discountType;
         ((Promotion *)copy).discountAmount = self.discountAmount;
         ((Promotion *)copy).minimumSpending = self.minimumSpending;
@@ -126,6 +139,9 @@
         ((Promotion *)copy).noOfLimitUsePerUser = self.noOfLimitUsePerUser;
         ((Promotion *)copy).noOfLimitUsePerUserPerDay = self.noOfLimitUsePerUserPerDay;
         [copy setVoucherCode:self.voucherCode];
+        [copy setTermsConditions:self.termsConditions];
+        ((Promotion *)copy).type = self.type;
+        ((Promotion *)copy).orderNo = self.orderNo;
         ((Promotion *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
@@ -141,6 +157,11 @@
     if(self.promotionID == editingPromotion.promotionID
        && [self.startDate isEqual:editingPromotion.startDate]
        && [self.endDate isEqual:editingPromotion.endDate]
+       && [self.usingStartDate isEqual:editingPromotion.usingStartDate]
+       && [self.usingEndDate isEqual:editingPromotion.usingEndDate]
+       && [self.header isEqualToString:editingPromotion.header]
+       && [self.subTitle isEqualToString:editingPromotion.subTitle]
+       && [self.imageUrl isEqualToString:editingPromotion.imageUrl]
        && self.discountType == editingPromotion.discountType
        && self.discountAmount == editingPromotion.discountAmount
        && self.minimumSpending == editingPromotion.minimumSpending
@@ -151,6 +172,9 @@
        && self.noOfLimitUsePerUser == editingPromotion.noOfLimitUsePerUser
        && self.noOfLimitUsePerUserPerDay == editingPromotion.noOfLimitUsePerUserPerDay
        && [self.voucherCode isEqualToString:editingPromotion.voucherCode]
+       && [self.termsConditions isEqualToString:editingPromotion.termsConditions]
+       && self.type == editingPromotion.type
+       && self.orderNo == editingPromotion.orderNo
        && self.status == editingPromotion.status
        )
     {
@@ -164,6 +188,11 @@
     toPromotion.promotionID = fromPromotion.promotionID;
     toPromotion.startDate = fromPromotion.startDate;
     toPromotion.endDate = fromPromotion.endDate;
+    toPromotion.usingStartDate = fromPromotion.usingStartDate;
+    toPromotion.usingEndDate = fromPromotion.usingEndDate;
+    toPromotion.header = fromPromotion.header;
+    toPromotion.subTitle = fromPromotion.subTitle;
+    toPromotion.imageUrl = fromPromotion.imageUrl;
     toPromotion.discountType = fromPromotion.discountType;
     toPromotion.discountAmount = fromPromotion.discountAmount;
     toPromotion.minimumSpending = fromPromotion.minimumSpending;
@@ -174,6 +203,9 @@
     toPromotion.noOfLimitUsePerUser = fromPromotion.noOfLimitUsePerUser;
     toPromotion.noOfLimitUsePerUserPerDay = fromPromotion.noOfLimitUsePerUserPerDay;
     toPromotion.voucherCode = fromPromotion.voucherCode;
+    toPromotion.termsConditions = fromPromotion.termsConditions;
+    toPromotion.type = fromPromotion.type;
+    toPromotion.orderNo = fromPromotion.orderNo;
     toPromotion.status = fromPromotion.status;
     toPromotion.modifiedUser = [Utility modifiedUser];
     toPromotion.modifiedDate = [Utility currentDateTime];
@@ -181,5 +213,16 @@
     return toPromotion;
 }
 
++(NSMutableArray *)sortWithdataList:(NSMutableArray *)dataList
+{
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_type" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"_frequency" ascending:NO];
+    NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:@"_sales" ascending:NO];
+    NSSortDescriptor *sortDescriptor4 = [[NSSortDescriptor alloc] initWithKey:@"_orderNo" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptor2,sortDescriptor3,sortDescriptor4, nil];
+    NSArray *sortArray = [dataList sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return [sortArray mutableCopy];
+}
 
 @end

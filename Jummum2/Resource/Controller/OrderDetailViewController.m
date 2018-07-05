@@ -1038,7 +1038,6 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         return cell;
                     }
-                    
                 }
                 else if(receipt.status == 13)
                 {

@@ -55,5 +55,6 @@
 +(NSMutableArray *)getBranchList;
 +(NSString *)getAddress:(Branch *)branch;
 +(NSMutableArray *)sortList:(NSMutableArray *)branchList;
++(Branch *)getBranchWithMaxModifiedDate;
 
 @end

@@ -154,8 +154,10 @@ enum enumDB
     dbPushReminder,
     dbHotDeal,
     dbHotDealList,
+    dbHotDealWithBranchID,
     dbRewardRedemption,
     dbRewardRedemptionList,
+    dbRewardRedemptionWithBranchID,
     dbPromoCode,
     dbPromoCodeList,
     dbUserRewardRedemptionUsed,
@@ -164,10 +166,12 @@ enum enumDB
     dbDisputeReasonList,
     dbDispute,
     dbDisputeList,
-    dbReceiptWithModifiedDate
-//    ,
-//    dbTestPasswordList
-
+    dbReceiptWithModifiedDate,
+    dbBranch,
+    dbComment,
+    dbCommentList,
+    dbRecommendShop,
+    dbRecommendShopList
 
 
     
@@ -215,6 +219,7 @@ enum enumUrl
     urlFacebookComment,
     urlUserAccountValidate,
     urlUserAccountInsert,
+    urlUserAccountUpdate,
     urlUserAccountForgotPasswordInsert,
     urlUserAccountGet,
     urlTermsOfService,
@@ -238,6 +243,8 @@ enum enumUrl
     urlHotDealUpdateList,
     urlHotDealDeleteList,
     urlHotDealGetList,
+    urlHotDealWithBranchGetList,
+    urlRewardRedemptionWithBranchGetList,
     urlRewardRedemptionInsert,
     urlRewardRedemptionUpdate,
     urlRewardRedemptionDelete,
@@ -273,11 +280,20 @@ enum enumUrl
     urlDisputeInsertList,
     urlDisputeUpdateList,
     urlDisputeDeleteList,
-    urlDisputeGetList
-//    ,
-//    urlTestPasswordInsertList
-    
-
+    urlDisputeGetList,
+    urlBranchGetList,
+    urlCommentInsert,
+    urlCommentUpdate,
+    urlCommentDelete,
+    urlCommentInsertList,
+    urlCommentUpdateList,
+    urlCommentDeleteList,
+    urlRecommendShopInsert,
+    urlRecommendShopUpdate,
+    urlRecommendShopDelete,
+    urlRecommendShopInsertList,
+    urlRecommendShopUpdateList,
+    urlRecommendShopDeleteList
 
     
 };
@@ -394,6 +410,9 @@ enum enumUrl
 +(BOOL)validateStrongPassword:(NSString *)password;
 +(void)addToSharedDataList:(NSArray *)items;
 +(NSString *)hideCreditCardNo:(NSString *)creditCardNo;
-
++(void)updateSharedObject:(NSArray *)arrOfObjectList;
++ (void)addUpdateObject:(NSObject *)object;
++(void)updateItemIfModify:(NSObject *)object;
++(BOOL)updateDataList:(NSArray *)itemList dataList:(NSMutableArray *)dataList;
 @end
 

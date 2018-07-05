@@ -64,6 +64,17 @@
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    
+    
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
+    [self.homeModel downloadItems:dbBranch withData:branchWithMaxModifiedDate.modifiedDate];
+    //-----------
+    
+    
+    
+    
     [self startButtonClicked];
     
     
@@ -196,4 +207,13 @@
     }
 }
 
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
+{
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbBranch)
+    {
+        [Utility updateSharedObject:items];
+    }
+}
 @end
+

@@ -177,6 +177,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         if (!_lastItemReached && section == [_receiptList count]-1)
         {
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
             [self.homeModel downloadItems:dbReceiptSummary withData:@[receipt,userAccount]];
         }
         
@@ -633,9 +635,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     [self performSegueWithIdentifier:@"segUnwindToMe" sender:self];
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    if(self.homeModel.propCurrentDB == dbReceiptSummary)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbReceiptSummary)
     {
         if([[items[0] mutableCopy] count]==0)
         {
@@ -653,7 +656,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             [tbvData reloadData];
         }
     }
-    else if(self.homeModel.propCurrentDB == dbReceiptMaxModifiedDate)
+    else if(homeModel.propCurrentDB == dbReceiptMaxModifiedDate)
     {
         NSMutableArray *receiptList = items[0];
         if([receiptList count]>0)

@@ -7,6 +7,8 @@
 //
 
 #import "LaunchScreenViewController.h"
+#import "LogInViewController.h"
+
 
 @interface LaunchScreenViewController ()
 {
@@ -16,18 +18,13 @@
 
 @implementation LaunchScreenViewController
 @synthesize progressBar;
+@synthesize lblAppStoreVersion;
 
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue
 {
-    
-}
-
-//-(void)viewdi
--(void)loadView
-{
-    [super loadView];
-    
+    _redirectToLogin = YES;
+    progressBar.progress = 0;
     [self.homeModel downloadItems:dbMasterWithProgressBar];
 }
 
@@ -36,7 +33,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    [self.homeModel downloadItems:dbMasterWithProgressBar];
     progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    progressBar.trackTintColor = [UIColor whiteColor];
+    progressBar.progressTintColor = cSystem2;
     {
         CGRect frame = progressBar.frame;
         frame.origin.y = self.view.frame.size.height-20;
@@ -59,51 +60,7 @@
     {
         if([items count] == 0)
         {
-            NSString *title = @"Warning";
-            NSString *message = @"Memory fail";
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                           message:message                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            
-            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-            [attrStringTitle addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:22]
-                                    range:NSMakeRange(0, title.length)];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
-            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-            
-            
-            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-            [attrStringMsg addAttribute:NSFontAttributeName
-                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                                  range:NSMakeRange(0, message.length)];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
-            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-            
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action)
-                                            {
-                                                
-                                            }];
-            [alert addAction:defaultAction];
-            dispatch_async(dispatch_get_main_queue(),^ {
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                
-                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-                UIColor *color = cSystem1;
-                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-                
-                UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-                label.attributedText = attrString;
-                
-            } );
+            [self showAlert:@"Warning" message:@"Memory fail"];
             return;
         }
         
@@ -113,16 +70,27 @@
         [self removeOverlayViews];//อาจ มีการเรียกจากหน้า customViewController
         
         
-        
-//        if([self needsUpdate])
-//        {
-//
-//            [self performSegueWithIdentifier:@"segUpdateVersion" sender:self];
-//        }
-//        else
-//        {
-            [self performSegueWithIdentifier:@"segLogIn" sender:self];
-//        }
+        if(_redirectToLogin)
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            LogInViewController *logInViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogInViewController"];
+            [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
+            
+            
+//            [self performSegueWithIdentifier:@"segLogIn" sender:self];
+        }
+        else
+        {
+            if([self needsUpdate])
+            {
+                [self performSegueWithIdentifier:@"segNewVersionUpdate" sender:self];
+            }
+            else
+            {
+                [self performSegueWithIdentifier:@"segLogIn" sender:self];
+            }
+
+        }
     }
 }
 
@@ -134,14 +102,36 @@
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
-    if ([lookup[@"resultCount"] integerValue] == 1){
+    if ([lookup[@"resultCount"] integerValue] == 1)
+    {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+//        lblAppStoreVersion.text = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
+        NSString *strAppVersion = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
+        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
         if (![appStoreVersion isEqualToString:currentVersion]){
             NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
             return YES;
         }
     }
+    else
+    {
+        NSString *strAppVersion = @"appVersion no resultCount";
+        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
+    }
     return NO;
+}
+
+- (void) connectionFail
+{
+    NSString *title = [Utility subjectNoConnection];
+    NSString *message = [Utility detailNoConnection];
+    [self showAlert:title message:message method:@selector(tryDownloadAgain)];
+}
+
+-(void)tryDownloadAgain
+{
+    progressBar.progress = 0;
+    [self.homeModel downloadItems:dbMasterWithProgressBar];
 }
 @end
