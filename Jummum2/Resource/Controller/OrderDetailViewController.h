@@ -11,6 +11,7 @@
 
 
 @interface OrderDetailViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) Receipt *receipt;
 

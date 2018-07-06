@@ -7,7 +7,6 @@
 //
 
 #import "CreditCardAndOrderSummaryViewController.h"
-#import "SaveToCameraRollViewController.h"
 #import "PaymentCompleteViewController.h"
 #import "SelectPaymentMethodViewController.h"
 #import "QRCodeScanTableViewController.h"
@@ -67,7 +66,7 @@ static NSString * const reuseIdentifierHeaderFooterButton = @"CustomTableViewHea
 static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLabel";
 
 
-
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize voucherView;
 @synthesize branch;
@@ -276,6 +275,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     
 
     
+    NSString *title = [Setting getValue:@"076t" example:@"ยืนยันการสั่งอาหาร"];
+    lblNavTitle.text = title;
     
     
     
@@ -453,7 +454,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     }
                     
                     
-                    cell.textLabel.text = @"การชำระเงิน ด้วยบัตรเครดิต";
+                    NSString *message = [Setting getValue:@"040m" example:@"การชำระเงิน ด้วยบัตรเครดิต"];
+                    cell.textLabel.text = message;
                     cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
                     cell.textLabel.textColor = cSystem1;
                     
@@ -1489,7 +1491,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         }
         else
         {
-            [self showAlert:@"" message:@"การจ่ายด้วยบัตรเครดิตขัดข้อง กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง"];
+            NSString *message = [Setting getValue:@"041m" example:@"การจ่ายด้วยบัตรเครดิตขัดข้อง กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง"];
+            [self showAlert:@"" message:message];
         }
     }];
 }
@@ -1705,7 +1708,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
     if(totalPriceGetDiscount == 0)
     {
-        [self blinkAlertMsg:@"โค้ดที่ใส่ไม่สามารถใช้กับเมนูที่คุณเลือก"];
+        NSString *message = [Setting getValue:@"042m" example:@"โค้ดที่ใส่ไม่สามารถใช้กับเมนูที่คุณเลือก"];
+        [self blinkAlertMsg:message];
     }
     else
     {

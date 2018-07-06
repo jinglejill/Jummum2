@@ -23,6 +23,7 @@
 #import "OrderNote.h"
 #import "Dispute.h"
 #import "DisputeReason.h"
+#import "Setting.h"
 #import "QuartzCore/QuartzCore.h"
 
 
@@ -43,7 +44,7 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
 static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisputeDetail";
 
 
-
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize receipt;
 
@@ -63,6 +64,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"072t" example:@"รายละเอียดการสั่งอาหาร"];
+    lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];
@@ -707,8 +711,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     CustomTableViewCellButton *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierButton];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
+                    
+                    NSString *message = [Setting getValue:@"004m" example:@"Cancel order"];
                     cell.btnValue.hidden = NO;
-                    [cell.btnValue setTitle:@"Cancel order" forState:UIControlStateNormal];
+                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
                     cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue addTarget:self action:@selector(cancelOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
@@ -721,9 +727,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     CustomTableViewCellButton *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierButton];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
+                    
+                    NSString *message = [Setting getValue:@"005m" example:@"Open dispute"];
                     cell.btnValue.hidden = NO;
-                    [cell.btnValue setTitle:@"Open dispute" forState:UIControlStateNormal];
-                    cell.btnValue.backgroundColor = cSystem1;;
+                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
+                    cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
                     
@@ -736,9 +744,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า";
+                    NSString *message = [Setting getValue:@"013m" example:@"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -752,10 +760,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     float totalAmount = [Receipt getTotalAmount:receipt];
                     NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
                     cell.lblReasonDetailHeight.constant = 0;
@@ -775,8 +784,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
+                    NSString *message = [Setting getValue:@"015m" example:@"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -789,13 +799,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
-                    
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -813,9 +824,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"018m" example:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -828,11 +839,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
-                    
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     float totalAmount = [Receipt getTotalAmount:receipt];
                     NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
                     cell.lblReasonDetailHeight.constant = 0;
@@ -851,9 +862,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    
-                    cell.lblRemark.textColor = cSystem1;;                    
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"019m" example:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -867,12 +878,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -890,9 +903,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม.";
+                    NSString *message = [Setting getValue:@"020m" example:@"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -907,13 +920,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                         
                         
-                        
+                        NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                         NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                         strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                        cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                         
                         
-                        cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                        NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                         [cell.lblReasonDetail sizeToFit];
                         cell.lblReasonDetailTop.constant = 8;
                         cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -931,12 +945,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         
                         
+                        NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                         NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                         strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                        cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                         
                         
-                        cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                        NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                         [cell.lblReasonDetail sizeToFit];
                         cell.lblReasonDetailTop.constant = 8;
                         cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -957,8 +973,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         
                         
-                        cell.lblRemark.textColor = cSystem1;;
-                        cell.lblRemark.text = @"หลังจากคุยกับเจ้าหน้าที่ Jummum แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
+                        NSString *message = [Setting getValue:@"021m" example:@"หลังจากคุยกับเจ้าหน้าที่ JUMMUM แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate"];
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
                         [cell.lblRemark sizeToFit];
                         cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                         
@@ -970,9 +987,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                         
                         
                         
+                        NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                         NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                         strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                        cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
                         
                         
                         cell.lblReasonDetail.attributedText = [self setAttributedString:@"เหตุผล: " text:dispute.detail];
@@ -1046,8 +1065,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
+                    NSString *message = [Setting getValue:@"022m" example:@"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1059,12 +1079,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1082,9 +1104,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"023m" example:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1096,12 +1118,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1372,9 +1396,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
-                    cell.lblRemark.text = @"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า";
+                    NSString *message = [Setting getValue:@"024m" example:@"คุณได้ส่งคำร้องขอยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันการยกเลิกจากร้านค้า"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1388,10 +1412,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     float totalAmount = [Receipt getTotalAmount:receipt];
                     NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
                     cell.lblReasonDetailHeight.constant = 0;
@@ -1411,9 +1436,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
-                    cell.lblRemark.text = @"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
+                    NSString *message = [Setting getValue:@"025m" example:@"คุณส่ง Open dispute ไปที่ร้านค้าด้วยเหตุผลด้านล่างนี้ กรุณารอการยืนยันจากทางร้านค้าสักครู่"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1426,13 +1451,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
-                    
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1450,10 +1476,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณต้องการยกเลิกบิลนี้  ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า";
-                    cell.lblRemark.text = @"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"026m" example:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1467,10 +1492,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     float totalAmount = [Receipt getTotalAmount:receipt];
                     NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
                     cell.lblReasonDetailHeight.constant = 0;
@@ -1490,9 +1516,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"027m" example:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1506,12 +1532,15 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1530,9 +1559,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    //                        cell.lblRemark.text = @"ลูกค้าของคุณ Open dispute ด้วยเหตุผลด้านล่างนี้ กรุณากด Confirm เพื่อ Refund เงินคืนลูกค้า หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม.";
+                    NSString *message = [Setting getValue:@"028m" example:@"Open dispute ที่ส่งไปกำลังดำเนินการอยู่ จะมีเจ้าหน้าที่ติดต่อกลับไปภายใน 24 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1546,12 +1575,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1570,8 +1601,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"หลังจากคุยกับเจ้าหน้าที่ Jummum แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate";
+                    NSString *message = [Setting getValue:@"029m" example:@"หลังจากคุยกับเจ้าหน้าที่ JUMMUM แล้ว มีการแก้ไขจำนวนเงิน refund ใหม่ ตามด้านล่างนี้ กรุณากด Confirm เพื่อยืนยัน หรือหากต้องการแก้ไขรายการกรุณากด Negotiate"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1583,9 +1615,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
                     cell.lblReasonDetail.attributedText = [self setAttributedString:@"เหตุผล: " text:dispute.detail];
@@ -1606,8 +1639,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่";
+                    NSString *message = [Setting getValue:@"030m" example:@"Open dispute ที่มีการแก้ไขกำลังดำเนินการอยู่ กรุณารอการยืนยันจากทางร้านค้าสักครู่"];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1620,13 +1654,15 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
-                    
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1646,8 +1682,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     
-                    cell.lblRemark.textColor = cSystem1;;
-                    cell.lblRemark.text = @"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม.";
+                    NSString *message = [Setting getValue:@"031m" example:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                    cell.lblRemark.textColor = cSystem1;
+                    cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
@@ -1660,13 +1697,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
-                    
+                    NSString *message2 = [Setting getValue:@"016m" example:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:@"จำนวนเงินที่ขอคืน: " text:strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:@"รายละเอียดเหตุผล: " text:dispute.detail];
+                    NSString *message3 = [Setting getValue:@"017m" example:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
@@ -1839,7 +1877,9 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             receipt.status = downloadReceipt.status;
             receipt.statusRoute = downloadReceipt.statusRoute;
             [tbvData reloadData];
-            NSString *strMessage = downloadReceipt.status == 5?@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ":@"อาหารได้ส่งถึงคุณแล้วค่ะ";
+            NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
+            NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
+            NSString *strMessage = downloadReceipt.status == 5?message:message2;            
             [self showAlert:@"" message:strMessage];
         }
         else

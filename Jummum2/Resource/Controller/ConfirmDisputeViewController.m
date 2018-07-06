@@ -133,7 +133,9 @@
         {
             receipt.status = downloadReceipt.status;
             receipt.statusRoute = downloadReceipt.statusRoute;
-            NSString *strMessage = downloadReceipt.status == 5?@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ":@"อาหารได้ส่งถึงคุณแล้วค่ะ";
+            NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
+            NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
+            NSString *strMessage = downloadReceipt.status == 5?message:message2;            
             [self showAlert:@"" message:strMessage method:@selector(noDispute:)];            
         }
         else

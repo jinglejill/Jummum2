@@ -19,6 +19,7 @@
 #import "OrderTaking.h"
 #import "Menu.h"
 #import "OrderNote.h"
+#import "Setting.h"
 
 
 @interface ReceiptSummaryViewController ()
@@ -38,7 +39,7 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLabel";
 
 
-
+@synthesize lblNavTitle;
 @synthesize tbvData;
 
 
@@ -76,6 +77,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"062t" example:@"ประวัติการสั่งอาหาร"];
+    lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];

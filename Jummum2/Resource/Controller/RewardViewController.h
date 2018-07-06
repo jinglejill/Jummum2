@@ -9,6 +9,7 @@
 #import "CustomViewController.h"
 
 @interface RewardViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 
 - (IBAction)goBack:(id)sender;

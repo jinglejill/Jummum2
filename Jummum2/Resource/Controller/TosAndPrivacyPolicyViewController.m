@@ -7,14 +7,16 @@
 //
 
 #import "TosAndPrivacyPolicyViewController.h"
+#import "Setting.h"
+
 
 @interface TosAndPrivacyPolicyViewController ()
 @property (strong, nonatomic) WKWebView *webView;
 @end
 
 @implementation TosAndPrivacyPolicyViewController
-@synthesize webViewContainer;
 @synthesize lblNavTitle;
+@synthesize webViewContainer;
 @synthesize pageType;
 
 
@@ -59,19 +61,24 @@
     // Do any additional setup after loading the view.
     
     
+    NSString *title = [Setting getValue:@"064t" example:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
+    lblNavTitle.text = title;
     if(pageType == 1)
     {
-        lblNavTitle.text = @"ข้อกำหนดและเงื่อนไขของ JUMMUM";
+        NSString *title = [Setting getValue:@"064t" example:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
+        lblNavTitle.text = title;
         [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlTermsOfService.html"];
     }
     else if(pageType == 2)
     {
-        lblNavTitle.text = @"นโยบายความเป็นส่วนตัว";
+        NSString *title = [Setting getValue:@"078t" example:@"นโยบายความเป็นส่วนตัว"];
+        lblNavTitle.text = title;
         [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlPrivacyPolicy.html"];
     }
     else if(pageType == 3)
     {
-        lblNavTitle.text = @"ติดต่อ JUMMUM";
+        NSString *title = [Setting getValue:@"079t" example:@"ติดต่อ JUMMUM"];
+        lblNavTitle.text = title;
         [self webViewLoadUrl:@"http://www.jummum.co/jummum/HtmlContactUs.html"];
     }
     

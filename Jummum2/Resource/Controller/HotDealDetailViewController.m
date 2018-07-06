@@ -10,6 +10,7 @@
 #import "CustomTableViewCellRewardDetail.h"
 #import "CustomTableViewCellLabel.h"
 #import "Branch.h"
+#import "Setting.h"
 
 
 @interface HotDealDetailViewController ()
@@ -23,6 +24,7 @@ static NSString * const reuseIdentifierRewardDetail = @"CustomTableViewCellRewar
 static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize promotion;
 
@@ -33,6 +35,9 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     // Do any additional setup after loading the view.
     
     
+    
+    NSString *title = [Setting getValue:@"060t" example:@"Hot Deal"];
+    lblNavTitle.text = title;
     _expandCollapse = 1;
     tbvData.delegate = self;
     tbvData.dataSource = self;

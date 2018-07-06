@@ -12,6 +12,7 @@
 
 
 @interface CustomerTableSearchViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvCustomerTable;
 @property (strong, nonatomic) IBOutlet UIView *vwBottomShadow;
 @property (strong, nonatomic) IBOutlet UIButton *btnBack;

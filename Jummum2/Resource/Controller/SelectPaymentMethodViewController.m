@@ -11,6 +11,7 @@
 #import "OmiseSDK.h"
 #import "Jummum2-Swift.h"
 #import "CreditCard.h"
+#import "Setting.h"
 
 
 @interface SelectPaymentMethodViewController ()
@@ -23,6 +24,7 @@
 static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellImageLabelRemove";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize creditCard;
 
@@ -33,6 +35,8 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
     // Do any additional setup after loading the view.
     
     
+    NSString *title = [Setting getValue:@"077t" example:@"เลือกช่องทางชำระเงิน"];
+    lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     
@@ -90,7 +94,6 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
         NSData *encodedObject = _creditCardList[item];
         CreditCard *creditCard = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
         CustomTableViewCellImageLabelRemove *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageLabelRemove];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSInteger cardBrand = [OMSCardNumber brandForPan:creditCard.creditCardNo];
         switch (cardBrand)
         {

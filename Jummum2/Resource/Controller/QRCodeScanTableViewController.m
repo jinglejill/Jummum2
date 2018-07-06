@@ -11,6 +11,7 @@
 #import "Utility.h"
 #import "Branch.h"
 #import "CustomerTable.h"
+#import "Setting.h"
 
 
 @interface QRCodeScanTableViewController ()
@@ -29,6 +30,7 @@
 @end
 
 @implementation QRCodeScanTableViewController
+@synthesize lblNavTitle;
 @synthesize fromCreditCardAndOrderSummaryMenu;
 @synthesize customerTable;
 @synthesize btnBack;
@@ -54,6 +56,8 @@
     [super viewDidLoad];
     
     
+    NSString *title = [Setting getValue:@"057t" example:@"สแกน QR Code เลขโต๊ะ"];
+    lblNavTitle.text = title;
     btnBack.hidden = fromCreditCardAndOrderSummaryMenu?NO:YES;
     _captureSession = nil;
     [self loadBeepSound];

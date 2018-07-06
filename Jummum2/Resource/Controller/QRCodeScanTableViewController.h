@@ -12,6 +12,7 @@
 
 
 @interface QRCodeScanTableViewController : CustomViewController<AVCaptureMetadataOutputObjectsDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UIView *vwPreview;
 @property (nonatomic) NSInteger fromCreditCardAndOrderSummaryMenu;
 @property (strong, nonatomic) CustomerTable *customerTable;

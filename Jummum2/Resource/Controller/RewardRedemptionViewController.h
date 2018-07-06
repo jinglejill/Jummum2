@@ -13,7 +13,7 @@
 
 
 @interface RewardRedemptionViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
-
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UILabel *lblCountDown;
 @property (strong, nonatomic) RewardPoint *rewardPoint;

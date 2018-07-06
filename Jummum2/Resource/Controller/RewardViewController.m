@@ -18,6 +18,7 @@
 #import "Branch.h"
 #import "Receipt.h"
 #import "Utility.h"
+#import "Setting.h"
 
 
 @interface RewardViewController ()
@@ -39,6 +40,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTableViewCellLabelDetailLabelWithImage";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 
 
@@ -80,6 +82,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     // Do any additional setup after loading the view.
     
     
+    NSString *title = [Setting getValue:@"066t" example:@"แต้มสะสม/แลกของรางวัล"];
+    lblNavTitle.text = title;
     [self loadingOverlayView];
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
     [self.homeModel downloadItems:dbRewardPoint withData:@[userAccount,@0]];
@@ -380,23 +384,6 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         }
     }
 }
-
-//-(void)itemsDownloaded:(NSArray *)items
-//{
-//    [self removeOverlayViews];
-//    NSMutableArray *rewardPointList = items[0];
-//    _rewardPoint = rewardPointList[0];
-//
-//
-//    _rewardRedemptionList = [items[1] mutableCopy];
-//    _filterRewardRedemptionList = _rewardRedemptionList;
-//    for(RewardRedemption *item in _filterRewardRedemptionList)
-//    {
-//        Branch *branch = [Branch getBranch:item.branchID];
-//        item.branchName = branch.name;
-//    }
-//    [tbvData reloadData];
-//}
 
 #pragma mark - search
 

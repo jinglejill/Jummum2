@@ -13,6 +13,7 @@
 #import "Promotion.h"
 #import "Branch.h"
 #import "Receipt.h"
+#import "Setting.h"
 
 
 @interface HotDealViewController ()
@@ -32,6 +33,7 @@ static NSString * const reuseIdentifierPromoBanner = @"CustomTableViewCellPromoB
 static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPromoThumbNail";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize searchBar;
 
@@ -59,6 +61,11 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    NSString *title = [Setting getValue:@"059t" example:@"Hot Deal"];
+    lblNavTitle.text = title;
+    
     
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
     [self.homeModel downloadItems:dbHotDeal withData:@[userAccount,@0]];

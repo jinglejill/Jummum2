@@ -7,6 +7,8 @@
 //
 
 #import "TermsOfServiceViewController.h"
+#import "Setting.h"
+
 
 @interface TermsOfServiceViewController ()
 {
@@ -16,6 +18,7 @@
 @end
 
 @implementation TermsOfServiceViewController
+@synthesize lblNavTitle;
 @synthesize webViewContainer;
 @synthesize btnAccept;
 @synthesize btnAcceptWidthConstant;
@@ -66,6 +69,8 @@
     // Do any additional setup after loading the view.
     
     
+    NSString *title = [Setting getValue:@"055t" example:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
+    lblNavTitle.text = title;
     [self webViewLoadUrl:[Utility url:urlTermsOfService]];
     [self addWebView:webViewContainer];
 }
@@ -83,7 +88,6 @@
     
     [[NSUserDefaults standardUserDefaults] setValue:[dicTosAgree copy] forKey:@"tosAgree"];
     [self performSegueWithIdentifier:@"segHotDeal" sender:self];
-//    [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
 }
 
 - (IBAction)goBack:(id)sender

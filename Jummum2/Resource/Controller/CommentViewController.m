@@ -11,6 +11,7 @@
 #import "CustomTableViewCellLabelTextView.h"
 #import "CustomTableViewHeaderFooterOkCancel.h"
 #import "Comment.h"
+#import "Setting.h"
 
 
 
@@ -28,7 +29,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
 static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewHeaderFooterOkCancel";
 
 
-@synthesize lblTitle;
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize pickerVw;
 @synthesize tbvAction;
@@ -65,9 +66,10 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
-    _strPlaceHolder = @"กรุณาใส่ข้อเสนอแนะ คำติชม หรือปัญหาที่พบเจอ";
+    NSString *title = [Setting getValue:@"068t" example:@"แนะนำ ติชม"];
+    lblNavTitle.text = title;
+    NSString *message = [Setting getValue:@"046m" example:@"กรุณาใส่ข้อเสนอแนะ คำติชม หรือปัญหาที่พบเจอ"];
+    _strPlaceHolder = message;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];
@@ -143,7 +145,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        NSString *strTitle = @"ข้อเสนอแนะ และคำติชม";
+        NSString *message = [Setting getValue:@"047m" example:@"ข้อเสนอแนะ และคำติชม"];
+        NSString *strTitle = message;
         
         
         
@@ -286,8 +289,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 {
     [self removeOverlayViews];
     
-    
-    [self showAlert:@"" message:@"ข้อเสนอแนะ และคำติชมได้ถูกส่งไปแล้ว ขอบคุณค่ะ" method:@selector(unwindToMe)];
+    NSString *message = [Setting getValue:@"048m" example:@"ข้อเสนอแนะ และคำติชมได้ถูกส่งไปแล้ว ขอบคุณค่ะ"];
+    [self showAlert:@"" message:message method:@selector(unwindToMe)];
 }
 
 -(BOOL)validate
@@ -297,7 +300,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         UITextView *textView = [self.view viewWithTag:3];
         if([textView.text isEqualToString:_strPlaceHolder])
         {
-            [self blinkAlertMsg:@"กรุณาใส่ข้อเสนอแนะ และคำติชม"];
+            NSString *message = [Setting getValue:@"049m" example:@"กรุณาใส่ข้อเสนอแนะ และคำติชม"];
+            [self blinkAlertMsg:message];
             return NO;
         }
     }

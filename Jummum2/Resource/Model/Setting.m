@@ -13,7 +13,7 @@
 
 @implementation Setting
 
--(Setting *)initWithKeyName:(NSString *)keyName value:(NSString *)value
+-(Setting *)initWithKeyName:(NSString *)keyName value:(NSString *)value type:(NSInteger)type remark:(NSString *)remark
 {
     self = [super init];
     if(self)
@@ -21,6 +21,8 @@
         self.settingID = [Setting getNextID];
         self.keyName = keyName;
         self.value = value;
+        self.type = type;
+        self.remark = remark;
         self.modifiedUser = [Utility modifiedUser];
         self.modifiedDate = [Utility currentDateTime];
     }
@@ -34,21 +36,26 @@
     NSMutableArray *dataList = [SharedSetting sharedSetting].settingList;
     
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:propertyName ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:propertyName ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     NSArray *sortArray = [dataList sortedArrayUsingDescriptors:sortDescriptors];
     dataList = [sortArray mutableCopy];
     
     if([dataList count] == 0)
     {
-        return 1;
+        return -1;
     }
     else
     {
         id value = [dataList[0] valueForKey:primaryKeyName];
-        NSString *strMaxID = value;
-        
-        return [strMaxID intValue]+1;
+        if([value integerValue]>0)
+        {
+            return -1;
+        }
+        else
+        {
+            return [value integerValue]-1;
+        }
     }
 }
 
@@ -88,6 +95,33 @@
     return nil;
 }
 
+-(BOOL)editSetting:(Setting *)editingSetting
+{
+    if(self.settingID == editingSetting.settingID
+       && [self.keyName isEqualToString:editingSetting.keyName]
+       && [self.value isEqualToString:editingSetting.value]
+       && self.type == editingSetting.type
+       && [self.remark isEqualToString:editingSetting.remark]
+       )
+    {
+        return NO;
+    }
+    return YES;
+}
+
++(Setting *)copyFrom:(Setting *)fromSetting to:(Setting *)toSetting
+{
+    toSetting.settingID = fromSetting.settingID;
+    toSetting.keyName = fromSetting.keyName;
+    toSetting.value = fromSetting.value;
+    toSetting.type = fromSetting.type;
+    toSetting.remark = fromSetting.remark;
+    toSetting.modifiedUser = [Utility modifiedUser];
+    toSetting.modifiedDate = [Utility currentDateTime];
+    
+    return toSetting;
+}
+
 +(NSString *)getSettingValueWithKeyName:(NSString *)keyName
 {
     NSMutableArray *dataList = [SharedSetting sharedSetting].settingList;
@@ -99,6 +133,19 @@
         return setting.value;
     }
     return nil;
+}
+
++(NSString *)getValue:(NSString *)keyName example:(NSString *)example
+{
+    NSString *value = [self getSettingValueWithKeyName:keyName];
+    if(value)
+    {
+        return value;
+    }
+    else
+    {
+        return example;
+    }
 }
 
 +(Setting *)getSettingWithKeyName:(NSString *)keyName

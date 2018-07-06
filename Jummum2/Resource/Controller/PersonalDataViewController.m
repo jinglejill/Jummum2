@@ -9,6 +9,7 @@
 #import "PersonalDataViewController.h"
 #import "CustomTableViewCellLabelLabel.h"
 #import "UserAccount.h"
+#import "Setting.h"
 
 
 @interface PersonalDataViewController ()
@@ -21,14 +22,18 @@
 static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLabel";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
+    NSString *title = [Setting getValue:@"063t" example:@"ข้อมูลส่วนตัว"];
+    lblNavTitle.text = title;
     tbvData.dataSource = self;
     tbvData.delegate = self;
     

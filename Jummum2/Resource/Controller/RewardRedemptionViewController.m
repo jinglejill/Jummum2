@@ -10,6 +10,8 @@
 #import "CustomTableViewCellRedemption.h"
 #import "CustomTableViewCellLabel.h"
 #import "CustomTableViewCellLabelDetailLabelWithImage.h"
+#import "Setting.h"
+
 
 @interface RewardRedemptionViewController ()
 {
@@ -26,6 +28,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTableViewCellLabelDetailLabelWithImage";
 
 
+@synthesize lblNavTitle;
 @synthesize lblCountDown;
 @synthesize tbvData;
 @synthesize rewardPoint;
@@ -48,6 +51,9 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"071t" example:@"แสดงโค้ด เพื่อรับสิทธิ์"];
+    lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     
@@ -69,7 +75,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     
     if(rewardRedemption.withInPeriod == 0)
     {
-        lblCountDown.text = [NSString stringWithFormat:@"ใช้ได้ 1 ครั้ง ภายใน %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+        NSString *message = [Setting getValue:@"043m" example:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
+        lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
     }
     else
     {
@@ -101,10 +108,6 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     
     if(item == 0)
     {
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-//        if (!cell) {
-//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-//        }
         CustomTableViewCellLabelDetailLabelWithImage *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelDetailLabelWithImage];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -143,10 +146,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         cell.lblRedeemDate.text = [Utility dateToString:rewardPointSpent.modifiedDate toFormat:@"d MMM yyyy HH:mm"];
-//        cell.lblPromoCode.text = promoCode.code;
         cell.txvPromoCode.text = promoCode.code;
-//        cell.txtPromoCode.delegate = self;
-//        cell.txtPromoCode.tag = 20;
         cell.imgQrCode.image = [self generateQRCodeWithString:promoCode.code scale:5];
         
         
@@ -161,7 +161,6 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         cell.lblTextLabel.text = rewardRedemption.termsConditions;
         [cell.lblTextLabel sizeToFit];
-//        cell.lblTextLabelHeight.constant = _expandCollapse?cell.lblTextLabel.frame.size.height-40:0;
         cell.lblTextLabelHeight.constant = _expandCollapse?cell.lblTextLabel.frame.size.height:0;
         
         
@@ -214,7 +213,6 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         return 49+cell.lblTextLabelHeight.constant+20;
-//        return _expandCollapse?49+cell.lblTextLabelHeight.constant+20:cell.lblTextLabelHeight.constant;
     }
     
     

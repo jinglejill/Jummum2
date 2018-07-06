@@ -49,6 +49,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBar";
 
 
+@synthesize lblNavTitle;
 @synthesize branch;
 @synthesize customerTable;
 @synthesize tbvMenu;
@@ -143,6 +144,10 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     // Do any additional setup after loading the view.
     
   
+    
+    NSString *title = [Setting getValue:@"074t" example:@"เลือกเมนู"];
+    lblNavTitle.text = title;
+    
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierMenu bundle:nil];

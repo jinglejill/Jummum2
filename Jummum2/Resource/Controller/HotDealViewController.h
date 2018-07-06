@@ -9,6 +9,7 @@
 #import "CustomViewController.h"
 
 @interface HotDealViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 

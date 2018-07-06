@@ -10,6 +10,7 @@
 #import "TermsOfServiceViewController.h"
 #import "CustomTableViewCellText.h"
 #import "UserAccount.h"
+#import "Setting.h"
 
 
 @interface RegisterNowViewController ()
@@ -26,6 +27,7 @@
 static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize dtPicker;
 @synthesize topButtonHeight;
@@ -51,7 +53,8 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     {
         _userAccount = userAccount;
         [tbvData reloadData];
-        [self showAlert:@"" message:@"คุณล็อคอินผ่าน facebook สำเร็จแล้ว กรุณาใส่วันเกิดและเบอร์โทรศัพท์ เพื่อเราจะได้สร้างบัญชีสำหรับใช้งานให้คุณ"];
+        NSString *message = [Setting getValue:@"045m" example:@"คุณล็อคอินผ่าน facebook สำเร็จแล้ว กรุณาใส่วันเกิดและเบอร์โทรศัพท์ เพื่อเราจะได้สร้างบัญชีสำหรับใช้งานให้คุณ"];
+        [self showAlert:@"" message:message];
     }
 }
 
@@ -121,7 +124,8 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     // Do any additional setup after loading the view.
     
     
-    
+    NSString *title = [Setting getValue:@"056t" example:@"สร้างบัญชีใหม่"];
+    lblNavTitle.text = title;
     _userAccount = [[UserAccount alloc]init];
     tbvData.delegate = self;
     tbvData.dataSource = self;
@@ -393,7 +397,6 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     }
     
     
-//    if([_userAccount.birthDate isEqual:[Utility notIdentifiedDate]])
     if(!_userAccount.birthDate)
     {
         [self showAlert:@"" message:@"กรุณาระบุวันเกิด"];
@@ -454,13 +457,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
         vc.username = _userAccount.email;
     }
 }
-//-(void)hideDatePicker
-//{
-//    [dtPicker removeFromSuperview];
-//    [_toolBar removeFromSuperview];
-//    UITextField *txtBirthDate = [self.view viewWithTag:4];
-//    [txtBirthDate resignFirstResponder];
-//}
+
 -(void)dismissKeyboard
 {
     [self.view endEditing:YES];

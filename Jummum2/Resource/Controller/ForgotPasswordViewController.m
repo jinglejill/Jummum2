@@ -7,12 +7,15 @@
 //
 
 #import "ForgotPasswordViewController.h"
+#import "Setting.h"
+
 
 @interface ForgotPasswordViewController ()
 
 @end
 
 @implementation ForgotPasswordViewController
+@synthesize lblNavTitle;
 @synthesize txtEmail;
 
 
@@ -28,6 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    NSString *title = [Setting getValue:@"054t" example:@"ลืมรหัสผ่าน"];
+    lblNavTitle.text = title;
     txtEmail.delegate = self;
     
     

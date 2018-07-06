@@ -13,6 +13,7 @@
 
 
 @interface BasketViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvOrder;
 @property (strong, nonatomic) IBOutlet UITableView *tbvTotal;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tbvTotalHeightConstant;

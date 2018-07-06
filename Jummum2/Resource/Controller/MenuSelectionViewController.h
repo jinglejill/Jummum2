@@ -12,7 +12,7 @@
 
 
 @interface MenuSelectionViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UISearchBarDelegate>
-
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvMenu;
 @property (strong, nonatomic) IBOutlet UILabel *lblTotalQuantityTop;
 @property (strong, nonatomic) IBOutlet UILabel *lblTotalQuantity;

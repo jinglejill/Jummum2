@@ -11,6 +11,7 @@
 
 
 @interface RegisterNowViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UIDatePicker *dtPicker;
 @property (strong, nonatomic) IBOutlet UIButton *btnCreateAccount;

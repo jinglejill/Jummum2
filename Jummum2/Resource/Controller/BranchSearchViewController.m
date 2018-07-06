@@ -12,6 +12,7 @@
 #import "MenuSelectionViewController.h"
 #import "CustomTableViewCellMenu.h"
 #import "Branch.h"
+#import "Setting.h"
 
 
 @interface BranchSearchViewController ()
@@ -31,6 +32,7 @@
 static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvBranch;
 @synthesize sbText;
 
@@ -70,6 +72,9 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"058t" example:@"เลือกร้าน"];
+    lblNavTitle.text = title;
     tbvBranch.delegate = self;
     tbvBranch.dataSource = self;
     sbText.delegate = self;

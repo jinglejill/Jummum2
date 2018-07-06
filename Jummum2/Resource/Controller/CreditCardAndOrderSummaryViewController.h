@@ -14,7 +14,7 @@
 
 
 @interface CreditCardAndOrderSummaryViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIPopoverPresentationControllerDelegate>
-- (IBAction)backToBasket:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UIView *vwTopBorderPay;
 @property (strong, nonatomic) IBOutlet UITableView *tbvTotal;
@@ -25,6 +25,7 @@
 @property (nonatomic) NSInteger fromReceiptSummaryMenu;
 
 
+- (IBAction)backToBasket:(id)sender;
 - (IBAction)pay:(id)sender;
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;

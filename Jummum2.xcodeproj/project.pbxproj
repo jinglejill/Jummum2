@@ -118,7 +118,6 @@
 		EF1AD15A20B0081600F6D223 /* CustomTableViewCellDisputeDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1AD15720B0081600F6D223 /* CustomTableViewCellDisputeDetail.m */; };
 		EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */; };
 		EF26676E20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */; };
-		EF26677620AA869300969AB2 /* SaveToCameraRollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26677520AA869300969AB2 /* SaveToCameraRollViewController.m */; };
 		EF26677820AA87B400969AB2 /* check2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF26677720AA87B300969AB2 /* check2.png */; };
 		EF5C2EDF2080BBB000084B7E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2EDE2080BBB000084B7E /* ViewController.m */; };
 		EF5C2EE42080BBB400084B7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2EE32080BBB400084B7E /* Assets.xcassets */; };
@@ -175,7 +174,6 @@
 		EF5C31012080C00500084B7E /* QRCodeScanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2F992080C00400084B7E /* QRCodeScanTableViewController.m */; };
 		EF5C31022080C00500084B7E /* BranchSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2F9A2080C00400084B7E /* BranchSearchViewController.m */; };
 		EF5C31032080C00500084B7E /* PersonalDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2F9B2080C00400084B7E /* PersonalDataViewController.m */; };
-		EF5C31052080C00500084B7E /* LogOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FA12080C00400084B7E /* LogOutViewController.m */; };
 		EF5C31062080C00500084B7E /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FA32080C00400084B7E /* TermsOfServiceViewController.m */; };
 		EF5C31072080C00500084B7E /* BasketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FA52080C00400084B7E /* BasketViewController.m */; };
 		EF5C31082080C00500084B7E /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FA62080C00400084B7E /* MeViewController.m */; };
@@ -331,7 +329,6 @@
 		EFD5B0CB20DE249F00D9434A /* search_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CA20DE249E00D9434A /* search_white.png */; };
 		EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CC20DE29E300D9434A /* gift_small.png */; };
 		EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */; };
-		EFD9BA7820E3BE1000A0A874 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */; };
 		EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */; };
 		EFE8BFE220A5C508005E0746 /* party.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE8BFE120A5C507005E0746 /* party.png */; };
 /* End PBXBuildFile section */
@@ -480,8 +477,6 @@
 		EF26676A20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewHeaderFooterOkCancel.h; sourceTree = "<group>"; };
 		EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewHeaderFooterOkCancel.m; sourceTree = "<group>"; };
 		EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewHeaderFooterOkCancel.xib; sourceTree = "<group>"; };
-		EF26677420AA869300969AB2 /* SaveToCameraRollViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollViewController.h; sourceTree = "<group>"; };
-		EF26677520AA869300969AB2 /* SaveToCameraRollViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollViewController.m; sourceTree = "<group>"; };
 		EF26677720AA87B300969AB2 /* check2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check2.png; sourceTree = "<group>"; };
 		EF5C2ED72080BBB000084B7E /* Jummum2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jummum2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5C2EDD2080BBB000084B7E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -551,7 +546,6 @@
 		EF5C2F8E2080C00400084B7E /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		EF5C2F8F2080C00400084B7E /* TermsOfServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsOfServiceViewController.h; sourceTree = "<group>"; };
 		EF5C2F902080C00400084B7E /* LaunchScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchScreenViewController.m; sourceTree = "<group>"; };
-		EF5C2F912080C00400084B7E /* LogOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogOutViewController.h; sourceTree = "<group>"; };
 		EF5C2F922080C00400084B7E /* ReceiptSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptSummaryViewController.m; sourceTree = "<group>"; };
 		EF5C2F932080C00400084B7E /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		EF5C2F942080C00400084B7E /* RewardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardViewController.h; sourceTree = "<group>"; };
@@ -566,7 +560,6 @@
 		EF5C2F9E2080C00400084B7E /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		EF5C2F9F2080C00400084B7E /* MenuSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuSelectionViewController.h; sourceTree = "<group>"; };
 		EF5C2FA02080C00400084B7E /* CustomerTableSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerTableSearchViewController.h; sourceTree = "<group>"; };
-		EF5C2FA12080C00400084B7E /* LogOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogOutViewController.m; sourceTree = "<group>"; };
 		EF5C2FA22080C00400084B7E /* LaunchScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchScreenViewController.h; sourceTree = "<group>"; };
 		EF5C2FA32080C00400084B7E /* TermsOfServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsOfServiceViewController.m; sourceTree = "<group>"; };
 		EF5C2FA42080C00400084B7E /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
@@ -835,8 +828,6 @@
 		EFD5B0CC20DE29E300D9434A /* gift_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift_small.png; sourceTree = "<group>"; };
 		EFD9BA2E20E233E400A0A874 /* HotDealDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotDealDetailViewController.h; sourceTree = "<group>"; };
 		EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotDealDetailViewController.m; sourceTree = "<group>"; };
-		EFD9BA7620E3BE1000A0A874 /* AlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
-		EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
 		EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+FontAppearance.h"; sourceTree = "<group>"; };
 		EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FontAppearance.m"; sourceTree = "<group>"; };
 		EFE8BFE120A5C507005E0746 /* party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = party.png; sourceTree = "<group>"; };
@@ -1182,8 +1173,6 @@
 			children = (
 				EF02455420EA51170025B89D /* NewVersionUpdateViewController.h */,
 				EF02455520EA51170025B89D /* NewVersionUpdateViewController.m */,
-				EFD9BA7620E3BE1000A0A874 /* AlertViewController.h */,
-				EFD9BA7720E3BE1000A0A874 /* AlertViewController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
@@ -1208,8 +1197,6 @@
 				EF5C2F902080C00400084B7E /* LaunchScreenViewController.m */,
 				EF5C2FAD2080C00400084B7E /* LogInViewController.h */,
 				EF5C2F972080C00400084B7E /* LogInViewController.m */,
-				EF5C2F912080C00400084B7E /* LogOutViewController.h */,
-				EF5C2FA12080C00400084B7E /* LogOutViewController.m */,
 				EFCB3ADC20DA0D47007E0896 /* MainTabBarController.h */,
 				EFCB3ADB20DA0D47007E0896 /* MainTabBarController.m */,
 				EF5C2F9F2080C00400084B7E /* MenuSelectionViewController.h */,
@@ -1238,8 +1225,6 @@
 				EFBBEEBA2098191A003884A9 /* RewardRedemptionViewController.m */,
 				EF5C2F942080C00400084B7E /* RewardViewController.h */,
 				EF5C2FB12080C00400084B7E /* RewardViewController.m */,
-				EF26677420AA869300969AB2 /* SaveToCameraRollViewController.h */,
-				EF26677520AA869300969AB2 /* SaveToCameraRollViewController.m */,
 				EF5C319820820A1700084B7E /* SelectPaymentMethodViewController.h */,
 				EF5C319920820A1700084B7E /* SelectPaymentMethodViewController.m */,
 				EF5C2F8F2080C00400084B7E /* TermsOfServiceViewController.h */,
@@ -1910,7 +1895,6 @@
 				EF5C31452080C00500084B7E /* SharedMenuTypeNote.m in Sources */,
 				EFA9633820A6B5C500E2DB9C /* Dispute.m in Sources */,
 				EF02456620EC99630025B89D /* CommentViewController.m in Sources */,
-				EF26677620AA869300969AB2 /* SaveToCameraRollViewController.m in Sources */,
 				EFBBEEBF20981BB4003884A9 /* CustomTableViewCellRedemption.m in Sources */,
 				EF5C312A2080C00500084B7E /* NoteType.m in Sources */,
 				EF5C30932080C00500084B7E /* AppDelegate.m in Sources */,
@@ -1957,7 +1941,6 @@
 				EF5C314C2080C00500084B7E /* CustomTableViewHeaderFooterButton.m in Sources */,
 				EF5C314D2080C00500084B7E /* CustomTableViewCellCreditCard.m in Sources */,
 				EF5C30962080C00500084B7E /* NSData+AES.m in Sources */,
-				EFD9BA7820E3BE1000A0A874 /* AlertViewController.m in Sources */,
 				EF5C31342080C00500084B7E /* TableNo.m in Sources */,
 				EF5C31422080C00500084B7E /* SharedMenuType.m in Sources */,
 				EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */,
@@ -1972,7 +1955,6 @@
 				EF5C316B2080C00500084B7E /* CustomCollectionReusableView.m in Sources */,
 				EF5C312D2080C00500084B7E /* LogIn.m in Sources */,
 				EF5C313E2080C00500084B7E /* SharedUserAccount.m in Sources */,
-				EF5C31052080C00500084B7E /* LogOutViewController.m in Sources */,
 				EFBBEEB22096DD72003884A9 /* CustomTableViewCellRewardDetail.m in Sources */,
 				EF5C30FE2080C00500084B7E /* ReceiptSummaryViewController.m in Sources */,
 				EF02455620EA51170025B89D /* NewVersionUpdateViewController.m in Sources */,

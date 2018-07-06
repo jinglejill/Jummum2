@@ -57,6 +57,7 @@ static NSString * const reuseIdentifierNote = @"CustomTableViewCellNote";
 static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVoucherCode";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvOrder;
 @synthesize tbvTotal;
 @synthesize branch;
@@ -183,6 +184,8 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     
     
+    NSString *title = [Setting getValue:@"075t" example:@"สรุปรายการที่สั่ง"];
+    lblNavTitle.text = title;
     tbvOrder.delegate = self;
     tbvOrder.dataSource = self;
     [tbvOrder setSeparatorColor:[UIColor clearColor]];

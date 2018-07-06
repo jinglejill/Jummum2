@@ -9,7 +9,9 @@
 #import "CustomViewController.h"
 
 @interface CreditCardViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
-- (IBAction)goBack:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
+- (IBAction)goBack:(id)sender;
+
 
 @end

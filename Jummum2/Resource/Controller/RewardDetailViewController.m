@@ -12,6 +12,7 @@
 #import "CustomTableViewCellLabel.h"
 #import "PromoCode.h"
 #import "Branch.h"
+#import "Setting.h"
 
 
 @interface RewardDetailViewController ()
@@ -27,7 +28,7 @@ static NSString * const reuseIdentifierRewardDetail = @"CustomTableViewCellRewar
 static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 
 
-
+@synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize rewardPoint;
 @synthesize rewardRedemption;
@@ -44,7 +45,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     // Do any additional setup after loading the view.
     
     
-    
+    NSString *title = [Setting getValue:@"070t" example:@"แลกของรางวัล"];
+    lblNavTitle.text = title;
     _expandCollapse = 1;
     tbvData.delegate = self;
     tbvData.dataSource = self;
@@ -96,6 +98,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
@@ -159,6 +162,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
@@ -303,7 +307,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     }
     else
     {
-        [self showAlert:@"" message:@"จำนวนสิทธิ์ครบแล้ว"];
+        NSString *message = [Setting getValue:@"039m" example:@"จำนวนสิทธิ์ครบแล้ว"];
+        [self showAlert:@"" message:message];
     }
 }
 

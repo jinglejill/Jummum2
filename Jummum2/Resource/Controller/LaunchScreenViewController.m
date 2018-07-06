@@ -19,6 +19,8 @@
 @implementation LaunchScreenViewController
 @synthesize progressBar;
 @synthesize lblAppStoreVersion;
+@synthesize lblTitle;
+@synthesize lblMessage;
 
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue
@@ -47,6 +49,13 @@
     }
     
     [self.view addSubview:progressBar];
+    
+    
+    
+    NSString *title = [Setting getValue:@"002t" example:@"Welcome"];
+    NSString *message = [Setting getValue:@"002m" example:@"Pay for your order, earn and track rewards, ckeck your balance and more, all from your mobile device"];
+    lblTitle.text = title;
+    lblMessage.text = message;
 }
 
 - (void)downloadProgress:(float)percent
@@ -60,7 +69,9 @@
     {
         if([items count] == 0)
         {
-            [self showAlert:@"Warning" message:@"Memory fail"];
+            NSString *title = [Setting getValue:@"001t" example:@"Warning"];
+            NSString *message = [Setting getValue:@"001m" example:@"Memory fail"];
+            [self showAlert:title message:message];
             return;
         }
         

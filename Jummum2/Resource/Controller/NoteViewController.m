@@ -232,7 +232,6 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
     OrderNote *orderNote = [OrderNote getOrderNoteWithNoteID:note.noteID orderNoteList:_currentOrderNoteList];
     if(!orderNote)
     {
-        NSLog(@"note id when did select:%ld",note.noteID);
         OrderNote *addOrderNote = [[OrderNote alloc]initWithOrderTakingID:orderTaking.orderTakingID noteID:note.noteID];
         [OrderNote addObject:addOrderNote];
         [_currentOrderNoteList addObject:addOrderNote];

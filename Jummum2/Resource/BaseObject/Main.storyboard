@@ -409,6 +409,7 @@
                     <tabBarItem key="tabBarItem" title="QR Code" image="QR.png" id="eag-YE-bxj"/>
                     <connections>
                         <outlet property="btnBack" destination="OCG-tG-c0S" id="Lcv-78-eOe"/>
+                        <outlet property="lblNavTitle" destination="jlF-Ej-s0u" id="T8u-TM-gnA"/>
                         <outlet property="vwPreview" destination="qHC-bF-lj9" id="44Q-Q3-xX0"/>
                         <segue destination="oGW-Dn-caM" kind="show" identifier="segMenuSelection" id="wW5-0e-zXP"/>
                         <segue destination="w8g-Xt-JeV" kind="unwind" identifier="segUnwindToCreditCardAndOrderSummary" unwindAction="unwindToCreditCardAndOrderSummary:" id="33Z-0W-onv"/>
@@ -556,6 +557,7 @@
                         <viewLayoutGuide key="safeArea" id="y6j-e7-MuU"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="kTP-0K-jqj" id="Wzb-Cy-vcv"/>
                         <outlet property="lblTotalAmount" destination="Bia-3L-6vS" id="aL6-77-OQN"/>
                         <outlet property="lblTotalQuantity" destination="0Rf-He-E0k" id="bR6-VD-UVL"/>
                         <outlet property="lblTotalQuantityTop" destination="8Lh-DX-j6p" id="4NG-ue-uqh"/>
@@ -669,6 +671,7 @@
                         <viewLayoutGuide key="safeArea" id="SDP-3K-UxH"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="WeQ-T4-ld0" id="sTl-GJ-oUP"/>
                         <outlet property="tbvOrder" destination="hAg-dt-c2J" id="pW6-DA-dLg"/>
                         <outlet property="tbvTotal" destination="Ktk-3F-kvS" id="sci-7K-ZX6"/>
                         <outlet property="tbvTotalHeightConstant" destination="RY9-pn-hqP" id="4BH-RD-IZf"/>
@@ -772,6 +775,7 @@
                         <viewLayoutGuide key="safeArea" id="dKE-4I-Zg2"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="TP8-ny-J3D" id="eAu-Yy-ISc"/>
                         <outlet property="tbvData" destination="RAl-zk-N3f" id="Lvb-Kq-5Od"/>
                         <outlet property="tbvTotal" destination="sks-LX-zTb" id="Rck-i9-BFR"/>
                         <outlet property="tbvTotalHeightConstant" destination="q3r-0s-qef" id="tXl-f1-oZP"/>
@@ -863,6 +867,7 @@
                         <viewLayoutGuide key="safeArea" id="fpG-Jz-tjr"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="Qoz-7W-v4X" id="62O-15-NNV"/>
                         <outlet property="tbvData" destination="Lzl-bO-gMA" id="Mud-t0-74x"/>
                         <segue destination="MTK-aL-bNu" kind="unwind" identifier="segUnwindToCreditCardAndOrderSummary" unwindAction="unwindToCreditCardAndOrderSummary:" id="flj-p2-MsD"/>
                     </connections>
@@ -1032,6 +1037,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search.png" id="l1Y-RK-9yi"/>
                     <connections>
+                        <outlet property="lblNavTitle" destination="PC9-d6-PcY" id="2bx-ke-4ub"/>
                         <outlet property="sbText" destination="hHv-gD-Izk" id="KJE-tD-PhB"/>
                         <outlet property="tbvBranch" destination="dVk-Iy-W08" id="INz-rZ-llT"/>
                         <segue destination="Ls5-2g-cA8" kind="unwind" identifier="segUnwindToQRCodeScanTable" unwindAction="unwindToQRCodeScanTable:" id="5Sg-l6-2a0"/>
@@ -1105,6 +1111,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Hot Deal" image="hotDeal.png" id="O6x-nc-Wxv"/>
                     <connections>
+                        <outlet property="lblNavTitle" destination="Obh-OW-FzG" id="9Bx-xz-sex"/>
                         <outlet property="searchBar" destination="zH5-h0-KpG" id="mY2-vZ-0PZ"/>
                         <outlet property="tbvData" destination="GBn-Gp-7Gw" id="rmE-t7-bSw"/>
                         <segue destination="vsL-9Z-0qh" kind="show" identifier="segHotDealDetail" id="CMA-NO-zsm"/>
@@ -1179,6 +1186,7 @@
                         <viewLayoutGuide key="safeArea" id="J1O-gR-WK3"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="qdb-jd-LEa" id="07f-10-NK7"/>
                         <outlet property="tbvData" destination="KvQ-h0-dmB" id="gTg-oa-CxH"/>
                         <segue destination="796-3H-Zaf" kind="unwind" identifier="segUnwindToHotDeal" unwindAction="unwindToHotDeal:" id="Pmr-6c-QpE"/>
                     </connections>
@@ -1270,6 +1278,7 @@
                         <viewLayoutGuide key="safeArea" id="aLg-ln-Kyt"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="dHc-zS-nNU" id="dhy-dh-TAT"/>
                         <outlet property="segConValue" destination="xpt-xI-zaA" id="R40-lQ-pg5"/>
                         <outlet property="tbvData" destination="epk-AB-aVB" id="iu7-pV-hNX"/>
                         <segue destination="eBM-4Z-jyX" kind="show" identifier="segRewardRedemption" id="2Iw-Lt-h1E"/>
@@ -1350,6 +1359,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Reward" image="gift_small.png" id="EpS-qE-v5u"/>
                     <connections>
+                        <outlet property="lblNavTitle" destination="Hjz-rB-69J" id="Lki-dt-3Y4"/>
                         <outlet property="tbvData" destination="amh-oJ-mR4" id="WUT-EV-50v"/>
                         <segue destination="TPh-64-dGT" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="BrQ-ym-P5V"/>
                         <segue destination="Dl7-J0-dAM" kind="show" identifier="segRewardDetail" id="R8e-hM-RZ6"/>
@@ -1448,6 +1458,7 @@
                     </view>
                     <connections>
                         <outlet property="btnRedeem" destination="r8C-qB-yhf" id="wVx-tK-rKj"/>
+                        <outlet property="lblNavTitle" destination="69F-Ta-hrB" id="LaA-Q9-Nbk"/>
                         <outlet property="tbvData" destination="2q6-KZ-VBB" id="Z4R-ND-97v"/>
                         <segue destination="kcM-PX-wCg" kind="unwind" identifier="segUnwindToReward" unwindAction="unwindToReward:" id="Nu5-Zl-g88"/>
                         <segue destination="eBM-4Z-jyX" kind="show" identifier="segRewardRedemption" id="iUw-Wp-Uz3"/>
@@ -1650,6 +1661,7 @@
                         <viewLayoutGuide key="safeArea" id="9XH-h2-Osu"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="Sjf-m4-4du" id="kv4-Vr-2xx"/>
                         <outlet property="txtEmail" destination="OpT-r0-HDb" id="REe-gU-uaR"/>
                         <segue destination="7og-Tv-WSe" kind="unwind" identifier="segUnwindToLogIn" unwindAction="unwindToLogIn:" id="QHi-4H-OoS"/>
                     </connections>
@@ -1790,6 +1802,7 @@
                         <outlet property="btnAcceptWidthConstant" destination="CKl-hP-SxZ" id="xfM-uH-WNU"/>
                         <outlet property="btnDecline" destination="iAh-es-I72" id="kHe-TZ-vyF"/>
                         <outlet property="btnDeclineWidthConstant" destination="b5T-FX-h0q" id="uj3-LV-71d"/>
+                        <outlet property="lblNavTitle" destination="ErA-rQ-g6w" id="8ON-9P-BiW"/>
                         <outlet property="webViewContainer" destination="m0T-tx-jXq" id="gcb-7T-rka"/>
                         <segue destination="Zxh-g4-4NG" kind="show" identifier="segHotDeal" id="MDz-RH-tSw"/>
                         <segue destination="8cF-MI-BCX" kind="unwind" identifier="segUnwindToLogIn" unwindAction="unwindToLogIn:" id="snB-27-qXr"/>
@@ -1867,6 +1880,7 @@
                         <viewLayoutGuide key="safeArea" id="ZBR-Z8-vVq"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="tYK-oz-zSP" id="62w-zG-FCC"/>
                         <outlet property="tbvData" destination="Jbd-Wa-RYA" id="n4A-ei-CSd"/>
                         <segue destination="ArK-WT-M6V" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="Oua-gb-sMj"/>
                     </connections>
@@ -1941,7 +1955,7 @@
                         <viewLayoutGuide key="safeArea" id="VUv-vs-BOR"/>
                     </view>
                     <connections>
-                        <outlet property="lblNavTitle" destination="e66-od-FrZ" id="J0T-kC-jlo"/>
+                        <outlet property="lblNavTitle" destination="e66-od-FrZ" id="UnM-Hg-Xb8"/>
                         <outlet property="webViewContainer" destination="3R6-3e-Is2" id="Kyo-N2-6Nz"/>
                         <outlet property="webViewContainerBottom" destination="pmZ-Sx-yLM" id="9G5-ez-Wwv"/>
                         <outlet property="webViewContainerTrailing" destination="biG-0E-PoZ" id="Ym9-kw-miV"/>
@@ -2086,6 +2100,7 @@
                         <outlet property="bottomViewHeight" destination="yx5-sc-i57" id="Vm9-5H-1YZ"/>
                         <outlet property="btnCreateAccount" destination="NL8-ES-Dix" id="wOH-1j-gOT"/>
                         <outlet property="dtPicker" destination="hlG-Gg-0ZP" id="R3y-ao-hbC"/>
+                        <outlet property="lblNavTitle" destination="TSQ-Cc-BHP" id="zj6-F6-Aze"/>
                         <outlet property="tbvData" destination="0Ki-Ti-JuK" id="dBc-5W-fDV"/>
                         <outlet property="topButtonHeight" destination="i7e-Nh-IeQ" id="XOZ-xr-Eo7"/>
                         <outlet property="topViewHeight" destination="kdF-ob-Zz9" id="P6S-pD-YvH"/>
@@ -2203,6 +2218,7 @@
                         <viewLayoutGuide key="safeArea" id="QG8-V2-tZ5"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="rJR-c3-AGR" id="454-lt-NqG"/>
                         <outlet property="tbvData" destination="G8T-EG-Mn9" id="qfX-U2-Di1"/>
                         <segue destination="vmU-p8-Lii" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="9Li-BT-3Dy"/>
                     </connections>
@@ -2276,6 +2292,7 @@
                         <viewLayoutGuide key="safeArea" id="Wzt-d2-epj"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="vgo-cP-uPj" id="Nlu-bD-m38"/>
                         <outlet property="tbvData" destination="SAa-xu-6ma" id="AZb-t6-to3"/>
                         <segue destination="4WA-Zl-OI4" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="ID8-jF-8LQ"/>
                         <segue destination="uxx-Px-8LI" kind="show" identifier="segCreditCardAndOrderSummary" id="jVQ-j3-veY"/>
@@ -2353,6 +2370,7 @@
                         <viewLayoutGuide key="safeArea" id="W8d-Ay-IMa"/>
                     </view>
                     <connections>
+                        <outlet property="lblNavTitle" destination="Vhh-RY-qMW" id="OR7-BM-G6x"/>
                         <outlet property="tbvData" destination="f16-cy-jWw" id="jzr-Di-mmr"/>
                         <segue destination="8Ok-4Q-dTd" kind="unwind" identifier="segUnwindToReceiptSummary" unwindAction="unwindToReceiptSummary:" id="U1U-Ug-PVQ"/>
                         <segue destination="dOc-Km-btJ" kind="presentation" identifier="segConfirmDispute" id="vSa-G8-BZk"/>
@@ -2551,7 +2569,7 @@
                         <viewLayoutGuide key="safeArea" id="FUp-WZ-1z7"/>
                     </view>
                     <connections>
-                        <outlet property="lblTitle" destination="KgK-Tc-Bsb" id="GUc-je-qaZ"/>
+                        <outlet property="lblNavTitle" destination="KgK-Tc-Bsb" id="7Ca-hX-xoh"/>
                         <outlet property="pickerVw" destination="lwN-CQ-AEA" id="z8h-1Z-znG"/>
                         <outlet property="tbvAction" destination="CwE-LV-rt3" id="O4V-ts-igp"/>
                         <outlet property="tbvData" destination="AcY-td-Udl" id="WNF-17-Ris"/>
@@ -2654,7 +2672,7 @@
                         <viewLayoutGuide key="safeArea" id="F9f-3t-ml7"/>
                     </view>
                     <connections>
-                        <outlet property="lblTitle" destination="3qD-1v-K0s" id="VGN-4X-Rdn"/>
+                        <outlet property="lblNavTitle" destination="3qD-1v-K0s" id="b2J-8d-48E"/>
                         <outlet property="pickerVw" destination="hJn-j1-ams" id="QFS-k5-vBm"/>
                         <outlet property="tbvAction" destination="xPF-lu-SLh" id="pzq-J0-DtT"/>
                         <outlet property="tbvData" destination="PEd-t7-lco" id="2Cm-4i-IuY"/>
@@ -2758,7 +2776,7 @@
                         <viewLayoutGuide key="safeArea" id="DhS-jL-a1p"/>
                     </view>
                     <connections>
-                        <outlet property="lblTitle" destination="iFY-j3-yIA" id="1Ni-7W-4iS"/>
+                        <outlet property="lblNavTitle" destination="iFY-j3-yIA" id="wD2-Wi-F7m"/>
                         <outlet property="pickerVw" destination="Hu8-71-doF" id="2ug-BJ-JkJ"/>
                         <outlet property="tbvAction" destination="YOr-WS-Hia" id="cLw-de-ykQ"/>
                         <outlet property="tbvData" destination="lXE-xC-W6D" id="GzN-YG-xQ4"/>
@@ -2864,6 +2882,7 @@
                     <tabBarItem key="tabBarItem" title="Search" id="5C9-XA-YPH"/>
                     <connections>
                         <outlet property="btnBack" destination="gBa-0D-13G" id="5L0-8D-viF"/>
+                        <outlet property="lblNavTitle" destination="3ST-wY-hEG" id="Q0e-pN-zyb"/>
                         <outlet property="tbvCustomerTable" destination="beU-Yw-gIj" id="5ha-V6-Lf1"/>
                         <segue destination="R9C-9E-FAD" kind="unwind" identifier="segUnwindToQRCodeScanTable" unwindAction="unwindToQRCodeScanTable:" id="oUd-Fy-5ls"/>
                         <segue destination="oGW-Dn-caM" kind="show" identifier="segMenuSelection" id="odZ-6m-Wsi"/>
@@ -3005,8 +3024,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ขอบคุณที่ใช้บริการจั้มมั่ม" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58Q-hr-zDL">
-                                        <rect key="frame" x="111" y="464" width="153" height="23"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ขอบคุณที่ใช้บริการจั้มมั่ม" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58Q-hr-zDL">
+                                        <rect key="frame" x="111" y="465" width="153" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="ZLH-es-emh"/>
                                             <constraint firstAttribute="width" constant="153" id="wj2-dW-8p7"/>
@@ -3063,14 +3082,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9pP-ga-kts" firstAttribute="trailing" secondItem="N5c-kS-jU5" secondAttribute="trailing" id="71H-m6-10l"/>
-                            <constraint firstItem="9pP-ga-kts" firstAttribute="bottom" secondItem="N5c-kS-jU5" secondAttribute="bottom" id="BNG-sv-PJJ"/>
                             <constraint firstItem="9pP-ga-kts" firstAttribute="leading" secondItem="N5c-kS-jU5" secondAttribute="leading" id="Vcf-Lz-qn0"/>
+                            <constraint firstAttribute="bottom" secondItem="9pP-ga-kts" secondAttribute="bottom" id="qOf-gq-6C5"/>
                             <constraint firstItem="9pP-ga-kts" firstAttribute="top" secondItem="Hkc-55-UGZ" secondAttribute="top" id="zFy-il-BIO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N5c-kS-jU5"/>
                     </view>
                     <connections>
                         <outlet property="btnSaveToCameraRoll" destination="gFJ-5e-RFy" id="UCb-ga-hey"/>
+                        <outlet property="lblMessage" destination="58Q-hr-zDL" id="diT-hx-jtZ"/>
+                        <outlet property="lblTitle" destination="NgZ-ei-F2m" id="fh6-pe-BhY"/>
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToBranchSearch" unwindAction="unwindToBranchSearch:" id="1Yr-Jf-at4"/>
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToQRCodeScanTable" unwindAction="unwindToQRCodeScanTable:" id="LF2-V3-Iw9"/>
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToHotDeal" unwindAction="unwindToHotDeal:" id="BT9-x7-GZa"/>
@@ -3144,6 +3165,8 @@
                         <viewLayoutGuide key="safeArea" id="blf-de-FND"/>
                     </view>
                     <connections>
+                        <outlet property="lblMessage" destination="Rqc-qG-zz7" id="twU-kA-4Nl"/>
+                        <outlet property="lblTitle" destination="unR-RH-0yo" id="G9E-PV-eXd"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="segLogIn" animates="NO" id="ZQU-Dk-sfw"/>
                         <segue destination="FCG-tI-fuZ" kind="presentation" identifier="segNewVersionUpdate" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="rz6-vD-yJO"/>
                     </connections>
@@ -3173,13 +3196,13 @@
         <image name="white.png" width="226" height="132"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VWF-Um-mlZ"/>
+        <segue reference="aHo-2G-vPP"/>
         <segue reference="8cS-48-gwU"/>
         <segue reference="UTS-nM-B10"/>
         <segue reference="Evt-HH-TlE"/>
         <segue reference="iUw-Wp-Uz3"/>
         <segue reference="hjD-fg-as6"/>
-        <segue reference="jVQ-j3-veY"/>
+        <segue reference="MmB-Bw-Sra"/>
         <segue reference="odZ-6m-Wsi"/>
         <segue reference="aNU-Zf-Wbq"/>
     </inferredMetricsTieBreakers>

@@ -7,10 +7,12 @@
 //
 
 #import "MyRewardViewController.h"
+#import "RewardRedemptionViewController.h"
 #import "CustomTableViewCellReward.h"
 #import "RewardRedemption.h"
 #import "Branch.h"
-#import "RewardRedemptionViewController.h"
+#import "Setting.h"
+
 
 
 @interface MyRewardViewController ()
@@ -46,6 +48,7 @@
 static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 
 
+@synthesize lblNavTitle;
 @synthesize segConValue;
 @synthesize tbvData;
 @synthesize rewardPoint;
@@ -69,6 +72,9 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     // Do any additional setup after loading the view.
     
     
+    
+    NSString *title = [Setting getValue:@"069t" example:@"รางวัลของฉัน"];
+    lblNavTitle.text = title;
     tbvData.dataSource = self;
     tbvData.delegate = self;
     [tbvData setSeparatorColor:cTextFieldBorder];
@@ -195,7 +201,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
          }];
         if(rewardRedemption.withInPeriod == 0)
         {
-            cell.lblCountDown.text = [NSString stringWithFormat:@"ใช้ได้ 1 ครั้ง ภายใน %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+            NSString *message = [Setting getValue:@"043m" example:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
+            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
         }
 
         
@@ -686,7 +693,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         RewardRedemption *rewardRedemption = _rewardRedemptionList[index];
         if(rewardRedemption.withInPeriod == 0)
         {
-            cell.lblCountDown.text = [NSString stringWithFormat:@"ใช้ได้ 1 ครั้ง ภายใน %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+            NSString *message = [Setting getValue:@"043m" example:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
+            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
         }
         else
         {

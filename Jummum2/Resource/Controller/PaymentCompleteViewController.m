@@ -15,6 +15,7 @@
 #import "Note.h"
 #import "OrderNote.h"
 #import "Menu.h"
+#import "Setting.h"
 
 
 @interface PaymentCompleteViewController ()
@@ -29,12 +30,10 @@ static NSString * const reuseIdentifierOrderSummary = @"CustomTableViewCellOrder
 static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 
 
-//@synthesize lblMessage;
-//@synthesize vwAlertHeight;
-//@synthesize lblMessageHeight;
-//@synthesize vwAlert;
 @synthesize receipt;
 @synthesize btnSaveToCameraRoll;
+@synthesize lblTitle;
+@synthesize lblMessage;
 
 
 -(void)viewDidLayoutSubviews
@@ -42,16 +41,16 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
     [super viewDidLayoutSubviews];
     [self setButtonDesign:btnSaveToCameraRoll];
     
-    
-//    lblMessageHeight.constant = lblMessage.frame.size.height;
-//    vwAlertHeight.constant = 80+38+38+44+lblMessage.frame.size.height;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+    NSString *title = [Setting getValue:@"044t" example:@"ชำระเงินสำเร็จ"];
+    NSString *message = [Setting getValue:@"044m" example:@"ขอบคุณที่ใช้บริการ ​JUMMUM"];
+    lblTitle.text = title;
+    lblMessage.text = message;
     tbvData = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierReceiptSummary bundle:nil];
@@ -66,35 +65,6 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierTotal];
     }
     
-    
-    
-    
-//    // Do any additional setup after loading the view.
-//    NSString *strMessageHeader = @"ชำระเงินสำเร็จ";
-//    NSString *strMessageSubTitle = @"ขอบคุณที่ใช้บริการ";
-//    
-//    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:22];
-//    UIColor *color = cSystem4;
-//    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-//    NSMutableAttributedString *attrStringHeader = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n",strMessageHeader] attributes:attribute];
-//    
-//    
-//    UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
-//    UIColor *color2 = cSystem4;
-//    NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
-//    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:strMessageSubTitle attributes:attribute2];
-//    
-//    
-//    [attrStringHeader appendAttributedString:attrString];
-    
-    
-    
-//    lblMessage.attributedText = attrStringHeader;
-//    [lblMessage sizeToFit];
-//
-//
-//    vwAlert.layer.cornerRadius = 10;
-//    vwAlert.layer.masksToBounds = YES;
 }
 
 - (IBAction)button1Clicked:(id)sender
@@ -102,13 +72,11 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
     //save to camera roll
     [self screenCaptureBill:receipt];
     [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
-//    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 - (IBAction)button2Clicked:(id)sender
 {
     [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
-//    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
 }
 
 -(void)screenCaptureBill:(Receipt *)receipt

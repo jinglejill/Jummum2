@@ -9,6 +9,7 @@
 #import "CustomViewController.h"
 
 @interface PersonalDataViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 - (IBAction)goBack:(id)sender;
 

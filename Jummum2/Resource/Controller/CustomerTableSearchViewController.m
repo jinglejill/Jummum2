@@ -11,6 +11,7 @@
 #import "CustomTableViewCellMenu.h"
 #import "CustomTableViewCellSearchBar.h"
 #import "CustomerTable.h"
+#import "Setting.h"
 
 
 @interface CustomerTableSearchViewController ()
@@ -32,6 +33,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBar";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvCustomerTable;
 @synthesize branch;
 @synthesize vwBottomShadow;
@@ -76,9 +78,12 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"061t" example:@"เลือกโต๊ะ"];
+    lblNavTitle.text = title;
     tbvCustomerTable.delegate = self;
     tbvCustomerTable.dataSource = self;
-//    tbvCustomerTable.separatorColor = [UIColor clearColor];
+
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierMenu bundle:nil];
@@ -422,44 +427,6 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         [tbvCustomerTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
-
-//-(void)itemsDownloaded:(NSArray *)items
-//{
-//    _customerTableList = [items[0] mutableCopy];
-//    [CustomerTable setSharedData:_customerTableList];
-//
-//
-//
-//    _customerTableZoneList = [CustomerTable getCustomerTableZoneListWithType:1 status:1];
-//    _customerTableList = [CustomerTable getCustomerTableListWithType:1 status:1];
-//    _filterCustomerTableList = _customerTableList;
-//
-//
-//    [self createHorizontalScroll];
-//    [tbvCustomerTable reloadData];
-//
-//
-//    if([_customerTableZoneList count]>0)
-//    {
-//        NSString *zone = _customerTableZoneList[0];
-//        NSMutableArray *customerTableList = [CustomerTable getCustomerTableListWithZone:zone customerTableList:_filterCustomerTableList];
-//        if([customerTableList count]>0)
-//        {
-//            [tbvCustomerTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-//        }
-//        else
-//        {
-//            [tbvCustomerTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-//        }
-//    }
-//    else
-//    {
-//        [tbvCustomerTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-//    }
-//
-//
-//    [self removeOverlayViews];
-//}
 
 -(void)setData
 {

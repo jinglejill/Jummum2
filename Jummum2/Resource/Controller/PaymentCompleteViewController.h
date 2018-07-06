@@ -11,14 +11,11 @@
 
 
 @interface PaymentCompleteViewController : CustomViewController
-//@property (strong, nonatomic) IBOutlet UILabel *lblMessage;
-//@property (strong, nonatomic) IBOutlet UIView *vwAlert;
-//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *vwAlertHeight;
-//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblMessageHeight;
-
 @property (strong, nonatomic) IBOutlet UIButton *btnSaveToCameraRoll;
 
 @property (strong, nonatomic) Receipt *receipt;
+@property (strong, nonatomic) IBOutlet UILabel *lblTitle;
+@property (strong, nonatomic) IBOutlet UILabel *lblMessage;
 
 
 

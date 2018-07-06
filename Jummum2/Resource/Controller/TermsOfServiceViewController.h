@@ -11,6 +11,7 @@
 
 
 @interface TermsOfServiceViewController : CustomViewController
+@property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UIView *webViewContainer;
 @property (strong, nonatomic) IBOutlet UIButton *btnAccept;
 @property (strong, nonatomic) IBOutlet UIButton *btnDecline;

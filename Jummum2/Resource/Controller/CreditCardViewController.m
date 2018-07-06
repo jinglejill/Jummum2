@@ -11,6 +11,7 @@
 #import "OmiseSDK.h"
 #import "Jummum2-Swift.h"
 #import "CreditCard.h"
+#import "Setting.h"
 
 
 @interface CreditCardViewController ()
@@ -24,6 +25,7 @@
 static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellImageLabelRemove";
 
 
+@synthesize lblNavTitle;
 @synthesize tbvData;
 
 
@@ -32,6 +34,9 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSString *title = [Setting getValue:@"065t" example:@"บัตรเครดิต/เดบิต"];
+    lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
     
