@@ -11,12 +11,16 @@
 
 
 @interface TermsOfServiceViewController : CustomViewController
+
 @property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UIView *webViewContainer;
 @property (strong, nonatomic) IBOutlet UIButton *btnAccept;
 @property (strong, nonatomic) IBOutlet UIButton *btnDecline;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnAcceptWidthConstant;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnDeclineWidthConstant;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
+
 @property (nonatomic) NSString *username;
 - (IBAction)goBack:(id)sender;
 - (IBAction)acceptTos:(id)sender;

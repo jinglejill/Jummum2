@@ -20,7 +20,8 @@
 @property (strong, nonatomic) IBOutlet CustomViewVoucher *voucherView;
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
-
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 
 -(IBAction)unwindToBasket:(UIStoryboardSegue *)segue;

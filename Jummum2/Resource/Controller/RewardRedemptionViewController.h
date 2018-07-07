@@ -21,6 +21,8 @@
 @property (strong, nonatomic) RewardRedemption *rewardRedemption;
 @property (strong, nonatomic) PromoCode *promoCode;
 @property (nonatomic) NSInteger fromMenuMyReward;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomLabelHeight;
 
 - (IBAction)goBack:(id)sender;
 @end

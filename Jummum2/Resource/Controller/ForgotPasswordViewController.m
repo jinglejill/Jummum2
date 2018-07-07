@@ -17,7 +17,19 @@
 @implementation ForgotPasswordViewController
 @synthesize lblNavTitle;
 @synthesize txtEmail;
+@synthesize topViewHeight;
+@synthesize bottomButtonHeight;
 
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == txtEmail)

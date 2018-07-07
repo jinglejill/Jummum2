@@ -24,11 +24,21 @@
 @synthesize btnAcceptWidthConstant;
 @synthesize btnDeclineWidthConstant;
 @synthesize username;
+@synthesize topViewHeight;
+@synthesize bottomButtonHeight;
 
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;    
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+    
+    
+    
     btnAcceptWidthConstant.constant = ceilf(self.view.frame.size.width/2.0);
     btnDeclineWidthConstant.constant = ceilf(self.view.frame.size.width/2.0);
 }

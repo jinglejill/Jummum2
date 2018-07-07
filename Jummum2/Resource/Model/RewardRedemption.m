@@ -13,12 +13,13 @@
 
 @implementation RewardRedemption
 
--(RewardRedemption *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType orderNo:(NSInteger)orderNo status:(NSInteger)status
+-(RewardRedemption *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountMenuID:(NSInteger)discountMenuID orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
     {
         self.rewardRedemptionID = [RewardRedemption getNextID];
+        self.mainBranchID = mainBranchID;
         self.startDate = startDate;
         self.endDate = endDate;
         self.header = header;
@@ -38,6 +39,7 @@
         self.minimumSpending = minimumSpending;
         self.maxDiscountAmountPerDay = maxDiscountAmountPerDay;
         self.allowDiscountForAllMenuType = allowDiscountForAllMenuType;
+        self.discountMenuID = discountMenuID;
         self.orderNo = orderNo;
         self.status = status;
         self.modifiedUser = [Utility modifiedUser];
@@ -119,6 +121,7 @@
     if (copy)
     {
         ((RewardRedemption *)copy).rewardRedemptionID = self.rewardRedemptionID;
+        ((RewardRedemption *)copy).mainBranchID = self.mainBranchID;
         [copy setStartDate:self.startDate];
         [copy setEndDate:self.endDate];
         [copy setHeader:self.header];
@@ -138,6 +141,7 @@
         ((RewardRedemption *)copy).minimumSpending = self.minimumSpending;
         ((RewardRedemption *)copy).maxDiscountAmountPerDay = self.maxDiscountAmountPerDay;
         ((RewardRedemption *)copy).allowDiscountForAllMenuType = self.allowDiscountForAllMenuType;
+        ((RewardRedemption *)copy).discountMenuID = self.discountMenuID;
         ((RewardRedemption *)copy).orderNo = self.orderNo;
         ((RewardRedemption *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
@@ -152,6 +156,7 @@
 -(BOOL)editRewardRedemption:(RewardRedemption *)editingRewardRedemption
 {
     if(self.rewardRedemptionID == editingRewardRedemption.rewardRedemptionID
+       && self.mainBranchID == editingRewardRedemption.mainBranchID
        && [self.startDate isEqual:editingRewardRedemption.startDate]
        && [self.endDate isEqual:editingRewardRedemption.endDate]
        && [self.header isEqualToString:editingRewardRedemption.header]
@@ -171,6 +176,7 @@
        && self.minimumSpending == editingRewardRedemption.minimumSpending
        && self.maxDiscountAmountPerDay == editingRewardRedemption.maxDiscountAmountPerDay
        && self.allowDiscountForAllMenuType == editingRewardRedemption.allowDiscountForAllMenuType
+       && self.discountMenuID == editingRewardRedemption.discountMenuID
        && self.orderNo == editingRewardRedemption.orderNo
        && self.status == editingRewardRedemption.status
        )
@@ -183,6 +189,7 @@
 +(RewardRedemption *)copyFrom:(RewardRedemption *)fromRewardRedemption to:(RewardRedemption *)toRewardRedemption
 {
     toRewardRedemption.rewardRedemptionID = fromRewardRedemption.rewardRedemptionID;
+    toRewardRedemption.mainBranchID = fromRewardRedemption.mainBranchID;
     toRewardRedemption.startDate = fromRewardRedemption.startDate;
     toRewardRedemption.endDate = fromRewardRedemption.endDate;
     toRewardRedemption.header = fromRewardRedemption.header;
@@ -202,6 +209,7 @@
     toRewardRedemption.minimumSpending = fromRewardRedemption.minimumSpending;
     toRewardRedemption.maxDiscountAmountPerDay = fromRewardRedemption.maxDiscountAmountPerDay;
     toRewardRedemption.allowDiscountForAllMenuType = fromRewardRedemption.allowDiscountForAllMenuType;
+    toRewardRedemption.discountMenuID = fromRewardRedemption.discountMenuID;
     toRewardRedemption.orderNo = fromRewardRedemption.orderNo;
     toRewardRedemption.status = fromRewardRedemption.status;
     toRewardRedemption.modifiedUser = [Utility modifiedUser];

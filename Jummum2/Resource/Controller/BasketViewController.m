@@ -64,6 +64,8 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 @synthesize customerTable;
 @synthesize voucherView;
 @synthesize tbvTotalHeightConstant;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
 
 -(IBAction)unwindToBasket:(UIStoryboardSegue *)segue;
@@ -151,6 +153,16 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         vc.branch = branch;
         vc.customerTable = customerTable;        
     }
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView
@@ -292,7 +304,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         
 
         
-        NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
+        NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)

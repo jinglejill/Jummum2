@@ -32,11 +32,23 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 @synthesize tbvData;
 @synthesize rewardPoint;
 @synthesize rewardRedemption;
+@synthesize topViewHeight;
+@synthesize bottomButtonHeight;
 
 
 -(IBAction)unwindToRewardDetail:(UIStoryboardSegue *)segue
 {
     
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 - (void)viewDidLoad
@@ -90,15 +102,14 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
     
         
-        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Reward/%@",branch.dbName,rewardRedemption.imageUrl];
+        
+        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Reward/%@",rewardRedemption.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
                  NSLog(@"succeed");
                  cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
              }
          }];
         float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
@@ -154,15 +165,14 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Reward/%@",branch.dbName,rewardRedemption.imageUrl];
+        
+        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Reward/%@",rewardRedemption.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
                  NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
+                 cell.imgVwValue.image = image;                 
              }
          }];
         float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;

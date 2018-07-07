@@ -10,5 +10,6 @@
 
 @interface MeViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *tbvMe;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue;
 @end

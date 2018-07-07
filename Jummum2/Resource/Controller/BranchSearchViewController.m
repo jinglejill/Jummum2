@@ -35,6 +35,8 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 @synthesize lblNavTitle;
 @synthesize tbvBranch;
 @synthesize sbText;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
 
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue
@@ -45,6 +47,16 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 - (IBAction)goBack:(id)sender
 {
     [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -137,7 +149,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
         cell.lblQuantity.hidden = YES;
         cell.imgTriangle.hidden = YES;
         cell.lblMenuName.text = branch.name;
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)

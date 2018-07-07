@@ -57,7 +57,8 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 @synthesize lblTotalQuantityTop;
 @synthesize lblTotalQuantity;
 @synthesize lblTotalAmount;
-
+@synthesize topViewHeight;
+@synthesize bottomButtonHeight;
 
 -(IBAction)unwindToMenuSelection:(UIStoryboardSegue *)segue
 {
@@ -75,6 +76,16 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         vc.branch = branch;
         vc.customerTable = customerTable;
     }
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView
@@ -281,7 +292,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             }
             
             
-            NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
+            NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
             [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
              {
                  if (succeeded)

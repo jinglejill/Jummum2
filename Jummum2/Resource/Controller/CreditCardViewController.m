@@ -27,7 +27,19 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
 
 @synthesize lblNavTitle;
 @synthesize tbvData;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
 
 - (void)viewDidLoad
 {
@@ -64,10 +76,12 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
         }
     }
     
+    NSString *message = [Setting getValue:@"082m" example:@"คุณไม่ได้บันทึกบัตรเครดิตไว้"];
     UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
-    noDataLabel.text             = @"คุณไม่ได้บันทึกบัตรเครดิตไว้";
+    noDataLabel.text             = message;
     noDataLabel.textColor        = cSystem4;
     noDataLabel.textAlignment    = NSTextAlignmentCenter;
+    noDataLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15.0f];
     tableView.backgroundView = noDataLabel;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     return 0;

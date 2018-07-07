@@ -30,7 +30,6 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 @synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize dtPicker;
-@synthesize topButtonHeight;
 @synthesize topViewHeight;
 @synthesize bottomViewHeight;
 @synthesize userAccount;
@@ -41,8 +40,8 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
     float topPadding = window.safeAreaInsets.bottom;
-    topButtonHeight.constant = topPadding == 0?20:topPadding;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 

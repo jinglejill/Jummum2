@@ -496,6 +496,22 @@
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardPointSpentUsedMoreGetList]]];
         }
         break;
+        case dbRewardPointSpentExpired:
+        {
+            UserAccount *userAccount = (UserAccount *)data;
+            noteDataString = [NSString stringWithFormat:@"memberID=%ld",userAccount.userAccountID];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardPointSpentExpiredGetList]]];
+        }
+        break;
+        case dbRewardPointSpentExpiredMore:
+        {
+            NSArray *dataList = (NSArray *)data;
+            RewardPoint *rewardPoint = (RewardPoint *)dataList[0];
+            UserAccount *userAccount = (UserAccount *)dataList[1];
+            noteDataString = [NSString stringWithFormat:@"modifiedDate=%@&rewardPointID=%ld&memberID=%ld",rewardPoint.modifiedDate,rewardPoint.rewardPointID,userAccount.userAccountID];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardPointSpentExpiredMoreGetList]]];
+        }
+        break;
         case dbHotDeal:
         {
             NSArray *dataList = (NSArray *)data;
@@ -702,10 +718,11 @@
             NSMutableArray *orderTakingList = dataList[3];
             NSMutableArray *orderNoteList = dataList[4];
             NSObject *userPromotionOrRewardRedemptionUsed = dataList[5];
+            NSNumber *objPromoCodeID = dataList[6];
             NSInteger type = [userPromotionOrRewardRedemptionUsed isMemberOfClass:[UserPromotionUsed class]]?1:2;
             
             
-            noteDataString = [NSString stringWithFormat:@"omiseToken=%@&amount=%ld&type=%ld",omiseToken,(long)amount,type];
+            noteDataString = [NSString stringWithFormat:@"omiseToken=%@&amount=%ld&type=%ld&promoCodeID=%ld",omiseToken,(long)amount,type,[objPromoCodeID integerValue]];
             noteDataString = [NSString stringWithFormat:@"%@&countOtOrderTaking=%ld&countOnOrderNote=%ld",noteDataString,(unsigned long)[orderTakingList count],[orderNoteList count]];
             noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:receipt]];
             noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:userPromotionOrRewardRedemptionUsed withPrefix:@"pr"]];

@@ -40,11 +40,23 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 @synthesize fromCreditCardAndOrderSummaryMenu;
 @synthesize customerTable;
 @synthesize btnBack;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
 
 -(IBAction)unwindToCustomerTableSearch:(UIStoryboardSegue *)segue
 {
     
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView

@@ -34,6 +34,7 @@
 @synthesize fromCreditCardAndOrderSummaryMenu;
 @synthesize customerTable;
 @synthesize btnBack;
+@synthesize topViewHeight;
 
 
 -(IBAction)unwindToQRCodeScanTable:(UIStoryboardSegue *)segue
@@ -49,6 +50,15 @@
 - (IBAction)goBack:(id)sender
 {
     [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 - (void)viewDidLoad

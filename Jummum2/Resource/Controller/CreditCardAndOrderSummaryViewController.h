@@ -23,7 +23,8 @@
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (nonatomic) NSInteger fromReceiptSummaryMenu;
-
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 - (IBAction)backToBasket:(id)sender;
 - (IBAction)pay:(id)sender;

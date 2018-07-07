@@ -11,6 +11,7 @@
 @interface CustomTableViewCellProfile : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *imgValue;
 @property (strong, nonatomic) IBOutlet UILabel *lblEmail;
-
+@property (strong, nonatomic) IBOutlet UIView *vwContent;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *singleTapGestureRecognizer;
 
 @end

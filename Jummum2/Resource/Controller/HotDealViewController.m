@@ -36,11 +36,21 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 @synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize searchBar;
+@synthesize topViewHeight;
 
 
 -(IBAction)unwindToHotDeal:(UIStoryboardSegue *)segue
 {
     
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -134,8 +144,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 
         
         
-        Branch *branch = [Branch getBranch:promotion.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -174,8 +183,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        Branch *branch = [Branch getBranch:promotion.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -225,8 +233,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        Branch *branch = [Branch getBranch:promotion.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -284,7 +291,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     }
     else
     {
-        NSPredicate *resultPredicate   = [NSPredicate predicateWithFormat:@"(_branchName contains[c] %@)", searchText];
+        NSPredicate *resultPredicate   = [NSPredicate predicateWithFormat:@"(_header contains[c] %@) or (_subTitle contains[c] %@) or (_termsConditions contains[c] %@)", searchText, searchText, searchText];
         _filterPromotionList = [[_promotionList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
     }
     
@@ -373,10 +380,14 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     {
         //add update
         NSMutableArray *promotionList = items[0];
-        BOOL update = [Utility updateDataList:promotionList dataList:_promotionList];
-        _promotionList = [Promotion sortWithdataList:_promotionList];
-        if(update)
+        if(!_promotionList)
         {
+            _promotionList = [[NSMutableArray alloc]init];
+        }
+        BOOL update = [Utility updateDataList:promotionList dataList:_promotionList];
+        if(update)
+        {            
+            _promotionList = [Promotion sortWithdataList:_promotionList];
             [self searchBar:searchBar textDidChange:searchBar.text];
         }
     }

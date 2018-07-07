@@ -42,6 +42,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 
 @synthesize lblNavTitle;
 @synthesize tbvData;
+@synthesize topViewHeight;
 
 
 -(IBAction)unwindToReward:(UIStoryboardSegue *)segue
@@ -53,6 +54,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     cell.lblValue.text = [NSString stringWithFormat:@"%@ points",strPoint];
     [cell.lblValue sizeToFit];
     cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;    
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView
@@ -222,8 +232,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
-        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -375,6 +385,10 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         //rewardRedemptionList
         //add update
         NSMutableArray *rewardRedemptionList = items[1];
+        if(!_rewardRedemptionList)
+        {
+            _rewardRedemptionList = [[NSMutableArray alloc]init];
+        }
         BOOL update = [Utility updateDataList:rewardRedemptionList dataList:_rewardRedemptionList];
         _rewardRedemptionList = [RewardRedemption sortWithdataList:_rewardRedemptionList];
         if(update)
@@ -399,7 +413,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     }
     else
     {
-        NSPredicate *resultPredicate   = [NSPredicate predicateWithFormat:@"(_branchName contains[c] %@)", searchText];
+        NSPredicate *resultPredicate   = [NSPredicate predicateWithFormat:@"(_header contains[c] %@) or (_subTitle contains[c] %@) or (_termsConditions contains[c] %@) or (_point contains[c] %@)", searchText, searchText, searchText];
         _filterRewardRedemptionList = [[_rewardRedemptionList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
     }
 }

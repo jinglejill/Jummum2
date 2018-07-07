@@ -17,6 +17,8 @@
 @property (nonatomic) NSInteger fromCreditCardAndOrderSummaryMenu;
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (strong, nonatomic) IBOutlet UIButton *btnBack;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+
 
 
 - (IBAction)branchSearch:(id)sender;

@@ -9,6 +9,16 @@
 #import "CustomTableViewCellProfile.h"
 
 @implementation CustomTableViewCellProfile
+@synthesize singleTapGestureRecognizer;
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self)
+    {
+        singleTapGestureRecognizer = [[UITapGestureRecognizer alloc]init];
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

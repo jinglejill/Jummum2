@@ -31,11 +31,21 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 
 
 @synthesize tbvMe;
+@synthesize topViewHeight;
 
 
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue
 {
     
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView
@@ -67,13 +77,45 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         UINib *nib = [UINib nibWithNibName:reuseIdentifierProfile bundle:nil];
         [tbvMe registerNib:nib forCellReuseIdentifier:reuseIdentifierProfile];
     }
+    
+    
+    //------
+    CustomTableViewCellProfile *cell = [tbvMe dequeueReusableCellWithIdentifier:reuseIdentifierProfile];
+
+    
+    cell.imgValue.layer.cornerRadius = 35;
+    cell.imgValue.layer.masksToBounds = YES;
+    cell.imgValue.layer.borderWidth = 0;
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    cell.lblEmail.text = userAccount.email;
+    
+    
+    
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    float topPadding = window.safeAreaInsets.bottom;
+    CGRect frame = cell.frame;
+    frame.origin.x = 0;
+    frame.origin.y = topPadding == 0?20:topPadding;
+    frame.size.width = self.view.frame.size.width;
+    frame.size.height = 90;
+    cell.frame = frame;
+    [self.view addSubview:cell];
+    
+    
+    
+    [cell.singleTapGestureRecognizer addTarget:self action:@selector(handleSingleTap:)];
+    [cell.vwContent addGestureRecognizer:cell.singleTapGestureRecognizer];
+    cell.singleTapGestureRecognizer.numberOfTapsRequired = 1;
+    ////-----------
 }
+
 
 ///tableview section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     
-    return 3;
+//    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -81,15 +123,16 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     
     if([tableView isEqual:tbvMe])
     {
-        if(section == 0)
-        {
-            return 1;
-        }
-        else if (section == 1)
+//        if(section == 0)
+//        {
+//            return 1;
+//        }
+//        else
+            if (section == 0)
         {
             return [_meList count];
         }
-        else if (section == 2)
+        else if (section == 1)
         {
             return [_aboutUsList count];
         }
@@ -110,22 +153,23 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     if([tableView isEqual:tbvMe])
     {
      
-        if(section == 0)
-        {
-            CustomTableViewCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierProfile];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            
-            cell.imgValue.layer.cornerRadius = 35;
-            cell.imgValue.layer.masksToBounds = YES;
-            cell.imgValue.layer.borderWidth = 0;
-            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            cell.lblEmail.text = userAccount.email;
-            
-            
-            return cell;
-        }
-        else if (section == 1)
+//        if(section == 0)
+//        {
+//            CustomTableViewCellProfile *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierProfile];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//
+//            cell.imgValue.layer.cornerRadius = 35;
+//            cell.imgValue.layer.masksToBounds = YES;
+//            cell.imgValue.layer.borderWidth = 0;
+//            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+//            cell.lblEmail.text = userAccount.email;
+//
+//
+//            return cell;
+//        }
+//        else
+        if (section == 0)
         {
             CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -136,7 +180,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
             cell.lblText.textColor = cSystem1;
             return cell;
         }
-        else if (section == 2)
+        else if (section == 1)
         {
             CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -167,11 +211,11 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 {
     if([tableView isEqual:tbvMe])
     {
-        if(indexPath.section == 0)
-        {
-            return 90;
-        }
-        else
+//        if(indexPath.section == 0)
+//        {
+//            return 90;
+//        }
+//        else
         {
             return 44;
         }
@@ -191,11 +235,12 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     
     if([tableView isEqual:tbvMe])
     {
-        if(indexPath.section == 0)
-        {
-            [self performSegueWithIdentifier:@"segPersonalData" sender:self];
-        }
-        else if(indexPath.section == 1)
+//        if(indexPath.section == 0)
+//        {
+//            [self performSegueWithIdentifier:@"segPersonalData" sender:self];
+//        }
+//        else
+            if(indexPath.section == 0)
         {
             switch (indexPath.item)
             {
@@ -230,7 +275,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     break;
             }
         }
-        else if(indexPath.section == 2)
+        else if(indexPath.section == 1)
         {
             switch (indexPath.item)
             {
@@ -297,7 +342,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 {
     if (section == 0)
     {
-        return CGFLOAT_MIN;
+        return 8;//CGFLOAT_MIN;
     }
 //    else if(section == 1)
 //    {
@@ -305,6 +350,17 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 //    }
     return tableView.sectionHeaderHeight;
 }
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    
+////    if(section == 0)
+//    {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.sectionHeaderHeight)];
+//        view.backgroundColor = cSystem1;
+//        return view;
+//    }
+//    return nil;
+//}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -318,5 +374,10 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 -(void)unwindToLogIn
 {
     [self performSegueWithIdentifier:@"segUnwindToLogIn" sender:self];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    [self performSegueWithIdentifier:@"segPersonalData" sender:self];
 }
 @end

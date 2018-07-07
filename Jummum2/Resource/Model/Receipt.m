@@ -368,7 +368,7 @@
         return receipt.modifiedDate;
     }
     
-    return nil;
+    return [Utility notIdentifiedDate];
 }
 
 +(void)updateStatusList:(NSMutableArray *)receiptList

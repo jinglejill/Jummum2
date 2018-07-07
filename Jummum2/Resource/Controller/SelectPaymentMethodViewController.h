@@ -13,6 +13,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) CreditCard *creditCard;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 - (IBAction)dismissViewController:(id)sender;
 
 @end

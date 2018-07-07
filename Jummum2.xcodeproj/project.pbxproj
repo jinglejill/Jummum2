@@ -331,6 +331,9 @@
 		EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */; };
 		EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */; };
 		EFE8BFE220A5C508005E0746 /* party.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE8BFE120A5C507005E0746 /* party.png */; };
+		EFF44D4720EFE2D300D07770 /* NoImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4620EFE2D200D07770 /* NoImage.jpg */; };
+		EFF44D4B20F05C6600D07770 /* CustomTableViewCellLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */; };
+		EFF44D4C20F05C6600D07770 /* CustomTableViewCellLogo.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -831,6 +834,10 @@
 		EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+FontAppearance.h"; sourceTree = "<group>"; };
 		EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FontAppearance.m"; sourceTree = "<group>"; };
 		EFE8BFE120A5C507005E0746 /* party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = party.png; sourceTree = "<group>"; };
+		EFF44D4620EFE2D200D07770 /* NoImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NoImage.jpg; sourceTree = "<group>"; };
+		EFF44D4820F05C6600D07770 /* CustomTableViewCellLogo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellLogo.h; sourceTree = "<group>"; };
+		EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellLogo.m; sourceTree = "<group>"; };
+		EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCellLogo.xib; sourceTree = "<group>"; };
 		F9AD4867B6FFD6155F64F9B2 /* Pods-Jummum2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jummum2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Jummum2Tests/Pods-Jummum2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE55E498180126FC94589F1 /* Pods-Jummum2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jummum2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Jummum2UITests/Pods-Jummum2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1089,6 +1096,7 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EFF44D4620EFE2D200D07770 /* NoImage.jpg */,
 				EF02455D20EC93BE0025B89D /* comment.png */,
 				EF02455C20EC93BE0025B89D /* contactUs.png */,
 				EF02455B20EC93BE0025B89D /* recommendShop.png */,
@@ -1491,6 +1499,9 @@
 				EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */,
 				EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */,
 				EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */,
+				EFF44D4820F05C6600D07770 /* CustomTableViewCellLogo.h */,
+				EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */,
+				EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1643,10 +1654,12 @@
 				EF13B67F20D212E5008CF35C /* Kanit-Regular.ttf in Resources */,
 				EFB91849208C7CFD0079FC15 /* remove.png in Resources */,
 				EF13B68820D212E5008CF35C /* Kanit-Thin.ttf in Resources */,
+				EFF44D4720EFE2D300D07770 /* NoImage.jpg in Resources */,
 				EF13B6C620D220F9008CF35C /* Icon-Spotlight-40@2x.png in Resources */,
 				EF5C30E92080C00500084B7E /* jcb.png in Resources */,
 				EF13B6A020D212E5008CF35C /* Kanit-LightItalic.ttf in Resources */,
 				EF13B6D020D220F9008CF35C /* Icon-72@2x.png in Resources */,
+				EFF44D4C20F05C6600D07770 /* CustomTableViewCellLogo.xib in Resources */,
 				EF13B6C320D220F9008CF35C /* Icon-Small-50.png in Resources */,
 				EF13B67420D212E5008CF35C /* Kanit-ThinItalic.ttf in Resources */,
 				EF02456020EC93BF0025B89D /* comment.png in Resources */,
@@ -1983,6 +1996,7 @@
 				EF5C311E2080C00500084B7E /* Menu.m in Sources */,
 				EF5C31302080C00500084B7E /* UserPromotionUsed.m in Sources */,
 				EF5C31572080C00500084B7E /* CustomCollectionViewCellNote.m in Sources */,
+				EFF44D4B20F05C6600D07770 /* CustomTableViewCellLogo.m in Sources */,
 				EF5C31432080C00500084B7E /* SubMenuType.m in Sources */,
 				EF5C31412080C00500084B7E /* PushSync.m in Sources */,
 				EF1AD15A20B0081600F6D223 /* CustomTableViewCellDisputeDetail.m in Sources */,

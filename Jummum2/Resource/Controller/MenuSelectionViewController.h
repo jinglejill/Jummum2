@@ -20,6 +20,9 @@
 @property (strong, nonatomic) IBOutlet UIView *vwBottomShadow;
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
+
 
 -(IBAction)unwindToMenuSelection:(UIStoryboardSegue *)segue;
 - (IBAction)goBackHome:(id)sender;

@@ -27,7 +27,19 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 @synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize promotion;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
 
 - (void)viewDidLoad
 {
@@ -80,8 +92,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        Branch *branch = [Branch getBranch:promotion.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
+        
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -146,8 +158,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        Branch *branch = [Branch getBranch:promotion.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Promotion/%@",branch.dbName,promotion.imageUrl];
+        
+        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)

@@ -21,6 +21,7 @@
 #import "CreditCard.h"
 #import "SharedCurrentUserAccount.h"
 #import "Menu.h"
+#import "SpecialPriceProgram.h"
 #import "Receipt.h"
 #import "OrderTaking.h"
 #import "OrderNote.h"
@@ -53,6 +54,7 @@
     NSInteger _promotionOrRewardRedemption;//1=promotion,2=rewardRedemption
     Receipt *_receipt;
     NSIndexPath *_currentScrollIndexPath;
+    UIToolbar *_toolBar;
 }
 @end
 
@@ -75,6 +77,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 @synthesize tbvTotal;
 @synthesize tbvTotalHeightConstant;
 @synthesize fromReceiptSummaryMenu;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
 
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue
@@ -171,7 +175,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
-    
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
     return YES;
 }
 
@@ -180,12 +187,13 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     if(textField.tag == 31)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+
         
         [self.view endEditing:YES];
         
         return YES;
     }
-    
+
     return YES;
 }
 
@@ -249,13 +257,23 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             break;
         default:
         break;
-    }    
+    }
+    
+    
+//    if(textField.tag == 31)
+//    {
+//        [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    }
 }
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-//    NSLog(@"self.view: %f,%f,%f,%f",self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.size.width,self.view.frame.size.height);
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
 -(void)loadView
@@ -309,6 +327,17 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     tbvTotal.scrollEnabled = NO;
     
 
+    
+    //keyboard dismiss
+    _toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    [_toolBar setTintColor:cSystem4_10];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(hideKeyboard)];
+    doneBtn.tintColor = cSystem1;
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [_toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    
+    
+    
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierCredit bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierCredit];
@@ -494,6 +523,14 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                         cell.txtMonth.delegate = self;
                         cell.txtYear.delegate = self;
                         cell.txtCCV.delegate = self;
+                        
+                        
+                        [cell.txtFirstName setInputAccessoryView:_toolBar];
+                        [cell.txtLastName setInputAccessoryView:_toolBar];
+                        [cell.txtCardNo setInputAccessoryView:_toolBar];
+                        [cell.txtMonth setInputAccessoryView:_toolBar];
+                        [cell.txtYear setInputAccessoryView:_toolBar];
+                        [cell.txtCCV setInputAccessoryView:_toolBar];
                         
                         
                         cell.vwFirstName.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -799,6 +836,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.txtVoucherCode.delegate = self;
                 cell.txtVoucherCode.text = @"";
                 [self setTextFieldDesign:cell.txtVoucherCode];
+                [cell.txtVoucherCode setInputAccessoryView:_toolBar];
                 
                 
                 cell.btnConfirmVoucherCodeWidthConstant.constant = (self.view.frame.size.width - 16*2 - 8)/2;
@@ -1481,12 +1519,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             if(_promotionOrRewardRedemption == 1)
             {
                 UserPromotionUsed *userPromotionUsed = [[UserPromotionUsed alloc]initWithUserAccountID:userAccount.userAccountID promotionID:_promotionUsed.promotionID receiptID:0];
-                [self.homeModel insertItems:dbOmiseCheckOut withData:@[[token tokenId],@(_netTotal*100),receipt,orderTakingList,orderNoteList,userPromotionUsed,@(_promotionOrRewardRedemption)] actionScreen:@"call omise checkout at server"];
+                [self.homeModel insertItems:dbOmiseCheckOut withData:@[[token tokenId],@(_netTotal*100),receipt,orderTakingList,orderNoteList,userPromotionUsed,@(_promotionUsed.promoCodeID)] actionScreen:@"call omise checkout at server"];
             }
             else
             {
                 UserRewardRedemptionUsed *userRewardRedemptionUsed = [[UserRewardRedemptionUsed alloc]initWithUserAccountID:userAccount.userAccountID rewardRedemptionID:_promotionUsed.rewardRedemptionID receiptID:0];
-                [self.homeModel insertItems:dbOmiseCheckOut withData:@[[token tokenId],@(_netTotal*100),receipt,orderTakingList,orderNoteList,userRewardRedemptionUsed] actionScreen:@"call omise checkout at server"];
+                [self.homeModel insertItems:dbOmiseCheckOut withData:@[[token tokenId],@(_netTotal*100),receipt,orderTakingList,orderNoteList,userRewardRedemptionUsed,@(_promotionUsed.promoCodeID)] actionScreen:@"call omise checkout at server"];
             }
         }
         else
@@ -1648,7 +1686,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     }
     else if([[segue identifier] isEqualToString:@"segPaymentComplete"])
     {
-//        SaveToCameraRollViewController *vc = segue.destinationViewController;
         PaymentCompleteViewController *vc = segue.destinationViewController;
         vc.receipt = _receipt;
     }
@@ -1686,23 +1723,43 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
     Promotion *promotion = promotionList[0];
     float totalAmount = [OrderTaking getSumSpecialPrice:_orderTakingList];
-    if(promotion.allowDiscountForAllMenuType)
+    if(promotion.discountMenuID)
     {
-        totalPriceGetDiscount = totalAmount;
+        NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:promotion.discountMenuID];
+        if([orderTakingList count]>0)
+        {
+            Menu *menu = [Menu getMenu:promotion.discountMenuID branchID:promotion.mainBranchID];
+            SpecialPriceProgram *specialPriceProgram = [SpecialPriceProgram getSpecialPriceProgramTodayWithMenuID:promotion.discountMenuID branchID:promotion.mainBranchID];
+            float specialPrice = specialPriceProgram?specialPriceProgram.specialPrice:menu.price;
+            totalPriceGetDiscount = specialPrice;
+        }
+        else
+        {
+            totalPriceGetDiscount = 0;
+        }
     }
     else
     {
-        for(OrderTaking *item in _orderTakingList)
+        if(promotion.allowDiscountForAllMenuType)
         {
-            Menu *menu = [Menu getMenu:item.menuID];
-            MenuType *menuType = [MenuType getMenuType:menu.menuTypeID];
-            //เช็คว่า เมนูที่สั่งได้ส่วนลดมั๊ย
-            if(menuType.allowDiscount && (item.specialPrice == item.price))
+            totalPriceGetDiscount = totalAmount;
+        }
+        else
+        {
+            for(OrderTaking *item in _orderTakingList)
             {
-                totalPriceGetDiscount += item.quantity * item.specialPrice;
+                Menu *menu = [Menu getMenu:item.menuID];
+                MenuType *menuType = [MenuType getMenuType:menu.menuTypeID];
+                //เช็คว่า เมนูที่สั่งได้ส่วนลดมั๊ย
+                if(menuType.allowDiscount && (item.specialPrice == item.price))
+                {
+                    totalPriceGetDiscount += item.quantity * item.specialPrice;
+                }
             }
         }
     }
+    
+    
 
 
 
@@ -1710,6 +1767,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         NSString *message = [Setting getValue:@"042m" example:@"โค้ดที่ใส่ไม่สามารถใช้กับเมนูที่คุณเลือก"];
         [self blinkAlertMsg:message];
+        return;
     }
     else
     {
@@ -1728,22 +1786,21 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         NSLog(@"voucherView: %f,%f,%f,%f",frame.origin.x,frame.origin.y,frame.size.width,frame.size.height);
 
 
-        if(promotion.discountType == 1) //baht
+        if(promotion.discountMenuID)
         {
             _discountType = 1;
             voucherView.lblVoucherCode.text = [NSString stringWithFormat:@"คูปองส่วนลด %@",cell.txtVoucherCode.text];
             [voucherView.lblVoucherCode sizeToFit];
             voucherView.lblVoucherCodeWidthConstant.constant = voucherView.lblVoucherCode.frame.size.width;
-            _discountValue = totalPriceGetDiscount < promotion.discountAmount?totalPriceGetDiscount:promotion.discountAmount;
-            if(promotion.moreDiscountToGo != -1)
-            {
-                _discountValue = _discountValue > promotion.moreDiscountToGo?promotion.moreDiscountToGo:_discountValue;
-            }
+            _discountValue = totalPriceGetDiscount;
+//            _discountValue = totalPriceGetDiscount < promotion.discountAmount?totalPriceGetDiscount:promotion.discountAmount;
+            
+            
             voucherView.lblDiscountAmount.text = [Utility formatDecimal:_discountValue withMinFraction:2 andMaxFraction:2];
             voucherView.lblDiscountAmount.text = [Utility addPrefixBahtSymbol:voucherView.lblDiscountAmount.text];
             voucherView.lblDiscountAmount.text = [NSString stringWithFormat:@"-%@",voucherView.lblDiscountAmount.text];
-
-
+            
+            
             NSString *strTotalAmountNet = [Utility formatDecimal:totalAmount-_discountValue withMinFraction:2 andMaxFraction:2];
             {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
@@ -1752,35 +1809,63 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             }
             _discountAmount = _discountValue;
         }
-        else//2 = percent
+        else
         {
-            _discountType = 2;
-            _discountAmount = promotion.discountAmount;
-            _discountValue = totalPriceGetDiscount * promotion.discountAmount * 0.01;
-            _discountValue = floorf(_discountValue * 100) * 0.01;
-            if(promotion.moreDiscountToGo != -1)
+            if(promotion.discountType == 1) //baht
             {
-                _discountValue = _discountValue > promotion.moreDiscountToGo?promotion.moreDiscountToGo:_discountValue;
+                _discountType = 1;
+                voucherView.lblVoucherCode.text = [NSString stringWithFormat:@"คูปองส่วนลด %@",cell.txtVoucherCode.text];
+                [voucherView.lblVoucherCode sizeToFit];
+                voucherView.lblVoucherCodeWidthConstant.constant = voucherView.lblVoucherCode.frame.size.width;
+                _discountValue = totalPriceGetDiscount < promotion.discountAmount?totalPriceGetDiscount:promotion.discountAmount;
+                if(promotion.moreDiscountToGo != -1)
+                {
+                    _discountValue = _discountValue > promotion.moreDiscountToGo?promotion.moreDiscountToGo:_discountValue;
+                }
+                voucherView.lblDiscountAmount.text = [Utility formatDecimal:_discountValue withMinFraction:2 andMaxFraction:2];
+                voucherView.lblDiscountAmount.text = [Utility addPrefixBahtSymbol:voucherView.lblDiscountAmount.text];
+                voucherView.lblDiscountAmount.text = [NSString stringWithFormat:@"-%@",voucherView.lblDiscountAmount.text];
+                
+                
+                NSString *strTotalAmountNet = [Utility formatDecimal:totalAmount-_discountValue withMinFraction:2 andMaxFraction:2];
+                {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
+                    CustomTableViewCellTotal *cell = [tbvTotal cellForRowAtIndexPath:indexPath];
+                    cell.lblAmount.text = [Utility addPrefixBahtSymbol:strTotalAmountNet];
+                }
+                _discountAmount = _discountValue;
             }
-            
-
-
-
-            voucherView.lblVoucherCode.text = [NSString stringWithFormat:@"คูปองส่วนลด %@",cell.txtVoucherCode.text];
-            [voucherView.lblVoucherCode sizeToFit];
-            voucherView.lblVoucherCodeWidthConstant.constant = voucherView.lblVoucherCode.frame.size.width;
-            voucherView.lblDiscountAmount.text = [Utility formatDecimal:_discountValue withMinFraction:2 andMaxFraction:2];
-            voucherView.lblDiscountAmount.text = [Utility addPrefixBahtSymbol:voucherView.lblDiscountAmount.text];
-            voucherView.lblDiscountAmount.text = [NSString stringWithFormat:@"-%@",voucherView.lblDiscountAmount.text];
-
-
-            NSString *strTotalAmountNet = [Utility formatDecimal:totalAmount-_discountValue withMinFraction:2 andMaxFraction:2];
+            else//2 = percent
             {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
-                CustomTableViewCellTotal *cell = [tbvTotal cellForRowAtIndexPath:indexPath];
-                cell.lblAmount.text = [Utility addPrefixBahtSymbol:strTotalAmountNet];
+                _discountType = 2;
+                _discountAmount = promotion.discountAmount;
+                _discountValue = totalPriceGetDiscount * promotion.discountAmount * 0.01;
+                _discountValue = floorf(_discountValue * 100) * 0.01;
+                if(promotion.moreDiscountToGo != -1)
+                {
+                    _discountValue = _discountValue > promotion.moreDiscountToGo?promotion.moreDiscountToGo:_discountValue;
+                }
+                
+                
+                
+                
+                voucherView.lblVoucherCode.text = [NSString stringWithFormat:@"คูปองส่วนลด %@",cell.txtVoucherCode.text];
+                [voucherView.lblVoucherCode sizeToFit];
+                voucherView.lblVoucherCodeWidthConstant.constant = voucherView.lblVoucherCode.frame.size.width;
+                voucherView.lblDiscountAmount.text = [Utility formatDecimal:_discountValue withMinFraction:2 andMaxFraction:2];
+                voucherView.lblDiscountAmount.text = [Utility addPrefixBahtSymbol:voucherView.lblDiscountAmount.text];
+                voucherView.lblDiscountAmount.text = [NSString stringWithFormat:@"-%@",voucherView.lblDiscountAmount.text];
+                
+                
+                NSString *strTotalAmountNet = [Utility formatDecimal:totalAmount-_discountValue withMinFraction:2 andMaxFraction:2];
+                {
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
+                    CustomTableViewCellTotal *cell = [tbvTotal cellForRowAtIndexPath:indexPath];
+                    cell.lblAmount.text = [Utility addPrefixBahtSymbol:strTotalAmountNet];
+                }
             }
         }
+        
 
         
         Message *type = typeList[0];
@@ -1963,8 +2048,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     cell.txtVoucherCode.hidden = NO;
     cell.btnConfirmVoucherCode.hidden = NO;
     cell.txtVoucherCode.text = @"";
+    _voucherCode = @"";
     _promotionUsed = nil;
-
+    
 
 
     //after discount, vat,service charge,net total
@@ -2136,4 +2222,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     }
 }
 
+-(void)hideKeyboard
+{
+    [self.view endEditing:YES];
+}
 @end

@@ -16,12 +16,13 @@
 
 @implementation Promotion
 
--(Promotion *)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status
+-(Promotion *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountMenuID:(NSInteger)discountMenuID noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
     {
         self.promotionID = [Promotion getNextID];
+        self.mainBranchID = mainBranchID;
         self.startDate = startDate;
         self.endDate = endDate;
         self.usingStartDate = usingStartDate;
@@ -35,6 +36,7 @@
         self.maxDiscountAmountPerDay = maxDiscountAmountPerDay;
         self.allowEveryone = allowEveryone;
         self.allowDiscountForAllMenuType = allowDiscountForAllMenuType;
+        self.discountMenuID = discountMenuID;
         self.noOfLimitUse = noOfLimitUse;
         self.noOfLimitUsePerUser = noOfLimitUsePerUser;
         self.noOfLimitUsePerUserPerDay = noOfLimitUsePerUserPerDay;
@@ -122,6 +124,7 @@
     if (copy)
     {
         ((Promotion *)copy).promotionID = self.promotionID;
+        ((Promotion *)copy).mainBranchID = self.mainBranchID;
         [copy setStartDate:self.startDate];
         [copy setEndDate:self.endDate];
         [copy setUsingStartDate:self.usingStartDate];
@@ -135,6 +138,7 @@
         ((Promotion *)copy).maxDiscountAmountPerDay = self.maxDiscountAmountPerDay;
         ((Promotion *)copy).allowEveryone = self.allowEveryone;
         ((Promotion *)copy).allowDiscountForAllMenuType = self.allowDiscountForAllMenuType;
+        ((Promotion *)copy).discountMenuID = self.discountMenuID;
         ((Promotion *)copy).noOfLimitUse = self.noOfLimitUse;
         ((Promotion *)copy).noOfLimitUsePerUser = self.noOfLimitUsePerUser;
         ((Promotion *)copy).noOfLimitUsePerUserPerDay = self.noOfLimitUsePerUserPerDay;
@@ -155,6 +159,7 @@
 -(BOOL)editPromotion:(Promotion *)editingPromotion
 {
     if(self.promotionID == editingPromotion.promotionID
+       && self.mainBranchID == editingPromotion.mainBranchID
        && [self.startDate isEqual:editingPromotion.startDate]
        && [self.endDate isEqual:editingPromotion.endDate]
        && [self.usingStartDate isEqual:editingPromotion.usingStartDate]
@@ -168,6 +173,7 @@
        && self.maxDiscountAmountPerDay == editingPromotion.maxDiscountAmountPerDay
        && self.allowEveryone == editingPromotion.allowEveryone
        && self.allowDiscountForAllMenuType == editingPromotion.allowDiscountForAllMenuType
+       && self.discountMenuID == editingPromotion.discountMenuID
        && self.noOfLimitUse == editingPromotion.noOfLimitUse
        && self.noOfLimitUsePerUser == editingPromotion.noOfLimitUsePerUser
        && self.noOfLimitUsePerUserPerDay == editingPromotion.noOfLimitUsePerUserPerDay
@@ -186,6 +192,7 @@
 +(Promotion *)copyFrom:(Promotion *)fromPromotion to:(Promotion *)toPromotion
 {
     toPromotion.promotionID = fromPromotion.promotionID;
+    toPromotion.mainBranchID = fromPromotion.mainBranchID;
     toPromotion.startDate = fromPromotion.startDate;
     toPromotion.endDate = fromPromotion.endDate;
     toPromotion.usingStartDate = fromPromotion.usingStartDate;
@@ -199,6 +206,7 @@
     toPromotion.maxDiscountAmountPerDay = fromPromotion.maxDiscountAmountPerDay;
     toPromotion.allowEveryone = fromPromotion.allowEveryone;
     toPromotion.allowDiscountForAllMenuType = fromPromotion.allowDiscountForAllMenuType;
+    toPromotion.discountMenuID = fromPromotion.discountMenuID;
     toPromotion.noOfLimitUse = fromPromotion.noOfLimitUse;
     toPromotion.noOfLimitUsePerUser = fromPromotion.noOfLimitUsePerUser;
     toPromotion.noOfLimitUsePerUserPerDay = fromPromotion.noOfLimitUsePerUserPerDay;

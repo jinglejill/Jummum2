@@ -386,6 +386,12 @@ extern NSString *globalModifiedUser;
         case urlRewardPointSpentUsedMoreGetList:
             url = @"/JMM/JUMMUM3/JMMRewardPointSpentUsedMoreGetList.php";
             break;
+        case urlRewardPointSpentExpiredGetList:
+            url = @"/JMM/JUMMUM3/JMMRewardPointSpentExpiredGetList.php";
+            break;
+        case urlRewardPointSpentExpiredMoreGetList:
+            url = @"/JMM/JUMMUM3/JMMRewardPointSpentExpiredMoreGetList.php";
+            break;
         case urlUserRewardRedemptionUsedInsert:
             url = @"/JMM/JUMMUM3/JMMUserRewardRedemptionUsedInsert.php";
             break;
@@ -463,6 +469,9 @@ extern NSString *globalModifiedUser;
             break;
         case urlHotDealWithBranchGetList:
             url = @"/JMM/JUMMUM3/JMMHotDealWithBranchIDGetList.php";
+            break;
+        case urlRewardRedemptionWithBranchGetList:
+            url = @"/JMM/JUMMUM3/JMMRewardRedemptionWithBranchIDGetList.php";
             break;
         case urlCommentInsert:
             url = @"/JMM/JUMMUM3/JMMCommentInsert.php";
@@ -1429,7 +1438,7 @@ extern NSString *globalModifiedUser;
 
 + (NSDate *)notIdentifiedDate
 {
-    return [Utility stringToDate:@"0000-00-00 00:00:00" fromFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [Utility stringToDate:@"1900-01-01 00:00:00" fromFormat:@"yyyy-MM-dd HH:mm:ss"];
 }
 
 + (BOOL)isDateColumn:(NSString *)columnName

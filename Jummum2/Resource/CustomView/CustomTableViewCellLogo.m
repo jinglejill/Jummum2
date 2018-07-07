@@ -1,14 +1,14 @@
 //
-//  CustomTableViewCellReward.m
+//  CustomTableViewCellLogo.m
 //  Jummum2
 //
-//  Created by Thidaporn Kijkamjai on 24/4/2561 BE.
+//  Created by Thidaporn Kijkamjai on 7/7/2561 BE.
 //  Copyright © 2561 Appxelent. All rights reserved.
 //
 
-#import "CustomTableViewCellReward.h"
+#import "CustomTableViewCellLogo.h"
 
-@implementation CustomTableViewCellReward
+@implementation CustomTableViewCellLogo
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -25,7 +25,6 @@
 {
     [super prepareForReuse];
     self.imgVwValue.image = [UIImage imageNamed:@"NoImage.jpg"];
-    self.lblCountDown.hidden = NO;
     
 }
 @end

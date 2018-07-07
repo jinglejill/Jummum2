@@ -13,6 +13,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UITableView *tbvAction;
 @property (strong, nonatomic) IBOutlet UIPickerView *pickerVw;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 
 

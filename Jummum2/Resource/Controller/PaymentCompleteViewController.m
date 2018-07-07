@@ -7,6 +7,7 @@
 //
 
 #import "PaymentCompleteViewController.h"
+#import "CustomTableViewCellLogo.h"
 #import "CustomTableViewCellReceiptSummary.h"
 #import "CustomTableViewCellOrderSummary.h"
 #import "CustomTableViewCellTotal.h"
@@ -21,10 +22,13 @@
 @interface PaymentCompleteViewController ()
 {
     UITableView *tbvData;
+    BOOL _endOfFile;
+    BOOL _logoDownloaded;
 }
 @end
 
 @implementation PaymentCompleteViewController
+static NSString * const reuseIdentifierLogo = @"CustomTableViewCellLogo";
 static NSString * const reuseIdentifierReceiptSummary = @"CustomTableViewCellReceiptSummary";
 static NSString * const reuseIdentifierOrderSummary = @"CustomTableViewCellOrderSummary";
 static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
@@ -52,6 +56,10 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
     lblTitle.text = title;
     lblMessage.text = message;
     tbvData = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLogo bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLogo];
+    }
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierReceiptSummary bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierReceiptSummary];
@@ -82,24 +90,52 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 -(void)screenCaptureBill:(Receipt *)receipt
 {
     NSMutableArray *arrImage = [[NSMutableArray alloc]init];
-    
-    
-    //order header
-    CustomTableViewCellReceiptSummary *cell = [tbvData dequeueReusableCellWithIdentifier:reuseIdentifierReceiptSummary];
     Branch *branch = [Branch getBranch:receipt.branchID];
-    cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
-    cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
-    cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
-    cell.lblBranchName.textColor = cSystem1;
-    cell.btnOrderItAgain.hidden = YES;
     
     
-    CGRect frame = cell.frame;
-    frame.size.height = 79;
-    cell.frame = frame;
+    {
+        //shop logo
+        CustomTableViewCellLogo *cell = [tbvData dequeueReusableCellWithIdentifier:reuseIdentifierLogo];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+         {
+             if (succeeded)
+             {
+                 cell.imgVwValue.image = image;
+                 UIImage *image = [self imageFromView:cell];
+                 [arrImage insertObject:image atIndex:0];
+                 _logoDownloaded = YES;
+                 
+                 if(_logoDownloaded && _endOfFile)
+                 {
+                     UIImage *combineImage = [self combineImage:arrImage];
+                     UIImageWriteToSavedPhotosAlbum(combineImage, nil, nil, nil);
+                     return;
+                 }
+             }
+         }];
+    }
     
-    UIImage *image = [self imageFromView:cell];
-    [arrImage addObject:image];
+    
+    
+    {
+        //order header
+        CustomTableViewCellReceiptSummary *cell = [tbvData dequeueReusableCellWithIdentifier:reuseIdentifierReceiptSummary];
+        cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
+        cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
+        cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
+        cell.lblBranchName.textColor = cSystem1;
+        cell.btnOrderItAgain.hidden = YES;
+        
+        
+        CGRect frame = cell.frame;
+        frame.size.height = 79;
+        cell.frame = frame;
+        
+        UIImage *image = [self imageFromView:cell];
+        [arrImage addObject:image];
+    }
+    
     
     
     
@@ -625,11 +661,33 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
                 [arrImage addObject:image];
             }
         }
+        
+        
+        
+        {
+            //space at the end
+            UITableViewCell *cell =  [tbvData dequeueReusableCellWithIdentifier:@"cell"];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            }
+            CGRect frame = cell.frame;
+            frame.size.height = 20;
+            cell.frame = frame;
+            
+            UIImage *image = [self imageFromView:cell];
+            [arrImage addObject:image];
+        }
+        
+        _endOfFile = YES;
     }
     ////
     
-    UIImage *combineImage = [self combineImage:arrImage];
-    UIImageWriteToSavedPhotosAlbum(combineImage, nil, nil, nil);
+    if(_logoDownloaded && _endOfFile)
+    {
+        UIImage *combineImage = [self combineImage:arrImage];
+        UIImageWriteToSavedPhotosAlbum(combineImage, nil, nil, nil);
+        return;
+    }
 }
 
 @end

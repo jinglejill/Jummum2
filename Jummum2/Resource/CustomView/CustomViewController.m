@@ -243,6 +243,7 @@ CGFloat animatedDistance;
     lblWaiting.alpha = 1;
     
     
+    indicator.center = self.view.center;
     CGRect frame = indicator.frame;
     frame.origin.y = frame.origin.y - indicator.frame.size.height/2;
     indicator.frame = frame;
@@ -253,6 +254,9 @@ CGFloat animatedDistance;
     [self.view addSubview:waitingView];
     [self.view addSubview:lblWaiting];
     [self.view addSubview:overlayView];
+//    [indicator removeFromSuperview];
+//    [waitingView addSubview:indicator];
+    
     [self.view addSubview:indicator];
     [self.view bringSubviewToFront:indicator];
 }

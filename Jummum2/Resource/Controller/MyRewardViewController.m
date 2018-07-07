@@ -37,6 +37,16 @@
     
     
     
+    NSMutableArray *_rewardRedemptionExpiredList;
+    NSMutableArray *_rewardPointExpiredList;
+    NSMutableArray *_promoCodeExpiredList;
+    NSMutableArray *_timeToCountDownExpiredList;
+    NSMutableArray *_timerExpiredList;
+    BOOL _lastItemReachedExpired;
+    
+    
+    
+    
     
     RewardRedemption *_rewardRedemption;
     RewardPoint *_rewardPointSpent;
@@ -52,7 +62,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 @synthesize segConValue;
 @synthesize tbvData;
 @synthesize rewardPoint;
-
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
 -(IBAction)unwindToMyReward:(UIStoryboardSegue *)segue
 {
@@ -61,6 +72,14 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 
 -(void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+    
+    
     UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:12.0f];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
     [segConValue setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -99,6 +118,12 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     _rewardPointUsedList = [[NSMutableArray alloc]init];
     _promoCodeUsedList = [[NSMutableArray alloc]init];
     _rewardRedemptionUsedList = [[NSMutableArray alloc]init];
+    
+    
+    _timeToCountDownExpiredList = [[NSMutableArray alloc]init];
+    _rewardPointExpiredList = [[NSMutableArray alloc]init];
+    _promoCodeExpiredList = [[NSMutableArray alloc]init];
+    _rewardRedemptionExpiredList = [[NSMutableArray alloc]init];
     _timerList = [[NSMutableArray alloc]init];
     _timerUsedList = [[NSMutableArray alloc]init];
 }
@@ -116,16 +141,18 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         }
         else
         {
+            NSString *message = [Setting getValue:@"081m" example:@"คุณยังไม่มีรางวัล"];
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
-            noDataLabel.text             = @"คุณยังไม่มีรางวัล";
+            noDataLabel.text             = message;
             noDataLabel.textColor        = cSystem4;
             noDataLabel.textAlignment    = NSTextAlignmentCenter;
+            noDataLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15.0f];
             tableView.backgroundView = noDataLabel;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             return 0;
         }
     }
-    else
+    else if(segConValue.selectedSegmentIndex == 1)
     {
         if([_rewardRedemptionUsedList count] > 0)
         {
@@ -135,15 +162,39 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         }
         else
         {
+            NSString *message = [Setting getValue:@"081m" example:@"คุณยังไม่มีรางวัล"];
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
-            noDataLabel.text             = @"คุณยังไม่มีรางวัล";
+            noDataLabel.text             = message;
             noDataLabel.textColor        = cSystem4;
             noDataLabel.textAlignment    = NSTextAlignmentCenter;
+            noDataLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15.0f];
             tableView.backgroundView = noDataLabel;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             return 0;
         }
     }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        if([_rewardRedemptionExpiredList count] > 0)
+        {
+            tableView.backgroundView = nil;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            return 1;
+        }
+        else
+        {
+            NSString *message = [Setting getValue:@"081m" example:@"คุณยังไม่มีรางวัล"];
+            UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
+            noDataLabel.text             = message;
+            noDataLabel.textColor        = cSystem4;
+            noDataLabel.textAlignment    = NSTextAlignmentCenter;
+            noDataLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15.0f];
+            tableView.backgroundView = noDataLabel;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            return 0;
+        }
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -153,10 +204,15 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     {
         return [_rewardRedemptionList count];
     }
-    else
+    else if(segConValue.selectedSegmentIndex == 1)
     {
         return [_rewardRedemptionUsedList count];
     }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        return [_rewardRedemptionExpiredList count];
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,8 +244,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
         
         
-        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -220,7 +276,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         return cell;
     }
-    else
+    else if(segConValue.selectedSegmentIndex == 1)
     {
         CustomTableViewCellReward *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierReward];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -243,8 +299,66 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         
-        Branch *branch = [Branch getBranch:rewardRedemption.branchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"succeed");
+                 cell.imgVwValue.image = image;
+                 [self setImageDesign:cell.imgVwValue];
+             }
+         }];
+        cell.lblCountDown.hidden = YES;
+//        if(rewardRedemption.withInPeriod == 0)
+//        {
+//            cell.lblCountDown.text = [NSString stringWithFormat:@"หมดอายุเมื่อ %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+//        }
+//        else
+//        {
+//            cell.lblCountDown.text = @"00:00:00";
+//
+//        }
+
+        
+        
+        
+        if (!_lastItemReachedUsed && item == [_rewardRedemptionUsedList count]-1)
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            RewardPoint *rewardPointSpent = _rewardPointUsedList[item];
+            [self.homeModel downloadItems:dbRewardPointSpentUsedMore withData:@[rewardPointSpent,userAccount]];
+        }
+        
+        
+        return cell;
+    }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        CustomTableViewCellReward *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierReward];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        RewardRedemption *rewardRedemption = _rewardRedemptionExpiredList[item];
+        cell.lblHeader.text = rewardRedemption.header;
+        [cell.lblHeader sizeToFit];
+        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>70?70:cell.lblHeader.frame.size.height;
+        
+        
+        cell.lblSubTitle.text = rewardRedemption.subTitle;
+        [cell.lblSubTitle sizeToFit];
+        cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
+        
+        
+        NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
+        cell.lblRemark.text = [NSString stringWithFormat:@"%@ points",strPoint];
+        [cell.lblRemark sizeToFit];
+        cell.lblRemarkWidth.constant = cell.lblRemark.frame.size.width;
+        
+        
+        
+        Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
+        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
         [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
@@ -261,17 +375,17 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         else
         {
             cell.lblCountDown.text = @"00:00:00";
-
+            
         }
-
         
         
         
-        if (!_lastItemReachedUsed && item == [_rewardRedemptionUsedList count]-1)
+        
+        if (!_lastItemReachedExpired && item == [_rewardRedemptionExpiredList count]-1)
         {
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            RewardPoint *rewardPointSpent = _rewardPointUsedList[item];
-            [self.homeModel downloadItems:dbRewardPointSpentUsedMore withData:@[rewardPointSpent,userAccount]];
+            RewardPoint *rewardPointSpent = _rewardPointExpiredList[item];
+            [self.homeModel downloadItems:dbRewardPointSpentExpiredMore withData:@[rewardPointSpent,userAccount]];
         }
         
         
@@ -324,11 +438,17 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         _rewardPointSpent = _rewardPointList[item];
         _promoCode = _promoCodeList[item];
     }
-    else
+    else if(segConValue.selectedSegmentIndex == 1)
     {
         _rewardRedemption = _rewardRedemptionUsedList[item];
         _rewardPointSpent = _rewardPointUsedList[item];
         _promoCode = _promoCodeUsedList[item];
+    }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        _rewardRedemption = _rewardRedemptionExpiredList[item];
+        _rewardPointSpent = _rewardPointExpiredList[item];
+        _promoCode = _promoCodeExpiredList[item];
     }
     [self performSegueWithIdentifier:@"segRewardRedemption" sender:self];
 }
@@ -399,6 +519,65 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             [tbvData reloadData];
         }
     }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        if([_rewardRedemptionExpiredList count] == 0)
+        {
+            UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+            [self.homeModel downloadItems:dbRewardPointSpentExpired withData:userAccount];
+            [self loadingOverlayView];
+        }
+        else
+        {
+            //sort by หมดอายุก่อนหลัง
+            //ให้เช็คว่า แยกเป็น 2 กรณี 1.within=0-->sort by rewardRedemption.usingEndDate desc, rewardPoint.modifiedDate Desc 2.countDown-->sort by within+reward.modifiedDate>rewardRedemption.usingEndDate?rewardRedemption.usingEndDate:within+reward.modifiedDate
+            for(int i=0; i<[_rewardRedemptionExpiredList count]; i++)
+            {
+                RewardRedemption *rewardRedemption = _rewardRedemptionExpiredList[i];
+                RewardPoint *rewardPoint = _rewardPointExpiredList[i];
+                
+                
+                if(rewardRedemption.withInPeriod == 0)
+                {
+                    rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
+                }
+                else
+                {
+                    NSDate *modifiedDateAddWithInPeriod = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
+                    
+                    NSTimeInterval seconds = [modifiedDateAddWithInPeriod timeIntervalSinceDate:[Utility setEndOfTheDay:rewardRedemption.usingEndDate]];
+                    if(seconds > 0)
+                    {
+                        rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
+                    }
+                    else
+                    {
+                        rewardRedemption.sortDate = modifiedDateAddWithInPeriod;
+                    }
+                }
+            }
+            _rewardRedemptionExpiredList = [RewardRedemption sort:_rewardRedemptionExpiredList];
+            
+            
+            for(PromoCode *item in _promoCodeExpiredList)
+            {
+                RewardRedemption *rewardRedemption = [RewardRedemption getRewardRedemption:item.rewardRedemptionID];
+                item.rewardRedemptionSortDate = rewardRedemption.sortDate;
+            }
+            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
+            
+            
+            for(RewardPoint *item in _rewardPointExpiredList)
+            {
+                PromoCode *promoCode = [PromoCode getPromoCode:item.promoCodeID];
+                item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
+            }
+            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
+            
+            
+            [tbvData reloadData];
+        }
+    }
     else
     {
         [tbvData reloadData];
@@ -451,7 +630,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             [_rewardRedemptionList addObjectsFromArray:rewardRedemptionList];
         }
     }
-    else
+    else if(segConValue.selectedSegmentIndex == 1)
     {
         NSMutableArray *rewardPointUsedList = items[0];
         NSMutableArray *promoCodeUsedList = items[1];
@@ -515,6 +694,73 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
                 item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
             }
             _promoCodeUsedList = [PromoCode sort:_promoCodeUsedList];
+            
+        }
+    }
+    else if(segConValue.selectedSegmentIndex == 2)
+    {
+        NSMutableArray *rewardPointExpiredList = items[0];
+        NSMutableArray *promoCodeExpiredList = items[1];
+        NSMutableArray *rewardRedemptionExpiredList = items[2];
+        
+        
+        if([rewardPointExpiredList count]==0)
+        {
+            _lastItemReachedExpired = YES;
+        }
+        else
+        {
+            
+            [_rewardPointExpiredList addObjectsFromArray:rewardPointExpiredList];
+            [_promoCodeExpiredList addObjectsFromArray:promoCodeExpiredList];
+            [_rewardRedemptionExpiredList addObjectsFromArray:rewardRedemptionExpiredList];
+            
+            
+            //sort
+            //sort by หมดอายุก่อนหลัง
+            //ให้เช็คว่า แยกเป็น 2 กรณี 1.within=0-->sort by rewardRedemption.usingEndDate desc, rewardPoint.modifiedDate Desc 2.countDown-->sort by within+reward.modifiedDate>rewardRedemption.usingEndDate?rewardRedemption.usingEndDate:within+reward.modifiedDate
+            for(int i=0; i<[_rewardRedemptionExpiredList count]; i++)
+            {
+                RewardRedemption *rewardRedemption = _rewardRedemptionExpiredList[i];
+                RewardPoint *rewardPoint = _rewardPointExpiredList[i];
+                
+                
+                if(rewardRedemption.withInPeriod == 0)
+                {
+                    rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
+                }
+                else
+                {
+                    NSDate *modifiedDateAddWithInPeriod = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
+                    
+                    NSTimeInterval seconds = [modifiedDateAddWithInPeriod timeIntervalSinceDate:[Utility setEndOfTheDay:rewardRedemption.usingEndDate]];
+                    if(seconds > 0)
+                    {
+                        rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
+                    }
+                    else
+                    {
+                        rewardRedemption.sortDate = modifiedDateAddWithInPeriod;
+                    }
+                }
+            }
+            _rewardRedemptionExpiredList = [RewardRedemption sort:_rewardRedemptionExpiredList];
+            
+            
+            for(PromoCode *item in _promoCodeExpiredList)
+            {
+                RewardRedemption *rewardRedemption = [RewardRedemption getRewardRedemption:item.rewardRedemptionID];
+                item.rewardRedemptionSortDate = rewardRedemption.sortDate;
+            }
+            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
+            
+            
+            for(RewardPoint *item in _rewardPointExpiredList)
+            {
+                PromoCode *promoCode = [PromoCode getPromoCode:item.promoCodeID];
+                item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
+            }
+            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
             
         }
     }

@@ -18,6 +18,7 @@
     NSTimer *timer;
     NSInteger _timeToCountDown;
     NSInteger _expandCollapse;//1=expand,0=collapse
+    NSString *_promoCode;
 }
 
 @end
@@ -36,15 +37,19 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 @synthesize rewardPointSpent;
 @synthesize promoCode;
 @synthesize fromMenuMyReward;
-//
-//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-//{
-//    if(textField.tag == 20)
-//    {
-//        return NO;
-//    }
-//    return YES;
-//}
+@synthesize topViewHeight;
+@synthesize bottomLabelHeight;
+
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomLabelHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
 
 - (void)viewDidLoad
 {
@@ -148,7 +153,11 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         cell.lblRedeemDate.text = [Utility dateToString:rewardPointSpent.modifiedDate toFormat:@"d MMM yyyy HH:mm"];
         cell.txvPromoCode.text = promoCode.code;
         cell.imgQrCode.image = [self generateQRCodeWithString:promoCode.code scale:5];
+        _promoCode = promoCode.code;
         
+        
+        
+        [cell.btnCopy addTarget:self action:@selector(copyQRCode:) forControlEvents:UIControlEventTouchUpInside];
         
         
         return cell;
@@ -200,7 +209,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         
-        return 20+cell.lblHeaderHeight.constant+8+cell.lblSubTitleHeight.constant+8+266-71;
+        return 20+cell.lblHeaderHeight.constant+8+cell.lblSubTitleHeight.constant+8+266-71+8+30;
     }
     else if(item == 2)
     {
@@ -269,5 +278,11 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 {
     _expandCollapse = !_expandCollapse;
     [tbvData reloadData];    
+}
+
+-(void)copyQRCode:(id)sender
+{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = _promoCode;
 }
 @end

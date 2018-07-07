@@ -32,7 +32,19 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 @synthesize tbvData;
 @synthesize pickerVw;
 @synthesize tbvAction;
+@synthesize topViewHeight;
+@synthesize bottomViewHeight;
 
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
+    float topPadding = window.safeAreaInsets.bottom;
+    topViewHeight.constant = topPadding == 0?20:topPadding;
+}
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {

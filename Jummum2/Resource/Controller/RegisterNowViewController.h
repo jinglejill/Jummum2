@@ -11,16 +11,19 @@
 
 
 @interface RegisterNowViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+
 @property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UIDatePicker *dtPicker;
 @property (strong, nonatomic) IBOutlet UIButton *btnCreateAccount;
-@property (strong, nonatomic) UserAccount *userAccount;
-- (IBAction)datePickerChanged:(id)sender;
-- (IBAction)createAccount:(id)sender;
-- (IBAction)goBack:(id)sender;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topButtonHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+@property (strong, nonatomic) UserAccount *userAccount;
+
+- (IBAction)datePickerChanged:(id)sender;
+- (IBAction)createAccount:(id)sender;
+- (IBAction)goBack:(id)sender;
+
 
 @end

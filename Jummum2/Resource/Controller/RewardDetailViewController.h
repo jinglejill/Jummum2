@@ -17,7 +17,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnRedeem;
 @property (strong, nonatomic) RewardPoint *rewardPoint;
 @property (strong, nonatomic) RewardRedemption *rewardRedemption;
-
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
 -(IBAction)unwindToRewardDetail:(UIStoryboardSegue *)segue;
 - (IBAction)redeemReward:(id)sender;
 - (IBAction)goBack:(id)sender;
