@@ -47,7 +47,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     bottomButtonHeight.constant = window.safeAreaInsets.bottom;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 

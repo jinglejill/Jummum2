@@ -65,7 +65,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 @synthesize voucherView;
 @synthesize tbvTotalHeightConstant;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
+@synthesize bottomButtonHeight;
 
 
 -(IBAction)unwindToBasket:(UIStoryboardSegue *)segue;
@@ -159,9 +159,9 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 

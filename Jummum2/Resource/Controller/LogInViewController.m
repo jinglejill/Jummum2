@@ -39,30 +39,38 @@
 @synthesize btnLogIn;
 @synthesize imgVwValueHeight;
 @synthesize lblOrBottom;
+@synthesize imgVwLogoText;
+@synthesize lblLogInTop;
 
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     imgVwValueHeight.constant = self.view.frame.size.width/375*255;
-    float bottom = 0;
-    if(imgVwValueHeight.constant + 70 + 323 > self.view.frame.size.height)
-    {
-        bottom = 323;
-    }
-    else
-    {
-        bottom = imgVwValueHeight.constant + 70;
-    }
+    float bottom = imgVwValueHeight.constant+20+30+11;
     lblOrBottom.constant = bottom;
     
     
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    float bottomPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     _loginButton.center = self.view.center;
     CGRect frame = _loginButton.frame;
-    frame.origin.y = self.view.frame.size.height - bottom + 11;//frame.origin.y + 33;
+    frame.origin.y = self.view.frame.size.height - bottomPadding - bottom + 11;//frame.origin.y + 33;
     _loginButton.frame = frame;
+    NSLog(@"topPadding : %f",topPadding);
+    NSLog(@"bottomPadding : %f",bottomPadding);
+    NSLog(@"view height : %f",self.view.frame.size.height);
+    NSLog(@"bottom : %f",bottom);
     NSLog(@"facebook y: %f",_loginButton.frame.origin.y);
     
+    
+    lblLogInTop.constant = 7 + bottomPadding;
+    if(bottom+286+40>self.view.frame.size.height)
+    {
+        //hide jummum text
+        imgVwLogoText.hidden = YES;
+    }
 }
 
 - (IBAction)rememberMe:(id)sender

@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblAppStoreVersion;
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UILabel *lblMessage;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwLogoTop;
 
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue;

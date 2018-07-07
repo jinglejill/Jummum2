@@ -16,6 +16,7 @@
 @property (strong, nonatomic) Receipt *receipt;
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UILabel *lblMessage;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwCheckTop;
 
 
 

@@ -78,7 +78,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 @synthesize tbvTotalHeightConstant;
 @synthesize fromReceiptSummaryMenu;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
+@synthesize bottomButtonHeight;
 
 
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue
@@ -270,9 +270,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 

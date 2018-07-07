@@ -7,6 +7,7 @@
 //
 
 #import "Menu.h"
+#import "MenuType.h"
 #import "SubMenuType.h"
 #import "OrderTaking.h"
 #import "SharedMenu.h"
@@ -220,6 +221,8 @@
     {
         SubMenuType *subMenuType = [SubMenuType getSubMenuType:item.subMenuTypeID];
         item.subMenuOrderNo = subMenuType.orderNo;
+        MenuType *menuType = [MenuType getMenuType:item.menuTypeID];
+        item.menuOrderNo = menuType.orderNo;
         
         
         //        OrderCancelDiscount *orderCancelDiscount = [OrderCancelDiscount getOrderCancelDiscount:item.orderTakingID];
@@ -227,9 +230,11 @@
     }
     
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_subMenuOrderNo" ascending:YES];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"_orderNo" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptor2, nil];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_menuOrderNo" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"_subMenuOrderNo" ascending:YES];
+    NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:@"_orderNo" ascending:YES];
+    NSSortDescriptor *sortDescriptor4 = [[NSSortDescriptor alloc] initWithKey:@"_menuID" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptor2,sortDescriptor3,sortDescriptor4, nil];
     NSArray *sortArray = [menuList sortedArrayUsingDescriptors:sortDescriptors];
     
     return [sortArray mutableCopy];

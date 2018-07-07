@@ -84,7 +84,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     bottomButtonHeight.constant = window.safeAreaInsets.bottom;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
@@ -437,7 +437,10 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 
 - (void)createHorizontalScroll
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    float topPadding = window.safeAreaInsets.top;
+    topPadding = topPadding == 0?20:topPadding;
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topPadding+44, self.view.frame.size.width, 44)];
     scrollView.delegate = self;
     int buttonX = 15;
     for (int i = 0; i < [_menuTypeList count]; i++)

@@ -21,6 +21,7 @@
 @synthesize lblAppStoreVersion;
 @synthesize lblTitle;
 @synthesize lblMessage;
+@synthesize imgVwLogoTop;
 
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue
@@ -30,6 +31,13 @@
     [self.homeModel downloadItems:dbMasterWithProgressBar];
 }
 
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    
+    imgVwLogoTop.constant = (self.view.frame.size.height - (542-94))/2;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

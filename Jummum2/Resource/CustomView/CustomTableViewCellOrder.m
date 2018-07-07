@@ -24,7 +24,7 @@
 -(void)prepareForReuse
 {
     [super prepareForReuse];
-    self.imgMenuPic.image = [UIImage imageNamed:@"NoImage.jpg"];
+//    self.imgMenuPic.image = [UIImage imageNamed:@"NoImage.jpg"];
     
 }
 @end

@@ -44,7 +44,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
@@ -92,7 +92,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     
     
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     CGRect frame = cell.frame;
     frame.origin.x = 0;
     frame.origin.y = topPadding == 0?20:topPadding;

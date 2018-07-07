@@ -28,7 +28,7 @@
 @property (nonatomic) NSInteger idInserted;
 
 
-
+@property (nonatomic) NSInteger menuOrderNo;
 @property (nonatomic) NSInteger subMenuOrderNo;
 @property (nonatomic) NSInteger expand;
 @property (nonatomic) NSInteger branchID;

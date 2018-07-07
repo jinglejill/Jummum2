@@ -38,12 +38,16 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 @synthesize btnSaveToCameraRoll;
 @synthesize lblTitle;
 @synthesize lblMessage;
+@synthesize imgVwCheckTop;
 
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     [self setButtonDesign:btnSaveToCameraRoll];
+    
+    
+    imgVwCheckTop.constant = (self.view.frame.size.height - 63 - (559-69))/2;
     
 }
 

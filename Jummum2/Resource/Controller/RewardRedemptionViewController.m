@@ -47,7 +47,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     bottomLabelHeight.constant = window.safeAreaInsets.bottom;
     
-    float topPadding = window.safeAreaInsets.bottom;
+    float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 

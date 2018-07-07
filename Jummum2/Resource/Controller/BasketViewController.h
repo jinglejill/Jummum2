@@ -21,7 +21,7 @@
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
 
 
 -(IBAction)unwindToBasket:(UIStoryboardSegue *)segue;

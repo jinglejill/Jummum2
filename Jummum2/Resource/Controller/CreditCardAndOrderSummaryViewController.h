@@ -24,7 +24,7 @@
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (nonatomic) NSInteger fromReceiptSummaryMenu;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
 
 - (IBAction)backToBasket:(id)sender;
 - (IBAction)pay:(id)sender;
