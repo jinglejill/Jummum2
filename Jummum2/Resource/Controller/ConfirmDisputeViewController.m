@@ -122,9 +122,10 @@
     }
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    if(self.homeModel.propCurrentDB == dbReceipt)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbReceipt)
     {
         [self removeOverlayViews];
         NSMutableArray *receiptList = items[0];

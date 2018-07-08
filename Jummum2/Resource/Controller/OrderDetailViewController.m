@@ -1870,9 +1870,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    if(self.homeModel.propCurrentDB == dbReceiptWithModifiedDate)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbReceiptWithModifiedDate)
     {
         NSMutableArray *receiptList = items[0];
         NSMutableArray *disputeList = items[1];
@@ -1887,7 +1888,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             [tbvData reloadData];
         }        
     }
-    else if(self.homeModel.propCurrentDB == dbReceipt)//check ปุ่ม
+    else if(homeModel.propCurrentDB == dbReceipt)//check ปุ่ม
     {
         [self removeOverlayViews];
         NSMutableArray *receiptList = items[0];
@@ -1957,6 +1958,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     
     
     [self loadingOverlayView];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
     [self.homeModel downloadItems:dbReceipt withData:receipt];
 }
 
