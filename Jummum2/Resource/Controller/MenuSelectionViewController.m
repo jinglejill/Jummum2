@@ -293,14 +293,22 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             
             
             NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
-            [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            UIImage *image = [Utility getImageFromCache:imageFileName];
+            if(image)
+            {
+                cell.imgMenuPic.image = image;
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     NSLog(@"succeed");
-                     cell.imgMenuPic.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgMenuPic.image = image;
+                     }
+                 }];
+            }
             cell.imgMenuPic.contentMode = UIViewContentModeScaleAspectFit;
             [self setImageDesign:cell.imgMenuPic];
             

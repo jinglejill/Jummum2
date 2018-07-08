@@ -40,6 +40,7 @@ CGFloat animatedDistance;
 @synthesize takeAwayNotiView;
 @synthesize lblAlertMsg;
 @synthesize lblWaiting;
+@synthesize toolBar;
 
 
 -(void)setCurrentVc
@@ -107,7 +108,8 @@ CGFloat animatedDistance;
     _lblStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, 150)];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     
@@ -118,6 +120,14 @@ CGFloat animatedDistance;
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
 
+    
+    
+    toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    [toolBar setTintColor:cSystem4_10];
+    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissKeyboard)];
+    doneBtn.tintColor = cSystem1;
+    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
 }
 
 -(void) blinkAddedNotiView
@@ -1573,6 +1583,11 @@ CGFloat animatedDistance;
     [attrString appendAttributedString:attrString2];
     
     return attrString;
+}
+
+-(void)dismissKeyboard
+{
+    [self.view endEditing:YES];
 }
 @end
 

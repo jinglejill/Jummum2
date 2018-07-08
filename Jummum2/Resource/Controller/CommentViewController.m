@@ -19,7 +19,6 @@
 {
     Comment *_comment;
     NSString *_strPlaceHolder;
-    UIToolbar *_toolBar;
 }
 @end
 
@@ -96,15 +95,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvAction.scrollEnabled = NO;
     
 
-    
-    //keyboard dismiss
-    _toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    [_toolBar setTintColor:cSystem4_10];
-    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(hideKeyboard)];
-    doneBtn.tintColor = cSystem1;
-    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [_toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
-    
+
     
     
     {
@@ -198,7 +189,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         cell.txvValue.layer.cornerRadius = 5;
         cell.txvValue.clipsToBounds = YES;
         cell.txvValueHeight.constant = tableView.frame.size.height - 45;
-        [cell.txvValue setInputAccessoryView:_toolBar];
+        [cell.txvValue setInputAccessoryView:self.toolBar];
         
         
         return cell;
@@ -324,11 +315,6 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 -(void)unwindToMe
 {
     [self performSegueWithIdentifier:@"segUnwindToMe" sender:self];
-}
-
--(void)hideKeyboard
-{
-    [self.view endEditing:YES];
 }
 
 @end

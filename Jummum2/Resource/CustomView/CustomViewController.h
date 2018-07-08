@@ -22,6 +22,7 @@
 @property (nonatomic,retain) UIImageView *takeAwayNotiView;
 @property (nonatomic,retain) UILabel *lblAlertMsg;
 @property (nonatomic,retain) UILabel *lblWaiting;
+@property (nonatomic,retain) UIToolbar *toolBar;
 
 
 -(void)setCurrentVc;
@@ -69,4 +70,5 @@
 -(UIImage *)combineImage:(UIImage *)image1 image2:(UIImage *)image2;
 -(UIImage *)imageFromView:(UIView *)view;
 -(NSAttributedString *)setAttributedString:(NSString *)title text:(NSString *)text;
+-(void)dismissKeyboard;
 @end

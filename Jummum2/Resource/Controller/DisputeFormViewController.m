@@ -123,8 +123,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     // Do any additional setup after loading the view.
     
     
-//    NSString *title = [Setting getValue:@"073t" example:@"Open dispute"];
-//    lblNavTitle.text = title;
+
     NSString *message = [Setting getValue:@"003m" example:@"กรุณาใส่รายละเอียดเหตุผลในการขอเงินคืน"];
     _strPlaceHolder = message;
     [pickerVw removeFromSuperview];
@@ -147,6 +146,10 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvAction.dataSource = self;
     tbvAction.backgroundColor = [UIColor whiteColor];
     tbvAction.scrollEnabled = NO;
+    
+    
+    
+    
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelText bundle:nil];
@@ -272,6 +275,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.placeholder = message2;
                 cell.txtValue.delegate = self;
                 cell.txtValue.inputView = pickerVw;
+                [cell.txtValue setInputAccessoryView:self.toolBar];
+                
                 
                 DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
                 cell.txtValue.text = disputeReason.text;
@@ -314,6 +319,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.placeholder = @"xxx-xxx-xxxx";
                 cell.txtValue.text = _dispute.phoneNo;
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
+                [cell.txtValue setInputAccessoryView:self.toolBar];
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
                 cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -374,6 +380,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.placeholder = message2;
                 cell.txtValue.delegate = self;
                 cell.txtValue.inputView = pickerVw;
+                [cell.txtValue setInputAccessoryView:self.toolBar];
+                
                 
                 DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
                 cell.txtValue.text = disputeReason.text;
@@ -416,6 +424,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.placeholder = @"THB";
                 cell.txtValue.keyboardType = UIKeyboardTypeDecimalPad;
                 cell.txtValue.text = [Utility formatDecimal:_dispute.refundAmount withMinFraction:0 andMaxFraction:2];
+                [cell.txtValue setInputAccessoryView:self.toolBar];
                 if(_dispute.refundAmount == 0)
                 {
                     cell.txtValue.text = @"";
@@ -473,7 +482,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 //The rounded corner part, where you specify your view's corner radius:
                 cell.txvValue.layer.cornerRadius = 5;
                 cell.txvValue.clipsToBounds = YES;
-                
+                [cell.txvValue setInputAccessoryView:self.toolBar];
                 
                 
                 return cell;
@@ -512,6 +521,9 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.placeholder = @"xxx-xxx-xxxx";
                 cell.txtValue.text = _dispute.phoneNo;
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
+                [cell.txtValue setInputAccessoryView:self.toolBar];
+                
+                
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
                 cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -645,29 +657,29 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         [DisputeReason setSharedData:items[0]];
         [tbvData reloadData];
     }
-    else if(self.homeModel.propCurrentDB == dbReceipt)
-    {
-        [self removeOverlayViews];
-        NSMutableArray *receiptList = items[0];
-        Receipt *downloadReceipt = receiptList[0];
-        if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
-        {
-            receipt.status = downloadReceipt.status;
-            receipt.statusRoute = downloadReceipt.statusRoute;
-            receipt.modifiedUser = downloadReceipt.modifiedUser;
-            receipt.modifiedDate = downloadReceipt.modifiedDate;
-            
-            
-            NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
-            NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
-            NSString *strMessage = downloadReceipt.status == 5?message:message2;
-            [self showAlert:@"" message:strMessage method:@selector(goBack:)];            
-        }
-        else
-        {
-            [self submit];
-        }
-    }
+//    else if(self.homeModel.propCurrentDB == dbReceipt)
+//    {
+//        NSMutableArray *receiptList = items[0];
+//        Receipt *downloadReceipt = receiptList[0];
+//        if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
+//        {
+//            receipt.status = downloadReceipt.status;
+//            receipt.statusRoute = downloadReceipt.statusRoute;
+//            receipt.modifiedUser = downloadReceipt.modifiedUser;
+//            receipt.modifiedDate = downloadReceipt.modifiedDate;
+//
+//
+//            NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
+//            NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
+//            NSString *strMessage = downloadReceipt.status == 5?message:message2;
+//            [self showAlert:@"" message:strMessage method:@selector(goBack:)];
+//            [self removeOverlayViews];
+//        }
+//        else
+//        {
+//            [self submit];
+//        }
+//    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component
@@ -687,7 +699,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         cell.txtValue.text = disputeReason.text;
         
         
-        [cell.txtValue resignFirstResponder];
+//        [cell.txtValue resignFirstResponder];
     }
 }
 
@@ -739,12 +751,28 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 {
     if(fromType == 1)
     {
-        self.homeModel = [[HomeModel alloc]init];
-        self.homeModel.delegate = self;
+//        self.homeModel = [[HomeModel alloc]init];
+//        self.homeModel.delegate = self;
+//
+//
+        [self.view endEditing:YES];
+        if(![self validate])
+        {
+            return;
+        }
         
         
         [self loadingOverlayView];
-        [self.homeModel downloadItems:dbReceipt withData:receipt];
+        _dispute.receiptID = receipt.receiptID;
+        _dispute.type = fromType;
+        _dispute.modifiedUser = [Utility modifiedUser];
+        _dispute.modifiedDate = [Utility currentDateTime];
+        
+        Branch *branch = [Branch getBranch:receipt.branchID];
+        [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
+        
+        
+//        [self.homeModel downloadItems:dbReceipt withData:receipt];
     }
     else
     {
@@ -778,14 +806,48 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
 }
 
--(void)itemsInserted
+//-(void)itemsInserted
+//{
+//    receipt.status = 8;
+//    NSString *message = [Setting getValue:@"009m" example:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
+//    [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
+//    [self removeOverlayViews];
+//}
+
+-(void)itemsInsertedWithReturnData:(NSArray *)items
 {
-    [self removeOverlayViews];
+    NSMutableArray *receiptList = items[0];
+    NSMutableArray *disputeList = items[1];
+    Receipt *downloadReceipt = receiptList[0];
+    receipt.status = downloadReceipt.status;
+    receipt.statusRoute = downloadReceipt.statusRoute;
+    receipt.modifiedUser = downloadReceipt.modifiedUser;
+    receipt.modifiedDate = downloadReceipt.modifiedDate;
+    if([disputeList count] > 0)
+    {
+        [Utility addToSharedDataList:items];
+    }
+    if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
+    {
+        NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
+        NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
+        NSString *strMessage = downloadReceipt.status == 5?message:message2;
+        [self showAlert:@"" message:strMessage method:@selector(goBack:)];
+        [self removeOverlayViews];
+    }
+    else if(downloadReceipt.status == 7)
+    {
+        NSString *message = [Setting getValue:@"084m" example:@"คำร้องขอเงินคืนเต็มจำนวนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
+        [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
+        [self removeOverlayViews];
+    }
+    else if(downloadReceipt.status == 8)
+    {
+        NSString *message = [Setting getValue:@"009m" example:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
+        [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
+        [self removeOverlayViews];
+    }
     
-    
-    receipt.status = 8;
-    NSString *message = [Setting getValue:@"009m" example:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
-    [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
 }
 
 -(BOOL)validate

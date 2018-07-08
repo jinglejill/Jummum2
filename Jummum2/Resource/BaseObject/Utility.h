@@ -168,6 +168,7 @@ enum enumDB
     dbDisputeReasonList,
     dbDispute,
     dbDisputeList,
+    dbDisputeCancel,
     dbReceiptWithModifiedDate,
     dbBranch,
     dbComment,
@@ -285,6 +286,7 @@ enum enumUrl
     urlDisputeUpdateList,
     urlDisputeDeleteList,
     urlDisputeGetList,
+    urlDisputeCancelInsert,
     urlBranchGetList,
     urlCommentInsert,
     urlCommentUpdate,
@@ -418,5 +420,7 @@ enum enumUrl
 + (void)addUpdateObject:(NSObject *)object;
 +(void)updateItemIfModify:(NSObject *)object;
 +(BOOL)updateDataList:(NSArray *)itemList dataList:(NSMutableArray *)dataList;
++(UIImage *)getImageFromCache:(NSString *)imageName;
++(void)saveImageInCache:(UIImage *)image imageName:(NSString *)imageName;
 @end
 

@@ -944,6 +944,16 @@
             url = [NSURL URLWithString:[Utility url:urlDisputeInsertList]];
         }
             break;
+        case dbDisputeCancel:
+        {
+            NSArray *dataList = (NSArray *)data;
+            Dispute *dispute = dataList[0];
+            Branch *branch = dataList[1];
+            noteDataString = [Utility getNoteDataString:dispute];
+            noteDataString = [NSString stringWithFormat:@"%@&branchID=%ld",noteDataString,branch.branchID];
+            url = [NSURL URLWithString:[Utility url:urlDisputeCancelInsert]];
+        }
+        break;
         case dbComment:
         {
             noteDataString = [Utility getNoteDataString:data];
@@ -1061,6 +1071,10 @@
                             else if([strTableName isEqualToString:@"RewardPoint"])
                             {
                                 arrClassName = @[@"PromoCode"];
+                            }
+                            else if([strTableName isEqualToString:@"Receipt"])
+                            {
+                                arrClassName = @[@"Receipt",@"Dispute"];
                             }
                             
                             NSArray *items = [Utility jsonToArray:dataJson arrClassName:arrClassName];

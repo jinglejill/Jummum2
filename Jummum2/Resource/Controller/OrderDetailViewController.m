@@ -725,9 +725,13 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     NSString *message = [Setting getValue:@"004m" example:@"Cancel order"];
-                    cell.btnValue.hidden = NO;
-                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
+                    NSDate *endDate = [Utility addDay:receipt.receiptDate numberOfDay:7];
+                    NSComparisonResult result = [[Utility currentDateTime] compare:endDate];
+                    cell.btnValue.hidden = result != NSOrderedAscending;
+                    
+                    
                     cell.btnValue.backgroundColor = cSystem1;
+                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
                     [cell.btnValue addTarget:self action:@selector(cancelOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
                     
@@ -741,7 +745,11 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     
                     
                     NSString *message = [Setting getValue:@"005m" example:@"Open dispute"];
-                    cell.btnValue.hidden = NO;
+                    NSDate *endDate = [Utility addDay:receipt.receiptDate numberOfDay:7];
+                    NSComparisonResult result = [[Utility currentDateTime] compare:endDate];
+                    cell.btnValue.hidden = result != NSOrderedAscending;
+                    
+                    
                     [cell.btnValue setTitle:message forState:UIControlStateNormal];
                     cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];

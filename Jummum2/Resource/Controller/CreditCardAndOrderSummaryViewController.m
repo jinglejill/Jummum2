@@ -54,7 +54,7 @@
     NSInteger _promotionOrRewardRedemption;//1=promotion,2=rewardRedemption
     Receipt *_receipt;
     NSIndexPath *_currentScrollIndexPath;
-    UIToolbar *_toolBar;
+
 }
 @end
 
@@ -328,15 +328,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     
 
     
-    //keyboard dismiss
-    _toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    [_toolBar setTintColor:cSystem4_10];
-    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(hideKeyboard)];
-    doneBtn.tintColor = cSystem1;
-    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [_toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
-    
-    
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierCredit bundle:nil];
@@ -525,12 +516,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                         cell.txtCCV.delegate = self;
                         
                         
-                        [cell.txtFirstName setInputAccessoryView:_toolBar];
-                        [cell.txtLastName setInputAccessoryView:_toolBar];
-                        [cell.txtCardNo setInputAccessoryView:_toolBar];
-                        [cell.txtMonth setInputAccessoryView:_toolBar];
-                        [cell.txtYear setInputAccessoryView:_toolBar];
-                        [cell.txtCCV setInputAccessoryView:_toolBar];
+                        [cell.txtFirstName setInputAccessoryView:self.toolBar];
+                        [cell.txtLastName setInputAccessoryView:self.toolBar];
+                        [cell.txtCardNo setInputAccessoryView:self.toolBar];
+                        [cell.txtMonth setInputAccessoryView:self.toolBar];
+                        [cell.txtYear setInputAccessoryView:self.toolBar];
+                        [cell.txtCCV setInputAccessoryView:self.toolBar];
                         
                         
                         cell.vwFirstName.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -836,7 +827,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 cell.txtVoucherCode.delegate = self;
                 cell.txtVoucherCode.text = @"";
                 [self setTextFieldDesign:cell.txtVoucherCode];
-                [cell.txtVoucherCode setInputAccessoryView:_toolBar];
+                [cell.txtVoucherCode setInputAccessoryView:self.toolBar];
                 
                 
                 cell.btnConfirmVoucherCodeWidthConstant.constant = (self.view.frame.size.width - 16*2 - 8)/2;
@@ -2222,8 +2213,4 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     }
 }
 
--(void)hideKeyboard
-{
-    [self.view endEditing:YES];
-}
 @end

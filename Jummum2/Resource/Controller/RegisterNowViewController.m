@@ -17,7 +17,6 @@
 {
     UserAccount *_userAccount;
     BOOL _validate;
-    UIToolbar *_toolBar;
     BOOL _updateBirthDateAndPhoneNo;
     
 }
@@ -138,12 +137,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
     
     
-    _toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    [_toolBar setTintColor:cSystem4_10];
-    UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissKeyboard)];
-    doneBtn.tintColor = cSystem1;
-    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [_toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    
     
     
     
@@ -198,7 +192,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.placeholder = @"อีเมลล์";
                 cell.textValue.text = _userAccount.email;
                 cell.textValue.enabled = NO;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 1:
@@ -208,7 +202,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.placeholder = @"ชื่อเต็ม";
                 cell.textValue.text = _userAccount.fullName;
                 cell.textValue.enabled = NO;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 2:
@@ -219,7 +213,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.inputView = dtPicker;
                 cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 3:
@@ -230,7 +224,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.phoneNo;
                 cell.textValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             default:
@@ -248,7 +242,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.placeholder = @"อีเมลล์";
                 cell.textValue.text = _userAccount.username;
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 1:
@@ -259,7 +253,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.password;
                 cell.textValue.secureTextEntry = YES;
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 2:
@@ -269,7 +263,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.placeholder = @"ชื่อเต็ม";
                 cell.textValue.text = _userAccount.fullName;
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 3:
@@ -280,7 +274,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.inputView = dtPicker;
                 cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             case 4:
@@ -291,7 +285,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.phoneNo;
                 cell.textValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.textValue.enabled = YES;
-                [cell.textValue setInputAccessoryView:_toolBar];
+                [cell.textValue setInputAccessoryView:self.toolBar];
             }
                 break;
             default:
@@ -457,8 +451,8 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     }
 }
 
--(void)dismissKeyboard
-{
-    [self.view endEditing:YES];
-}
+//-(void)dismissKeyboard
+//{
+//    [self.view endEditing:YES];
+//}
 @end

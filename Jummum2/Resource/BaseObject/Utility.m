@@ -461,6 +461,9 @@ extern NSString *globalModifiedUser;
         case urlDisputeGetList:
             url = @"/JMM/JUMMUM3/JMMDisputeGetList.php";
             break;
+        case urlDisputeCancelInsert:
+            url = @"/JMM/JUMMUM3/JMMDisputeCancelInsert.php";
+            break;
         case urlReceiptUpdate:
             url = @"/JMM/JUMMUM3/JMMReceiptUpdate.php";
             break;
@@ -2013,6 +2016,28 @@ extern NSString *globalModifiedUser;
             }
         }
     }
+}
+
++(UIImage *)getImageFromCache:(NSString *)imageName
+{
+    NSRange needleRange = NSMakeRange(2,[imageName length]-2);
+    NSString *saveImageName = [imageName substringWithRange:needleRange];
+    saveImageName =[saveImageName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *cachedFolderPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString *cachedImagePath = [cachedFolderPath stringByAppendingPathComponent:saveImageName];
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfFile:cachedImagePath]];
+    
+    return image;
+}
+
++(void)saveImageInCache:(UIImage *)image imageName:(NSString *)imageName
+{
+    NSRange needleRange = NSMakeRange(2,[imageName length]-2);
+    NSString *saveImageName = [imageName substringWithRange:needleRange];
+    saveImageName =[saveImageName stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *cachedFolderPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString *cachedImagePath = [cachedFolderPath stringByAppendingPathComponent:saveImageName];
+    [UIImagePNGRepresentation(image) writeToFile:cachedImagePath atomically:YES];
 }
 @end
 

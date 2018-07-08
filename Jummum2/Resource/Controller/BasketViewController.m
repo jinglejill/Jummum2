@@ -281,6 +281,8 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     if([tableView isEqual:tbvOrder])
     {
         CustomTableViewCellOrder *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierOrder];
+//        CustomTableViewCellOrder *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCellOrder" owner:self options:nil] objectAtIndex:0];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
@@ -305,13 +307,22 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 
         
         NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
+        {
+            cell.imgMenuPic.image = image;
+        }
+        else
+        {
+            [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
              {
-                 cell.imgMenuPic.image = image;
-             }
-         }];
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgMenuPic.image = image;
+                 }
+             }];
+        }
         cell.imgMenuPic.contentMode = UIViewContentModeScaleAspectFit;
         [self setImageDesign:cell.imgMenuPic];
         
