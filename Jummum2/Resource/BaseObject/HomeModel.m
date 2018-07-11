@@ -30,6 +30,8 @@
 #import "Dispute.h"
 #import "Comment.h"
 #import "RecommendShop.h"
+#import "Rating.h"
+#import "MenuNote.h"
 
 
 @interface HomeModel()
@@ -100,7 +102,7 @@
             break;
         case dbMenuList:
         {
-            arrClassName = @[@"Menu",@"MenuType",@"MenuTypeNote",@"Note",@"NoteType",@"SubMenuType",@"SpecialPriceProgram"];
+            arrClassName = @[@"Menu",@"MenuType",@"MenuNote",@"Note",@"NoteType",@"SubMenuType",@"SpecialPriceProgram"];
         }
             break;
         case dbCustomerTable:
@@ -163,7 +165,7 @@
             break;
         case dbReceiptWithModifiedDate:
         {
-            arrClassName = @[@"Receipt",@"Dispute"];
+            arrClassName = @[@"Receipt",@"Dispute",@"Rating"];
         }
         break;
         case dbDisputeReasonList:
@@ -584,10 +586,16 @@
             break;
         case dbBranch:
         {
-//            Branch *branch = (Branch *)data;
             NSDate *modifiedDate = (NSDate *)data;
             noteDataString = [NSString stringWithFormat:@"modifiedDate=%@",modifiedDate];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchGetList]]];
+        }
+            break;
+        case dbReceiptDisputeRating:
+        {
+            Receipt *receipt = (Receipt *)data;
+            noteDataString = [Utility getNoteDataString:receipt];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlReceiptDisputeRatingGet]]];
         }
             break;
         default:
@@ -996,6 +1004,27 @@
             url = [NSURL URLWithString:[Utility url:urlRecommendShopInsertList]];
         }
             break;
+        case dbRating:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRatingInsert]];
+        }
+        break;
+        case dbRatingList:
+        {
+            NSMutableArray *ratingList = (NSMutableArray *)data;
+            NSInteger countRating = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRating=%ld",[ratingList count]];
+            for(Rating *item in ratingList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRating]];
+                countRating++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRatingInsertList]];
+        }
+        break;
         default:
             break;
     }
@@ -1075,6 +1104,10 @@
                             else if([strTableName isEqualToString:@"Receipt"])
                             {
                                 arrClassName = @[@"Receipt",@"Dispute"];
+                            }
+                            else if([strTableName isEqualToString:@"Rating"])
+                            {
+                                arrClassName = @[@"Rating"];
                             }
                             
                             NSArray *items = [Utility jsonToArray:dataJson arrClassName:arrClassName];
@@ -1421,6 +1454,27 @@
             url = [NSURL URLWithString:[Utility url:urlUserAccountUpdate]];
         }
             break;
+        case dbRating:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRatingUpdate]];
+        }
+        break;
+        case dbRatingList:
+        {
+            NSMutableArray *ratingList = (NSMutableArray *)data;
+            NSInteger countRating = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRating=%ld",[ratingList count]];
+            for(Rating *item in ratingList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRating]];
+                countRating++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRatingUpdateList]];
+        }
+        break;
         default:
             break;
     }
@@ -1736,6 +1790,27 @@
             url = [NSURL URLWithString:[Utility url:urlRecommendShopDeleteList]];
         }
             break;
+        case dbRating:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlRatingDelete]];
+        }
+        break;
+        case dbRatingList:
+        {
+            NSMutableArray *ratingList = (NSMutableArray *)data;
+            NSInteger countRating = 0;
+            
+            noteDataString = [NSString stringWithFormat:@"countRating=%ld",[ratingList count]];
+            for(Rating *item in ratingList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countRating]];
+                countRating++;
+            }
+            
+            url = [NSURL URLWithString:[Utility url:urlRatingDeleteList]];
+        }
+        break;
         default:
             break;
     }

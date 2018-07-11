@@ -512,6 +512,27 @@ extern NSString *globalModifiedUser;
         case urlRecommendShopDeleteList:
             url = @"/JMM/JUMMUM3/JMMRecommendShopDeleteList.php";
             break;
+        case urlRatingInsert:
+            url = @"/JMM/JUMMUM3/JMMRatingInsert.php";
+            break;
+        case urlRatingUpdate:
+            url = @"/JMM/JUMMUM3/JMMRatingUpdate.php";
+            break;
+        case urlRatingDelete:
+            url = @"/JMM/JUMMUM3/JMMRatingDelete.php";
+            break;
+        case urlRatingInsertList:
+            url = @"/JMM/JUMMUM3/JMMRatingInsertList.php";
+            break;
+        case urlRatingUpdateList:
+            url = @"/JMM/JUMMUM3/JMMRatingUpdateList.php";
+            break;
+        case urlRatingDeleteList:
+            url = @"/JMM/JUMMUM3/JMMRatingDeleteList.php";
+            break;
+        case urlReceiptDisputeRatingGet:
+            url = @"/JMM/JUMMUM3/JMMReceiptDisputeRatingGet.php";
+            break;        
         default:
             break;
     }

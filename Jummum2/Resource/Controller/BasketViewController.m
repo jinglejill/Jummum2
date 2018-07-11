@@ -22,6 +22,7 @@
 #import "SpecialPriceProgram.h"
 #import "Promotion.h"
 #import "MenuType.h"
+#import "MenuNote.h"
 
 
 #import "Utility.h"
@@ -45,6 +46,8 @@
     NSInteger _discountType;
     float _discountAmount;
     float _discountValue;
+    
+    NSInteger _sourceCopyItem;
     
 }
 @end
@@ -143,7 +146,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     if([[segue identifier] isEqualToString:@"segNote"])
     {
         NoteViewController *vc = segue.destinationViewController;
-        vc.noteList = [Note getNoteList];
+        vc.noteList = [MenuNote getNoteListWithMenuID:_orderTaking.menuID];//[MenuTypeNote getNoteListWithMenuTypeID:menu.menuTypeID];//[Note getNoteList];
         vc.orderTaking = _orderTaking;
         vc.branch = branch;
     }
@@ -281,8 +284,6 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     if([tableView isEqual:tbvOrder])
     {
         CustomTableViewCellOrder *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierOrder];
-//        CustomTableViewCellOrder *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCellOrder" owner:self options:nil] objectAtIndex:0];
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
@@ -394,13 +395,15 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         NSInteger menuID = tableView.tag;
         
         {
+            NSString *message = [Setting getValue:@"119m" example:@"เพิ่มโน้ต"];
+            NSString *message2 = [Setting getValue:@"120m" example:@"จานที่ %ld"];
             CustomTableViewCellNote *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierNote];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             
-            cell.lblDishNo.text = [NSString stringWithFormat:@"จานที่ %ld",item+1];
+            cell.lblDishNo.text = [NSString stringWithFormat:message2,item+1];
             cell.txtNote.delegate = self;
-            
+            cell.txtNote.placeholder = message;
             
         
             //note
@@ -594,6 +597,11 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     if([tableView isEqual:tbvOrder])
     {
         Menu *menu = _menuList[item];
+        if(!menu.expand)
+        {
+            NSString *message = [Setting getValue:@"118m" example:@"กดค้างที่ช่อง \"เพิ่มโน้ต\" เพื่อแสดงเมนูแก้ไขโน้ต"];
+            [self blinkAlertMsg:message];
+        }
         menu.expand = !menu.expand;
         
         
@@ -801,6 +809,11 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     CGPoint point = [gestureRecognizer locationInView:tbvOrder];
     NSIndexPath * tappedIP = [tbvOrder indexPathForRowAtPoint:point];
     CustomTableViewCellOrder *cell = [tbvOrder cellForRowAtIndexPath:tappedIP];
+    {
+        CGPoint point = [gestureRecognizer locationInView:cell.tbvNote];
+        NSIndexPath * tappedIP = [cell.tbvNote indexPathForRowAtPoint:point];
+        _sourceCopyItem = tappedIP.item;
+    }
     
     
     
@@ -814,35 +827,126 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
                                   NSMutableArray *currentOrderTakingList = [OrderTaking getCurrentOrderTakingList];
                                   NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
                                   
-                                  
-                                  
                                   {
-                                      CGPoint pointTbvNote = [gestureRecognizer locationInView:cell.tbvNote];
-                                      NSIndexPath * indexPath = [cell.tbvNote indexPathForRowAtPoint:pointTbvNote];
-                                      _copyOrderTaking = orderTakingList[indexPath.item];
+                                      CGPoint point = [gestureRecognizer locationInView:cell.tbvNote];
+                                      NSIndexPath * tappedIP = [cell.tbvNote indexPathForRowAtPoint:point];
+                                      _copyOrderTaking = orderTakingList[_sourceCopyItem];
+//                                      _copyOrderTaking = orderTakingList[tappedIP.item];
                                   }
+                                  
+                                  
+                                  UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+                                  UIColor *color = cSystem1;
+                                  NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+                                  NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"คัดลอก" attributes:attribute];
+                                  
+                                  UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+                                  label.attributedText = attrString;
                               }];
-    
     [alert addAction:action1];
+    
+    
+    NSString *message4 = [Setting getValue:@"112m" example:@"วางทั้งหมด"];
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:message4
+                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                              {
+                                  Menu *menu = _menuList[tappedIP.item];
+                                  NSMutableArray *currentOrderTakingList = [OrderTaking getCurrentOrderTakingList];
+                                  NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
+                                  
+                                  
+                                  for(OrderTaking *orderTaking in orderTakingList)
+                                  {
+                                      if(_copyOrderTaking && ![orderTaking isEqual:_copyOrderTaking] && _copyOrderTaking.menuID == orderTaking.menuID)
+                                      {
+                                          //remove current note
+                                          NSMutableArray *currentOrderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:orderTaking.orderTakingID];
+                                          [OrderNote removeList:currentOrderNoteList];
+                                          
+                                          
+                                          //add note
+                                          NSMutableArray *orderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:_copyOrderTaking.orderTakingID];
+                                          for(OrderNote *item in orderNoteList)
+                                          {
+                                              OrderNote *orderNote = [item copy];
+                                              orderNote.orderNoteID = [OrderNote getNextID];
+                                              orderNote.orderTakingID = orderTaking.orderTakingID;
+                                              [OrderNote addObject:orderNote];
+                                          }
+                                          
+                                          
+                                          
+                                          
+                                          //update note id list in text
+                                          orderTaking.noteIDListInText = [OrderNote getNoteIDListInTextWithOrderTakingID:orderTaking.orderTakingID];
+                                          
+                                          
+                                          //update ordertaking price
+                                          float takeAwayFee = orderTaking.takeAway?[[Setting getSettingValueWithKeyName:@"takeAwayFee"] floatValue]:0;
+                                          SpecialPriceProgram *specialPriceProgram = [SpecialPriceProgram getSpecialPriceProgramTodayWithMenuID:menu.menuID branchID:branch.branchID];
+                                          float specialPrice = specialPriceProgram?specialPriceProgram.specialPrice:menu.price;
+                                          float sumNotePrice = [OrderNote getSumNotePriceWithOrderTakingID:orderTaking.orderTakingID];
+                                          orderTaking.price = menu.price+sumNotePrice+takeAwayFee;
+                                          orderTaking.specialPrice = specialPrice+sumNotePrice+takeAwayFee;
+                                          orderTaking.modifiedUser = [Utility modifiedUser];
+                                          orderTaking.modifiedDate = [Utility currentDateTime];
+                                      }
+                                  }
+                                  
+                                  [tbvOrder reloadData];
+                                  
+                                  
+                              }];
+    [alert addAction:action4];
+    
+    
+    NSString *message5 = [Setting getValue:@"113m" example:@"Take away ทั้งหมด"];
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:message5
+                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                              {
+                                  Menu *menu = _menuList[tappedIP.item];
+                                  NSMutableArray *currentOrderTakingList = [OrderTaking getCurrentOrderTakingList];
+                                  NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:currentOrderTakingList];
+                                  
+                                  
+                                  for(OrderTaking *orderTaking in orderTakingList)
+                                  {
+                                      orderTaking.takeAway = orderTaking.takeAway;
+                                      float takeAwayFee = orderTaking.takeAway?branch.takeAwayFee:0;
+                                      SpecialPriceProgram *specialPriceProgram = [SpecialPriceProgram getSpecialPriceProgramTodayWithMenuID:menu.menuID branchID:branch.branchID];
+                                      float specialPrice = specialPriceProgram?specialPriceProgram.specialPrice:menu.price;
+                                      float sumNotePrice = [OrderNote getSumNotePriceWithOrderTakingID:orderTaking.orderTakingID];
+                                      orderTaking.price = menu.price+sumNotePrice+takeAwayFee;
+                                      orderTaking.specialPrice = specialPrice+sumNotePrice+takeAwayFee;
+                                      orderTaking.modifiedUser = [Utility modifiedUser];
+                                      orderTaking.modifiedDate = [Utility currentDateTime];
+                            
+                                  }
+                                  [tbvOrder reloadData];
+                                  [tbvTotal reloadData];
+                                  
+                                  
+                              }];
+    [alert addAction:action5];
+    
+    
     
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"ยกเลิก"
                                                       style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
                               {
-                                  
                               }];
-    
     [alert addAction:action2];
     
     
     
-    
-    UIAlertAction *pasteHowTo = [UIAlertAction actionWithTitle:@"Double tap at note to paste"
+    NSString *message3 = [Setting getValue:@"114m" example:@"Double tap at note to paste"];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:message3
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *action)
                                  {
                                  }];
-    [pasteHowTo setValue:cSystem4 forKey:@"titleTextColor"];
-    [alert addAction:pasteHowTo];
+//    [action3 setValue:cSystem4 forKey:@"titleTextColor"];
+    [alert addAction:action3];
     
     
 
@@ -859,6 +963,8 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     [self presentViewController:alert animated:YES completion:nil];
     
     
+    
+    
     UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
     UIColor *color = cSystem1;
     NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
@@ -866,6 +972,26 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
     label.attributedText = attrString;
+    
+    
+    
+    UIFont *font4 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color4 = cSystem1;
+    NSDictionary *attribute4 = @{NSForegroundColorAttributeName:color4 ,NSFontAttributeName: font4};
+    NSMutableAttributedString *attrString4 = [[NSMutableAttributedString alloc] initWithString:message4 attributes:attribute4];
+    
+    UILabel *label4 = [[action4 valueForKey:@"__representer"] valueForKey:@"label"];
+    label4.attributedText = attrString4;
+    
+    
+    
+    UIFont *font5 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color5 = cSystem1;
+    NSDictionary *attribute5 = @{NSForegroundColorAttributeName:color5 ,NSFontAttributeName: font5};
+    NSMutableAttributedString *attrString5 = [[NSMutableAttributedString alloc] initWithString:message5 attributes:attribute5];
+    
+    UILabel *label5 = [[action5 valueForKey:@"__representer"] valueForKey:@"label"];
+    label5.attributedText = attrString5;
     
     
     
@@ -882,12 +1008,10 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     UIFont *font3 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
     UIColor *color3 = mPlaceHolder;
     NSDictionary *attribute3 = @{NSForegroundColorAttributeName:color3 ,NSFontAttributeName: font3};
-    NSMutableAttributedString *attrString3 = [[NSMutableAttributedString alloc] initWithString:@"Double tap at note to paste" attributes:attribute3];
+    NSMutableAttributedString *attrString3 = [[NSMutableAttributedString alloc] initWithString:message3 attributes:attribute3];
     
-    UILabel *label3 = [[pasteHowTo valueForKey:@"__representer"] valueForKey:@"label"];
-    label3.attributedText = attrString;
-    
-    
+    UILabel *label3 = [[action3 valueForKey:@"__representer"] valueForKey:@"label"];
+    label3.attributedText = attrString3;
     
 }
 
@@ -910,7 +1034,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     
     
-    if(_copyOrderTaking && ![orderTaking isEqual:_copyOrderTaking])
+    if(_copyOrderTaking && ![orderTaking isEqual:_copyOrderTaking] && _copyOrderTaking.menuID == orderTaking.menuID)
     {
         //remove current note
         NSMutableArray *currentOrderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:orderTaking.orderTakingID];
@@ -967,10 +1091,10 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
 
     
     
-    if([_copyOrderTaking isEqual:_orderTaking])
-    {
-        _copyOrderTaking = nil;
-    }
+//    if([_copyOrderTaking isEqual:_orderTaking])
+//    {
+//        _copyOrderTaking = nil;
+//    }
     [self performSegueWithIdentifier:@"segNote" sender:self];
 }
 
@@ -1007,19 +1131,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     orderTaking.modifiedDate = [Utility currentDateTime];
 
     
-
-    if(orderTaking.takeAway)
-    {
-        UIImage *image = [UIImage imageNamed:@"takeAway2.png"];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
-        [self blinkTakeAwayNotiView];
-    }
-    else
-    {
-        UIImage *image = [UIImage imageNamed:@"takeAwayGrayOut.png"];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
-    }
-    
+    [tbvOrder reloadData];
     [tbvTotal reloadData];
 }
 @end

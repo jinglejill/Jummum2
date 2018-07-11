@@ -147,11 +147,12 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     {
         if(section == 0)
         {
+            NSString *message = [Setting getValue:@"116m" example:@"ค้นหาเบอร์โต๊ะ"];
             CustomTableViewCellSearchBar *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSearchBar];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.sbText.delegate = self;
             cell.sbText.tag = 300;
-            cell.sbText.placeholder = @"ค้นหาเบอร์โต๊ะ";
+            cell.sbText.placeholder = message;
             UITextField *textField = [cell.sbText valueForKey:@"searchField"];
             textField.layer.borderColor = [cTextFieldBorder CGColor];
             textField.layer.borderWidth = 1;

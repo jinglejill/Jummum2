@@ -13,7 +13,6 @@
 #import "NoteType.h"
 #import "OrderNote.h"
 #import "Menu.h"
-#import "MenuTypeNote.h"
 #import "SpecialPriceProgram.h"
 #import "Setting.h"
 
@@ -159,7 +158,7 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
             cell.selected = YES;
             [colVwNote selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
             [cell.btnCheckBox setImage:[UIImage imageNamed:@"checkbox_gray.png"] forState:UIControlStateNormal];
-            cell.layer.backgroundColor = [mLightBlueColor CGColor];
+            cell.layer.backgroundColor = [cSystem1_20 CGColor];
         }
         else
         {
@@ -182,7 +181,8 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
             [attrString appendAttributedString:attrString2];
             
             
-            cell.lblNoteName.attributedText = attrString;
+            cell.lblNoteName.attributedText = attrString;        
+            
         }
         else//ไม่ใส่
         {
@@ -199,6 +199,8 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
             strNotePrice = [NSString stringWithFormat:@"-%@",[Utility formatDecimal:note.price withMinFraction:0 andMaxFraction:0]];
         }
         cell.lblPrice.text = strNotePrice;
+        cell.lblPrice.textColor = cSystem1;
+        
         
         cell.btnCheckBox.hidden = NO;
         cell.lblNoteName.hidden = NO;

@@ -429,7 +429,8 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     NSNumber *tosAgree = [dicTosAgree objectForKey:username];
     if(tosAgree)
     {
-        [self performSegueWithIdentifier:@"segHotDeal" sender:self];
+        [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+//        [self performSegueWithIdentifier:@"segHotDeal" sender:self];
     }
     else
     {

@@ -13,7 +13,7 @@
 
 @implementation Comment
 
--(Comment *)initWithUserAccountID:(NSInteger)userAccountID text:(NSString *)text type:(NSInteger)type
+-(Comment *)initWithUserAccountID:(NSInteger)userAccountID text:(NSString *)text type:(NSInteger)type receiptID:(NSInteger)receiptID
 {
     self = [super init];
     if(self)
@@ -22,6 +22,7 @@
         self.userAccountID = userAccountID;
         self.text = text;
         self.type = type;
+        self.receiptID = receiptID;
         self.modifiedUser = [Utility modifiedUser];
         self.modifiedDate = [Utility currentDateTime];
     }
@@ -104,6 +105,7 @@
         ((Comment *)copy).userAccountID = self.userAccountID;
         [copy setText:self.text];
         ((Comment *)copy).type = self.type;
+        ((Comment *)copy).receiptID = self.receiptID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
         ((Comment *)copy).replaceSelf = self.replaceSelf;
@@ -119,6 +121,7 @@
        && self.userAccountID == editingComment.userAccountID
        && [self.text isEqualToString:editingComment.text]
        && self.type == editingComment.type
+       && self.receiptID == editingComment.receiptID
        )
     {
         return NO;
@@ -132,10 +135,12 @@
     toComment.userAccountID = fromComment.userAccountID;
     toComment.text = fromComment.text;
     toComment.type = fromComment.type;
+    toComment.receiptID = fromComment.receiptID;
     toComment.modifiedUser = [Utility modifiedUser];
     toComment.modifiedDate = [Utility currentDateTime];
     
     return toComment;
 }
+
 
 @end

@@ -51,6 +51,15 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
+    
+    
+    
+    
+    //cancel button in searchBar
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cSystem1, NSForegroundColorAttributeName,font, NSFontAttributeName, nil]
+     forState:UIControlStateNormal];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -85,7 +94,9 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     
     
     
+    NSString *message = [Setting getValue:@"117m" example:@"ค้นหา Deal"];
     searchBar.delegate = self;
+    searchBar.placeholder = message;
     UITextField *textField = [searchBar valueForKey:@"searchField"];
     textField.layer.borderColor = [cTextFieldBorder CGColor];
     textField.layer.borderWidth = 1;
@@ -333,8 +344,8 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     // but we'll not do that any more... it made problems
     // it's better to set self.searchBarActive = YES when user typed something
     //    [self.searchBar setShowsCancelButton:YES animated:YES];
-    UISearchBar *sbText = [self.view viewWithTag:300];
-    [sbText setShowsCancelButton:YES animated:YES];
+//    UISearchBar *sbText = [self.view viewWithTag:300];
+    [searchBar setShowsCancelButton:YES animated:YES];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -345,17 +356,17 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     //    self.searchBarActive = NO;
     
     //    [self.searchBar setShowsCancelButton:NO animated:YES];
-    UISearchBar *sbText = [self.view viewWithTag:300];
-    [sbText setShowsCancelButton:NO animated:YES];
+//    UISearchBar *sbText = [self.view viewWithTag:300];
+    [searchBar setShowsCancelButton:NO animated:YES];
 }
 
 -(void)cancelSearching
 {
-    UISearchBar *sbText = [self.view viewWithTag:300];
+//    UISearchBar *sbText = [self.view viewWithTag:300];
     self.searchBarActive = NO;
-    [sbText resignFirstResponder];
-    sbText.text  = @"";
-    [self filterContentForSearchText:sbText.text scope:@""];
+    [searchBar resignFirstResponder];
+    searchBar.text  = @"";
+    [self filterContentForSearchText:searchBar.text scope:@""];
 }
 
 -(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel

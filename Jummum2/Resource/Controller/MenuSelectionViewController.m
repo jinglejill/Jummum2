@@ -12,7 +12,7 @@
 #import "CustomTableViewCellSearchBar.h"
 #import "Menu.h"
 #import "MenuType.h"
-#import "MenuTypeNote.h"
+#import "MenuNote.h"
 #import "Note.h"
 #import "NoteType.h"
 #import "SubMenuType.h"
@@ -26,7 +26,7 @@
 {
     NSMutableArray *_menuList;
     NSMutableArray *_menuTypeList;
-    NSMutableArray *_menuTypeNoteList;
+    NSMutableArray *_menuNoteList;
     NSMutableArray *_noteList;
     NSMutableArray *_noteTypeList;
     NSMutableArray *_subMenuTypeList;
@@ -136,7 +136,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     else
     {
         _menuTypeList = [MenuType getMenuTypeList];
-        _menuTypeNoteList = [MenuTypeNote getMenuTypeNoteList];
+        _menuNoteList = [MenuNote getMenuNoteList];
         _noteList = [Note getNoteList];
         _noteTypeList = [NoteType getNoteTypeList];
         _subMenuTypeList = [SubMenuType getSubMenuTypeList];
@@ -393,7 +393,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 {
     _menuList = [items[0] mutableCopy];
     _menuTypeList = [items[1] mutableCopy];
-    _menuTypeNoteList = [items[2] mutableCopy];
+    _menuNoteList = [items[2] mutableCopy];
     _noteList = [items[3] mutableCopy];
     _noteTypeList = [items[4] mutableCopy];
     _subMenuTypeList = [items[5] mutableCopy];
@@ -408,7 +408,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     
     [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
     [MenuType setSharedData:_menuTypeList];
-    [MenuTypeNote setSharedData:_menuTypeNoteList];
+    [MenuNote setSharedData:_menuNoteList];
     [Note setSharedData:_noteList];
     [NoteType setSharedData:_noteTypeList];
     [SubMenuType setSharedData:_subMenuTypeList];

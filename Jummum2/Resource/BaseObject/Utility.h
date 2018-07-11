@@ -133,8 +133,6 @@ enum enumDB
     dbMenuPicList,
     dbMenuType,
     dbMenuTypeList,
-    dbMenuTypeNote,
-    dbMenuTypeNoteList,
     dbNote,
     dbNoteList,
     dbReceiptOrderTakingOrderNote,
@@ -174,7 +172,12 @@ enum enumDB
     dbComment,
     dbCommentList,
     dbRecommendShop,
-    dbRecommendShopList
+    dbRecommendShopList,
+    dbRating,
+    dbRatingList,
+    dbReceiptDisputeRating,
+    dbMenuNote,
+    dbMenuNoteList
 
 
     
@@ -299,7 +302,20 @@ enum enumUrl
     urlRecommendShopDelete,
     urlRecommendShopInsertList,
     urlRecommendShopUpdateList,
-    urlRecommendShopDeleteList
+    urlRecommendShopDeleteList,
+    urlRatingInsert,
+    urlRatingUpdate,
+    urlRatingDelete,
+    urlRatingInsertList,
+    urlRatingUpdateList,
+    urlRatingDeleteList,
+    urlReceiptDisputeRatingGet,
+    urlMenuNoteInsert,
+    urlMenuNoteUpdate,
+    urlMenuNoteDelete,
+    urlMenuNoteInsertList,
+    urlMenuNoteUpdateList,
+    urlMenuNoteDeleteList
 
     
 };

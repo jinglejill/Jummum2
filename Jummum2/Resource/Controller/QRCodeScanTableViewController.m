@@ -8,6 +8,7 @@
 
 #import "QRCodeScanTableViewController.h"
 #import "MenuSelectionViewController.h"
+#import "CreditCardAndOrderSummaryViewController.h"
 #import "Utility.h"
 #import "Branch.h"
 #import "CustomerTable.h"
@@ -18,6 +19,8 @@
 {
     Branch *_selectedBranch;
     CustomerTable *_selectedCustomerTable;
+    BOOL _performSegue;
+    BOOL _fromOrderItAgain;
 }
 //@property (nonatomic) BOOL isReading;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
@@ -39,7 +42,13 @@
 
 -(IBAction)unwindToQRCodeScanTable:(UIStoryboardSegue *)segue
 {
-    
+    if([segue.sourceViewController isMemberOfClass:[CreditCardAndOrderSummaryViewController class]])
+    {
+        CreditCardAndOrderSummaryViewController *vc = segue.sourceViewController;
+        _selectedBranch = vc.branch;
+        _selectedCustomerTable = nil;    
+        _fromOrderItAgain = YES;
+    }
 }
 
 - (IBAction)branchSearch:(id)sender
@@ -80,6 +89,7 @@
     [super viewDidAppear:YES];
     
     
+    _performSegue = NO;
     self.homeModel = [[HomeModel alloc]init];
     self.homeModel.delegate = self;
     Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
@@ -87,6 +97,12 @@
     //-----------
     
     
+    if(_fromOrderItAgain)
+    {
+        _fromOrderItAgain = NO;
+        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+        return;
+    }
     
     
     [self startButtonClicked];
@@ -166,7 +182,7 @@
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
-    if (metadataObjects && [metadataObjects count] > 0)
+    if (metadataObjects && [metadataObjects count] > 0 && !_performSegue)
     {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
@@ -196,6 +212,7 @@
                     customerTable = _selectedCustomerTable;
                     dispatch_async(dispatch_get_main_queue(), ^
                     {
+                        _performSegue = YES;
                        [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
                     });                    
                 }
@@ -203,6 +220,7 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^
                     {
+                        _performSegue = YES;
                         [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
                     });
                 }

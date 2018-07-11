@@ -23,10 +23,12 @@
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (nonatomic) NSInteger fromReceiptSummaryMenu;
+@property (nonatomic) NSInteger fromOrderDetailMenu;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
+@property (strong, nonatomic) IBOutlet UIButton *btnAddRemoveMenu;
+- (IBAction)addRemoveMenu:(id)sender;
 
-- (IBAction)backToBasket:(id)sender;
 - (IBAction)pay:(id)sender;
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;

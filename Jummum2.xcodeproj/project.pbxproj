@@ -225,7 +225,6 @@
 		EF5C313A2080C00500084B7E /* SharedBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FF72080C00500084B7E /* SharedBranch.m */; };
 		EF5C313B2080C00500084B7E /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FFC2080C00500084B7E /* Branch.m */; };
 		EF5C313C2080C00500084B7E /* SharedCurrentUserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FFD2080C00500084B7E /* SharedCurrentUserAccount.m */; };
-		EF5C313D2080C00500084B7E /* MenuTypeNote.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FFE2080C00500084B7E /* MenuTypeNote.m */; };
 		EF5C313E2080C00500084B7E /* SharedUserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2FFF2080C00500084B7E /* SharedUserAccount.m */; };
 		EF5C313F2080C00500084B7E /* CustomerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30002080C00500084B7E /* CustomerTable.m */; };
 		EF5C31402080C00500084B7E /* SharedCustomerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30052080C00500084B7E /* SharedCustomerTable.m */; };
@@ -233,7 +232,6 @@
 		EF5C31422080C00500084B7E /* SharedMenuType.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C300B2080C00500084B7E /* SharedMenuType.m */; };
 		EF5C31432080C00500084B7E /* SubMenuType.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C300D2080C00500084B7E /* SubMenuType.m */; };
 		EF5C31442080C00500084B7E /* SharedPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30102080C00500084B7E /* SharedPromotion.m */; };
-		EF5C31452080C00500084B7E /* SharedMenuTypeNote.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30112080C00500084B7E /* SharedMenuTypeNote.m */; };
 		EF5C31462080C00500084B7E /* SharedSpecialPriceProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30152080C00500084B7E /* SharedSpecialPriceProgram.m */; };
 		EF5C31482080C00500084B7E /* Promotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30192080C00500084B7E /* Promotion.m */; };
 		EF5C31492080C00500084B7E /* CreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C301B2080C00500084B7E /* CreditCard.m */; };
@@ -334,6 +332,16 @@
 		EFF44D4720EFE2D300D07770 /* NoImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4620EFE2D200D07770 /* NoImage.jpg */; };
 		EFF44D4B20F05C6600D07770 /* CustomTableViewCellLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */; };
 		EFF44D4C20F05C6600D07770 /* CustomTableViewCellLogo.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */; };
+		EFF44F2720F1CBB200D07770 /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F2620F1CBB200D07770 /* Rating.m */; };
+		EFF44F2A20F1CBBE00D07770 /* SharedRating.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F2920F1CBBE00D07770 /* SharedRating.m */; };
+		EFF44F2E20F1CC7B00D07770 /* CustomTableViewCellRating.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F2C20F1CC7B00D07770 /* CustomTableViewCellRating.m */; };
+		EFF44F2F20F1CC7B00D07770 /* CustomTableViewCellRating.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF44F2D20F1CC7B00D07770 /* CustomTableViewCellRating.xib */; };
+		EFF44F3220F1CE6700D07770 /* starRating.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF44F3020F1CE6600D07770 /* starRating.png */; };
+		EFF44F3320F1CE6700D07770 /* starRatingGray.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF44F3120F1CE6700D07770 /* starRatingGray.png */; };
+		EFF44F3920F334D800D07770 /* CommentRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F3820F334D700D07770 /* CommentRatingViewController.m */; };
+		EFF44F3B20F4C04900D07770 /* addRemove.png in Resources */ = {isa = PBXBuildFile; fileRef = EFF44F3A20F4C04800D07770 /* addRemove.png */; };
+		EFF44F3E20F5DA2400D07770 /* MenuNote.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F3D20F5DA2400D07770 /* MenuNote.m */; };
+		EFF44F4420F5DB3900D07770 /* SharedMenuNote.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44F4320F5DB3900D07770 /* SharedMenuNote.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -600,7 +608,6 @@
 		EF5C2FCA2080C00400084B7E /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
 		EF5C2FCB2080C00400084B7E /* SharedReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedReceipt.m; sourceTree = "<group>"; };
 		EF5C2FCC2080C00400084B7E /* CustomerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerTable.h; sourceTree = "<group>"; };
-		EF5C2FCD2080C00400084B7E /* MenuTypeNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTypeNote.h; sourceTree = "<group>"; };
 		EF5C2FCE2080C00400084B7E /* SharedUserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUserAccount.h; sourceTree = "<group>"; };
 		EF5C2FCF2080C00400084B7E /* SharedCurrentUserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedCurrentUserAccount.h; sourceTree = "<group>"; };
 		EF5C2FD02080C00400084B7E /* Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
@@ -610,7 +617,6 @@
 		EF5C2FD52080C00400084B7E /* SharedSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedSetting.m; sourceTree = "<group>"; };
 		EF5C2FD62080C00400084B7E /* SharedTableNo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedTableNo.m; sourceTree = "<group>"; };
 		EF5C2FD72080C00400084B7E /* OrderNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderNote.m; sourceTree = "<group>"; };
-		EF5C2FD82080C00400084B7E /* SharedMenuTypeNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedMenuTypeNote.h; sourceTree = "<group>"; };
 		EF5C2FD92080C00400084B7E /* SharedPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedPromotion.h; sourceTree = "<group>"; };
 		EF5C2FDA2080C00400084B7E /* Shop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shop.m; sourceTree = "<group>"; };
 		EF5C2FDB2080C00400084B7E /* SubMenuType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubMenuType.h; sourceTree = "<group>"; };
@@ -647,7 +653,6 @@
 		EF5C2FFB2080C00500084B7E /* SharedUserPromotionUsed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUserPromotionUsed.h; sourceTree = "<group>"; };
 		EF5C2FFC2080C00500084B7E /* Branch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Branch.m; sourceTree = "<group>"; };
 		EF5C2FFD2080C00500084B7E /* SharedCurrentUserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedCurrentUserAccount.m; sourceTree = "<group>"; };
-		EF5C2FFE2080C00500084B7E /* MenuTypeNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTypeNote.m; sourceTree = "<group>"; };
 		EF5C2FFF2080C00500084B7E /* SharedUserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUserAccount.m; sourceTree = "<group>"; };
 		EF5C30002080C00500084B7E /* CustomerTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerTable.m; sourceTree = "<group>"; };
 		EF5C30012080C00500084B7E /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
@@ -666,7 +671,6 @@
 		EF5C300E2080C00500084B7E /* SharedMenuPic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedMenuPic.h; sourceTree = "<group>"; };
 		EF5C300F2080C00500084B7E /* Shop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shop.h; sourceTree = "<group>"; };
 		EF5C30102080C00500084B7E /* SharedPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedPromotion.m; sourceTree = "<group>"; };
-		EF5C30112080C00500084B7E /* SharedMenuTypeNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedMenuTypeNote.m; sourceTree = "<group>"; };
 		EF5C30122080C00500084B7E /* SharedSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedSetting.h; sourceTree = "<group>"; };
 		EF5C30132080C00500084B7E /* SharedTableNo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedTableNo.h; sourceTree = "<group>"; };
 		EF5C30142080C00500084B7E /* OrderNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderNote.h; sourceTree = "<group>"; };
@@ -838,6 +842,22 @@
 		EFF44D4820F05C6600D07770 /* CustomTableViewCellLogo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellLogo.h; sourceTree = "<group>"; };
 		EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellLogo.m; sourceTree = "<group>"; };
 		EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCellLogo.xib; sourceTree = "<group>"; };
+		EFF44F2520F1CBB200D07770 /* Rating.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
+		EFF44F2620F1CBB200D07770 /* Rating.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Rating.m; sourceTree = "<group>"; };
+		EFF44F2820F1CBBE00D07770 /* SharedRating.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedRating.h; sourceTree = "<group>"; };
+		EFF44F2920F1CBBE00D07770 /* SharedRating.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedRating.m; sourceTree = "<group>"; };
+		EFF44F2B20F1CC7B00D07770 /* CustomTableViewCellRating.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellRating.h; sourceTree = "<group>"; };
+		EFF44F2C20F1CC7B00D07770 /* CustomTableViewCellRating.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellRating.m; sourceTree = "<group>"; };
+		EFF44F2D20F1CC7B00D07770 /* CustomTableViewCellRating.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCellRating.xib; sourceTree = "<group>"; };
+		EFF44F3020F1CE6600D07770 /* starRating.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starRating.png; sourceTree = "<group>"; };
+		EFF44F3120F1CE6700D07770 /* starRatingGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starRatingGray.png; sourceTree = "<group>"; };
+		EFF44F3720F334D700D07770 /* CommentRatingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentRatingViewController.h; sourceTree = "<group>"; };
+		EFF44F3820F334D700D07770 /* CommentRatingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentRatingViewController.m; sourceTree = "<group>"; };
+		EFF44F3A20F4C04800D07770 /* addRemove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addRemove.png; sourceTree = "<group>"; };
+		EFF44F3C20F5DA2400D07770 /* MenuNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuNote.h; sourceTree = "<group>"; };
+		EFF44F3D20F5DA2400D07770 /* MenuNote.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuNote.m; sourceTree = "<group>"; };
+		EFF44F4220F5DB3900D07770 /* SharedMenuNote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMenuNote.h; sourceTree = "<group>"; };
+		EFF44F4320F5DB3900D07770 /* SharedMenuNote.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMenuNote.m; sourceTree = "<group>"; };
 		F9AD4867B6FFD6155F64F9B2 /* Pods-Jummum2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jummum2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Jummum2Tests/Pods-Jummum2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE55E498180126FC94589F1 /* Pods-Jummum2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jummum2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Jummum2UITests/Pods-Jummum2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1096,6 +1116,9 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EFF44F3A20F4C04800D07770 /* addRemove.png */,
+				EFF44F3020F1CE6600D07770 /* starRating.png */,
+				EFF44F3120F1CE6700D07770 /* starRatingGray.png */,
 				EFF44D4620EFE2D200D07770 /* NoImage.jpg */,
 				EF02455D20EC93BE0025B89D /* comment.png */,
 				EF02455C20EC93BE0025B89D /* contactUs.png */,
@@ -1243,6 +1266,8 @@
 				EF02456520EC99630025B89D /* CommentViewController.m */,
 				EF02456720EC99720025B89D /* RecommendShopViewController.h */,
 				EF02456820EC99720025B89D /* RecommendShopViewController.m */,
+				EFF44F3720F334D700D07770 /* CommentRatingViewController.h */,
+				EFF44F3820F334D700D07770 /* CommentRatingViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1260,6 +1285,8 @@
 			children = (
 				EF5C2FD02080C00400084B7E /* Branch.h */,
 				EF5C2FFC2080C00500084B7E /* Branch.m */,
+				EF02456C20ECA7C00025B89D /* Comment.h */,
+				EF02456D20ECA7C00025B89D /* Comment.m */,
 				EF5C2FEE2080C00400084B7E /* CreditCard.h */,
 				EF5C301B2080C00500084B7E /* CreditCard.m */,
 				EF5C2FCC2080C00400084B7E /* CustomerTable.h */,
@@ -1280,8 +1307,6 @@
 				EF5C2FE82080C00400084B7E /* MenuPic.m */,
 				EF5C30072080C00500084B7E /* MenuType.h */,
 				EF5C2FC42080C00400084B7E /* MenuType.m */,
-				EF5C2FCD2080C00400084B7E /* MenuTypeNote.h */,
-				EF5C2FFE2080C00500084B7E /* MenuTypeNote.m */,
 				EFADE9CF209B1A4F00AAB331 /* Message.h */,
 				EFADE9D0209B1A4F00AAB331 /* Message.m */,
 				EF5C30202080C00500084B7E /* Note.h */,
@@ -1302,8 +1327,12 @@
 				EF5C2FC92080C00400084B7E /* PromotionMenu.m */,
 				EF5C2FC62080C00400084B7E /* PushSync.h */,
 				EF5C30062080C00500084B7E /* PushSync.m */,
+				EFF44F2520F1CBB200D07770 /* Rating.h */,
+				EFF44F2620F1CBB200D07770 /* Rating.m */,
 				EF5C2FF82080C00500084B7E /* Receipt.h */,
 				EF5C2FBD2080C00400084B7E /* Receipt.m */,
+				EF02457220ECDDA30025B89D /* RecommendShop.h */,
+				EF02457320ECDDA30025B89D /* RecommendShop.m */,
 				EF5C2FE12080C00400084B7E /* RewardPoint.h */,
 				EF5C30282080C00500084B7E /* RewardPoint.m */,
 				EFB9186D208F43600079FC15 /* RewardRedemption.h */,
@@ -1312,6 +1341,8 @@
 				EF5C2FEC2080C00400084B7E /* Setting.m */,
 				EF5C2FBE2080C00400084B7E /* SharedBranch.h */,
 				EF5C2FF72080C00500084B7E /* SharedBranch.m */,
+				EF02456F20ECA7CB0025B89D /* SharedComment.h */,
+				EF02457020ECA7CB0025B89D /* SharedComment.m */,
 				EF5C30232080C00500084B7E /* SharedCurrentMenu.h */,
 				EF5C2FE62080C00400084B7E /* SharedCurrentMenu.m */,
 				EF5C300A2080C00500084B7E /* SharedCurrentOrderTaking.h */,
@@ -1334,8 +1365,6 @@
 				EF5C2FDC2080C00400084B7E /* SharedMenuPic.m */,
 				EF5C2FDD2080C00400084B7E /* SharedMenuType.h */,
 				EF5C300B2080C00500084B7E /* SharedMenuType.m */,
-				EF5C2FD82080C00400084B7E /* SharedMenuTypeNote.h */,
-				EF5C30112080C00500084B7E /* SharedMenuTypeNote.m */,
 				EF5C30172080C00500084B7E /* SharedNote.h */,
 				EF5C2FD22080C00400084B7E /* SharedNote.m */,
 				EF5C2FC32080C00400084B7E /* SharedNoteType.h */,
@@ -1354,8 +1383,12 @@
 				EF5C2FC82080C00400084B7E /* SharedPromotionMenu.m */,
 				EF5C30092080C00500084B7E /* SharedPushSync.h */,
 				EF5C2FE02080C00400084B7E /* SharedPushSync.m */,
+				EFF44F2820F1CBBE00D07770 /* SharedRating.h */,
+				EFF44F2920F1CBBE00D07770 /* SharedRating.m */,
 				EF5C30022080C00500084B7E /* SharedReceipt.h */,
 				EF5C2FCB2080C00400084B7E /* SharedReceipt.m */,
+				EF02457520ECDE300025B89D /* SharedRecommendShop.h */,
+				EF02457620ECDE300025B89D /* SharedRecommendShop.m */,
 				EF5C30082080C00500084B7E /* SharedRewardPoint.h */,
 				EF5C2FC52080C00400084B7E /* SharedRewardPoint.m */,
 				EFB91870208F436E0079FC15 /* SharedRewardRedemption.h */,
@@ -1390,14 +1423,10 @@
 				EF5C2FE92080C00400084B7E /* UserPromotionUsed.m */,
 				EFADE9D2209EE71B00AAB331 /* UserRewardRedemptionUsed.h */,
 				EFADE9D3209EE71B00AAB331 /* UserRewardRedemptionUsed.m */,
-				EF02456C20ECA7C00025B89D /* Comment.h */,
-				EF02456D20ECA7C00025B89D /* Comment.m */,
-				EF02456F20ECA7CB0025B89D /* SharedComment.h */,
-				EF02457020ECA7CB0025B89D /* SharedComment.m */,
-				EF02457220ECDDA30025B89D /* RecommendShop.h */,
-				EF02457320ECDDA30025B89D /* RecommendShop.m */,
-				EF02457520ECDE300025B89D /* SharedRecommendShop.h */,
-				EF02457620ECDE300025B89D /* SharedRecommendShop.m */,
+				EFF44F3C20F5DA2400D07770 /* MenuNote.h */,
+				EFF44F3D20F5DA2400D07770 /* MenuNote.m */,
+				EFF44F4220F5DB3900D07770 /* SharedMenuNote.h */,
+				EFF44F4320F5DB3900D07770 /* SharedMenuNote.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1502,6 +1531,9 @@
 				EFF44D4820F05C6600D07770 /* CustomTableViewCellLogo.h */,
 				EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */,
 				EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */,
+				EFF44F2B20F1CC7B00D07770 /* CustomTableViewCellRating.h */,
+				EFF44F2C20F1CC7B00D07770 /* CustomTableViewCellRating.m */,
+				EFF44F2D20F1CC7B00D07770 /* CustomTableViewCellRating.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1695,6 +1727,7 @@
 				EF13B69020D212E5008CF35C /* Kanit-ThinItalic.otf in Resources */,
 				EF13B68A20D212E5008CF35C /* Kanit-Italic.otf in Resources */,
 				EF13B69C20D212E5008CF35C /* Kanit-LightItalic.otf in Resources */,
+				EFF44F3320F1CE6700D07770 /* starRatingGray.png in Resources */,
 				EF13B6C220D220F9008CF35C /* Icon-60@3x.png in Resources */,
 				EF13B68B20D212E5008CF35C /* Kanit-Regular.otf in Resources */,
 				EF13B6A520D212E5008CF35C /* Kanit-Medium.ttf in Resources */,
@@ -1759,6 +1792,7 @@
 				EFAF78F920A53FA00069D6DA /* deleteAll3.png in Resources */,
 				EF5C31552080C00500084B7E /* CustomTableViewCellImageLabelRemove.xib in Resources */,
 				EF13B69320D212E5008CF35C /* Prompt-SemiBold.ttf in Resources */,
+				EFF44F2F20F1CC7B00D07770 /* CustomTableViewCellRating.xib in Resources */,
 				EF13B6C720D220F9008CF35C /* Icon.png in Resources */,
 				EF5C30BB2080C00500084B7E /* privacyPolicy.png in Resources */,
 				EF13B69920D212E5008CF35C /* Prompt-SemiBoldItalic.ttf in Resources */,
@@ -1779,8 +1813,10 @@
 				EFA9634020A7B54E00E2DB9C /* CustomTableViewCellLabelTextView.xib in Resources */,
 				EF13B6A420D212E5008CF35C /* Kanit-ExtraLightItalic.ttf in Resources */,
 				EF5C31642080C00500084B7E /* CustomViewVoucher.xib in Resources */,
+				EFF44F3B20F4C04900D07770 /* addRemove.png in Resources */,
 				EF5C31662080C00500084B7E /* CustomTableViewCellReceiptSummary.xib in Resources */,
 				EF13B62820CFCB8E008CF35C /* jummumLogoCrop2.png in Resources */,
+				EFF44F3220F1CE6700D07770 /* starRating.png in Resources */,
 				EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */,
 				EF13B67920D212E5008CF35C /* Prompt-BoldItalic.ttf in Resources */,
 				EF13B6A220D212E5008CF35C /* Prompt-Italic.ttf in Resources */,
@@ -1900,12 +1936,12 @@
 				EFA9633B20A6B5CD00E2DB9C /* SharedDispute.m in Sources */,
 				EF13B6DA20D227BC008CF35C /* CustomTableViewCellProfile.m in Sources */,
 				EFBBEEAE2096DB71003884A9 /* RewardDetailViewController.m in Sources */,
+				EFF44F4420F5DB3900D07770 /* SharedMenuNote.m in Sources */,
 				EF5C30FC2080C00500084B7E /* ForgotPasswordViewController.m in Sources */,
 				EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */,
 				EFBBEEC3209A5A24003884A9 /* PromoCode.m in Sources */,
 				EF5C30B22080C00500084B7E /* KeychainWrapper.m in Sources */,
 				EF5C31032080C00500084B7E /* PersonalDataViewController.m in Sources */,
-				EF5C31452080C00500084B7E /* SharedMenuTypeNote.m in Sources */,
 				EFA9633820A6B5C500E2DB9C /* Dispute.m in Sources */,
 				EF02456620EC99630025B89D /* CommentViewController.m in Sources */,
 				EFBBEEBF20981BB4003884A9 /* CustomTableViewCellRedemption.m in Sources */,
@@ -1923,6 +1959,7 @@
 				EFBBEEBB2098191A003884A9 /* RewardRedemptionViewController.m in Sources */,
 				EF5C31222080C00500084B7E /* SharedSetting.m in Sources */,
 				EF5C2EDF2080BBB000084B7E /* ViewController.m in Sources */,
+				EFF44F2720F1CBB200D07770 /* Rating.m in Sources */,
 				EF5C31312080C00500084B7E /* Note.m in Sources */,
 				EF5C31632080C00500084B7E /* CustomViewVoucher.m in Sources */,
 				EFADE9D7209EE74400AAB331 /* SharedUserRewardRedemptionUsed.m in Sources */,
@@ -1965,6 +2002,7 @@
 				EF5C31182080C00500084B7E /* SharedSubMenuType.m in Sources */,
 				EF5C310B2080C00500084B7E /* TosAndPrivacyPolicyViewController.m in Sources */,
 				EF02456920EC99720025B89D /* RecommendShopViewController.m in Sources */,
+				EFF44F3920F334D800D07770 /* CommentRatingViewController.m in Sources */,
 				EF5C316B2080C00500084B7E /* CustomCollectionReusableView.m in Sources */,
 				EF5C312D2080C00500084B7E /* LogIn.m in Sources */,
 				EF5C313E2080C00500084B7E /* SharedUserAccount.m in Sources */,
@@ -1983,6 +2021,7 @@
 				EF02457420ECDDA30025B89D /* RecommendShop.m in Sources */,
 				EF5C311B2080C00500084B7E /* SharedRewardPoint.m in Sources */,
 				EF5C31462080C00500084B7E /* SharedSpecialPriceProgram.m in Sources */,
+				EFF44F2E20F1CC7B00D07770 /* CustomTableViewCellRating.m in Sources */,
 				EF5C31402080C00500084B7E /* SharedCustomerTable.m in Sources */,
 				EF5C313C2080C00500084B7E /* SharedCurrentUserAccount.m in Sources */,
 				EF5C313B2080C00500084B7E /* Branch.m in Sources */,
@@ -2013,14 +2052,15 @@
 				EF5C31212080C00500084B7E /* SharedNote.m in Sources */,
 				EF5C30A22080C00500084B7E /* OmiseJsonParser.swift in Sources */,
 				EF5C31152080C00500084B7E /* Pic.m in Sources */,
+				EFF44F3E20F5DA2400D07770 /* MenuNote.m in Sources */,
 				EF02457720ECDE300025B89D /* SharedRecommendShop.m in Sources */,
 				EF5C30AF2080C00500084B7E /* CardNumber.swift in Sources */,
 				EF5C31192080C00500084B7E /* SharedMenu.m in Sources */,
-				EF5C313D2080C00500084B7E /* MenuTypeNote.m in Sources */,
 				EFAF78F120A4217E0069D6DA /* ConfirmDisputeViewController.m in Sources */,
 				EFAF790220A540CE0069D6DA /* CustomTableViewCellButton.m in Sources */,
 				EF5C315E2080C00500084B7E /* CustomTableViewCellSearchBar.m in Sources */,
 				EF5C31532080C00500084B7E /* CustomTableViewCellTotal.m in Sources */,
+				EFF44F2A20F1CBBE00D07770 /* SharedRating.m in Sources */,
 				EF5C31612080C00500084B7E /* CustomTableViewCellOrderSummary.m in Sources */,
 				EF5C31542080C00500084B7E /* CustomTableViewCellOrder.m in Sources */,
 				EF5C312F2080C00500084B7E /* MenuPic.m in Sources */,

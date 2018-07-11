@@ -77,8 +77,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 @synthesize tbvTotal;
 @synthesize tbvTotalHeightConstant;
 @synthesize fromReceiptSummaryMenu;
+@synthesize fromOrderDetailMenu;
 @synthesize topViewHeight;
 @synthesize bottomButtonHeight;
+@synthesize btnAddRemoveMenu;
 
 
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue
@@ -128,9 +130,11 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 {
     if(fromReceiptSummaryMenu)
     {
-//        [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
-        //go back in order to add more menu from selected bill
-        [self performSegueWithIdentifier:@"segUnwindToHotDeal" sender:self];
+        [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
+    }
+    else if(fromOrderDetailMenu)
+    {
+        [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
     }
     else
     {
@@ -298,6 +302,16 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     
     
     
+    if(fromReceiptSummaryMenu || fromOrderDetailMenu)
+    {
+        btnAddRemoveMenu.hidden = NO;
+    }
+    else
+    {
+        btnAddRemoveMenu.hidden = YES;
+    }
+    
+    
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
     NSMutableDictionary *dicCreditCard = [[[NSUserDefaults standardUserDefaults] objectForKey:@"creditCard"] mutableCopy];
     if(dicCreditCard)
@@ -442,7 +456,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             CustomTableViewCellLabelLabel *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelLabel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.lblText.text = branch.name;
+            
+            cell.lblText.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
             cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
             [cell.lblText sizeToFit];
             
@@ -1369,9 +1384,9 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     return 0;
 }
 
-- (IBAction)backToBasket:(id)sender
+- (IBAction)addRemoveMenu:(id)sender
 {
-    [self performSegueWithIdentifier:@"segUnwindToBasket" sender:self];
+    [self performSegueWithIdentifier:@"segUnwindToQRScanTable" sender:self];
 }
 
 - (void)pay:(id)sender
@@ -1394,35 +1409,35 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         [self blinkAlertMsg:@"กรุณาใส่ชื่อ"];
         UIView *vwInvalid = [self.view viewWithTag:11];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     if([Utility isStringEmpty:_creditCard.lastName])
     {
         [self blinkAlertMsg:@"กรุณาใส่นามสกุล"];
         UIView *vwInvalid = [self.view viewWithTag:12];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     if(![OMSCardNumber validate:_creditCard.creditCardNo])
     {
         [self blinkAlertMsg:@"หมายเลขบัตรเครดิตไม่ถูกต้อง"];
         UIView *vwInvalid = [self.view viewWithTag:13];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     if(_creditCard.month < 1 || _creditCard.month > 12)
     {
         [self blinkAlertMsg:@"เดือนไม่ถูกต้อง กรุณาใส่เดือนระหว่าง 01 ถึง 12"];
         UIView *vwInvalid = [self.view viewWithTag:14];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     if([[NSString stringWithFormat:@"%ld",_creditCard.year] length] < 4)
     {
         [self blinkAlertMsg:@"ปีไม่ถูกต้อง กรุณาใส่ปีจำนวน 4 หลัก"];
         UIView *vwInvalid = [self.view viewWithTag:15];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     NSString *strExpiredDate = [NSString stringWithFormat:@"%04ld%02ld01 00:00:00",_creditCard.year,_creditCard.month];
@@ -1431,14 +1446,14 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     {
         [self blinkAlertMsg:@"บัตรใบนี้หมดอายุแล้ว"];
         UIView *vwInvalid = [self.view viewWithTag:15];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     if([_creditCard.ccv length] < 3)
     {
         [self blinkAlertMsg:@"กรุณาใส่รหัสความปลอดภัย 3 หลัก"];
         UIView *vwInvalid = [self.view viewWithTag:16];
-        vwInvalid.backgroundColor = cSystem1;;
+        vwInvalid.backgroundColor = cSystem1;
         return;
     }
     

@@ -9,6 +9,7 @@
 #import "LogInViewController.h"
 #import "TermsOfServiceViewController.h"
 #import "RegisterNowViewController.h"
+#import "MeViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
@@ -142,7 +143,15 @@
         [FBSDKAccessToken setCurrentAccessToken:nil];
         _faceBookLogIn = NO;
     }
+    else if([segue.sourceViewController isMemberOfClass:[MeViewController class]])
+    {
+        [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+        _rememberMe = NO;
         
+        
+        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
+        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
+    }
         
     if (![FBSDKAccessToken currentAccessToken])
     {
@@ -152,25 +161,19 @@
     {
         _appLogIn = NO;
     }
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
-    {
-        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
-        _rememberMe = YES;
-        
-        
-        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
-        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
-        
-    }
-    else
-    {
-        [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
-        _rememberMe = NO;
-        
-        
-        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
-        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
-    }
+//    if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
+//    {
+//        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
+//        _rememberMe = YES;
+//
+//
+//        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
+//        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
+//
+//    }
+//    else
+    
+    
 }
 
 - (void)viewDidLoad
@@ -259,8 +262,6 @@
     if (_faceBookLogIn)
     {
         // User is logged in, do work such as go to next view controller.
-        //        [self performSegueWithIdentifier:@"segBranchSearch" sender:self];
-        
         [self insertUserLoginAndUserAccount];
     }
     else if(_appLogIn)
@@ -349,15 +350,14 @@
 //
                             [UIView setAnimationsEnabled:NO];
                             self.view.hidden = YES;
-                            
-                            [self performSegueWithIdentifier:@"segHotDeal" sender:self];
+                            [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
+
                             
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                 [UIView setAnimationsEnabled:YES];
                                 self.view.hidden = NO;
                             });
                         }
-//                        [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
                     }
                 }
             }
@@ -389,7 +389,7 @@
         NSNumber *tosAgree = [dicTosAgree objectForKey:username];
         if(tosAgree)
         {
-            [self performSegueWithIdentifier:@"segHotDeal" sender:self];
+            [self performSegueWithIdentifier:@"segQrCodeScanTable" sender:self];
         }
         else
         {

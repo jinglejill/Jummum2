@@ -16,12 +16,15 @@
 @implementation MainTabBarController
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Prompt-Regular" size:11.0f]} forState:UIControlStateNormal];
+    
+    self.selectedIndex = 1;
 }
 
 - (void)didReceiveMemoryWarning {

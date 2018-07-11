@@ -1,12 +1,12 @@
 //
-//  CommentViewController.m
+//  CommentRatingViewController.m
 //  Jummum2
 //
-//  Created by Thidaporn Kijkamjai on 4/7/2561 BE.
+//  Created by Thidaporn Kijkamjai on 9/7/2561 BE.
 //  Copyright © 2561 Appxelent. All rights reserved.
 //
 
-#import "CommentViewController.h"
+#import "CommentRatingViewController.h"
 #import "CustomTableViewCellLabelText.h"
 #import "CustomTableViewCellLabelTextView.h"
 #import "CustomTableViewHeaderFooterOkCancel.h"
@@ -14,15 +14,14 @@
 #import "Setting.h"
 
 
-
-@interface CommentViewController ()
+@interface CommentRatingViewController ()
 {
     Comment *_comment;
     NSString *_strPlaceHolder;
 }
 @end
 
-@implementation CommentViewController
+@implementation CommentRatingViewController
 static NSString * const reuseIdentifierLabelText = @"CustomTableViewCellLabelText";
 static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabelTextView";
 static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewHeaderFooterOkCancel";
@@ -85,9 +84,9 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Setting getValue:@"068t" example:@"แนะนำ ติชม"];
+    NSString *title = [Setting getValue:@"086t" example:@"แนะนำ ติชม"];
     lblNavTitle.text = title;
-    NSString *message = [Setting getValue:@"046m" example:@"กรุณาใส่ข้อเสนอแนะ คำติชม หรือปัญหาที่พบเจอ"];
+    NSString *message = [Setting getValue:@"087m" example:@"กรุณาใส่ข้อเสนอแนะ คำติชม หรือปัญหาที่พบเจอ"];
     _strPlaceHolder = message;
     
     
@@ -98,9 +97,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvData.backgroundColor = [UIColor whiteColor];
     
     
-    
     _comment = [[Comment alloc]init];
-    
+    _comment.text = rating.comment;
     
     
     tbvAction.delegate = self;
@@ -108,8 +106,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvAction.backgroundColor = [UIColor whiteColor];
     tbvAction.scrollEnabled = NO;
     
-
-
+    
+    
     
     
     {
@@ -122,7 +120,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     }
     
     
-
+    
     
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
@@ -163,7 +161,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         
         
         
-        NSString *message = [Setting getValue:@"047m" example:@"ข้อเสนอแนะ และคำติชม"];
+        NSString *message = [Setting getValue:@"088m" example:@"ข้อเสนอแนะ และคำติชม"];
         NSString *strTitle = message;
         
         
@@ -206,7 +204,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         cell.txvValue.clipsToBounds = YES;
         cell.txvValueHeight.constant = tableView.frame.size.height - 45;
         [cell.txvValue setInputAccessoryView:self.toolBar];
-        cell.txvValue.editable = YES;
+        cell.txvValue.editable = viewComment?NO:YES;
         
         
         return cell;
@@ -272,14 +270,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 - (IBAction)goBack:(id)sender
 {
-    if(rating)
-    {
-        [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:@"segUnwindToMe" sender:self];
-    }
+    [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
 }
 
 -(void)submit:(id)sender
@@ -304,41 +295,16 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     
     
     
-    if(rating)
-    {
-        rating.comment = _comment.text;
-        rating.modifiedUser = [Utility modifiedUser];
-        rating.modifiedDate = [Utility currentDateTime];
-        [self.homeModel updateItems:dbRating withData:rating actionScreen:@"update rating"];
-    }
-    else
-    {
-        _comment.userAccountID = userAccount.userAccountID;
-        _comment.modifiedUser = [Utility modifiedUser];
-        _comment.modifiedDate = [Utility currentDateTime];
-        [self.homeModel insertItems:dbComment withData:_comment actionScreen:@"insert comment"];
-    }
+    rating.comment = _comment.text;
+    rating.modifiedUser = [Utility modifiedUser];
+    rating.modifiedDate = [Utility currentDateTime];
+    [self.homeModel updateItems:dbRating withData:rating actionScreen:@"update rating"];
     
 }
 
 -(void)cancel:(id)sender
 {
-    if(rating)
-    {
-        [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:@"segUnwindToMe" sender:self];
-    }
-}
-
--(void)itemsInserted//comment
-{
-    [self removeOverlayViews];
-    
-    NSString *message = [Setting getValue:@"048m" example:@"ข้อเสนอแนะ และคำติชมได้ถูกส่งไปแล้ว ขอบคุณค่ะ"];
-    [self showAlert:@"" message:message method:@selector(unwindToMe)];
+    [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
 }
 
 -(void)itemsUpdated//rating
@@ -351,20 +317,12 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 -(BOOL)validate
 {
-
+    
     {
         UITextView *textView = [self.view viewWithTag:3];
         if([textView.text isEqualToString:_strPlaceHolder])
         {
-            NSString *message;
-            if(rating)
-            {
-                message = [Setting getValue:@"089m" example:@"กรุณาใส่ข้อเสนอแนะ และคำติชม"];
-            }
-            else
-            {
-                message = [Setting getValue:@"049m" example:@"กรุณาใส่ข้อเสนอแนะ และคำติชม"];
-            }
+            NSString *message = [Setting getValue:@"089m" example:@"กรุณาใส่ข้อเสนอแนะ และคำติชม"];
             [self blinkAlertMsg:message];
             return NO;
         }

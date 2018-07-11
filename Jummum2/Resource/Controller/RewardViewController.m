@@ -147,11 +147,12 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     
     if(section == 0)
     {
+        NSString *message = [Setting getValue:@"115m" example:@"ค้นหา Reward"];
         CustomTableViewCellSearchBar *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSearchBar];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.sbText.delegate = self;
         cell.sbText.tag = 300;
-        cell.sbText.placeholder = @"ค้นหา Reward";
+        cell.sbText.placeholder = message;
         UITextField *textField = [cell.sbText valueForKey:@"searchField"];
         textField.layer.borderColor = [cTextFieldBorder CGColor];
         textField.layer.borderWidth = 1;

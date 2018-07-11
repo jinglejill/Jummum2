@@ -9,12 +9,14 @@
 #import "OrderDetailViewController.h"
 #import "ConfirmDisputeViewController.h"
 #import "CreditCardAndOrderSummaryViewController.h"
+#import "CommentRatingViewController.h"
 #import "CustomTableViewCellReceiptSummary.h"
 #import "CustomTableViewCellOrderSummary.h"
 #import "CustomTableViewCellTotal.h"
 #import "CustomTableViewCellLabelLabel.h"
 #import "CustomTableViewCellButton.h"
 #import "CustomTableViewCellDisputeDetail.h"
+#import "CustomTableViewCellRating.h"
 #import "Receipt.h"
 #import "UserAccount.h"
 #import "Branch.h"
@@ -24,6 +26,7 @@
 #import "Dispute.h"
 #import "DisputeReason.h"
 #import "Setting.h"
+#import "Rating.h"
 #import "QuartzCore/QuartzCore.h"
 
 
@@ -32,6 +35,7 @@
     Branch *_receiptBranch;
     NSInteger _fromType;//1=cancel,2=dispute
     float _accumHeight;
+    Rating *_rating;
 }
 @end
 
@@ -42,13 +46,16 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLabel";
 static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
 static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisputeDetail";
+static NSString * const reuseIdentifierRating = @"CustomTableViewCellRating";
 
 
 @synthesize lblNavTitle;
 @synthesize tbvData;
+@synthesize tbvRating;
 @synthesize receipt;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
+@synthesize bottomButtonHeight;
+@synthesize tbvRatingHeight;
 
 
 -(IBAction)unwindToOrderDetail:(UIStoryboardSegue *)segue
@@ -60,10 +67,12 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    bottomButtonHeight.constant = window.safeAreaInsets.bottom;
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -82,7 +91,17 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];
-
+    
+    
+    tbvRating.delegate = self;
+    tbvRating.dataSource = self;
+    tbvRating.scrollEnabled = NO;
+    _rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!_rating)
+    {
+        _rating = [[Rating alloc]initWithReceiptID:receipt.receiptID score:0 comment:@""];
+    }
+    
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierReceiptSummary bundle:nil];
@@ -104,7 +123,13 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
         UINib *nib = [UINib nibWithNibName:reuseIdentifierDisputeDetail bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierDisputeDetail];
     }
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierRating bundle:nil];
+        [tbvRating registerNib:nib forCellReuseIdentifier:reuseIdentifierRating];
+    }
     
+    
+    [self.homeModel downloadItems:dbReceiptDisputeRating withData:receipt];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -112,6 +137,8 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     [super viewDidAppear:animated];
     
 
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
     [self.homeModel downloadItems:dbReceiptWithModifiedDate withData:receipt];
 }
 
@@ -121,6 +148,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     if([tableView isEqual:tbvData])
     {
         return 3;
+    }
+    else if([tableView isEqual:tbvRating])
+    {
+        return 1;
     }
     else
     {
@@ -178,6 +209,10 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 return 1+1;
             }
         }
+    }
+    else if([tableView isEqual:tbvRating])
+    {
+        return 1;
     }
     else
     {
@@ -724,14 +759,14 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    NSString *message = [Setting getValue:@"004m" example:@"Cancel order"];
+                    NSString *title = [Setting getValue:@"004t" example:@"Cancel order"];
                     NSDate *endDate = [Utility addDay:receipt.receiptDate numberOfDay:7];
                     NSComparisonResult result = [[Utility currentDateTime] compare:endDate];
                     cell.btnValue.hidden = result != NSOrderedAscending;
                     
                     
                     cell.btnValue.backgroundColor = cSystem1;
-                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
+                    [cell.btnValue setTitle:title forState:UIControlStateNormal];
                     [cell.btnValue addTarget:self action:@selector(cancelOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
                     
@@ -744,13 +779,13 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     
-                    NSString *message = [Setting getValue:@"005m" example:@"Open dispute"];
+                    NSString *title = [Setting getValue:@"005t" example:@"Open dispute"];
                     NSDate *endDate = [Utility addDay:receipt.receiptDate numberOfDay:7];
                     NSComparisonResult result = [[Utility currentDateTime] compare:endDate];
                     cell.btnValue.hidden = result != NSOrderedAscending;
                     
                     
-                    [cell.btnValue setTitle:message forState:UIControlStateNormal];
+                    [cell.btnValue setTitle:title forState:UIControlStateNormal];
                     cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
@@ -1158,6 +1193,168 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
                 }
             }
         }
+    }
+    else if([tableView isEqual:tbvRating])
+    {
+        CustomTableViewCellRating *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRating];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+        if(rating)
+        {
+            NSString *title = [Setting getValue:@"090t" example:@"You rated"];
+            cell.lblTitle.text = title;
+            cell.lblRate.text = [Rating getTextWithScore:_rating.score];
+            cell.btnRate1.enabled = NO;
+            cell.btnRate2.enabled = NO;
+            cell.btnRate3.enabled = NO;
+            cell.btnRate4.enabled = NO;
+            cell.btnRate5.enabled = NO;
+            switch (_rating.score)
+            {
+                case 1:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                }
+                break;
+                case 2:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                }
+                break;
+                case 3:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                }
+                break;
+                case 4:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateDisabled];
+                }
+                break;
+                case 5:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateDisabled];
+                }
+                break;
+                default:
+                break;
+            }
+            
+            if([Utility isStringEmpty:rating.comment])
+            {
+                NSString *title = [Setting getValue:@"096t" example:@"ADD COMMENT"];
+                [cell.btnAction setTitle:title forState:UIControlStateNormal];
+                [cell.btnAction removeTarget:self action:@selector(viewComment) forControlEvents:UIControlEventTouchUpInside];
+                [cell.btnAction addTarget:self action:@selector(addComment) forControlEvents:UIControlEventTouchUpInside];
+            }
+            else
+            {
+                NSString *title = [Setting getValue:@"097t" example:@"VIEW COMMENT"];
+                [cell.btnAction setTitle:title forState:UIControlStateNormal];
+                [cell.btnAction removeTarget:self action:@selector(addComment) forControlEvents:UIControlEventTouchUpInside];
+                [cell.btnAction addTarget:self action:@selector(viewComment) forControlEvents:UIControlEventTouchUpInside];
+            }
+        }
+        else
+        {
+            NSString *message = [Setting getValue:@"098m" example:@"Please rate my service"];
+            cell.lblTitle.text = message;
+            cell.lblRate.text = @"";
+            [cell.btnRate1 addTarget:self action:@selector(btnRate1) forControlEvents:UIControlEventTouchUpInside];
+            [cell.btnRate2 addTarget:self action:@selector(btnRate2) forControlEvents:UIControlEventTouchUpInside];
+            [cell.btnRate3 addTarget:self action:@selector(btnRate3) forControlEvents:UIControlEventTouchUpInside];
+            [cell.btnRate4 addTarget:self action:@selector(btnRate4) forControlEvents:UIControlEventTouchUpInside];
+            [cell.btnRate5 addTarget:self action:@selector(btnRate5) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            switch (_rating.score)
+            {
+                case 0:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                }
+                break;
+                case 1:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                }
+                break;
+                case 2:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                }
+                break;
+                case 3:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                }
+                break;
+                case 4:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+                }
+                break;
+                case 5:
+                {
+                    [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                    [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+                }
+                break;
+                default:
+                break;
+            }
+            
+            
+            NSString *title = [Setting getValue:@"099m" example:@"Submit"];
+            [cell.btnAction setTitle:title forState:UIControlStateNormal];
+            [cell.btnAction addTarget:self action:@selector(submitRating) forControlEvents:UIControlEventTouchUpInside];
+        }
+        return  cell;
     }
     else
     {
@@ -1740,13 +1937,15 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
             else
             {
                 return 38;
-//                return 44+8;
             }
         }
     }
+    else if([tableView isEqual:tbvRating])
+    {
+        return 169;
+    }
     else
     {
-        
         //load order มาโชว์
         NSInteger receiptID = tableView.tag;
         NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithReceiptID:receiptID];
@@ -1845,7 +2044,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
 
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
-    if([tableView isEqual:tbvData])
+    if([tableView isEqual:tbvData] || [tableView isEqual:tbvRating])
     {
         [cell setSeparatorInset:UIEdgeInsetsMake(16, 16, 16, 16)];
     }
@@ -1877,6 +2076,7 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     {
         NSMutableArray *receiptList = items[0];
         NSMutableArray *disputeList = items[1];
+        NSMutableArray *ratingList = items[2];
         if([receiptList count] > 0)
         {
             [Receipt updateStatusList:receiptList];
@@ -1886,7 +2086,24 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
         {
             [Utility addToSharedDataList:items];
             [tbvData reloadData];
-        }        
+        }
+//
+        {
+            if([ratingList count] > 0)
+            {
+                _rating = ratingList[0];
+            }
+            
+            [Utility addToSharedDataList:items];
+            [tbvRating reloadData];
+            Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+            if(!rating)
+            {
+                NSDate *endDate = [Utility addDay:receipt.receiptDate numberOfDay:30];
+                NSComparisonResult result = [[Utility currentDateTime] compare:endDate];
+                tbvRatingHeight.constant = result == NSOrderedAscending?169:0;
+            }
+        }
     }
     else if(homeModel.propCurrentDB == dbReceipt)//check ปุ่ม
     {
@@ -1933,13 +2150,24 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
         CreditCardAndOrderSummaryViewController *vc = segue.destinationViewController;
         vc.branch = _receiptBranch;
         vc.customerTable = nil;
-        vc.fromReceiptSummaryMenu = 1;
+        vc.fromOrderDetailMenu = 1;
     }
     else if([[segue identifier] isEqualToString:@"segConfirmDispute"])
     {
         ConfirmDisputeViewController *vc = segue.destinationViewController;
         vc.fromType = _fromType;
         vc.receipt = receipt;
+    }
+    else if([[segue identifier] isEqualToString:@"segCommentRating"])
+    {
+        CommentRatingViewController *vc = segue.destinationViewController;
+        vc.rating = _rating;
+    }
+    else if([[segue identifier] isEqualToString:@"segCommentRatingView"])
+    {
+        CommentRatingViewController *vc = segue.destinationViewController;
+        vc.rating = _rating;
+        vc.viewComment = 1;
     }
 }
 
@@ -1992,4 +2220,122 @@ static NSString * const reuseIdentifierDisputeDetail = @"CustomTableViewCellDisp
     [self removeOverlayViews];
     [tbvData reloadData];
 }
+
+-(void)btnRate1
+{
+    Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!rating)
+    {
+        _rating.score = 1;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellRating *cell = [tbvRating cellForRowAtIndexPath:indexPath];
+        [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)btnRate2
+{
+    Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!rating)
+    {
+        _rating.score = 2;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellRating *cell = [tbvRating cellForRowAtIndexPath:indexPath];
+        [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)btnRate3
+{
+    Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!rating)
+    {
+        _rating.score = 3;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellRating *cell = [tbvRating cellForRowAtIndexPath:indexPath];
+        [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+        [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)btnRate4
+{
+    Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!rating)
+    {
+        _rating.score = 4;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellRating *cell = [tbvRating cellForRowAtIndexPath:indexPath];
+        [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRatingGray.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)btnRate5
+{
+    Rating *rating = [Rating getRatingWithReceiptID:receipt.receiptID];
+    if(!rating)
+    {
+        _rating.score = 5;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellRating *cell = [tbvRating cellForRowAtIndexPath:indexPath];
+        [cell.btnRate1 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate2 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate3 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate4 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+        [cell.btnRate5 setBackgroundImage:[UIImage imageNamed:@"starRating.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(void)submitRating
+{
+    if(!_rating.score)
+    {
+        NSString *message = [Setting getValue:@"121m" example:@"กรุณาให้คะแนนก่อนกด Submit"];
+        [self showAlert:@"" message:message];
+        return;
+    }
+    _rating.modifiedUser = [Utility modifiedUser];
+    _rating.modifiedDate = [Utility currentDateTime];
+    [self.homeModel insertItems:dbRating withData:_rating actionScreen:@"insert rating"];
+}
+
+-(void)addComment
+{
+    [self performSegueWithIdentifier:@"segCommentRating" sender:self];
+}
+
+-(void)viewComment
+{
+    [self performSegueWithIdentifier:@"segCommentRatingView" sender:self];
+}
+
+-(void)itemsInsertedWithReturnData:(NSArray *)items
+{
+    NSMutableArray *ratingList = items[0];
+    Rating *rating = ratingList[0];
+    _rating = rating;
+    
+    
+    [Rating addObject:rating];
+    [tbvRating reloadData];
+    NSString *title = [Setting getValue:@"100t" example:@"Thank you"];
+    NSString *message = [Setting getValue:@"100m" example:@"We hope you have enjoyed our service. For comments, compliments or enquiries, please write to us below"];
+    [self showAlert:title message:message];
+}
+
 @end

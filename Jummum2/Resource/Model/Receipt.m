@@ -9,6 +9,7 @@
 #import "Receipt.h"
 #import "SharedReceipt.h"
 #import "Utility.h"
+#import "Setting.h"
 
 
 @implementation Receipt
@@ -409,67 +410,68 @@
 +(NSString *)getStrStatus:(Receipt *)receipt
 {
     NSString *strStatus;
+    NSString *message;
     switch (receipt.status)
     {
         case 2:
         {
-            strStatus = @"Order sent";
+            message = [Setting getValue:@"101m" example:@"Order sent"];
         }
             break;
         case 5:
         {
-            strStatus = @"Processing..";
+            message = [Setting getValue:@"102m" example:@"Processing.."];
         }
             break;
         case 6:
         {
-            strStatus = @"Delivered";
+            message = [Setting getValue:@"103m" example:@"Delivered"];
         }
             break;
         case 7:
         {
-            strStatus = @"Pending cancel";
+            message = [Setting getValue:@"104m" example:@"Pending cancel"];
         }
             break;
         case 8:
         {
-            strStatus = @"Order dispute in process";
+            message = [Setting getValue:@"105m" example:@"Order dispute in process"];
         }
             break;
         case 9:
         {
-            strStatus = @"Order cancelled";
+            message = [Setting getValue:@"106m" example:@"Order cancelled"];
         }
             break;
         case 10:
         {
-            strStatus = @"Order dispute finished";
+            message = [Setting getValue:@"107m" example:@"Order dispute finished"];
         }
             break;
         case 11:
         {
-            strStatus = @"Negotiate";
+            message = [Setting getValue:@"108m" example:@"Negotiate"];
         }
             break;
         case 12:
         {
-            strStatus = @"Review dispute";
+            message = [Setting getValue:@"109m" example:@"Review dispute"];
         }
             break;
         case 13:
         {
-            strStatus = @"Review dispute in process";
+            message = [Setting getValue:@"110m" example:@"Review dispute in process"];
         }
         break;
         case 14:
         {
-            strStatus = @"Order dispute finished";
+            message = [Setting getValue:@"111m" example:@"Order dispute finished"];
         }
         break;
         default:
             break;
     }
-    
+    strStatus = message;
     return strStatus;
 }
 

@@ -991,30 +991,13 @@ CGFloat animatedDistance;
         //ใส่ทุกหน้าในนี้
         BOOL loadViewProcess = NO;
         NSArray *arrReferenceTable;
-//        if([self isMemberOfClass:[OrderTakingViewController class]])
-//        {
-//            arrReferenceTable = @[@"MenuType",@"Menu",@"TableTaking",@"CustomerTable",@"OrderTaking",@"MenuTypeNote",@"OrderNote"];
-//            loadViewProcess = NO;
-//        }
-//        else if([self isMemberOfClass:[ReceiptViewController class]])
-//        {
-//            arrReferenceTable = @[@"OrderTaking",@"Menu",@"OrderNote",@"Member",@"Address",@"Receipt",@"Discount",@"Setting",@"UserAccount",@"RewardProgram",@"RewardPoint",@"ReceiptNo",@"ReceiptNoTax",@"ReceiptCustomerTable",@"TableTaking"];
-//            loadViewProcess = YES;
-//        }
-//        else if([self isMemberOfClass:[CustomerTableViewController class]])
-//        {
-//            arrReferenceTable = @[@"UserAccount",@"UserAccount",@"TableTaking",@"OrderTaking",@"UserTabMenu",@"Board"];
-//            loadViewProcess = YES;
-//        }
         NSArray *resultArray = [Utility intersectArray1:arrAllType array2:arrReferenceTable];
         if([resultArray count] > 0)
         {
-            //                [self loadingOverlayView];
             if(loadViewProcess)
             {
                 [self loadViewProcess];
             }
-//            [self removeOverlayViews];
         }
     }
     [self removeOverlayViews];
@@ -1023,12 +1006,7 @@ CGFloat animatedDistance;
 -(void)itemsDownloaded:(NSArray *)items
 {
     if(homeModel.propCurrentDB == dbMaster || homeModel.propCurrentDB == dbMasterWithProgressBar)
-    {
-//        PushSync *pushSync = [[PushSync alloc]init];
-//        pushSync.deviceToken = [Utility deviceToken];
-//        [homeModel updateItems:dbPushSyncUpdateByDeviceToken withData:pushSync actionScreen:@"Update synced time by device token"];
-        
-        
+    {       
         [Utility itemsDownloaded:items];
         [self removeOverlayViews];
         [self loadViewProcess];//call child process
