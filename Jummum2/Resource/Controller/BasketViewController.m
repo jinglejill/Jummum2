@@ -1131,6 +1131,10 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     orderTaking.modifiedDate = [Utility currentDateTime];
 
     
+    if(orderTaking.takeAway)
+    {        
+        [self blinkTakeAwayNotiView];
+    }
     [tbvOrder reloadData];
     [tbvTotal reloadData];
 }

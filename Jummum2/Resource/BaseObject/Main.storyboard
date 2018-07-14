@@ -3913,9 +3913,8 @@
         <image name="white.png" width="226" height="132"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dN2-SP-tDV"/>
         <segue reference="aHo-2G-vPP"/>
-        <segue reference="DCf-pC-0Ih"/>
+        <segue reference="MDz-RH-tSw"/>
         <segue reference="UZ8-nN-acy"/>
         <segue reference="UTS-nM-B10"/>
         <segue reference="C1B-oJ-Xmi"/>
