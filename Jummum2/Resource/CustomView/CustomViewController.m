@@ -122,6 +122,7 @@ CGFloat animatedDistance;
 
     
     
+    //toolbar
     toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     [toolBar setTintColor:cSystem4_10];
     UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissKeyboard)];
@@ -331,96 +332,18 @@ CGFloat animatedDistance;
 
 - (void) connectionFail
 {
+    [self removeOverlayViews];
     NSString *title = [Utility subjectNoConnection];
     NSString *message = [Utility detailNoConnection];
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-    [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                            range:NSMakeRange(0, title.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, title.length)];
-    [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-    
-    
-    NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrStringMsg addAttribute:NSFontAttributeName
-                          value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                          range:NSMakeRange(0, message.length)];
-    [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, message.length)];
-    [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-    
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action)
-                                                            {
-                                                            }];
-    
-    [alert addAction:defaultAction];
-    dispatch_async(dispatch_get_main_queue(),^ {
-        [self presentViewController:alert animated:YES completion:nil];
-        
-        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-        UIColor *color = cSystem1;
-        NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-        
-        UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-        label.attributedText = attrString;
-    } );
+    [self showAlert:title message:message];
 }
 
 - (void)itemsFail
 {
-    NSString *title = [Utility getConnectionLostTitle];
-    NSString *message = [Utility getConnectionLostMessage];
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-    [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                            range:NSMakeRange(0, title.length)];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, title.length)];
-    [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-    
-    
-    NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrStringMsg addAttribute:NSFontAttributeName
-                          value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                          range:NSMakeRange(0, message.length)];
-    [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, attrStringMsg.length)];
-    [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-    
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-
-                                                          }];
-    
-    [alert addAction:defaultAction];
-    dispatch_async(dispatch_get_main_queue(),^ {
-        [self presentViewController:alert animated:YES completion:nil];
-        
-        UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-        UIColor *color = cSystem1;
-        NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-        
-        UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-        label.attributedText = attrString;
-    } );
+    [self removeOverlayViews];
+    NSString *title = [Utility getErrorOccurTitle];
+    NSString *message = [Utility getErrorOccurMessage];
+    [self showAlert:title message:message];
 }
 
 - (void)itemsInserted

@@ -243,7 +243,7 @@ static NSString * const reuseIdentifierRating = @"CustomTableViewCellRating";
             
             Branch *branch = [Branch getBranch:receipt.branchID];
             cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
-            cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
+            cell.lblReceiptDate.text = [Utility dateToString:receipt.modifiedDate toFormat:@"d MMM yy HH:mm"];
             cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
             cell.lblBranchName.textColor = cSystem1;
             
@@ -2200,24 +2200,27 @@ static NSString * const reuseIdentifierRating = @"CustomTableViewCellRating";
 -(void)confirmNegotiate:(id)sender
 {
     [self loadingOverlayView];
-    receipt.status = 13;
-    receipt.modifiedUser = [Utility modifiedUser];
-    receipt.modifiedDate = [Utility currentDateTime];
-    [self.homeModel updateItems:dbReceipt withData:receipt actionScreen:@"update receipt status"];
+    Receipt *updateReceipt = [receipt copy];
+    updateReceipt.status = 13;
+    updateReceipt.modifiedUser = [Utility modifiedUser];
+    updateReceipt.modifiedDate = [Utility currentDateTime];
+    [self.homeModel updateItems:dbReceipt withData:updateReceipt actionScreen:@"update receipt status"];
 }
 
 -(void)negotiate:(id)sender
 {
     [self loadingOverlayView];
-    receipt.status = 11;
-    receipt.modifiedUser = [Utility modifiedUser];
-    receipt.modifiedDate = [Utility currentDateTime];
-    [self.homeModel updateItems:dbReceipt withData:receipt actionScreen:@"update receipt status"];
+    Receipt *updateReceipt = [receipt copy];
+    updateReceipt.status = 11;
+    updateReceipt.modifiedUser = [Utility modifiedUser];
+    updateReceipt.modifiedDate = [Utility currentDateTime];
+    [self.homeModel updateItems:dbReceipt withData:updateReceipt actionScreen:@"update receipt status"];
 }
 
--(void)itemsUpdated
+- (void)itemsUpdatedWithManager:(NSObject *)objHomeModel items:(NSArray *)items;
 {
     [self removeOverlayViews];
+    [Utility updateSharedObject:items];
     [tbvData reloadData];
 }
 

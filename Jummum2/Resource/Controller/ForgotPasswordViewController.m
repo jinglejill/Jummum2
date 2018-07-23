@@ -48,7 +48,7 @@
     NSString *title = [Setting getValue:@"054t" example:@"ลืมรหัสผ่าน"];
     lblNavTitle.text = title;
     txtEmail.delegate = self;
-    
+    [txtEmail setInputAccessoryView:self.toolBar];
     
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
@@ -62,7 +62,7 @@
     
     if(![Utility validateEmailWithString:txtEmail.text])
     {
-        [self showAlert:@"" message:@"คุณใส่อีเมลล์ไม่ถูกต้อง"];
+        [self showAlert:@"" message:@"คุณใส่อีเมลไม่ถูกต้อง"];
         return;
     }
     
@@ -81,11 +81,11 @@
     NSMutableArray *userAccountList = items[0];
     if([userAccountList count]==0)
     {
-        [self showAlert:@"" message:@"ไม่มีอีเมลล์นี้ในระบบ"];
+        [self showAlert:@"" message:@"ไม่มีอีเมลนี้ในระบบ"];
     }
     else
     {
-        [self showAlert:@"" message:@"เราได้ส่งอีเมลล์ให้คุณแล้ว กรุณาเช็คอีเมลล์ของคุณ" method:@selector(goBack:)];
+        [self showAlert:@"" message:@"เราได้ส่งอีเมลให้คุณแล้ว กรุณาเช็คอีเมลของคุณ" method:@selector(goBack:)];
     }
 }
 

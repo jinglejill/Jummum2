@@ -14,12 +14,16 @@
 @property (strong, nonatomic) IBOutlet UIView *vwAlert;
 @property (strong, nonatomic) IBOutlet UIButton *btnUpdate;
 @property (strong, nonatomic) IBOutlet UIButton *btnDismiss;
+@property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 - (IBAction)dismiss:(id)sender;
 - (IBAction)update:(id)sender;
+- (IBAction)cancel:(id)sender;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtitle;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *vwAlertHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnDismissTop;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnDismissHeight;
-
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnCancelHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnCancelTop;
+@property (strong, nonatomic) NSString *appStoreVersion;
 @end

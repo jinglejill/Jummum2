@@ -18,6 +18,7 @@
 #import "CustomTableViewCellVoucherCode.h"
 #import "CustomTableViewHeaderFooterButton.h"
 #import "CustomTableViewCellLabelLabel.h"
+#import "CustomTableViewCellLabelTextView.h"
 #import "CreditCard.h"
 #import "SharedCurrentUserAccount.h"
 #import "Menu.h"
@@ -54,6 +55,9 @@
     NSInteger _promotionOrRewardRedemption;//1=promotion,2=rewardRedemption
     Receipt *_receipt;
     NSIndexPath *_currentScrollIndexPath;
+    
+    NSString *_strPlaceHolder;
+    NSString *_remark;
 
 }
 @end
@@ -66,6 +70,8 @@ static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
 static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVoucherCode";
 static NSString * const reuseIdentifierHeaderFooterButton = @"CustomTableViewHeaderFooterButton";
 static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLabel";
+static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabelTextView";
+
 
 
 @synthesize lblNavTitle;
@@ -106,6 +112,27 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         QRCodeScanTableViewController *vc = segue.sourceViewController;
         customerTable = vc.customerTable;
         [tbvData reloadData];
+    }
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    textView.textColor = [UIColor blackColor];
+    if([textView.text isEqualToString:_strPlaceHolder])
+    {
+        textView.text = @"";
+    }
+    
+    [textView becomeFirstResponder];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    _remark = [Utility trimString:textView.text];
+    if([textView.text isEqualToString:@""])
+    {
+        textView.text = _strPlaceHolder;
+        textView.textColor = mPlaceHolder;
     }
 }
 
@@ -299,6 +326,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     
     NSString *title = [Setting getValue:@"076t" example:@"ยืนยันการสั่งอาหาร"];
     lblNavTitle.text = title;
+    NSString *message = [Setting getValue:@"123m" example:@"ใส่หมายเหตุที่ต้องการแจ้งเพิ่มเติมกับทางร้านอาหาร"];
+    _strPlaceHolder = message;
     
     
     
@@ -324,11 +353,13 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         else
         {
             _creditCard = [[CreditCard alloc]init];
+            _creditCard.saveCard = 1;
         }        
     }
     else
     {
         _creditCard = [[CreditCard alloc]init];
+        _creditCard.saveCard = 1;
     }
 
     
@@ -360,6 +391,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelLabel];
     }
     {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelTextView bundle:nil];
+        [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelTextView];
+    }
+    {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierTotal bundle:nil];
         [tbvTotal registerNib:nib forCellReuseIdentifier:reuseIdentifierTotal];
     }
@@ -371,6 +406,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         UINib *nib = [UINib nibWithNibName:reuseIdentifierVoucherCode bundle:nil];
         [tbvTotal registerNib:nib forCellReuseIdentifier:reuseIdentifierVoucherCode];
     }
+    
     
     
 
@@ -391,7 +427,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     if([tableView isEqual:tbvData])
     {
 //        return 2;
-        return 3;
+        return 4;
     }
     else if([tableView isEqual:tbvTotal])
     {
@@ -429,11 +465,16 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             
             return 2;
         }
-        else
+        else if(section == 2)
         {
             return [_orderTakingList count]+1;
         }
+        else if(section == 3)
+        {
+            return 1;
+        }
     }
+    
     else if([tableView isEqual:tbvTotal])
     {
         tbvTotalHeightConstant.constant = branch.serviceChargePercent > 0?230:204;
@@ -667,7 +708,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                     break;
             }
         }
-        else
+        else if(section == 2)
         {
             if(item == 0)
             {
@@ -802,6 +843,57 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 
                 return cell;
             }
+        }
+        else if(section == 3)
+        {
+            CustomTableViewCellLabelTextView *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelTextView];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            
+            NSString *message = [Setting getValue:@"122m" example:@"หมายเหตุ"];
+            NSString *strTitle = message;
+            
+            
+            
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            UIColor *color = cSystem1;;
+            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"" attributes:attribute];
+            
+            
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+            UIColor *color2 = cSystem4;
+            NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+            NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+            
+            
+            [attrString appendAttributedString:attrString2];
+            cell.lblTitle.attributedText = attrString;
+            
+            
+            
+            cell.txvValue.tag = 41;
+            cell.txvValue.delegate = self;
+            cell.txvValue.text = _remark;
+            if([cell.txvValue.text isEqualToString:@""])
+            {
+                cell.txvValue.text = _strPlaceHolder;
+                cell.txvValue.textColor = mPlaceHolder;
+            }
+            else
+            {
+                cell.txvValue.textColor = [UIColor blackColor];
+            }
+            [cell.txvValue.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+            [cell.txvValue.layer setBorderWidth:0.5];
+            
+            //The rounded corner part, where you specify your view's corner radius:
+            cell.txvValue.layer.cornerRadius = 5;
+            cell.txvValue.clipsToBounds = YES;
+            [cell.txvValue setInputAccessoryView:self.toolBar];
+            
+            
+            return cell;
         }
     }
     else if([tableView isEqual:tbvTotal])
@@ -1121,7 +1213,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 return 44;
             }
         }
-        else
+        else if(section == 2)
         {
             if(item == 0)
             {
@@ -1215,6 +1307,10 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 float height = menuNameLabelSize.height+noteLabelSize.height+8+8+2;
                 return height;
             }
+        }
+        else if(section == 3)
+        {
+            return 108;
         }
     }
     else if([tableView isEqual:tbvTotal])
@@ -1511,7 +1607,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            Receipt *receipt = [[Receipt alloc]initWithBranchID:branch.branchID customerTableID:customerTable.customerTableID memberID:userAccount.userAccountID servingPerson:0 customerType:4 openTableDate:[Utility currentDateTime] cashAmount:0 cashReceive:0 creditCardType:[self getCreditCardType:_creditCard.creditCardNo] creditCardNo:_creditCard.creditCardNo creditCardAmount:_netTotal transferDate:[Utility notIdentifiedDate] transferAmount:0 remark:@"" discountType:_discountType discountAmount:_discountAmount discountValue:_discountValue discountReason:@"" serviceChargePercent:branch.serviceChargePercent serviceChargeValue:_serviceChargeValue priceIncludeVat:branch.priceIncludeVat vatPercent:branch.percentVat vatValue:_vatValue status:2 statusRoute:@"" receiptNoID:@"" receiptNoTaxID:@"" receiptDate:[Utility currentDateTime] mergeReceiptID:0];
+            Receipt *receipt = [[Receipt alloc]initWithBranchID:branch.branchID customerTableID:customerTable.customerTableID memberID:userAccount.userAccountID servingPerson:0 customerType:4 openTableDate:[Utility currentDateTime] cashAmount:0 cashReceive:0 creditCardType:[self getCreditCardType:_creditCard.creditCardNo] creditCardNo:_creditCard.creditCardNo creditCardAmount:_netTotal transferDate:[Utility notIdentifiedDate] transferAmount:0 remark:_remark discountType:_discountType discountAmount:_discountAmount discountValue:_discountValue discountReason:@"" serviceChargePercent:branch.serviceChargePercent serviceChargeValue:_serviceChargeValue priceIncludeVat:branch.priceIncludeVat vatPercent:branch.percentVat vatValue:_vatValue status:2 statusRoute:@"" receiptNoID:@"" receiptNoTaxID:@"" receiptDate:[Utility currentDateTime] mergeReceiptID:0];
 
 
 
@@ -1645,16 +1741,26 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 -(void)itemsInsertedWithReturnData:(NSArray *)items
 {
-    [self removeWaitingView];
-    [OrderTaking removeCurrentOrderTakingList];
+    if([items count] == 1)
+    {
+        NSMutableArray *messageList = items[0];
+        Message *message = messageList[0];
+        [self showAlert:@"" message:message.text];
+    }
+    else
+    {
+        [self removeWaitingView];
+        [OrderTaking removeCurrentOrderTakingList];
+        
+        
+        [Utility addToSharedDataList:items];
+        NSMutableArray *receiptList = items[0];
+        Receipt *receipt = receiptList[0];
+        _receipt = receipt;
+        [self.homeModel insertItems:dbPushReminder withData:@[branch,receipt] actionScreen:@"push reminder"];
+        [self performSegueWithIdentifier:@"segPaymentComplete" sender:self];
+    }
     
-    
-    [Utility addToSharedDataList:items];
-    NSMutableArray *receiptList = items[0];
-    Receipt *receipt = receiptList[0];
-    _receipt = receipt;
-    [self.homeModel insertItems:dbPushReminder withData:@[branch,receipt] actionScreen:@"push reminder"];
-    [self performSegueWithIdentifier:@"segPaymentComplete" sender:self];
 
 }
 

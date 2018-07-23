@@ -102,7 +102,7 @@
             break;
         case dbMenuList:
         {
-            arrClassName = @[@"Menu",@"MenuType",@"MenuNote",@"Note",@"NoteType",@"SubMenuType",@"SpecialPriceProgram"];
+            arrClassName = @[@"Message",@"Menu",@"MenuType",@"MenuNote",@"Note",@"NoteType",@"SubMenuType",@"SpecialPriceProgram"];
         }
             break;
         case dbCustomerTable:
@@ -183,6 +183,11 @@
             arrClassName = @[@"Branch",@"CustomerTable"];
         }
             break;
+        case dbOpeningTime:
+        {
+            arrClassName = @[@"Message"];
+        }
+            break;
         default:
             break;
     }
@@ -248,7 +253,7 @@
             // Ready to notify delegate that data is ready and pass back items
             if (self.delegate)
             {
-                if(propCurrentDB == dbHotDeal || propCurrentDB == dbHotDealWithBranchID || propCurrentDB == dbReceiptSummary || propCurrentDB == dbReceiptMaxModifiedDate ||propCurrentDB == dbRewardPoint || propCurrentDB == dbRewardRedemptionWithBranchID || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptWithModifiedDate)
+                if(propCurrentDB == dbHotDeal || propCurrentDB == dbHotDealWithBranchID || propCurrentDB == dbReceiptSummary || propCurrentDB == dbReceiptMaxModifiedDate ||propCurrentDB == dbRewardPoint || propCurrentDB == dbRewardRedemptionWithBranchID || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptWithModifiedDate || propCurrentDB == dbOpeningTime || propCurrentDB == dbMenuList)
                 {
                     [self.delegate itemsDownloaded:arrItem manager:self];
                 }
@@ -596,6 +601,12 @@
             Receipt *receipt = (Receipt *)data;
             noteDataString = [Utility getNoteDataString:receipt];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlReceiptDisputeRatingGet]]];
+        }
+            break;
+        case dbOpeningTime:
+        {            
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlOpeningTimeGet]]];
         }
             break;
         default:
@@ -1118,7 +1129,10 @@
                         }
                         else
                         {
-                            [self.delegate itemsInserted];
+                            if(self.delegate)
+                            {
+                                [self.delegate itemsInserted];
+                            }                            
                         }
                     }
                     else if([status isEqual:@"2"])
@@ -1126,6 +1140,20 @@
                         //alertMsg
                         if(self.delegate)
                         {
+                            if(propCurrentDBInsert == dbOmiseCheckOut)
+                            {
+                                NSString *msg = json[@"msg"];
+                                NSMutableArray *dataList = [[NSMutableArray alloc]init];
+                                NSMutableArray *messgeList = [[NSMutableArray alloc]init];
+                                Message *message = [[Message alloc]init];
+                                message.text = msg;
+                                [messgeList addObject:message];
+                                [dataList addObject:messgeList];
+                                [self.delegate itemsInsertedWithReturnData:dataList];
+                                NSLog(@"msg: %@", msg);
+                            }
+                            
+                            
                             NSString *msg = json[@"msg"];
                             [self.delegate alertMsg:msg];
                             NSLog(@"status: %@", status);
@@ -1508,13 +1536,31 @@
                                   JSONObjectWithData:dataRaw
                                   options:kNilOptions error:&error];
             NSString *status = json[@"status"];
-            
+            NSArray *dataJson = json[@"dataJson"];
+            NSString *strTableName = json[@"tableName"];
             if([status isEqual:@"1"])
             {
                 NSLog(@"update success");
-                if (self.delegate)
+                if(strTableName)
                 {
-                    [self.delegate itemsUpdated];
+                    NSArray *arrClassName;
+                    if([strTableName isEqualToString:@"Receipt"])
+                    {
+                        arrClassName = @[@"Receipt"];
+                    }
+                    
+                    NSArray *items = [Utility jsonToArray:dataJson arrClassName:arrClassName];
+                    if(self.delegate)
+                    {
+                        [self.delegate itemsUpdatedWithManager:self items:items];
+                    }
+                }
+                else
+                {
+                    if (self.delegate)
+                    {
+                        [self.delegate itemsUpdated];
+                    }
                 }
             }
             else if([status isEqual:@"2"])
@@ -1532,7 +1578,7 @@
                 NSLog(@"%@", status);
                 if (self.delegate)
                 {
-                    //                    [self.delegate itemsFail];
+                    [self.delegate itemsFail];
                 }
             }
         }
@@ -1854,7 +1900,7 @@
                 NSLog(@"%@", status);
                 if (self.delegate)
                 {
-                    //                    [self.delegate itemsFail];
+                    [self.delegate itemsFail];
                 }
             }
         }
@@ -1991,7 +2037,7 @@
                 NSLog(@"%@", status);
                 if (self.delegate)
                 {
-                    //                    [self.delegate itemsFail];
+                    [self.delegate itemsFail];
                 }
             }
         }

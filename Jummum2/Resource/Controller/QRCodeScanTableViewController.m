@@ -13,6 +13,7 @@
 #import "Branch.h"
 #import "CustomerTable.h"
 #import "Setting.h"
+#import "Message.h"
 
 
 @interface QRCodeScanTableViewController ()
@@ -187,19 +188,25 @@
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
         {
+            _selectedBranch = nil;
+            _selectedCustomerTable = nil;
             NSString *decryptedMessage = [metadataObj stringValue];
             NSData *data = [Utility dataFromHexString:decryptedMessage];
             NSString *strMessage = [Utility decryptData:data withKey:[Utility key]];
             
             NSArray *dataList = [strMessage componentsSeparatedByString: @","];
-            NSString *branchPart = dataList[0];
-            NSString *customerTablePart = dataList[1];
-            NSArray *branchPartList = [branchPart componentsSeparatedByString: @":"];
-            _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
-            NSArray *customerTablePartList = [customerTablePart componentsSeparatedByString: @":"];
-            _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
+            if([dataList count] == 2)
+            {
+                NSString *branchPart = dataList[0];
+                NSString *customerTablePart = dataList[1];
+                NSArray *branchPartList = [branchPart componentsSeparatedByString: @":"];
+                _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
+                NSArray *customerTablePartList = [customerTablePart componentsSeparatedByString: @":"];
+                _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
+            }
             
             
+        
             if(!_selectedBranch || !_selectedCustomerTable)
             {
                 [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
@@ -222,6 +229,13 @@
                     {
                         _performSegue = YES;
                         [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+                        
+                        
+//                        //check order openingTime
+//                        [self loadingOverlayView];
+//                        self.homeModel = [[HomeModel alloc]init];
+//                        self.homeModel.delegate = self;
+//                        [self.homeModel downloadItems:dbOpeningTime withData:_selectedBranch];
                     });
                 }
             }
@@ -246,6 +260,21 @@
     {
         [Utility updateSharedObject:items];
     }
+//    else if(homeModel.propCurrentDB == dbOpeningTime)
+//    {
+//        [self removeOverlayViews];
+//        NSMutableArray *messageList = items[0];
+//        Message *message = messageList[0];
+//        if([message.text integerValue])//open
+//        {
+//            [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+//        }
+//        else
+//        {
+//            NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตัวเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
+//            [self showAlert:@"" message:message];
+//        }
+//    }
 }
 @end
 

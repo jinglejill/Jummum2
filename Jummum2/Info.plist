@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4.4</string>
+	<string>1.4.5</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>578</string>
+	<string>663</string>
 	<key>FacebookAppID</key>
 	<string>1684680414955303</string>
 	<key>FacebookDisplayName</key>
@@ -48,7 +48,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>used to scan qr code</string>
+	<string>Use to scan QR code at the restaurant</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save receipt to camera roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>

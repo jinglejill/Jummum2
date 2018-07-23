@@ -20,6 +20,7 @@
 #import "SpecialPriceProgram.h"
 #import "Setting.h"
 #import "Utility.h"
+#import "Message.h"
 
 
 @interface MenuSelectionViewController ()
@@ -91,6 +92,36 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 -(void)loadView
 {
     [super loadView];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+  
+    
+    NSString *title = [Setting getValue:@"074t" example:@"เลือกเมนู"];
+    lblNavTitle.text = title;
+    
+    
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierMenu bundle:nil];
+        [tbvMenu registerNib:nib forCellReuseIdentifier:reuseIdentifierMenu];
+    }
+    {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierSearchBar bundle:nil];
+        [tbvMenu registerNib:nib forCellReuseIdentifier:reuseIdentifierSearchBar];
+    }
+
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    
+    
+    
+    
+    
     
     
     tbvMenu.delegate = self;
@@ -121,6 +152,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     else
     {
+        [Menu removeCurrentMenuList];
         lblTotalQuantity.text = @"0";
         lblTotalQuantityTop.text = @"";
         lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
@@ -131,6 +163,8 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     if([_menuList count] == 0)
     {
         [self loadingOverlayView];
+        self.homeModel = [[HomeModel alloc]init];
+        self.homeModel.delegate = self;
         [self.homeModel downloadItems:dbMenuList withData:branch.dbName];
     }
     else
@@ -146,31 +180,14 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         
         _filterMenuList = _menuList;
         [self setData];
+        
+        
+        
+        //check opening time การสั่งอาหารด้วยตัวเอง
+        self.homeModel = [[HomeModel alloc]init];
+        self.homeModel.delegate = self;
+        [self.homeModel downloadItems:dbOpeningTime withData:branch];
     }
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-  
-    
-    NSString *title = [Setting getValue:@"074t" example:@"เลือกเมนู"];
-    lblNavTitle.text = title;
-    
-    
-    {
-        UINib *nib = [UINib nibWithNibName:reuseIdentifierMenu bundle:nil];
-        [tbvMenu registerNib:nib forCellReuseIdentifier:reuseIdentifierMenu];
-    }
-    {
-        UINib *nib = [UINib nibWithNibName:reuseIdentifierSearchBar bundle:nil];
-        [tbvMenu registerNib:nib forCellReuseIdentifier:reuseIdentifierSearchBar];
-    }
-
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -382,42 +399,68 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             NSMutableArray *orderTakingListWithMenuID = [OrderTaking getOrderTakingListWithMenuID:menu.menuID orderTakingList:orderTakingList];
             cell.lblQuantity.text = [Utility formatDecimal:[orderTakingListWithMenuID count] withMinFraction:0 andMaxFraction:0];
             cell.imgTriangle.hidden = [orderTakingListWithMenuID count]==0;
-//            [tbvMenu reloadData];
+
             [self updateTotalAmount];
             [self blinkAddedNotiView];
         }
     }
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    _menuList = [items[0] mutableCopy];
-    _menuTypeList = [items[1] mutableCopy];
-    _menuNoteList = [items[2] mutableCopy];
-    _noteList = [items[3] mutableCopy];
-    _noteTypeList = [items[4] mutableCopy];
-    _subMenuTypeList = [items[5] mutableCopy];
-    _specialPriceProgramList = [items[6] mutableCopy];
-    _menuTypeList = [MenuType sortList:_menuTypeList];
-    
-    
-    _menuList = [Menu setBranchID:branch.branchID menuList:_menuList];
-    _filterMenuList = _menuList;
-    [Menu setCurrentMenuList:_menuList];
-
-    
-    [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
-    [MenuType setSharedData:_menuTypeList];
-    [MenuNote setSharedData:_menuNoteList];
-    [Note setSharedData:_noteList];
-    [NoteType setSharedData:_noteTypeList];
-    [SubMenuType setSharedData:_subMenuTypeList];
-    [SpecialPriceProgram setSharedData:_specialPriceProgramList];
-    
-    
-    
-    [self setData];
-    [self removeOverlayViews];
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbMenuList)
+    {
+        NSLog(@"menuList");
+        NSMutableArray *messageList = [items[0] mutableCopy];
+        Message *message = messageList[0];
+        if(![message.text integerValue])
+        {
+            NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตนเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
+            [self showAlert:@"" message:message];
+        }
+        
+        
+        _menuList = [items[1] mutableCopy];
+        _menuTypeList = [items[2] mutableCopy];
+        _menuNoteList = [items[3] mutableCopy];
+        _noteList = [items[4] mutableCopy];
+        _noteTypeList = [items[5] mutableCopy];
+        _subMenuTypeList = [items[6] mutableCopy];
+        _specialPriceProgramList = [items[7] mutableCopy];
+        _menuTypeList = [MenuType sortList:_menuTypeList];
+        
+        
+        _menuList = [Menu setBranchID:branch.branchID menuList:_menuList];
+        _filterMenuList = _menuList;
+        [Menu setCurrentMenuList:_menuList];
+        
+        
+        [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
+        [MenuType setSharedData:_menuTypeList];
+        [MenuNote setSharedData:_menuNoteList];
+        [Note setSharedData:_noteList];
+        [NoteType setSharedData:_noteTypeList];
+        [SubMenuType setSharedData:_subMenuTypeList];
+        [SpecialPriceProgram setSharedData:_specialPriceProgramList];
+        
+        
+        
+        [self setData];
+        [self removeOverlayViews];
+    }
+    else if(homeModel.propCurrentDB == dbOpeningTime)
+    {
+        NSLog(@"openingTime");
+        [self removeOverlayViews];
+        NSMutableArray *messageList = items[0];
+        Message *message = messageList[0];
+        if(![message.text integerValue])//open
+        {
+            NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตนเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
+            [self showAlert:@"" message:message];
+        }
+    }
 }
 
 -(void)setData

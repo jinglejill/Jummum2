@@ -189,7 +189,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
             {
                 cell.textValue.tag = 1;
                 cell.textValue.delegate = self;
-                cell.textValue.placeholder = @"อีเมลล์";
+                cell.textValue.placeholder = @"อีเมล";
                 cell.textValue.text = _userAccount.email;
                 cell.textValue.enabled = NO;
                 [cell.textValue setInputAccessoryView:self.toolBar];
@@ -239,7 +239,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
             {
                 cell.textValue.tag = 1;
                 cell.textValue.delegate = self;
-                cell.textValue.placeholder = @"อีเมลล์";
+                cell.textValue.placeholder = @"อีเมล";
                 cell.textValue.text = _userAccount.username;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
@@ -357,21 +357,21 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     //validate
     if([Utility isStringEmpty:_userAccount.username])
     {
-        [self showAlert:@"" message:@"กรุณาระบุอีเมลล์"];
+        [self showAlert:@"" message:@"กรุณาระบุอีเมล"];
         return;
     }
     
     
     if(![Utility validateEmailWithString:_userAccount.username])
     {
-        [self showAlert:@"" message:@"อีเมลล์ไม่ถูกต้อง"];
+        [self showAlert:@"" message:@"อีเมลไม่ถูกต้อง"];
         return;
     }
     
     
     if([items count] > 0 && [items[0] count]>0)
     {
-        [self showAlert:@"" message:@"อีเมลล์นี้ถูกใช้แล้ว"];
+        [self showAlert:@"" message:@"อีเมลนี้ถูกใช้แล้ว"];
         return;
     }
     

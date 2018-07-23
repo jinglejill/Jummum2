@@ -163,7 +163,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         Receipt *receipt = _receiptList[section];
         Branch *branch = [Branch getBranch:receipt.branchID];
         cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
-        cell.lblReceiptDate.text = [Utility dateToString:receipt.receiptDate toFormat:@"d MMM yy HH:mm"];
+        cell.lblReceiptDate.text = [Utility dateToString:receipt.modifiedDate toFormat:@"d MMM yy HH:mm"];
         cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
         cell.lblBranchName.textColor = cSystem1;
         
@@ -338,6 +338,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             {
                 cell.backgroundColor = [UIColor whiteColor];
             }
+            
             return cell;
         }
         else if(item == [orderTakingList count])
@@ -605,10 +606,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
-//    cell.backgroundColor = [UIColor whiteColor];
-    
-    
-    
     if([tableView isEqual:tbvData])
     {
         [cell setSeparatorInset:UIEdgeInsetsMake(16, 16, 16, 16)];

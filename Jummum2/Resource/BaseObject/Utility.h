@@ -177,7 +177,8 @@ enum enumDB
     dbRatingList,
     dbReceiptDisputeRating,
     dbMenuNote,
-    dbMenuNoteList
+    dbMenuNoteList,
+    dbOpeningTime
 
 
     
@@ -315,7 +316,9 @@ enum enumUrl
     urlMenuNoteDelete,
     urlMenuNoteInsertList,
     urlMenuNoteUpdateList,
-    urlMenuNoteDeleteList
+    urlMenuNoteDeleteList,
+    urlOpeningTimeGet
+    
 
     
 };
@@ -382,8 +385,8 @@ enum enumUrl
 + (BOOL)isNumeric:(NSString *)text;
 + (NSString *)getSqlFailTitle;
 + (NSString *)getSqlFailMessage;
-+ (NSString *)getConnectionLostTitle;
-+ (NSString *)getConnectionLostMessage;
++ (NSString *)getErrorOccurTitle;
++ (NSString *)getErrorOccurMessage;
 + (NSInteger)getNumberOfRowForExecuteSql;
 + (NSInteger)getScanTimeInterVal;
 + (NSInteger)getScanTimeInterValCaseBlur;

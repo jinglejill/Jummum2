@@ -175,6 +175,7 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
     if(item == [_creditCardList count])
     {
         creditCard = [[CreditCard alloc]init];
+        creditCard.saveCard = 1;
         [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
     }
     else

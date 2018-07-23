@@ -22,6 +22,10 @@
 @synthesize btnDismiss;
 @synthesize btnDismissTop;
 @synthesize btnDismissHeight;
+@synthesize btnCancel;
+@synthesize btnCancelTop;
+@synthesize btnCancelHeight;
+@synthesize appStoreVersion;
 
 
 -(void)viewDidLayoutSubviews
@@ -31,6 +35,7 @@
     vwAlert.layer.masksToBounds = YES;
     [self setButtonDesign:btnUpdate];
     [self setButtonDesign:btnDismiss];
+    [self setButtonDesign:btnCancel];
     
     
     NSString *strVersionType = [Setting getSettingValueWithKeyName:@"NewVersionType"];
@@ -43,6 +48,9 @@
         btnDismissTop.constant = 0;
         btnDismissHeight.constant = 0;
         btnDismiss.hidden = YES;
+        btnCancelTop.constant = 0;
+        btnCancelHeight.constant = 0;
+        btnCancel.hidden = YES;
     }
     
 }
@@ -57,7 +65,8 @@
 
 - (IBAction)dismiss:(id)sender
 {
-//    [self performSegueWithIdentifier:@"segLogIn" sender:self];
+    NSString *key = [NSString stringWithFormat:@"dismiss verion:%@",appStoreVersion];
+    [[NSUserDefaults standardUserDefaults] setValue:@1 forKey:key];
     [self performSegueWithIdentifier:@"segUnwindToLaunchScreen" sender:self];
 }
 
@@ -90,6 +99,11 @@
     
     //    NSString *iTunesLink = @"itms://itunes.apple.com/us/app/apple-store/id375380948?mt=8";
     //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [self performSegueWithIdentifier:@"segUnwindToLaunchScreen" sender:self];
 }
 
 

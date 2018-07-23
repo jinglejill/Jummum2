@@ -160,20 +160,7 @@
     if(![[NSUserDefaults standardUserDefaults] integerForKey:@"logInSession"])
     {
         _appLogIn = NO;
-    }
-//    if([[NSUserDefaults standardUserDefaults] integerForKey:@"rememberMe"])
-//    {
-//        [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
-//        _rememberMe = YES;
-//
-//
-//        txtEmail.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberEmail"];
-//        txtPassword.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberPassword"];
-//
-//    }
-//    else
-    
-    
+    } 
 }
 
 - (void)viewDidLoad
@@ -311,7 +298,7 @@
     {
         if([items count] > 0 && [items[0] count] == 0)
         {
-            [self showAlert:@"" message:@"อีเมลล์/พาสเวิร์ด ไม่ถูกต้อง"];
+            [self showAlert:@"" message:@"อีเมล/พาสเวิร์ด ไม่ถูกต้อง"];
         }
         else
         {

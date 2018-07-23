@@ -20,15 +20,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6h-Sb-Hs4">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6h-Sb-Hs4">
                     <rect key="frame" x="16" y="7" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="v4v-NS-ag9"/>
+                    </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="H6h-Sb-Hs4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="Opv-cL-gQM"/>
+                <constraint firstItem="H6h-Sb-Hs4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="lLd-Iq-Ldr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="H6h-Sb-Hs4" secondAttribute="trailing" constant="16" id="v8o-AQ-RUO"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="textValue" destination="H6h-Sb-Hs4" id="7Ul-wI-Qzf"/>

@@ -8,11 +8,14 @@
 
 #import "LaunchScreenViewController.h"
 #import "LogInViewController.h"
+#import "NewVersionUpdateViewController.h"
 
 
 @interface LaunchScreenViewController ()
 {
     BOOL _redirectToLogin;
+    NSString *_appStoreVersion;
+    
 }
 @end
 
@@ -102,7 +105,16 @@
         {
             if([self needsUpdate])
             {
-                [self performSegueWithIdentifier:@"segNewVersionUpdate" sender:self];
+                NSString *key = [NSString stringWithFormat:@"dismiss verion:%@",_appStoreVersion];
+                NSNumber *dismissVersion = [[NSUserDefaults standardUserDefaults] valueForKey:key];
+                if([dismissVersion integerValue])
+                {
+                    [self performSegueWithIdentifier:@"segLogIn" sender:self];
+                }
+                else
+                {
+                    [self performSegueWithIdentifier:@"segNewVersionUpdate" sender:self];
+                }
             }
             else
             {
@@ -117,6 +129,7 @@
 {
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+//    appID = @"1404154271";
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -125,9 +138,9 @@
     {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-//        lblAppStoreVersion.text = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
-        NSString *strAppVersion = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
-        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
+        _appStoreVersion = appStoreVersion;
+//        NSString *strAppVersion = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
+//        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
         if (![appStoreVersion isEqualToString:currentVersion]){
             NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
             return YES;
@@ -141,8 +154,18 @@
     return NO;
 }
 
-- (void) connectionFail
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if([segue.identifier isEqualToString:@"segNewVersionUpdate"])
+    {
+        NewVersionUpdateViewController *vc = segue.destinationViewController;
+        vc.appStoreVersion = _appStoreVersion;
+    }
+}
+
+- (void)connectionFail
+{
+    [self removeOverlayViews];
     NSString *title = [Utility subjectNoConnection];
     NSString *message = [Utility detailNoConnection];
     [self showAlert:title message:message method:@selector(tryDownloadAgain)];

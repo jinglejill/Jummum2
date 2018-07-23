@@ -657,29 +657,6 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         [DisputeReason setSharedData:items[0]];
         [tbvData reloadData];
     }
-//    else if(self.homeModel.propCurrentDB == dbReceipt)
-//    {
-//        NSMutableArray *receiptList = items[0];
-//        Receipt *downloadReceipt = receiptList[0];
-//        if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
-//        {
-//            receipt.status = downloadReceipt.status;
-//            receipt.statusRoute = downloadReceipt.statusRoute;
-//            receipt.modifiedUser = downloadReceipt.modifiedUser;
-//            receipt.modifiedDate = downloadReceipt.modifiedDate;
-//
-//
-//            NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
-//            NSString *message2 = [Setting getValue:@"033m" example:@"อาหารได้ส่งถึงคุณแล้วค่ะ"];
-//            NSString *strMessage = downloadReceipt.status == 5?message:message2;
-//            [self showAlert:@"" message:strMessage method:@selector(goBack:)];
-//            [self removeOverlayViews];
-//        }
-//        else
-//        {
-//            [self submit];
-//        }
-//    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component
@@ -697,9 +674,6 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
         CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
         cell.txtValue.text = disputeReason.text;
-        
-        
-//        [cell.txtValue resignFirstResponder];
     }
 }
 
@@ -751,10 +725,6 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 {
     if(fromType == 1)
     {
-//        self.homeModel = [[HomeModel alloc]init];
-//        self.homeModel.delegate = self;
-//
-//
         [self.view endEditing:YES];
         if(![self validate])
         {
@@ -771,10 +741,8 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         Branch *branch = [Branch getBranch:receipt.branchID];
         [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
         
-        
-//        [self.homeModel downloadItems:dbReceipt withData:receipt];
     }
-    else
+    else if(fromType == 2)
     {
         [self submit];
     }
@@ -806,27 +774,11 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
 }
 
-//-(void)itemsInserted
-//{
-//    receipt.status = 8;
-//    NSString *message = [Setting getValue:@"009m" example:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
-//    [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
-//    [self removeOverlayViews];
-//}
-
 -(void)itemsInsertedWithReturnData:(NSArray *)items
 {
+    [Utility updateSharedObject:items];
     NSMutableArray *receiptList = items[0];
-    NSMutableArray *disputeList = items[1];
     Receipt *downloadReceipt = receiptList[0];
-    receipt.status = downloadReceipt.status;
-    receipt.statusRoute = downloadReceipt.statusRoute;
-    receipt.modifiedUser = downloadReceipt.modifiedUser;
-    receipt.modifiedDate = downloadReceipt.modifiedDate;
-    if([disputeList count] > 0)
-    {
-        [Utility addToSharedDataList:items];
-    }
     if(downloadReceipt.status == 5 || downloadReceipt.status == 6)
     {
         NSString *message = [Setting getValue:@"032m" example:@"ร้านค้ากำลังปรุงอาหารให้คุณอยู่ค่ะ โปรดรอสักครู่นะคะ"];
@@ -931,5 +883,68 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 -(void)unwindToReceiptSummary
 {
     [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbRect = [self.view convertRect:kbRect toView:nil];
+    
+    CGSize kbSize = kbRect.size;
+    
+    
+    
+    // Assign new frame to your view
+    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionTransitionNone
+                     animations:^{
+                         [self.view setFrame:CGRectMake(0,kbSize.height*-1,self.view.frame.size.width,self.view.frame.size.height)]; //here taken -110 for example i.e. your view will be scrolled to -110. change its value according to your requirement.
+                     }
+                     completion:nil
+     ];
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionTransitionNone
+                     animations:^{
+                         [self.view setFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+                         [self.view layoutSubviews];
+                     }
+                     completion:nil
+     ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSInteger textFieldTag = fromType == 1?2:4;
+    
+    if(textField.tag == textFieldTag)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    NSInteger textFieldTag = fromType == 1?2:4;
+    
+    if(textField.tag == textFieldTag)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        
+        
+        [self.view endEditing:YES];
+        
+        return YES;
+    }
+    
+    return YES;
 }
 @end

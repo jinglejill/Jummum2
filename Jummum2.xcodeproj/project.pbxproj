@@ -1202,12 +1202,14 @@
 		EF5C2F8C2080C00400084B7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EF02455420EA51170025B89D /* NewVersionUpdateViewController.h */,
-				EF02455520EA51170025B89D /* NewVersionUpdateViewController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
 				EF5C2F9A2080C00400084B7E /* BranchSearchViewController.m */,
+				EFF44F3720F334D700D07770 /* CommentRatingViewController.h */,
+				EFF44F3820F334D700D07770 /* CommentRatingViewController.m */,
+				EF02456420EC99630025B89D /* CommentViewController.h */,
+				EF02456520EC99630025B89D /* CommentViewController.m */,
 				EFAF78EF20A4217E0069D6DA /* ConfirmDisputeViewController.h */,
 				EFAF78F020A4217E0069D6DA /* ConfirmDisputeViewController.m */,
 				EF5C2FB02080C00400084B7E /* CreditCardAndOrderSummaryViewController.h */,
@@ -1236,6 +1238,8 @@
 				EF5C2FA62080C00400084B7E /* MeViewController.m */,
 				EFBBEECC209A6EEB003884A9 /* MyRewardViewController.h */,
 				EFBBEECD209A6EEB003884A9 /* MyRewardViewController.m */,
+				EF02455420EA51170025B89D /* NewVersionUpdateViewController.h */,
+				EF02455520EA51170025B89D /* NewVersionUpdateViewController.m */,
 				EF5C2F9E2080C00400084B7E /* NoteViewController.h */,
 				EF5C2FB42080C00400084B7E /* NoteViewController.m */,
 				EFAF78EC20A41E200069D6DA /* OrderDetailViewController.h */,
@@ -1248,6 +1252,8 @@
 				EF5C2F992080C00400084B7E /* QRCodeScanTableViewController.m */,
 				EF5C2FA72080C00400084B7E /* ReceiptSummaryViewController.h */,
 				EF5C2F922080C00400084B7E /* ReceiptSummaryViewController.m */,
+				EF02456720EC99720025B89D /* RecommendShopViewController.h */,
+				EF02456820EC99720025B89D /* RecommendShopViewController.m */,
 				EF5C2F962080C00400084B7E /* RegisterNowViewController.h */,
 				EF5C2FAE2080C00400084B7E /* RegisterNowViewController.m */,
 				EFBBEEAC2096DB71003884A9 /* RewardDetailViewController.h */,
@@ -1262,12 +1268,6 @@
 				EF5C2FA32080C00400084B7E /* TermsOfServiceViewController.m */,
 				EF5C2F982080C00400084B7E /* TosAndPrivacyPolicyViewController.h */,
 				EF5C2FAB2080C00400084B7E /* TosAndPrivacyPolicyViewController.m */,
-				EF02456420EC99630025B89D /* CommentViewController.h */,
-				EF02456520EC99630025B89D /* CommentViewController.m */,
-				EF02456720EC99720025B89D /* RecommendShopViewController.h */,
-				EF02456820EC99720025B89D /* RecommendShopViewController.m */,
-				EFF44F3720F334D700D07770 /* CommentRatingViewController.h */,
-				EFF44F3820F334D700D07770 /* CommentRatingViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
