@@ -242,7 +242,11 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             }
             else
             {
-                CustomerTable *customerTable = _filterCustomerTableList[indexPath.item];
+                NSString *zone = _customerTableZoneList[_selectedZoneIndex];
+                NSMutableArray *customerTableList = [CustomerTable getCustomerTableListWithZone:zone customerTableList:_filterCustomerTableList];
+                
+                
+                CustomerTable *customerTable = customerTableList[indexPath.item];
                 _selectedCustomerTable = customerTable;
                 [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
             }

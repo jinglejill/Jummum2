@@ -383,6 +383,21 @@
                                             <action selector="branchSearch:" destination="JqZ-I6-eQn" eventType="touchUpInside" id="YF9-f5-ZWZ"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q32-tE-q13">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="JLt-XL-F70"/>
+                                            <constraint firstAttribute="width" constant="44" id="YGy-EB-cyy"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="20"/>
+                                        <state key="normal" title="&lt;">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="goBack:" destination="JqZ-I6-eQn" eventType="touchUpInside" id="pDw-Bv-hnV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.23529411764705882" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -390,7 +405,9 @@
                                     <constraint firstAttribute="trailing" secondItem="jlF-Ej-s0u" secondAttribute="trailing" constant="16" id="8Gd-Ev-ZTX"/>
                                     <constraint firstItem="6xX-41-EXl" firstAttribute="top" secondItem="TOQ-Lp-xoq" secondAttribute="top" constant="8" id="BOa-AB-UiT"/>
                                     <constraint firstAttribute="height" constant="44" id="Evm-Qr-qew"/>
+                                    <constraint firstItem="q32-tE-q13" firstAttribute="leading" secondItem="TOQ-Lp-xoq" secondAttribute="leading" id="Nzf-Qr-hfV"/>
                                     <constraint firstItem="6xX-41-EXl" firstAttribute="centerY" secondItem="jlF-Ej-s0u" secondAttribute="centerY" id="U2z-xh-iXz"/>
+                                    <constraint firstItem="q32-tE-q13" firstAttribute="top" secondItem="TOQ-Lp-xoq" secondAttribute="top" id="fdI-3q-IeQ"/>
                                     <constraint firstItem="jlF-Ej-s0u" firstAttribute="leading" secondItem="TOQ-Lp-xoq" secondAttribute="leading" constant="16" id="qhM-Sz-mSi"/>
                                 </constraints>
                             </view>
@@ -419,6 +436,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="QR Code" image="QR.png" id="eag-YE-bxj"/>
                     <connections>
+                        <outlet property="btnBack" destination="q32-tE-q13" id="sd3-6L-DS3"/>
+                        <outlet property="btnBranchSearch" destination="6xX-41-EXl" id="V14-zD-ocX"/>
                         <outlet property="lblNavTitle" destination="jlF-Ej-s0u" id="T8u-TM-gnA"/>
                         <outlet property="topViewHeight" destination="wbN-Ks-0Us" id="HQv-Nt-hCE"/>
                         <outlet property="vwPreview" destination="qHC-bF-lj9" id="44Q-Q3-xX0"/>
@@ -3930,6 +3949,7 @@
         <image name="white.png" width="226" height="132"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Gzz-jw-JAP"/>
         <segue reference="aHo-2G-vPP"/>
         <segue reference="DCf-pC-0Ih"/>
         <segue reference="UZ8-nN-acy"/>
@@ -3938,7 +3958,7 @@
         <segue reference="2Iw-Lt-h1E"/>
         <segue reference="3fp-yp-yps"/>
         <segue reference="jVQ-j3-veY"/>
-        <segue reference="odZ-6m-Wsi"/>
+        <segue reference="wW5-0e-zXP"/>
         <segue reference="bDK-E7-xJt"/>
     </inferredMetricsTieBreakers>
 </document>

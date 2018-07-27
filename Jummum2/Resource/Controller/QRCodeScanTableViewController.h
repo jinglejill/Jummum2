@@ -18,6 +18,7 @@
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (strong, nonatomic) IBOutlet UIButton *btnBack;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet UIButton *btnBranchSearch;
 
 
 

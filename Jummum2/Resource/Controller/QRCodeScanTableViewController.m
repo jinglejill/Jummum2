@@ -38,6 +38,7 @@
 @synthesize fromCreditCardAndOrderSummaryMenu;
 @synthesize customerTable;
 @synthesize btnBack;
+@synthesize btnBranchSearch;
 @synthesize topViewHeight;
 
 
@@ -79,6 +80,8 @@
     NSString *title = [Setting getValue:@"057t" example:@"สแกน QR Code เลขโต๊ะ"];
     lblNavTitle.text = title;
     btnBack.hidden = fromCreditCardAndOrderSummaryMenu?NO:YES;
+    btnBranchSearch.hidden = !btnBack.hidden;
+    
     _captureSession = nil;
     [self loadBeepSound];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
