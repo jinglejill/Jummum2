@@ -106,6 +106,9 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     [cell.vwContent addGestureRecognizer:cell.singleTapGestureRecognizer];
     cell.singleTapGestureRecognizer.numberOfTapsRequired = 1;
     ////-----------
+    
+    
+    NSLog(@"test tbvData y,height: %f,%f",tbvMe.frame.origin.y,tbvMe.frame.size.height);
 }
 
 
@@ -240,6 +243,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     break;
                 case 3:
                 {
+                    [self loadingOverlayView];
                     [FBSDKAccessToken setCurrentAccessToken:nil];
                     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"logInSession"];
                     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"rememberMe"];
@@ -249,6 +253,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     
                     
                     [self removeMemberData];
+                    [self removeOverlayViews];
                     [self showAlert:@"" message:@"ออกจากระบบสำเร็จ" method:@selector(unwindToLogIn)];
                 }
                     break;

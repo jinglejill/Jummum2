@@ -58,6 +58,7 @@
     
     NSString *_strPlaceHolder;
     NSString *_remark;
+    UIButton *_btnPay;
 
 }
 @end
@@ -1458,7 +1459,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
     {
         CustomTableViewHeaderFooterButton *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifierHeaderFooterButton];
         
-        
+        _btnPay = footerView.btnValue;
         [footerView.btnValue setTitle:@"ชำระเงิน" forState:UIControlStateNormal];
         [footerView.btnValue addTarget:self action:@selector(pay:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -1743,6 +1744,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
 {
     if([items count] == 1)
     {
+        _btnPay.enabled = YES;
         NSMutableArray *messageList = items[0];
         Message *message = messageList[0];
         [self showAlert:@"" message:message.text];

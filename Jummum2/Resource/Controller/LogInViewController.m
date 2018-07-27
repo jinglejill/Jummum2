@@ -59,11 +59,7 @@
     CGRect frame = _loginButton.frame;
     frame.origin.y = self.view.frame.size.height - bottomPadding - bottom + 11;//frame.origin.y + 33;
     _loginButton.frame = frame;
-    NSLog(@"topPadding : %f",topPadding);
-    NSLog(@"bottomPadding : %f",bottomPadding);
-    NSLog(@"view height : %f",self.view.frame.size.height);
-    NSLog(@"bottom : %f",bottom);
-    NSLog(@"facebook y: %f",_loginButton.frame.origin.y);
+
     
     
     lblLogInTop.constant = 7 + bottomPadding;

@@ -41,6 +41,7 @@
     
     imgVwLogoTop.constant = (self.view.frame.size.height - (542-94))/2;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

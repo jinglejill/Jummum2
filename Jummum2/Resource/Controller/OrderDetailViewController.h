@@ -17,7 +17,6 @@
 @property (strong, nonatomic) Receipt *receipt;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
-
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tbvRatingHeight;
 
 -(IBAction)unwindToOrderDetail:(UIStoryboardSegue *)segue;

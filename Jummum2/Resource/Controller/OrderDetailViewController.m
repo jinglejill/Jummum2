@@ -71,8 +71,6 @@ static NSString * const reuseIdentifierRating = @"CustomTableViewCellRating";
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
