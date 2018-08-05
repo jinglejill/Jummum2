@@ -43,8 +43,8 @@
 @property (nonatomic) NSInteger mergeReceiptID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(Receipt *)initWithBranchID:(NSInteger)branchID customerTableID:(NSInteger)customerTableID memberID:(NSInteger)memberID servingPerson:(NSInteger)servingPerson customerType:(NSInteger)customerType openTableDate:(NSDate *)openTableDate cashAmount:(float)cashAmount cashReceive:(float)cashReceive creditCardType:(NSInteger)creditCardType creditCardNo:(NSString *)creditCardNo creditCardAmount:(float)creditCardAmount transferDate:(NSDate *)transferDate transferAmount:(float)transferAmount remark:(NSString *)remark discountType:(NSInteger)discountType discountAmount:(float)discountAmount discountValue:(float)discountValue discountReason:(NSString *)discountReason serviceChargePercent:(float)serviceChargePercent serviceChargeValue:(float)serviceChargeValue priceIncludeVat:(NSInteger)priceIncludeVat vatPercent:(float)vatPercent vatValue:(float)vatValue status:(NSInteger)status statusRoute:(NSString *)statusRoute receiptNoID:(NSString *)receiptNoID receiptNoTaxID:(NSString *)receiptNoTaxID receiptDate:(NSDate *)receiptDate mergeReceiptID:(NSInteger)mergeReceiptID;
 +(NSInteger)getNextID;
@@ -66,6 +66,7 @@
 +(float)getAllCreditAmountWithReceiptDate:(NSDate *)date;
 +(float)getAllTransferAmountWithReceiptDate:(NSDate *)date;
 +(NSDate *)getMaxModifiedDateWithMemberID:(NSInteger)memberID;
++(Receipt *)getReceiptWithMaxModifiedDateWithMemberID:(NSInteger)memberID;
 +(void)updateStatusList:(NSMutableArray *)receiptList;
 +(NSMutableArray *)getReceiptList;
 +(void)removeAllObjects;
@@ -74,4 +75,6 @@
 +(UIColor *)getStatusColor:(Receipt *)receipt;
 +(NSInteger)getStateBeforeLast:(Receipt *)receipt;
 +(NSInteger)getBranchIDWithMaxModifiedDateWithMemberID:(NSInteger)memberID;
++(NSInteger)getIndex:(NSMutableArray *)receiptList receipt:(Receipt *)receipt;
++(NSInteger)getPriorStatus:(Receipt *)receipt;
 @end

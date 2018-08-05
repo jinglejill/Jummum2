@@ -118,8 +118,8 @@
         ((HotDeal *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((HotDeal *)copy).replaceSelf = self.replaceSelf;
-        ((HotDeal *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

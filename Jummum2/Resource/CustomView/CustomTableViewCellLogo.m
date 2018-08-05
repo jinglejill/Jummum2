@@ -25,6 +25,5 @@
 {
     [super prepareForReuse];
     self.imgVwValue.image = [UIImage imageNamed:@"NoImage.jpg"];
-    
 }
 @end

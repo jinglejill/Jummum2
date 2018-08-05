@@ -21,7 +21,6 @@
 - (void)itemsUpdated;
 - (void)itemsUpdatedWithManager:(NSObject *)objHomeModel items:(NSArray *)items;
 - (void)itemsUpdated:(NSString *)alert;
-- (void)itemsSynced:(NSArray *)items;
 - (void)itemsDeleted;
 - (void)emailSent;
 - (void)photoUploaded;
@@ -66,6 +65,8 @@ enum enumAction
 - (void)sendEmail:(NSString *)toAddress withSubject:(NSString *)subject andBody:(NSString *)body;
 - (void)uploadPhoto:(NSData *)photo fileName:(NSString *)fileName;
 - (void)downloadImageWithFileName:(NSString *)fileName completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock;
+- (void)downloadImageWithFileName:(NSString *)fileName type:(NSInteger)type branchID:(NSInteger)branchID completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock;
 - (void)downloadFileWithFileName:(NSString *)fileName completionBlock:(void (^)(BOOL succeeded, NSData *data))completionBlock;
+- (void)downloadItems:(enum enumDB)currentDB withData:(NSObject *)data completionBlock:(void (^)(BOOL succeeded, NSMutableArray *items))completionBlock;
 @end
 

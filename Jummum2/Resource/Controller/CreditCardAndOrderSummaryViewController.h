@@ -11,6 +11,7 @@
 #import "CustomerTable.h"
 #import "CustomViewVoucher.h"
 #import "Promotion.h"
+#import "Receipt.h"
 
 
 @interface CreditCardAndOrderSummaryViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate,UIPopoverPresentationControllerDelegate>
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet CustomViewVoucher *voucherView;
 @property (strong, nonatomic) Branch *branch;
 @property (strong, nonatomic) CustomerTable *customerTable;
+@property (strong, nonatomic) Receipt *receipt;
 @property (nonatomic) NSInteger fromReceiptSummaryMenu;
 @property (nonatomic) NSInteger fromOrderDetailMenu;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;

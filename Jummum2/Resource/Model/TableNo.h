@@ -19,8 +19,8 @@
 @property (nonatomic) NSInteger orderNo;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(TableNo *)initWithShopID:(NSInteger)shopID name:(NSInteger)name remark:(NSString *)remark type:(NSInteger)type zone:(NSInteger)zone status:(NSInteger)status orderNo:(NSInteger)orderNo;
 +(NSInteger)getNextID;

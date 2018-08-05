@@ -17,8 +17,8 @@
 @property (retain, nonatomic) NSDate * modifiedDate;
 
 
-@property (nonatomic) NSInteger replaceSelf;//ใช้เฉพาะตอน push type = 'd'
-@property (nonatomic) NSInteger idInserted;//ใช้ตอน update or delete
+//ใช้เฉพาะตอน push type = 'd'
+//ใช้ตอน update or delete
 
 
 -(LogIn *)initWithUsername:(NSString *)username status:(NSInteger)status deviceToken:(NSString *)deviceToken;

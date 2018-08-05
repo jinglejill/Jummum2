@@ -146,8 +146,8 @@
         ((RewardRedemption *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((RewardRedemption *)copy).replaceSelf = self.replaceSelf;
-        ((RewardRedemption *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

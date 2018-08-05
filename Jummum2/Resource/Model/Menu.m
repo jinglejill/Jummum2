@@ -155,8 +155,8 @@
         [copy setRemark:self.remark];
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Menu *)copy).replaceSelf = self.replaceSelf;
-        ((Menu *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

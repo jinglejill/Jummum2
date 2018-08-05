@@ -29,7 +29,11 @@
 
 -(IBAction)unwindToLaunchScreen:(UIStoryboardSegue *)segue
 {
-    _redirectToLogin = YES;
+    NSString *strVersionType = [Setting getSettingValueWithKeyName:@"NewVersionType"];
+    if([strVersionType isEqualToString:@"1"])
+    {
+        _redirectToLogin = YES;
+    }
     progressBar.progress = 0;
     [self.homeModel downloadItems:dbMasterWithProgressBar];
 }
@@ -83,7 +87,7 @@
         {
             NSString *title = [Setting getValue:@"001t" example:@"Warning"];
             NSString *message = [Setting getValue:@"001m" example:@"Memory fail"];
-            [self showAlert:title message:message];
+            [self showAlert:title message:message method:@selector(tryDownloadAgain)];
             return;
         }
         
@@ -100,7 +104,7 @@
             [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
             
             
-//            [self performSegueWithIdentifier:@"segLogIn" sender:self];
+            //            [self performSegueWithIdentifier:@"segLogIn" sender:self];
         }
         else
         {
@@ -121,7 +125,6 @@
             {
                 [self performSegueWithIdentifier:@"segLogIn" sender:self];
             }
-
         }
     }
 }
@@ -130,7 +133,7 @@
 {
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
-//    appID = @"1404154271";
+    //    appID = @"1404154271";
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -140,8 +143,8 @@
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
         _appStoreVersion = appStoreVersion;
-//        NSString *strAppVersion = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
-//        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
+        //        NSString *strAppVersion = [NSString stringWithFormat:@"App store version: %@, current version: %@",appStoreVersion,currentVersion];
+        //        [[NSUserDefaults standardUserDefaults] setValue:strAppVersion forKey:@"appVersion"];
         if (![appStoreVersion isEqualToString:currentVersion]){
             NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
             return YES;

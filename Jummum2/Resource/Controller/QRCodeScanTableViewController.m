@@ -94,10 +94,10 @@
     
     
     _performSegue = NO;
-    self.homeModel = [[HomeModel alloc]init];
-    self.homeModel.delegate = self;
-    Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
-    [self.homeModel downloadItems:dbBranch withData:branchWithMaxModifiedDate.modifiedDate];
+//    self.homeModel = [[HomeModel alloc]init];
+//    self.homeModel.delegate = self;
+//    Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
+//    [self.homeModel downloadItems:dbBranch withData:branchWithMaxModifiedDate.modifiedDate];
     //-----------
     
     
@@ -203,44 +203,43 @@
                 NSString *branchPart = dataList[0];
                 NSString *customerTablePart = dataList[1];
                 NSArray *branchPartList = [branchPart componentsSeparatedByString: @":"];
-                _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
+                NSInteger branchID = [branchPartList[1] integerValue];
+//                _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
                 NSArray *customerTablePartList = [customerTablePart componentsSeparatedByString: @":"];
-                _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
+                NSInteger customerTableID = [customerTablePartList[1] integerValue];
+//                _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
+                
+                _performSegue = YES;
+                [self.homeModel downloadItems:dbBranchAndCustomerTable withData:@[@(branchID),@(customerTableID)]];
+                
             }
             
             
         
-            if(!_selectedBranch || !_selectedCustomerTable)
-            {
-                [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
-            }
-            else
+//            if(!_selectedBranch || !_selectedCustomerTable)
+//            {
+//                [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
+//            }
+//            else
             {
                 [self stopReading];
-                if(fromCreditCardAndOrderSummaryMenu)
-                {
-                    customerTable = _selectedCustomerTable;
-                    dispatch_async(dispatch_get_main_queue(), ^
-                    {
-                        _performSegue = YES;
-                       [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
-                    });                    
-                }
-                else
-                {
-                    dispatch_async(dispatch_get_main_queue(), ^
-                    {
-                        _performSegue = YES;
-                        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
-                        
-                        
-//                        //check order openingTime
-//                        [self loadingOverlayView];
-//                        self.homeModel = [[HomeModel alloc]init];
-//                        self.homeModel.delegate = self;
-//                        [self.homeModel downloadItems:dbOpeningTime withData:_selectedBranch];
-                    });
-                }
+//                if(fromCreditCardAndOrderSummaryMenu)
+//                {
+//                    customerTable = _selectedCustomerTable;
+//                    dispatch_async(dispatch_get_main_queue(), ^
+//                    {
+//                        _performSegue = YES;
+//                       [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
+//                    });
+//                }
+//                else
+//                {
+//                    dispatch_async(dispatch_get_main_queue(), ^
+//                    {
+//                        _performSegue = YES;
+//                        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+//                    });
+//                }
             }
         }
     }
@@ -259,25 +258,45 @@
 -(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
     HomeModel *homeModel = (HomeModel *)objHomeModel;
-    if(homeModel.propCurrentDB == dbBranch)
-    {
-        [Utility updateSharedObject:items];
-    }
-//    else if(homeModel.propCurrentDB == dbOpeningTime)
+//    if(homeModel.propCurrentDB == dbBranch)
 //    {
-//        [self removeOverlayViews];
-//        NSMutableArray *messageList = items[0];
-//        Message *message = messageList[0];
-//        if([message.text integerValue])//open
-//        {
-//            [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
-//        }
-//        else
-//        {
-//            NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตัวเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
-//            [self showAlert:@"" message:message];
-//        }
+//        [Utility updateSharedObject:items];
 //    }
+//    else
+    if(homeModel.propCurrentDB == dbBranchAndCustomerTable)
+    {
+        NSMutableArray *branchList = items[0];
+        NSMutableArray *customerTableList = items[1];
+        if([branchList count] == 0 || [customerTableList count] == 0)
+        {
+            [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
+            _performSegue = NO;
+        }
+        else
+        {
+            [Utility updateSharedObject:items];
+            _selectedBranch = branchList[0];
+            _selectedCustomerTable = customerTableList[0];
+            if(fromCreditCardAndOrderSummaryMenu)
+            {
+                customerTable = customerTableList[0];
+                dispatch_async(dispatch_get_main_queue(), ^
+               {
+//                                   _performSegue = YES;
+                   [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
+               });
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+               {
+//                                   _performSegue = YES;
+                   [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+               });
+            }
+        }
+        
+    }
 }
 @end
 

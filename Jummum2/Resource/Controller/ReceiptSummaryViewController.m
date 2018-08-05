@@ -29,6 +29,7 @@
     Branch *_receiptBranch;
     NSInteger _selectedReceiptID;
     Receipt *_selectedReceipt;
+    Receipt *_orderItAgainReceipt;
 }
 @end
 
@@ -47,7 +48,28 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 
 -(IBAction)unwindToReceiptSummary:(UIStoryboardSegue *)segue
 {
-    [tbvData reloadData];
+    self.showOrderDetail = 0;
+    if([segue.sourceViewController isKindOfClass:[OrderDetailViewController class]])
+    {
+        OrderDetailViewController *vc = segue.sourceViewController;
+        [tbvData reloadData];
+        
+        
+        //get index and scroll to that index
+        NSInteger index = [Receipt getIndex:_receiptList receipt:vc.receipt];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+        [tbvData scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    else if([segue.sourceViewController isKindOfClass:[CreditCardAndOrderSummaryViewController class]])
+    {
+        CreditCardAndOrderSummaryViewController *vc = segue.sourceViewController;
+        
+        
+        //get index and scroll to that index
+        NSInteger index = [Receipt getIndex:_receiptList receipt:vc.receipt];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+        [tbvData scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 -(void)viewDidLayoutSubviews
@@ -68,13 +90,12 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
     NSDate *maxReceiptModifiedDate = [Receipt getMaxModifiedDateWithMemberID:userAccount.userAccountID];
     [self.homeModel downloadItems:dbReceiptMaxModifiedDate withData:@[userAccount, maxReceiptModifiedDate]];
-}
-
--(void)loadView
-{
-    [super loadView];
     
     
+    if(self.showOrderDetail)
+    {
+        [self segueToOrderDetailAuto:self.selectedReceipt];
+    }
 }
 
 -(void)setReceiptList
@@ -218,7 +239,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             OrderTaking *orderTaking = orderTakingList[item];
             Menu *menu = [Menu getMenu:orderTaking.menuID branchID:orderTaking.branchID];
             cell.lblQuantity.text = [Utility formatDecimal:orderTaking.quantity withMinFraction:0 andMaxFraction:0];
-            NSLog(@"%f, %f, %f, %f: ",cell.lblQuantity.frame.origin.x,cell.lblQuantity.frame.origin.y, cell.lblQuantity.frame.size.width,cell.lblQuantity.frame.size.height);
+            
             
             //menu
             if(orderTaking.takeAway)
@@ -245,7 +266,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             frame.size.height = menuNameLabelSize.height;
             cell.lblMenuNameHeight.constant = menuNameLabelSize.height;
             cell.lblMenuName.frame = frame;
-            NSLog(@"%f, %f, %f, %f: ",frame.origin.x,frame.origin.y, frame.size.width,frame.size.height);
+            
             
             
             //note
@@ -332,7 +353,6 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
                 {
                     _selectedReceiptID = 0;
                 }
-                
             }
             else
             {
@@ -662,13 +682,8 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         }
         else
         {
-            [Receipt addList:[items[0] mutableCopy]];
-            [OrderTaking addList:[items[1] mutableCopy]];
-            [OrderNote addList:[items[2] mutableCopy]];
-            [Menu addListCheckDuplicate:[items[3] mutableCopy]];
-            
-            [self setReceiptList];
-            [tbvData reloadData];
+            [Utility updateSharedObject:items];
+            [self reloadTableView];
         }
     }
     else if(homeModel.propCurrentDB == dbReceiptMaxModifiedDate)
@@ -676,10 +691,21 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         NSMutableArray *receiptList = items[0];
         if([receiptList count]>0)
         {
-            [Receipt updateStatusList:receiptList];
-            [tbvData reloadData];
+            [Utility updateSharedObject:items];
+            [self reloadTableView];
         }
     }
+}
+
+-(void)reloadTableView
+{
+    [self setReceiptList];
+    [tbvData reloadData];
+}
+
+- (IBAction)refresh:(id)sender
+{
+    [self viewDidAppear:NO];
 }
 
 -(void)orderItAgain:(id)sender
@@ -689,6 +715,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     Receipt *receipt = _receiptList[indexPath.section];
     NSMutableArray *orderTakingList = [OrderTaking getOrderTakingListWithReceiptID:receipt.receiptID];
     [OrderTaking setCurrentOrderTakingList:orderTakingList];
+    _orderItAgainReceipt = receipt;
     
     
     _receiptBranch = [Branch getBranch:receipt.branchID];
@@ -703,11 +730,18 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         vc.branch = _receiptBranch;
         vc.customerTable = nil;
         vc.fromReceiptSummaryMenu = 1;
+        vc.receipt = _orderItAgainReceipt;
     }
     else if([[segue identifier] isEqualToString:@"segOrderDetail"])
     {
-        OrderDetailViewController *vc = segue.destinationViewController;        
+        OrderDetailViewController *vc = segue.destinationViewController;
         vc.receipt = _selectedReceipt;
     }
+}
+
+-(void)segueToOrderDetailAuto:(Receipt *)receipt
+{
+    _selectedReceipt = receipt;
+    [self performSegueWithIdentifier:@"segOrderDetail" sender:self];
 }
 @end

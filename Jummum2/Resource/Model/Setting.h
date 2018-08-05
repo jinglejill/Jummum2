@@ -16,8 +16,8 @@
 @property (retain, nonatomic) NSString * remark;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(Setting *)initWithKeyName:(NSString *)keyName value:(NSString *)value type:(NSInteger)type remark:(NSString *)remark;
 +(NSInteger)getNextID;

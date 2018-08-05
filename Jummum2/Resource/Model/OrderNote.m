@@ -183,49 +183,6 @@
     }
     return strNote;
 }
-+(NSString *)getNoteNameListInTextWithOrderTakingID:(NSInteger)orderTakingID
-{
-    int i=0;
-    NSString *strAllNote = @"";
-    NSString *strRemoveTypeNote = @"";
-    NSString *strAddTypeNote = @"";
-    NSMutableArray *removeTypeNoteList = [OrderNote getNoteListWithOrderTakingID:orderTakingID noteType:-1];
-    NSMutableArray *addTypeNoteList = [OrderNote getNoteListWithOrderTakingID:orderTakingID noteType:1];
-    if([removeTypeNoteList count] > 0)
-    {
-        for(Note *item in removeTypeNoteList)
-        {
-            if(i == [removeTypeNoteList count]-1)
-            {
-                strRemoveTypeNote = [NSString stringWithFormat:@"%@%@",strRemoveTypeNote,item.name];
-            }
-            else
-            {
-                strRemoveTypeNote = [NSString stringWithFormat:@"%@%@,",strRemoveTypeNote,item.name];
-            }
-            i++;
-        }
-    }
-    
-    if([addTypeNoteList count] > 0)
-    {
-        for(Note *item in addTypeNoteList)
-        {
-            if(i == [addTypeNoteList count]-1)
-            {
-                strAddTypeNote = [NSString stringWithFormat:@"%@%@",strAddTypeNote,item.name];
-            }
-            else
-            {
-                strAddTypeNote = [NSString stringWithFormat:@"%@%@,",strAddTypeNote,item.name];
-            }
-            i++;
-        }
-    }
-    
-    strAllNote = strRemoveTypeNote;
-    return strAllNote;
-}
 
 +(NSString *)getNoteIDListInTextWithOrderTakingID:(NSInteger)orderTakingID
 {
@@ -272,8 +229,8 @@
         ((OrderNote *)copy).noteID = self.noteID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((OrderNote *)copy).replaceSelf = self.replaceSelf;
-        ((OrderNote *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;
@@ -301,7 +258,8 @@
     NSMutableArray *noteList = [[NSMutableArray alloc]init];
     for(OrderNote *item in filterArray)
     {
-        Note *note = [Note getNote:item.noteID];
+        OrderTaking *orderTaking = [OrderTaking getOrderTaking:orderTakingID];
+        Note *note = [Note getNote:item.noteID branchID:orderTaking.branchID];
         if(note.type == noteType)
         {
             [noteList addObject:note];

@@ -26,5 +26,7 @@
 +(CreditCard *)getPrimaryCard:(NSMutableArray *)creditCardList;
 +(BOOL)updatePrimaryCard:(CreditCard *)creditCard creditCardList:(NSMutableArray *)creditCardList;
 +(BOOL)clearPrimaryCard:(CreditCard *)creditCard creditCardList:(NSMutableArray *)creditCardList;
-//+(NSMutableArray *)setPrimaryCard:(CreditCard *)creditCard creditCardList:(NSMutableArray *)creditCardList;
++(CreditCard *)getCurrentCreditCard;
++(void)setCurrentCreditCard:(CreditCard *)creditCard;
++(void)removeCurrentCreditCard;
 @end

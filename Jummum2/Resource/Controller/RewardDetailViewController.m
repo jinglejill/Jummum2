@@ -103,8 +103,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     
         
         
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Reward/%@",rewardRedemption.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -166,8 +165,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        NSString *imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Reward/%@",rewardRedemption.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {

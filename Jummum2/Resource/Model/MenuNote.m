@@ -105,8 +105,8 @@
         ((MenuNote *)copy).noteID = self.noteID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((MenuNote *)copy).replaceSelf = self.replaceSelf;
-        ((MenuNote *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

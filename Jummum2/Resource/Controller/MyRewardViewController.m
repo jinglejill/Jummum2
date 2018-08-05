@@ -245,8 +245,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -300,8 +299,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -311,15 +309,6 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
              }
          }];
         cell.lblCountDown.hidden = YES;
-//        if(rewardRedemption.withInPeriod == 0)
-//        {
-//            cell.lblCountDown.text = [NSString stringWithFormat:@"หมดอายุเมื่อ %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
-//        }
-//        else
-//        {
-//            cell.lblCountDown.text = @"00:00:00";
-//
-//        }
 
         
         
@@ -358,8 +347,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -613,15 +601,19 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
                 }
                 [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
                 NSNumber *objIndex = [NSNumber numberWithInt:i];
+                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
                 NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                 [_timerList addObject:timer];
                 
                 
 
                 NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
                 seconds2 = seconds2>0?seconds2:0;
+                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
                 NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
-                [_timerUsedList addObject:timer2];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+                [_timerUsedList addObject:timer2];                
             }
             
             
@@ -840,14 +832,18 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             }
             [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
             NSNumber *objIndex = [NSNumber numberWithInt:i];
+            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
             NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
             [_timerList addObject:timer];
             
             
             
             NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
             seconds2 = seconds2>0?seconds2:0;
+            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
             NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
             [_timerUsedList addObject:timer2];
         }
         
@@ -906,14 +902,18 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         }
         [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
         NSNumber *objIndex = [NSNumber numberWithInt:i];
+        [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         [_timerList addObject:timer];
         
         
         
         NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
         seconds2 = seconds2>0?seconds2:0;
+        [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
         NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         [_timerUsedList addObject:timer2];
     }
     

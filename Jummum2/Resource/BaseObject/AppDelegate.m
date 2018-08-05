@@ -8,9 +8,38 @@
 
 #import "AppDelegate.h"
 #import "LogInViewController.h"
+#import "ReceiptSummaryViewController.h"
+#import "OrderDetailViewController.h"
+#import "DisputeFormViewController.h"
+#import "ConfirmDisputeViewController.h"
+#import "CommentRatingViewController.h"
+#import "ReceiptSummaryViewController.h"
+#import "MeViewController.h"
+#import "CommentViewController.h"
+#import "BasketViewController.h"
+#import "BranchSearchViewController.h"
+#import "CreditCardAndOrderSummaryViewController.h"
+#import "CreditCardViewController.h"
+#import "CustomerTableSearchViewController.h"
+#import "HotDealDetailViewController.h"
+#import "MenuSelectionViewController.h"
+#import "MyRewardViewController.h"
+#import "NoteViewController.h"
+#import "PaymentCompleteViewController.h"
+#import "PersonalDataViewController.h"
+#import "RecommendShopViewController.h"
+#import "RewardDetailViewController.h"
+#import "RewardRedemptionViewController.h"
+#import "SelectPaymentMethodViewController.h"
+#import "TosAndPrivacyPolicyViewController.h"
+#import "HotDealViewController.h"
+#import "RewardViewController.h"
+#import "QRCodeScanTableViewController.h"
+#import "HotDealViewController.h"
 #import "HomeModel.h"
 #import "Utility.h"
-#import "PushSync.h"
+#import "Receipt.h"
+//#import "PushSync.h"
 #import "SharedCurrentUserAccount.h"
 #import <objc/runtime.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -64,6 +93,8 @@ void myExceptionHandler(NSException *exception)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+//    NSString *key = [NSString stringWithFormat:@"dismiss verion:%@",@"1.4.4"];
+//    [[NSUserDefaults standardUserDefaults] setValue:@0 forKey:key];
     
     UIBarButtonItem *barButtonAppearance = [UIBarButtonItem appearance];
     [barButtonAppearance setBackgroundImage:[self imageWithColor:[UIColor clearColor]] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault]; // Change to your colour
@@ -105,7 +136,7 @@ void myExceptionHandler(NSException *exception)
     }
     
     
-    [[NSUserDefaults standardUserDefaults] setValue:@"JUMMUM4" forKey:BRANCH];
+//    [[NSUserDefaults standardUserDefaults] setValue:@"AND_JUMMUM" forKey:BRANCH];
     
     
     
@@ -138,7 +169,6 @@ void myExceptionHandler(NSException *exception)
 //    
     
     
-    //push notification
     //push notification
     {
         if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0"))
@@ -223,39 +253,73 @@ void myExceptionHandler(NSException *exception)
     
     
     //Called when a notification is delivered to a foreground app.
-    NSLog(@"Userinfo %@",notification.request.content.userInfo);
-    
-    
     NSDictionary *userInfo = notification.request.content.userInfo;
-    NSLog(@"Received notification: %@", userInfo);
+    NSLog(@"notification is delivered to a foreground app: %@", userInfo);
     
     
-    NSDictionary *myAps;
-    for(id key in userInfo)
+    
+    NSDictionary *myAps = [userInfo objectForKey:@"aps"];
+    NSString *categoryIdentifier = [myAps objectForKey:@"category"];
+    if([categoryIdentifier isEqualToString:@"updateStatus"])
     {
-        myAps = [userInfo objectForKey:key];
+        NSNumber *receiptID = [myAps objectForKey:@"receiptID"];
+        
+        
+        Receipt *receipt = [Receipt getReceipt:[receiptID integerValue]];
+        if(receipt)
+        {
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRatingUpdateAndReload withData:receipt];
+        }
+        else
+        {
+            Receipt *receipt = [[Receipt alloc]init];
+            receipt.receiptID = [receiptID integerValue];
+            
+            
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload withData:receipt];
+        }
     }
 }
 
 
--(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)(void))completionHandler{
     
     //Called to let your app know which action was selected by the user for a given notification.
-    NSLog(@"Userinfo %@",response.notification.request.content.userInfo);
+    NSDictionary *userInfo = response.notification.request.content.userInfo;
+    NSDictionary *myAps = [userInfo objectForKey:@"aps"];
+    NSString *categoryIdentifier = [myAps objectForKey:@"category"];
+    NSLog(@"action was selected by the user for a given notification: %@", userInfo);
+    
+    
+    if([categoryIdentifier isEqualToString:@"updateStatus"])
+    {
+        NSNumber *receiptID = [myAps objectForKey:@"receiptID"];
+        
+        
+        Receipt *receipt = [Receipt getReceipt:[receiptID integerValue]];
+        if(receipt)
+        {
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRating withData:receipt];
+        }
+        else
+        {
+            Receipt *receipt = [[Receipt alloc]init];
+            receipt.receiptID = [receiptID integerValue];
+            
+            
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRatingAllAfterReceipt withData:receipt];
+        }
+    }
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-{
-    //handle the actions
-    if ([identifier isEqualToString:@"declineAction"])
-    {
-        NSLog(@"decline action");
-    }
-    else if ([identifier isEqualToString:@"answerAction"])
-    {
-        NSLog(@"answer action");
-    }
-}
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
@@ -266,407 +330,78 @@ void myExceptionHandler(NSException *exception)
     
     [[NSUserDefaults standardUserDefaults] setValue:token forKey:TOKEN];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     //    NSLog([error localizedDescription]);
 }
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSLog(@"didRegisterUserNotificationSettings");
-}
-- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
-{
-    if(![Utility finishLoadSharedData])
+    NSLog(@"didReceiveRemoteNotification: %@", userInfo);
+    
+    
+    NSDictionary *myAps = [userInfo objectForKey:@"aps"];
+    NSString *categoryIdentifier = [myAps objectForKey:@"category"];
+    if([categoryIdentifier isEqualToString:@"updateStatus"])
     {
-        return;
+        NSNumber *receiptID = [myAps objectForKey:@"receiptID"];
+        
+        
+        Receipt *receipt = [Receipt getReceipt:[receiptID integerValue]];
+        if(receipt)
+        {
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRatingUpdateAndReload withData:receipt];
+        }
+        else
+        {
+            Receipt *receipt = [[Receipt alloc]init];
+            receipt.receiptID = [receiptID integerValue];
+            
+            
+            _homeModel = [[HomeModel alloc]init];
+            _homeModel.delegate = self;
+            [_homeModel downloadItems:dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload withData:receipt];
+        }
     }
+    completionHandler(UIBackgroundFetchResultNewData);
     
     
-    NSLog(@"Received notification: %@", userInfo);
-
+    
+    //    if (application.applicationState == UIApplicationStateBackground)
+    
+    //    if(application.applicationState == UIApplicationStateInactive)
+    //    {
+    //
+    //        NSLog(@"Inactive");
+    //
+    //        //Show the view with the content of the push
+    //
+    //        completionHandler(UIBackgroundFetchResultNewData);
+    //
+    //    }
+    //    else if (application.applicationState == UIApplicationStateBackground)
+    //    {
+    //
+    //        NSLog(@"Background");
+    //
+    //        //Refresh the local model
+    //
+    //        completionHandler(UIBackgroundFetchResultNewData);
+    //    }
+    //    else
+    //    {
+    //
+    //        NSLog(@"Active");
+    //
+    //        //Show an in-app banner
+    //
+    //        completionHandler(UIBackgroundFetchResultNewData);
+    //    }
 }
-
-//- (void)itemsSynced:(NSArray *)items
-//{
-//    NSLog(@"items count: %ld",[items count]);
-//    if([items count] == 0)
-//    {
-//        UINavigationController * navigationController = self.navController;
-//        UIViewController *viewController = navigationController.visibleViewController;
-//        SEL s = NSSelectorFromString(@"removeOverlayViews");
-//        if([viewController respondsToSelector:s])
-//        {
-//            [viewController performSelector:s];
-//        }
-//
-//        return;
-//    }
-//
-//
-//    NSMutableArray *pushSyncList = [[NSMutableArray alloc]init];
-//
-//
-//    //type == exit
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-//
-//
-//        if([type isEqualToString:@"exitApp"])
-//        {
-//            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-//            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-//            {
-//                continue;
-//            }
-//            else
-//            {
-//                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-//                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-//                [PushSync addObject:pushSync];
-//                [pushSyncList addObject:pushSync];
-//            }
-//
-//
-//            NSString *title = @"มีการปรับปรุงแอพ";
-//            NSString *message = @"กรุณาเปิดแอพใหม่อีกครั้งเพื่อใช้งาน";
-//
-//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-//                                                                           message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-//
-//            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-//            [attrStringTitle addAttribute:NSFontAttributeName
-//                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-//                                    range:NSMakeRange(0, title.length)];
-//            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-//                                    value:cSystem4
-//                                    range:NSMakeRange(0, title.length)];
-//            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-//
-//
-//            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-//            [attrStringMsg addAttribute:NSFontAttributeName
-//                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-//                                  range:NSMakeRange(0, message.length)];
-//            [attrStringMsg addAttribute:NSForegroundColorAttributeName
-//                                  value:cSystem4
-//                                  range:NSMakeRange(0, message.length)];
-//            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-//
-//
-//
-//
-//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                                  handler:^(UIAlertAction * action)
-//                                            {
-//                                                exit(0);
-//                                            }];
-//
-//            [alert addAction:defaultAction];
-//            [self.vc presentViewController:alert animated:YES completion:nil];
-//
-//
-//            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-//            UIColor *color = cSystem1;
-//            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-//            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-//
-//            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-//            label.attributedText = attrString;
-//        }
-//    }
-//
-//
-//
-//
-//
-//
-//    //type == alert
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-//        NSArray *data = [payload objectForKey:@"data"];
-//
-//
-//        if([type isEqualToString:@"alert"])
-//        {
-//            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-//            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-//            {
-//                continue;
-//            }
-//            else
-//            {
-//                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-//                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-//                [PushSync addObject:pushSync];
-//                [pushSyncList addObject:pushSync];
-//            }
-//
-//
-//            NSString *title = [Utility getSqlFailTitle];
-//            NSString *message = [NSString stringWithFormat:@"%@ is fail",[(NSDictionary *)data objectForKey:@"alert"]];
-//
-//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-//                                                                           message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-//
-//            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-//            [attrStringTitle addAttribute:NSFontAttributeName
-//                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-//                                    range:NSMakeRange(0, title.length)];
-//            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-//                                    value:cSystem4
-//                                    range:NSMakeRange(0, title.length)];
-//            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-//
-//
-//            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-//            [attrStringMsg addAttribute:NSFontAttributeName
-//                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-//                                  range:NSMakeRange(0, message.length)];
-//            [attrStringMsg addAttribute:NSForegroundColorAttributeName
-//                                  value:cSystem4
-//                                  range:NSMakeRange(0, message.length)];
-//            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-//
-//
-//
-//
-//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                                  handler:^(UIAlertAction * action)
-//                                            {
-//                                                SEL s = NSSelectorFromString(@"loadingOverlayView");
-//                                                [self.vc performSelector:s];
-//                                                [_homeModel downloadItems:dbMaster];
-//                                            }];
-//
-//            [alert addAction:defaultAction];
-//            [self.vc presentViewController:alert animated:YES completion:nil];
-//
-//
-//            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-//            UIColor *color = cSystem1;
-//            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-//            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-//
-//            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-//            label.attributedText = attrString;
-//
-//
-//        }
-//    }
-//
-//
-//
-//    //type == usernameconflict
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-//        NSArray *data = [payload objectForKey:@"data"];
-//
-//
-//        if([type isEqualToString:@"usernameconflict"])
-//        {
-//            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-//            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-//            {
-//                continue;
-//            }
-//            else
-//            {
-//                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-//                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-//                [PushSync addObject:pushSync];
-//                [pushSyncList addObject:pushSync];
-//            }
-//
-//
-//            //you have login in another device และ unwind to หน้า sign in
-//            if(![self.vc isMemberOfClass:[LogInViewController class]])
-//            {
-//                NSString *title = @"";
-//                NSString *message = @"Username นี้กำลังถูกใช้เข้าระบบที่เครื่องอื่น";
-//
-//                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-//                                                                               message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-//
-//                NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-//                [attrStringTitle addAttribute:NSFontAttributeName
-//                                        value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-//                                        range:NSMakeRange(0, title.length)];
-//                [attrStringTitle addAttribute:NSForegroundColorAttributeName
-//                                        value:cSystem4
-//                                        range:NSMakeRange(0, title.length)];
-//                [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-//
-//
-//                NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-//                [attrStringMsg addAttribute:NSFontAttributeName
-//                                      value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-//                                      range:NSMakeRange(0, message.length)];
-//                [attrStringMsg addAttribute:NSForegroundColorAttributeName
-//                                      value:cSystem4
-//                                      range:NSMakeRange(0, message.length)];
-//                [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-//
-//
-//
-//
-//                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                                      handler:^(UIAlertAction * action)
-//                                                {
-//                                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                                                    LogInViewController *logInViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogInViewController"];
-//                                                    [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
-//                                                }];
-//
-//                [alert addAction:defaultAction];
-//                [self.vc presentViewController:alert animated:YES completion:nil];
-//
-//
-//                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-//                UIColor *color = cSystem1;
-//                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-//                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-//
-//                UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-//                label.attributedText = attrString;
-//
-//
-//
-//            }
-//        }
-//    }
-//
-//
-//
-//
-//    //type == currentUserAccount
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-//        NSArray *data = [payload objectForKey:@"data"];
-//
-//
-//        if([type isEqualToString:@"currentUserAccount"])
-//        {
-//            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-//            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-//            {
-//                continue;
-//            }
-//            else
-//            {
-//                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-//                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-//                [PushSync addObject:pushSync];
-//                [pushSyncList addObject:pushSync];
-//            }
-//
-//
-//            NSDictionary *jsonElement = data[0];
-//            NSObject *object = [[NSClassFromString(@"UserAccount") alloc] init];
-//
-//            unsigned int propertyCount = 0;
-//            objc_property_t * properties = class_copyPropertyList([object class], &propertyCount);
-//
-//            for (unsigned int i = 0; i < propertyCount; ++i)
-//            {
-//                objc_property_t property = properties[i];
-//                const char * name = property_getName(property);
-//                NSString *key = [NSString stringWithUTF8String:name];
-//
-//
-//                NSString *dbColumnName = [Utility makeFirstLetterUpperCase:key];
-//                if(!jsonElement[dbColumnName])
-//                {
-//                    continue;
-//                }
-//
-//
-//                if([Utility isDateColumn:dbColumnName])
-//                {
-//                    NSDate *date = [Utility stringToDate:jsonElement[dbColumnName] fromFormat:@"yyyy-MM-dd HH:mm:ss"];
-//                    [object setValue:date forKey:key];
-//                }
-//                else
-//                {
-//                    [object setValue:jsonElement[dbColumnName] forKey:key];
-//                }
-//            }
-//
-//            [UserAccount setCurrentUserAccount:(UserAccount *)object];
-//        }
-//    }
-//
-//
-//
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        NSString *action = [payload objectForKey:@"action"];
-//        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-//        NSArray *data = [payload objectForKey:@"data"];
-//
-//
-//        //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-//        if([PushSync alreadySynced:[strPushSyncID integerValue]])
-//        {
-//            continue;
-//        }
-//        else
-//        {
-//            //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-//            PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-//            [PushSync addObject:pushSync];
-//            [pushSyncList addObject:pushSync];
-//        }
-//
-//
-//
-//        if([data isKindOfClass:[NSArray class]])
-//        {
-//            [Utility itemsSynced:type action:action data:data];
-//        }
-//    }
-//
-//
-//    //update pushsync ที่ sync แล้ว
-//    if([pushSyncList count]>0)
-//    {
-//        NSLog(@"push sync list count: %ld",[pushSyncList count]);
-//        [_homeModel updateItems:dbPushSyncUpdateTimeSynced withData:pushSyncList actionScreen:@"Update synced time"];
-//    }
-//
-//
-//    //ให้ refresh ข้อมูลที่ Show ที่หน้านั้นหลังจาก sync ข้อมูลมาใหม่ ตอนนี้ทำเฉพาะหน้า OrderTakingViewController ก่อน
-//    NSMutableArray *arrAllType = [[NSMutableArray alloc]init];
-//    for(int j=0; j<[items count]; j++)
-//    {
-//        NSDictionary *payload = items[j];
-//        NSString *type = [payload objectForKey:@"type"];
-//        [arrAllType addObject:type];
-//    }
-//    if([items count] > 0)
-//    {
-//        BOOL loadViewProcess = NO;
-//        NSArray *arrReferenceTable;
-//
-//    }
-//}
 
 - (void)itemsUpdated
 {
@@ -696,17 +431,37 @@ void myExceptionHandler(NSException *exception)
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    if(![Utility finishLoadSharedData])
+    
+    //reload when in receipt summary and orderDetail vc
+    //Get current vc
+    CustomViewController *currentVc;
+    CustomViewController *parentViewController = (CustomViewController *)[[[UIApplication sharedApplication] delegate] window].rootViewController;
+    
+    while (parentViewController.presentedViewController != nil && ![parentViewController.presentedViewController isKindOfClass:[UIAlertController class]])
     {
-        return;
+        parentViewController = (CustomViewController *)parentViewController.presentedViewController;
+    }
+    if([parentViewController isKindOfClass:[UITabBarController class]])
+    {
+        currentVc = ((UITabBarController *)parentViewController).selectedViewController;
+    }
+    else
+    {
+        currentVc = parentViewController;
     }
     
     
-    //load shared at the begining of everyday
-    NSDictionary *todayLoadShared = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"todayLoadShared"];
-    NSString *strCurrentDate = [Utility dateToString:[Utility currentDateTime] toFormat:@"yyyy-MM-dd"];
-    NSString *alreadyLoaded = [todayLoadShared objectForKey:strCurrentDate];
     
+    if([currentVc isKindOfClass:[ReceiptSummaryViewController class]])
+    {
+        ReceiptSummaryViewController *vc = (ReceiptSummaryViewController *)currentVc;
+        [vc reloadTableView];
+    }
+    else if([currentVc isKindOfClass:[OrderDetailViewController class]])
+    {
+        OrderDetailViewController *vc = (OrderDetailViewController *)currentVc;
+        [vc reloadTableView];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -718,19 +473,138 @@ void myExceptionHandler(NSException *exception)
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
-//-(void)itemsDownloaded:(NSArray *)items
-//{
-//
-//    [Utility itemsDownloaded:items];
-//    {
-//        SEL s = NSSelectorFromString(@"loadViewProcess");
-//        [self.vc performSelector:s];
-//    }
-//    {
-//        SEL s = NSSelectorFromString(@"removeOverlayViews");
-//        [self.vc performSelector:s];
-//    }
-//}
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
+{
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbReceiptDisputeRating || homeModel.propCurrentDB == dbReceiptDisputeRatingAllAfterReceipt)
+    {
+        //update
+        NSLog(@"before updateSharedObject ");
+        
+        [Utility updateSharedObject:items];
+        NSLog(@"after updateSharedObject");
+        
+        
+        //ไม่ว่าอยู่หน้าไหน ให้ไปที่หน้า orderDetail
+        //หาก unwind ให้ scroll ไปที่ receipt ใบนั้น
+        //reload when in receipt summary and orderDetail vc
+        //Get current vc
+        CustomViewController *currentVc;
+        CustomViewController *parentViewController = (CustomViewController *)[[[UIApplication sharedApplication] delegate] window].rootViewController;
+        
+        while (parentViewController.presentedViewController != nil && ![parentViewController.presentedViewController isKindOfClass:[UIAlertController class]])
+        {
+            parentViewController = (CustomViewController *)parentViewController.presentedViewController;
+        }
+        if([parentViewController isKindOfClass:[UITabBarController class]])
+        {
+            currentVc = ((UITabBarController *)parentViewController).selectedViewController;
+        }
+        else
+        {
+            currentVc = parentViewController;
+        }
+        
+        
+        
+        
+        NSMutableArray *receiptList = items[0];
+        Receipt *receipt = receiptList[0];
+        Receipt *selectedReceipt = [Receipt getReceipt:receipt.receiptID];
+        if([currentVc isKindOfClass:[OrderDetailViewController class]])
+        {
+            OrderDetailViewController *vc = (OrderDetailViewController *)currentVc;
+            vc.receipt = selectedReceipt;
+            [vc reloadTableView];
+        }
+        else if([currentVc isKindOfClass:[ConfirmDisputeViewController class]] || [currentVc isKindOfClass:[DisputeFormViewController class]] || [currentVc isKindOfClass:[CommentRatingViewController class]])
+        {
+            currentVc.selectedReceipt = selectedReceipt;
+            currentVc.showOrderDetail = 1;
+            [currentVc performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
+        }
+        else if([currentVc isKindOfClass:[ReceiptSummaryViewController class]])
+        {
+            ReceiptSummaryViewController *vc = (ReceiptSummaryViewController *)currentVc;
+            [vc segueToOrderDetailAuto:selectedReceipt];
+        }
+        else if([currentVc isKindOfClass:[MeViewController class]])
+        {
+            MeViewController *vc = (MeViewController *)currentVc;
+            vc.selectedReceipt = selectedReceipt;
+            vc.showOrderDetail = 1;
+            [vc segueToReceiptSummaryAuto];
+        }
+        else if([currentVc isKindOfClass:[CommentViewController class]] ||
+                [currentVc isKindOfClass:[BasketViewController class]] ||
+                [currentVc isKindOfClass:[BranchSearchViewController class]] ||
+                [currentVc isKindOfClass:[CreditCardAndOrderSummaryViewController class]] ||
+                [currentVc isKindOfClass:[CreditCardViewController class]] ||
+                [currentVc isKindOfClass:[CustomerTableSearchViewController class]] ||
+                [currentVc isKindOfClass:[HotDealDetailViewController class]] ||
+                [currentVc isKindOfClass:[MenuSelectionViewController class]] ||
+                [currentVc isKindOfClass:[MyRewardViewController class]] ||
+                [currentVc isKindOfClass:[NoteViewController class]] ||
+                [currentVc isKindOfClass:[PaymentCompleteViewController class]] ||
+                [currentVc isKindOfClass:[PersonalDataViewController class]] ||
+                [currentVc isKindOfClass:[RecommendShopViewController class]] ||
+                [currentVc isKindOfClass:[RewardDetailViewController class]] ||
+                [currentVc isKindOfClass:[RewardRedemptionViewController class]] ||
+                [currentVc isKindOfClass:[SelectPaymentMethodViewController class]] ||
+                [currentVc isKindOfClass:[TosAndPrivacyPolicyViewController class]])
+        {
+            currentVc.selectedReceipt = selectedReceipt;
+            currentVc.showOrderDetail = 1;
+            [currentVc performSegueWithIdentifier:@"segUnwindToMe" sender:self];            
+        }
+        else if([currentVc isKindOfClass:[HotDealViewController class]] || [currentVc isKindOfClass:[RewardViewController class]] || [currentVc isKindOfClass:[QRCodeScanTableViewController class]])
+        {
+            currentVc.tabBarController.selectedIndex = 3;//meViewController
+            MeViewController *vc = currentVc.tabBarController.selectedViewController;
+            vc.selectedReceipt = selectedReceipt;
+            vc.showOrderDetail = 1;
+            [vc segueToReceiptSummaryAuto];
+        }
+    }
+    else if(homeModel.propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || homeModel.propCurrentDB == dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload)
+    {
+        //update
+        [Utility updateSharedObject:items];
+        
+        
+        
+        //reload when in receipt summary and orderDetail vc
+        //Get current vc
+        CustomViewController *currentVc;
+        CustomViewController *parentViewController = (CustomViewController *)[[[UIApplication sharedApplication] delegate] window].rootViewController;
+        
+        while (parentViewController.presentedViewController != nil && ![parentViewController.presentedViewController isKindOfClass:[UIAlertController class]])
+        {
+            parentViewController = (CustomViewController *)parentViewController.presentedViewController;
+        }
+        if([parentViewController isKindOfClass:[UITabBarController class]])
+        {
+            currentVc = ((UITabBarController *)parentViewController).selectedViewController;
+        }
+        else
+        {
+            currentVc = parentViewController;
+        }
+        
+        
+        
+        if([currentVc isKindOfClass:[ReceiptSummaryViewController class]])
+        {
+            ReceiptSummaryViewController *vc = (ReceiptSummaryViewController *)currentVc;
+            [vc reloadTableView];
+        }
+        else if([currentVc isKindOfClass:[OrderDetailViewController class]])
+        {
+            OrderDetailViewController *vc = (OrderDetailViewController *)currentVc;
+            [vc reloadTableView];
+        }
+    }
+}
 
 - (void) connectionFail
 {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HomeModel.h"
 #import "Utility.h"
+#import "Receipt.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
 
@@ -23,6 +24,8 @@
 @property (nonatomic,retain) UILabel *lblAlertMsg;
 @property (nonatomic,retain) UILabel *lblWaiting;
 @property (nonatomic,retain) UIToolbar *toolBar;
+@property (nonatomic,retain) Receipt *selectedReceipt;
+@property (nonatomic) BOOL showOrderDetail;
 
 
 -(void)setCurrentVc;
@@ -71,4 +74,5 @@
 -(UIImage *)imageFromView:(UIView *)view;
 -(NSAttributedString *)setAttributedString:(NSString *)title text:(NSString *)text;
 -(void)dismissKeyboard;
+//-(void)segueToOrderDetail:(Receipt *)receipt;
 @end

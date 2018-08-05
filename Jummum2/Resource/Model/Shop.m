@@ -108,8 +108,8 @@
         ((Shop *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Shop *)copy).replaceSelf = self.replaceSelf;
-        ((Shop *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

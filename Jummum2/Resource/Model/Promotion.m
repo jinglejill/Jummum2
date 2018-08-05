@@ -149,8 +149,8 @@
         ((Promotion *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Promotion *)copy).replaceSelf = self.replaceSelf;
-        ((Promotion *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

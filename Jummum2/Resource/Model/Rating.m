@@ -107,8 +107,8 @@
         [copy setComment:self.comment];
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Rating *)copy).replaceSelf = self.replaceSelf;
-        ((Rating *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

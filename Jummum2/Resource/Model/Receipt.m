@@ -159,8 +159,8 @@
         ((Receipt *)copy).mergeReceiptID = self.mergeReceiptID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Receipt *)copy).replaceSelf = self.replaceSelf;
-        ((Receipt *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;
@@ -372,6 +372,26 @@
     return [Utility notIdentifiedDate];
 }
 
++(Receipt *)getReceiptWithMaxModifiedDateWithMemberID:(NSInteger)memberID
+{
+    NSMutableArray *dataList = [SharedReceipt sharedReceipt].receiptList;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"_memberID = %ld",memberID];
+    NSArray *filterArray = [dataList filteredArrayUsingPredicate:predicate];
+    
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"_modifiedDate" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    NSArray *sortArray = [filterArray sortedArrayUsingDescriptors:sortDescriptors];
+    
+    if([sortArray count] > 0)
+    {
+        Receipt *receipt = sortArray[0];
+        return receipt;
+    }
+    
+    return nil;
+}
+
 +(void)updateStatusList:(NSMutableArray *)receiptList
 {
     NSMutableArray *dataList = [SharedReceipt sharedReceipt].receiptList;
@@ -571,5 +591,30 @@
     }
     
     return 0;
+}
+
++(NSInteger)getIndex:(NSMutableArray *)receiptList receipt:(Receipt *)receipt
+{
+    NSInteger i;
+    for(i=0; i<[receiptList count]; i++)
+    {
+        Receipt *item = receiptList[i];
+        if(item.receiptID == receipt.receiptID)
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
++(NSInteger)getPriorStatus:(Receipt *)receipt
+{
+    NSArray *arrStatus = [receipt.statusRoute componentsSeparatedByString: @","];
+    if([arrStatus count] >= 2)
+    {
+        return [arrStatus[[arrStatus count]-2] integerValue];
+    }
+    return 0;
+    
 }
 @end

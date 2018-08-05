@@ -157,8 +157,8 @@
         [copy setDeviceTokenReceiveOrder:self.deviceTokenReceiveOrder];
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Branch *)copy).replaceSelf = self.replaceSelf;
-        ((Branch *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

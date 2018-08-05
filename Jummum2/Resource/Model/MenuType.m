@@ -110,8 +110,8 @@
         ((MenuType *)copy).orderNo = self.orderNo;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((MenuType *)copy).replaceSelf = self.replaceSelf;
-        ((MenuType *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

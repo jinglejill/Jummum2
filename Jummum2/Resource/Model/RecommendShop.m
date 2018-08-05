@@ -106,8 +106,8 @@
         ((RecommendShop *)copy).type = self.type;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((RecommendShop *)copy).replaceSelf = self.replaceSelf;
-        ((RecommendShop *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

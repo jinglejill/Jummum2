@@ -106,8 +106,8 @@
         ((UserRewardRedemptionUsed *)copy).receiptID = self.receiptID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((UserRewardRedemptionUsed *)copy).replaceSelf = self.replaceSelf;
-        ((UserRewardRedemptionUsed *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

@@ -133,7 +133,10 @@
 
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
 {
-    [viewController dismissViewControllerAnimated:YES completion:nil];
-    [self performSegueWithIdentifier:@"segUnwindToLaunchScreen" sender:self];
+//    [viewController dismissViewControllerAnimated:YES completion:nil];
+    [viewController dismissViewControllerAnimated:YES completion:^{
+        [self performSegueWithIdentifier:@"segUnwindToLaunchScreen" sender:self];
+    }];
+    
 }
 @end

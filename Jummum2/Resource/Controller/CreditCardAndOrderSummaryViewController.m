@@ -166,6 +166,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
     }
     else
     {
+        [CreditCard setCurrentCreditCard:_creditCard];
         [self performSegueWithIdentifier:@"segUnwindToBasket" sender:self];
     }
 }
@@ -342,26 +343,33 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
     }
     
     
-    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    NSMutableDictionary *dicCreditCard = [[[NSUserDefaults standardUserDefaults] objectForKey:@"creditCard"] mutableCopy];
-    if(dicCreditCard)
+    
+    //set credit card
+    _creditCard = [CreditCard getCurrentCreditCard];
+    if(!_creditCard)
     {
-        NSMutableArray *creditCardList = [dicCreditCard objectForKey:userAccount.username];
-        if(creditCardList && [creditCardList count] > 0)
+        UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+        NSMutableDictionary *dicCreditCard = [[[NSUserDefaults standardUserDefaults] objectForKey:@"creditCard"] mutableCopy];
+        if(dicCreditCard)
         {
-            _creditCard = [CreditCard getPrimaryCard:creditCardList];
+            NSMutableArray *creditCardList = [dicCreditCard objectForKey:userAccount.username];
+            if(creditCardList && [creditCardList count] > 0)
+            {
+                _creditCard = [CreditCard getPrimaryCard:creditCardList];
+            }
+            else
+            {
+                _creditCard = [[CreditCard alloc]init];
+                _creditCard.saveCard = 1;
+            }
         }
         else
         {
             _creditCard = [[CreditCard alloc]init];
             _creditCard.saveCard = 1;
-        }        
+        }
     }
-    else
-    {
-        _creditCard = [[CreditCard alloc]init];
-        _creditCard.saveCard = 1;
-    }
+    
 
     
     
@@ -590,8 +598,8 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
                         
                         
                         cell.txtFirstName.text = _creditCard.firstName;
-                        cell.txtLastName.text = _creditCard.lastName;
-                        cell.txtCardNo.text = _creditCard.creditCardNo;
+                        cell.txtLastName.text = _creditCard.lastName;                        
+                        cell.txtCardNo.text = [OMSCardNumber format:_creditCard.creditCardNo];
                         cell.txtMonth.text = _creditCard.month == 0?@"":[NSString stringWithFormat:@"%02ld",_creditCard.month];
                         cell.txtYear.text = _creditCard.year == 0?@"":[NSString stringWithFormat:@"%02ld",_creditCard.year];;
                         cell.txtCCV.text = _creditCard.ccv;
@@ -698,6 +706,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
                     
                     cell.textLabel.text = @"เลือกบัตรเครดิต";
                     cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+                    cell.textLabel.textColor = cSystem4;
                     cell.detailTextLabel.text = @">";
                     cell.detailTextLabel.textColor = cSystem4;
                     
@@ -1744,6 +1753,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
 {
     if([items count] == 1)
     {
+        [self removeWaitingView];
         _btnPay.enabled = YES;
         NSMutableArray *messageList = items[0];
         Message *message = messageList[0];
@@ -1753,13 +1763,13 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
     {
         [self removeWaitingView];
         [OrderTaking removeCurrentOrderTakingList];
+        [CreditCard removeCurrentCreditCard];
         
         
         [Utility addToSharedDataList:items];
         NSMutableArray *receiptList = items[0];
         Receipt *receipt = receiptList[0];
         _receipt = receipt;
-        [self.homeModel insertItems:dbPushReminder withData:@[branch,receipt] actionScreen:@"push reminder"];
         [self performSegueWithIdentifier:@"segPaymentComplete" sender:self];
     }
     

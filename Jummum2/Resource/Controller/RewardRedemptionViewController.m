@@ -87,7 +87,9 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     {
         NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPointSpent.modifiedDate];
         _timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
+        [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
         timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
     
 }

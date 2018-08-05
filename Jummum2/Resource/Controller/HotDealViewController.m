@@ -155,8 +155,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 
         
         
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -194,8 +193,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {
@@ -244,8 +242,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
         
         
-        NSString *imageFileName = [Utility isStringEmpty:promotion.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./Image/Promotion/%@",promotion.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {

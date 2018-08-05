@@ -18,8 +18,9 @@
 @property (nonatomic) NSInteger orderNo;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+@property (nonatomic) NSInteger branchID;
+
 
 -(Note *)initWithName:(NSString *)name price:(float)price noteTypeID:(NSInteger)noteTypeID type:(NSInteger)type status:(NSInteger)status orderNo:(NSInteger)orderNo;
 +(NSInteger)getNextID;
@@ -35,5 +36,5 @@
 +(NSMutableArray *)getNoteListWithStatus:(NSInteger)status noteList:(NSMutableArray *)noteList;
 +(NSMutableArray *)getNoteListWithNoteTypeID:(NSInteger)noteTypeID type:(NSInteger)type noteList:(NSMutableArray *)noteList;
 +(NSMutableArray *)getNoteListWithNoteTypeID:(NSInteger)noteTypeID noteList:(NSMutableArray *)noteList;
-
++(Note *)getNote:(NSInteger)noteID branchID:(NSInteger)branchID;
 @end

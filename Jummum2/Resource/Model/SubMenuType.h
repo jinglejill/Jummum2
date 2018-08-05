@@ -16,8 +16,8 @@
 @property (nonatomic) NSInteger status;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(SubMenuType *)initWithMenuTypeID:(NSInteger)menuTypeID name:(NSString *)name orderNo:(NSInteger)orderNo status:(NSInteger)status;
 +(NSInteger)getNextID;

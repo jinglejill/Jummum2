@@ -18,8 +18,8 @@
 @property (nonatomic) NSInteger status;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 @property (nonatomic) NSInteger branchID;
 

@@ -21,6 +21,7 @@
 #import "Setting.h"
 #import "Utility.h"
 #import "Message.h"
+#import "CreditCard.h"
 
 
 @interface MenuSelectionViewController ()
@@ -143,8 +144,9 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         }
         else
         {
-            [OrderTaking removeCurrentOrderTakingList];
             [Menu removeCurrentMenuList];
+            [OrderTaking removeCurrentOrderTakingList];            
+            [CreditCard removeCurrentCreditCard];
             lblTotalQuantity.text = @"0";
             lblTotalQuantityTop.text = @"";
             lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
@@ -165,10 +167,11 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         [self loadingOverlayView];
         self.homeModel = [[HomeModel alloc]init];
         self.homeModel.delegate = self;
-        [self.homeModel downloadItems:dbMenuList withData:branch.dbName];
+        [self.homeModel downloadItems:dbMenuList withData:branch];
     }
     else
     {
+
         _menuTypeList = [MenuType getMenuTypeList];
         _menuNoteList = [MenuNote getMenuNoteList];
         _noteList = [Note getNoteList];
@@ -180,6 +183,10 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         
         _filterMenuList = _menuList;
         [self setData];
+        
+        
+        
+        
         
         
         
@@ -317,7 +324,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             }
             else
             {
-                [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:menu.imageUrl type:1 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {
@@ -423,31 +430,28 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         
         _menuList = [items[1] mutableCopy];
         _menuTypeList = [items[2] mutableCopy];
-        _menuNoteList = [items[3] mutableCopy];
-        _noteList = [items[4] mutableCopy];
-        _noteTypeList = [items[5] mutableCopy];
-        _subMenuTypeList = [items[6] mutableCopy];
-        _specialPriceProgramList = [items[7] mutableCopy];
+        _noteList = [items[3] mutableCopy];
+        _noteTypeList = [items[4] mutableCopy];
+        _specialPriceProgramList = [items[5] mutableCopy];
         _menuTypeList = [MenuType sortList:_menuTypeList];
         
         
-        _menuList = [Menu setBranchID:branch.branchID menuList:_menuList];
+//        _menuList = [Menu setBranchID:branch.branchID menuList:_menuList];
         _filterMenuList = _menuList;
         [Menu setCurrentMenuList:_menuList];
         
-        
-        [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
-        [MenuType setSharedData:_menuTypeList];
-        [MenuNote setSharedData:_menuNoteList];
-        [Note setSharedData:_noteList];
-        [NoteType setSharedData:_noteTypeList];
-        [SubMenuType setSharedData:_subMenuTypeList];
-        [SpecialPriceProgram setSharedData:_specialPriceProgramList];
+        [Utility updateSharedObject:items];
+//        [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
+//        [MenuType setSharedData:_menuTypeList];
+//        [Note setSharedData:_noteList];
+//        [NoteType setSharedData:_noteTypeList];
+//        [SpecialPriceProgram setSharedData:_specialPriceProgramList];
         
         
         
         [self setData];
         [self removeOverlayViews];
+              
     }
     else if(homeModel.propCurrentDB == dbOpeningTime)
     {
@@ -460,6 +464,11 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตนเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
             [self showAlert:@"" message:message];
         }
+    }
+    else if(homeModel.propCurrentDB == dbMenuNoteList)
+    {
+        _menuNoteList = [items[0] mutableCopy];
+        [MenuNote setSharedData:_menuNoteList];
     }
 }
 

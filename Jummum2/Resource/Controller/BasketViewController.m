@@ -23,6 +23,7 @@
 #import "Promotion.h"
 #import "MenuType.h"
 #import "MenuNote.h"
+#import "CreditCard.h"
 
 
 #import "Utility.h"
@@ -146,7 +147,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     if([[segue identifier] isEqualToString:@"segNote"])
     {
         NoteViewController *vc = segue.destinationViewController;
-        vc.noteList = [MenuNote getNoteListWithMenuID:_orderTaking.menuID];//[MenuTypeNote getNoteListWithMenuTypeID:menu.menuTypeID];//[Note getNoteList];
+        vc.noteList = [MenuNote getNoteListWithMenuID:_orderTaking.menuID];
         vc.orderTaking = _orderTaking;
         vc.branch = branch;
     }
@@ -315,7 +316,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+            [self.homeModel downloadImageWithFileName:menu.imageUrl type:1 branchID:menu.branchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
                  if (succeeded)
                  {
@@ -653,6 +654,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
                                                       style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
                               {
                                   [OrderTaking removeCurrentOrderTakingList];
+                                  [CreditCard removeCurrentCreditCard];
                                   [tbvOrder reloadData];
                                   [tbvTotal reloadData];
                               }];
@@ -781,7 +783,7 @@ static NSString * const reuseIdentifierVoucherCode = @"CustomTableViewCellVouche
     
     
     
-    float takeAwayFee = orderTaking.takeAway?[[Setting getSettingValueWithKeyName:@"takeAwayFee"] floatValue]:0;
+    float takeAwayFee = orderTaking.takeAway?branch.takeAwayFee:0;
     SpecialPriceProgram *specialPriceProgram = [SpecialPriceProgram getSpecialPriceProgramTodayWithMenuID:menu.menuID branchID:branch.branchID];
     float specialPrice = specialPriceProgram?specialPriceProgram.specialPrice:menu.price;
     float sumNotePrice = [OrderNote getSumNotePriceWithOrderTakingID:orderTaking.orderTakingID];

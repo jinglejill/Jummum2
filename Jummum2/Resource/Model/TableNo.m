@@ -114,8 +114,8 @@
         ((TableNo *)copy).orderNo = self.orderNo;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((TableNo *)copy).replaceSelf = self.replaceSelf;
-        ((TableNo *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

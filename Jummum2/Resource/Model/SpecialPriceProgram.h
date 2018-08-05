@@ -16,8 +16,8 @@
 @property (nonatomic) float specialPrice;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 @property (nonatomic) NSInteger menuOrder;
 
 -(SpecialPriceProgram *)initWithMenuID:(NSInteger)menuID startDate:(NSDate *)startDate endDate:(NSDate *)endDate specialPrice:(float)specialPrice;

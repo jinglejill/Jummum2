@@ -16,8 +16,8 @@
 @property (nonatomic) NSInteger orderNo;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(DisputeReason *)initWithText:(NSString *)text type:(NSInteger)type status:(NSInteger)status orderNo:(NSInteger)orderNo;
 +(NSInteger)getNextID;

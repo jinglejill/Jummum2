@@ -15,8 +15,8 @@
 @property (nonatomic) NSInteger receiptID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(UserPromotionUsed *)initWithUserAccountID:(NSInteger)userAccountID promotionID:(NSInteger)promotionID receiptID:(NSInteger)receiptID;
 +(NSInteger)getNextID;

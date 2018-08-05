@@ -14,8 +14,8 @@
 @property (nonatomic) NSInteger picID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(MenuPic *)initWithMenuID:(NSInteger)menuID picID:(NSInteger)picID;
 +(NSInteger)getNextID;

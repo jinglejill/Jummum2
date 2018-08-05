@@ -104,8 +104,8 @@
         ((MenuPic *)copy).picID = self.picID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((MenuPic *)copy).replaceSelf = self.replaceSelf;
-        ((MenuPic *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

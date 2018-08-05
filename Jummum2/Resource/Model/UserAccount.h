@@ -24,8 +24,8 @@
 @property (nonatomic) NSInteger roleID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(UserAccount *)initWithUsername:(NSString *)username password:(NSString *)password deviceToken:(NSString *)deviceToken fullName:(NSString *)fullName nickName:(NSString *)nickName birthDate:(NSDate *)birthDate email:(NSString *)email phoneNo:(NSString *)phoneNo lineID:(NSString *)lineID roleID:(NSInteger)roleID;
 +(NSInteger)getNextID;

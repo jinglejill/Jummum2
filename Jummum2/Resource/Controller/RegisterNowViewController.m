@@ -108,7 +108,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
             break;
         case 5:
         {
-            _userAccount.phoneNo = [Utility trimString:textField.text];
+            _userAccount.phoneNo = [Utility removeDashAndSpaceAndParenthesis:[Utility trimString:textField.text]];
         }
             break;
         default:
@@ -193,6 +193,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.email;
                 cell.textValue.enabled = NO;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 1:
@@ -203,6 +204,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.fullName;
                 cell.textValue.enabled = NO;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 2:
@@ -214,6 +216,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 3:
@@ -221,10 +224,11 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.tag = 5;
                 cell.textValue.delegate = self;
                 cell.textValue.placeholder = @"เบอร์โทร.";
-                cell.textValue.text = _userAccount.phoneNo;
+                cell.textValue.text = [Utility setPhoneNoFormat:_userAccount.phoneNo];
                 cell.textValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
             }
                 break;
             default:
@@ -243,6 +247,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.username;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 1:
@@ -254,6 +259,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.secureTextEntry = YES;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 2:
@@ -264,6 +270,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = _userAccount.fullName;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 3:
@@ -275,6 +282,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.text = [Utility dateToString:_userAccount.birthDate toFormat:@"dd/MM/yyyy"];
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
             }
                 break;
             case 4:
@@ -282,10 +290,11 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
                 cell.textValue.tag = 5;
                 cell.textValue.delegate = self;
                 cell.textValue.placeholder = @"เบอร์โทร.";
-                cell.textValue.text = _userAccount.phoneNo;
+                cell.textValue.text = [Utility setPhoneNoFormat:_userAccount.phoneNo];
                 cell.textValue.keyboardType = UIKeyboardTypePhonePad;
                 cell.textValue.enabled = YES;
                 [cell.textValue setInputAccessoryView:self.toolBar];
+                [cell.textValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
             }
                 break;
             default:
@@ -452,8 +461,10 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     }
 }
 
-//-(void)dismissKeyboard
-//{
-//    [self.view endEditing:YES];
-//}
+-(void)txtPhoneNoDidChange:(id)sender
+{
+    UITextField *txtPhoneNo = sender;
+    txtPhoneNo.text = [Utility formatPhoneNo:[Utility removeDashAndSpaceAndParenthesis:txtPhoneNo.text]];
+}
+
 @end

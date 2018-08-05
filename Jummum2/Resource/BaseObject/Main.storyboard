@@ -264,7 +264,6 @@
                                         </state>
                                         <connections>
                                             <action selector="cancel:" destination="FCG-tI-fuZ" eventType="touchUpInside" id="VpV-dO-jDJ"/>
-                                            <action selector="dismiss:" destination="FCG-tI-fuZ" eventType="touchUpInside" id="BNJ-FP-i3f"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6Z-EQ-fXs">
@@ -449,7 +448,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSi-8h-xet" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="w8g-Xt-JeV" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1808.8" y="465.51724137931041"/>
+            <point key="canvasLocation" x="1809" y="503"/>
         </scene>
         <!--Menu Selection View Controller-->
         <scene sceneID="CLH-cF-aPR">
@@ -629,12 +628,13 @@
                         <segue destination="uX0-Uh-PuC" kind="unwind" identifier="segUnwindToQRCodeScanTable" unwindAction="unwindToQRCodeScanTable:" id="05Q-MX-YmP"/>
                         <segue destination="uX0-Uh-PuC" kind="unwind" identifier="segUnwindToBranchSearch" unwindAction="unwindToBranchSearch:" id="j6R-b8-eDc"/>
                         <segue destination="70l-RA-GXn" kind="show" identifier="segViewBasket" id="dN2-SP-tDV"/>
+                        <segue destination="uX0-Uh-PuC" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="B91-5l-tii"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o17-jl-gGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="uX0-Uh-PuC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3948" y="466"/>
+            <point key="canvasLocation" x="4156" y="503"/>
         </scene>
         <!--Basket View Controller-->
         <scene sceneID="r7k-Rg-bvf">
@@ -776,12 +776,13 @@
                         <segue destination="Dcg-zW-Rtj" kind="unwind" identifier="segUnwindToMenuSelection" unwindAction="unwindToMenuSelection:" id="5P5-MJ-jAj"/>
                         <segue destination="Epz-hG-mda" kind="show" identifier="segNote" id="YS1-3z-Ely"/>
                         <segue destination="uxx-Px-8LI" kind="show" identifier="segCreditCardAndOrderSummary" id="MmB-Bw-Sra"/>
+                        <segue destination="Dcg-zW-Rtj" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="g5u-cS-qYM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15h-Zo-VrG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Dcg-zW-Rtj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4789.6000000000004" y="466.41679160419795"/>
+            <point key="canvasLocation" x="4884" y="504"/>
         </scene>
         <!--Credit Card And Order Summary View Controller-->
         <scene sceneID="fTn-Dq-KHe">
@@ -930,12 +931,13 @@
                         <segue destination="pEA-cg-oFG" kind="unwind" identifier="segUnwindToReceiptSummary" unwindAction="unwindToReceiptSummary:" id="76E-xe-TCQ"/>
                         <segue destination="pEA-cg-oFG" kind="unwind" identifier="segUnwindToOrderDetail" unwindAction="unwindToOrderDetail:" id="IlM-w0-RME"/>
                         <segue destination="pEA-cg-oFG" kind="unwind" identifier="segUnwindToQRScanTable" unwindAction="unwindToQRCodeScanTable:" id="3nh-nw-2bt"/>
+                        <segue destination="pEA-cg-oFG" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="lof-As-eq3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TxL-MH-V7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="pEA-cg-oFG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5636" y="466.41679160419795"/>
+            <point key="canvasLocation" x="5713" y="503"/>
         </scene>
         <!--Select Payment Method View Controller-->
         <scene sceneID="kje-YX-BPl">
@@ -1042,12 +1044,13 @@
                         <outlet property="tbvData" destination="Lzl-bO-gMA" id="Mud-t0-74x"/>
                         <outlet property="topViewHeight" destination="h5d-sU-oBQ" id="67o-vg-d0d"/>
                         <segue destination="MTK-aL-bNu" kind="unwind" identifier="segUnwindToCreditCardAndOrderSummary" unwindAction="unwindToCreditCardAndOrderSummary:" id="flj-p2-MsD"/>
+                        <segue destination="MTK-aL-bNu" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="aGL-2J-5p4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GrZ-zL-Hxd" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MTK-aL-bNu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6340" y="465.51724137931041"/>
+            <point key="canvasLocation" x="6479" y="501"/>
         </scene>
         <!--Note View Controller-->
         <scene sceneID="eYu-ud-cqq">
@@ -1126,12 +1129,13 @@
                         <outlet property="btnConfirm" destination="8ui-pw-Mu5" id="MPw-ir-6pf"/>
                         <outlet property="colVwNote" destination="slD-tm-mGF" id="SwE-yK-Vng"/>
                         <segue destination="J82-vS-oAh" kind="unwind" identifier="segUnwindToBasket" unwindAction="unwindToBasket:" id="Iiu-NG-9Sg"/>
+                        <segue destination="J82-vS-oAh" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="Bya-m8-WSE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9GP-SR-hQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="J82-vS-oAh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4791" y="1233"/>
+            <point key="canvasLocation" x="4884" y="1287"/>
         </scene>
         <!--Branch Search-->
         <scene sceneID="PHN-TK-oa0">
@@ -1249,12 +1253,13 @@
                         <segue destination="p51-rT-9Bj" kind="show" identifier="segCustomerTableSearch" id="VWF-Um-mlZ"/>
                         <segue destination="oGW-Dn-caM" kind="show" identifier="segMenuSelection" id="Q01-98-W2a"/>
                         <segue destination="JqZ-I6-eQn" kind="show" identifier="segUnwindToQRCodeScanTable" id="bDK-E7-xJt"/>
+                        <segue destination="Ls5-2g-cA8" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="iII-la-thH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aFR-u0-cd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ls5-2g-cA8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1808.8" y="1181.5592203898052"/>
+            <point key="canvasLocation" x="2644" y="502"/>
         </scene>
         <!--Hot Deal-->
         <scene sceneID="6e4-4J-sgw">
@@ -1333,7 +1338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kMK-In-HDe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1808.8" y="1889.5052473763119"/>
+            <point key="canvasLocation" x="1809" y="1287"/>
         </scene>
         <!--Hot Deal Detail View Controller-->
         <scene sceneID="beM-OJ-yDy">
@@ -1437,12 +1442,13 @@
                         <outlet property="tbvData" destination="KvQ-h0-dmB" id="gTg-oa-CxH"/>
                         <outlet property="topViewHeight" destination="Rop-PC-B9L" id="j30-cY-7dM"/>
                         <segue destination="796-3H-Zaf" kind="unwind" identifier="segUnwindToHotDeal" unwindAction="unwindToHotDeal:" id="Pmr-6c-QpE"/>
+                        <segue destination="796-3H-Zaf" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="zRt-aT-i1m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KZt-h0-xyV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="796-3H-Zaf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2562.4000000000001" y="1887.7061469265368"/>
+            <point key="canvasLocation" x="2644" y="1287"/>
         </scene>
         <!--My Reward View Controller-->
         <scene sceneID="dHd-JZ-J3Q">
@@ -1561,12 +1567,13 @@
                         <outlet property="topViewHeight" destination="aDs-bW-VQO" id="Ud5-m1-GFV"/>
                         <segue destination="eBM-4Z-jyX" kind="show" identifier="segRewardRedemption" id="2Iw-Lt-h1E"/>
                         <segue destination="Shl-g2-XaT" kind="unwind" identifier="segUnwindToReward" unwindAction="unwindToReward:" id="1yU-UX-TTG"/>
+                        <segue destination="Shl-g2-XaT" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="IXi-4t-Y2S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QEz-lt-Na0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Shl-g2-XaT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3429.5999999999999" y="-3917.0914542728638"/>
+            <point key="canvasLocation" x="2644" y="2027"/>
         </scene>
         <!--Reward-->
         <scene sceneID="COo-cW-BFs">
@@ -1637,7 +1644,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHv-k1-Q9v" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="TPh-64-dGT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2661.5999999999999" y="-3177.6611694152925"/>
+            <point key="canvasLocation" x="1809" y="2746"/>
         </scene>
         <!--Reward Detail View Controller-->
         <scene sceneID="kOR-ZE-mCK">
@@ -1759,12 +1766,13 @@
                         <outlet property="topViewHeight" destination="Nw2-NV-8gZ" id="lHS-Ns-rax"/>
                         <segue destination="kcM-PX-wCg" kind="unwind" identifier="segUnwindToReward" unwindAction="unwindToReward:" id="Nu5-Zl-g88"/>
                         <segue destination="eBM-4Z-jyX" kind="show" identifier="segRewardRedemption" id="iUw-Wp-Uz3"/>
+                        <segue destination="kcM-PX-wCg" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="gqO-JQ-RAU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3dd-4S-75z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="kcM-PX-wCg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3429.5999999999999" y="-3178.5607196401802"/>
+            <point key="canvasLocation" x="2644" y="2746"/>
         </scene>
         <!--Reward Redemption View Controller-->
         <scene sceneID="rTb-0M-u58">
@@ -1884,12 +1892,13 @@
                         <outlet property="topViewHeight" destination="hzc-Pv-5Xu" id="iLm-yW-4zQ"/>
                         <segue destination="WJP-AU-SZs" kind="unwind" identifier="segUnwindToMyReward" unwindAction="unwindToMyReward:" id="ffr-XK-jHe"/>
                         <segue destination="WJP-AU-SZs" kind="unwind" identifier="segUnwindToReward" unwindAction="unwindToReward:" id="yam-I5-fWV"/>
+                        <segue destination="WJP-AU-SZs" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="olt-7H-6t2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pRw-SW-d2P" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WJP-AU-SZs" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4156" y="-3179.4602698650679"/>
+            <point key="canvasLocation" x="3409" y="2746"/>
         </scene>
         <!--Forgot Password View Controller-->
         <scene sceneID="AJc-TX-uxf">
@@ -1946,7 +1955,7 @@
                                 <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="กรุณาใส่อีเมลที่คุณได้ลงทะเบียนไว้ เราจะส่งอีอีเมลเพื่อรีเซตรหัสผ่านไปให้คุณ" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygi-j6-vsi">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="กรุณาใส่อีเมลที่คุณได้ลงทะเบียนไว้ เราจะส่งอีเมลเพื่อรีเซตรหัสผ่านไปให้คุณ" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygi-j6-vsi">
                                 <rect key="frame" x="16" y="234.5" width="343" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="CrX-Y8-8Eb"/>
@@ -2295,7 +2304,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR6-Y8-aoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ArK-WT-M6V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2661.5999999999999" y="-2473.313343328336"/>
+            <point key="canvasLocation" x="2662" y="-2337"/>
         </scene>
         <!--Tos And Privacy Policy View Controller-->
         <scene sceneID="HoK-tP-bhg">
@@ -2404,7 +2413,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amo-bW-tNy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="OXe-is-SUn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="-1700.5997001499252"/>
+            <point key="canvasLocation" x="2644" y="-1630"/>
         </scene>
         <!--Register Now View Controller-->
         <scene sceneID="2wa-Z3-fUr">
@@ -2708,7 +2717,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UdO-ZA-1Cp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="vmU-p8-Lii" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="-1011.544227886057"/>
+            <point key="canvasLocation" x="2644" y="-910"/>
         </scene>
         <!--Receipt Summary View Controller-->
         <scene sceneID="DCF-MY-f66">
@@ -2748,11 +2757,24 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MqV-1t-5Ll">
+                                        <rect key="frame" x="342" y="8" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="lje-sa-znB"/>
+                                            <constraint firstAttribute="height" constant="30" id="nXa-nf-Hya"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="refresh.png"/>
+                                        <connections>
+                                            <action selector="refresh:" destination="KW5-aB-qha" eventType="touchUpInside" id="DXI-wc-YaM"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.23529411764705882" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="MqV-1t-5Ll" secondAttribute="trailing" constant="3" id="1eO-LV-1fY"/>
                                     <constraint firstItem="vgo-cP-uPj" firstAttribute="leading" secondItem="pBd-8X-PPB" secondAttribute="leading" constant="16" id="GTY-Pn-V7f"/>
                                     <constraint firstAttribute="height" constant="44" id="HxA-0u-cuw"/>
+                                    <constraint firstItem="MqV-1t-5Ll" firstAttribute="top" secondItem="pBd-8X-PPB" secondAttribute="top" constant="8" id="O14-ut-ziD"/>
                                     <constraint firstItem="vgo-cP-uPj" firstAttribute="centerY" secondItem="8vQ-fe-np1" secondAttribute="centerY" id="ORs-S4-FhE"/>
                                     <constraint firstItem="8vQ-fe-np1" firstAttribute="leading" secondItem="pBd-8X-PPB" secondAttribute="leading" id="Zio-s8-juQ"/>
                                     <constraint firstAttribute="bottom" secondItem="8vQ-fe-np1" secondAttribute="bottom" id="eVS-tY-jrd"/>
@@ -2867,6 +2889,17 @@
                                     <constraint firstItem="o5q-vl-gqo" firstAttribute="leading" secondItem="2ef-K1-6sz" secondAttribute="leading" id="TeA-aX-YqC"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWd-3F-T8z">
+                                <rect key="frame" x="342" y="52" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QHS-H8-lVh"/>
+                                    <constraint firstAttribute="width" constant="30" id="SLK-3i-IXk"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="refresh.png"/>
+                                <connections>
+                                    <action selector="refresh:" destination="btE-BM-gjN" eventType="touchUpInside" id="8GK-ke-fhC"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f16-cy-jWw">
                                 <rect key="frame" x="0.0" y="88" width="375" height="368"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2930,8 +2963,10 @@
                             <constraint firstItem="2ef-K1-6sz" firstAttribute="leading" secondItem="W8d-Ay-IMa" secondAttribute="leading" id="a2S-p0-wfQ"/>
                             <constraint firstItem="5kg-fs-y6x" firstAttribute="leading" secondItem="W8d-Ay-IMa" secondAttribute="leading" id="bzO-0q-ByJ"/>
                             <constraint firstItem="f16-cy-jWw" firstAttribute="top" secondItem="2ef-K1-6sz" secondAttribute="bottom" id="dfA-kN-QJM"/>
+                            <constraint firstItem="W8d-Ay-IMa" firstAttribute="trailing" secondItem="UWd-3F-T8z" secondAttribute="trailing" constant="3" id="fmB-ai-Ks0"/>
                             <constraint firstItem="egA-cj-x4x" firstAttribute="bottom" secondItem="W8d-Ay-IMa" secondAttribute="bottom" id="hrA-lG-mt6"/>
                             <constraint firstItem="8hr-of-dzi" firstAttribute="leading" secondItem="wdB-iD-XDg" secondAttribute="leading" id="nKj-Xx-kcK"/>
+                            <constraint firstItem="UWd-3F-T8z" firstAttribute="top" secondItem="Xib-iO-CnF" secondAttribute="bottom" constant="8" id="qXe-Fv-iYz"/>
                             <constraint firstItem="2ef-K1-6sz" firstAttribute="trailing" secondItem="W8d-Ay-IMa" secondAttribute="trailing" id="tII-XQ-MC3"/>
                             <constraint firstItem="5kg-fs-y6x" firstAttribute="top" secondItem="f16-cy-jWw" secondAttribute="bottom" constant="8" id="yCf-mH-0vc"/>
                         </constraints>
@@ -3323,7 +3358,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mub-XW-JHM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fjC-rB-klD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2690" y="-3917"/>
+            <point key="canvasLocation" x="2662" y="-3053"/>
         </scene>
         <!--Comment View Controller-->
         <scene sceneID="m2i-Hz-UcL">
@@ -3459,7 +3494,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lsp-b8-PQh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0XE-bc-6gB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2688.8000000000002" y="-4601.6491754122944"/>
+            <point key="canvasLocation" x="2662" y="-3744"/>
         </scene>
         <!--Comment Rating View Controller-->
         <scene sceneID="pQi-Ma-CHd">
@@ -3595,7 +3630,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vAh-39-h6z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Jjx-Au-Dml" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2689" y="-5322"/>
+            <point key="canvasLocation" x="4156" y="-911"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="LGJ-4Y-pKy">
@@ -3730,12 +3765,13 @@
                         <segue destination="oGW-Dn-caM" kind="show" identifier="segMenuSelection" id="odZ-6m-Wsi"/>
                         <segue destination="R9C-9E-FAD" kind="unwind" identifier="segUnwindToBranchSearch" unwindAction="unwindToBranchSearch:" id="RNk-Sx-cDd"/>
                         <segue destination="R9C-9E-FAD" kind="unwind" identifier="segUnwindToCreditCardAndOrderSummary" unwindAction="unwindToCreditCardAndOrderSummary:" id="NAh-Kv-JFF"/>
+                        <segue destination="R9C-9E-FAD" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="ZHX-0V-B8L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2I-bE-ase" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="R9C-9E-FAD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2577" y="1182"/>
+            <point key="canvasLocation" x="3410" y="503"/>
         </scene>
         <!--Payment Complete View Controller-->
         <scene sceneID="CXw-dB-u2U">
@@ -3846,12 +3882,13 @@
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToBranchSearch" unwindAction="unwindToBranchSearch:" id="1Yr-Jf-at4"/>
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToQRCodeScanTable" unwindAction="unwindToQRCodeScanTable:" id="LF2-V3-Iw9"/>
                         <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToHotDeal" unwindAction="unwindToHotDeal:" id="BT9-x7-GZa"/>
+                        <segue destination="6xM-VG-NIx" kind="unwind" identifier="segUnwindToMe" unwindAction="unwindToMe:" id="mak-e9-Kp4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nH7-CS-u0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6xM-VG-NIx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6340" y="1984"/>
+            <point key="canvasLocation" x="5713" y="1287"/>
         </scene>
         <!--Launch Screen View Controller-->
         <scene sceneID="kay-GA-1YA">
@@ -3944,21 +3981,21 @@
         <image name="jummumTypeWhite.png" width="835" height="207"/>
         <image name="jummumYeah.png" width="555" height="555"/>
         <image name="me.png" width="30" height="30"/>
+        <image name="refresh.png" width="192" height="192"/>
         <image name="search.png" width="30" height="29"/>
         <image name="search_white.png" width="30" height="29"/>
         <image name="white.png" width="226" height="132"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gzz-jw-JAP"/>
-        <segue reference="aHo-2G-vPP"/>
+        <segue reference="VWF-Um-mlZ"/>
         <segue reference="DCf-pC-0Ih"/>
         <segue reference="UZ8-nN-acy"/>
         <segue reference="UTS-nM-B10"/>
         <segue reference="C1B-oJ-Xmi"/>
-        <segue reference="2Iw-Lt-h1E"/>
+        <segue reference="iUw-Wp-Uz3"/>
         <segue reference="3fp-yp-yps"/>
-        <segue reference="jVQ-j3-veY"/>
-        <segue reference="wW5-0e-zXP"/>
+        <segue reference="0UA-kM-pwb"/>
+        <segue reference="Q01-98-W2a"/>
         <segue reference="bDK-E7-xJt"/>
     </inferredMetricsTieBreakers>
 </document>

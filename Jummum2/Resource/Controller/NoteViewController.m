@@ -13,6 +13,7 @@
 #import "NoteType.h"
 #import "OrderNote.h"
 #import "Menu.h"
+#import "MenuNote.h"
 #import "SpecialPriceProgram.h"
 #import "Setting.h"
 
@@ -22,7 +23,6 @@
 {
     NSMutableArray *_noteTypeList;
     NSMutableArray *_currentOrderNoteList;
-    
 }
 @end
 
@@ -75,8 +75,67 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
         [colVwNote registerNib:nib forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reuseHeaderViewIdentifier];
     }
     
-    _currentOrderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:orderTaking.orderTakingID];
     
+    
+    noteList = [MenuNote getNoteListWithMenuID:orderTaking.menuID];
+    if([noteList count] == 0)
+    {
+        //download menunote
+        self.homeModel = [[HomeModel alloc]init];
+        self.homeModel.delegate = self;
+        [self.homeModel downloadItems:dbMenuNoteList withData:@[branch,@(orderTaking.menuID)] completionBlock:^(BOOL succeeded, NSMutableArray *items)
+         {
+             if (succeeded)
+             {
+                 [Utility updateSharedObject:items];
+
+                 
+                 /////////
+                 noteList = [MenuNote getNoteListWithMenuID:orderTaking.menuID];
+                 _noteTypeList = [[NSMutableArray alloc]init];
+                 NSSet *noteTypeIDSet = [NSSet setWithArray:[noteList valueForKey:@"_noteTypeID"]];
+                 for(NSNumber *noteTypeID in noteTypeIDSet)
+                 {
+                     NoteType *noteType = [NoteType getNoteType:[noteTypeID integerValue]];
+                     NSMutableArray *noteListByNoteTypeID = [Note getNoteListWithNoteTypeID:noteType.noteTypeID noteList:noteList];
+                     NSSet *typeSet = [NSSet setWithArray:[noteListByNoteTypeID valueForKey:@"_type"]];
+                     for(NSNumber *type in typeSet)
+                     {
+                         NoteType *newNoteType = [noteType copy];
+                         newNoteType.type = [type integerValue];
+                         [_noteTypeList addObject:newNoteType];
+                     }
+                 }
+                 _noteTypeList = [NoteType sort:_noteTypeList];
+                 _currentOrderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:orderTaking.orderTakingID];
+                 
+                 [colVwNote reloadData];
+             }
+         }];
+    }
+    else
+    {
+        _noteTypeList = [[NSMutableArray alloc]init];
+        NSSet *noteTypeIDSet = [NSSet setWithArray:[noteList valueForKey:@"_noteTypeID"]];
+        for(NSNumber *noteTypeID in noteTypeIDSet)
+        {
+            NoteType *noteType = [NoteType getNoteType:[noteTypeID integerValue]];
+            NSMutableArray *noteListByNoteTypeID = [Note getNoteListWithNoteTypeID:noteType.noteTypeID noteList:noteList];
+            NSSet *typeSet = [NSSet setWithArray:[noteListByNoteTypeID valueForKey:@"_type"]];
+            for(NSNumber *type in typeSet)
+            {
+                NoteType *newNoteType = [noteType copy];
+                newNoteType.type = [type integerValue];
+                [_noteTypeList addObject:newNoteType];
+            }
+        }
+        _noteTypeList = [NoteType sort:_noteTypeList];
+        _currentOrderNoteList = [OrderNote getOrderNoteListWithOrderTakingID:orderTaking.orderTakingID];
+        
+        [colVwNote reloadData];
+    }
+    
+
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
     [self.view addGestureRecognizer:tapGesture];
@@ -91,22 +150,22 @@ static NSString * const reuseIdentifierNote = @"CustomCollectionViewCellNote";
     colVwNote.allowsMultipleSelection = YES;
     
     
-    
-    _noteTypeList = [[NSMutableArray alloc]init];
-    NSSet *noteTypeIDSet = [NSSet setWithArray:[noteList valueForKey:@"_noteTypeID"]];
-    for(NSNumber *noteTypeID in noteTypeIDSet)
-    {
-        NoteType *noteType = [NoteType getNoteType:[noteTypeID integerValue]];
-        NSMutableArray *noteListByNoteTypeID = [Note getNoteListWithNoteTypeID:noteType.noteTypeID noteList:noteList];
-        NSSet *typeSet = [NSSet setWithArray:[noteListByNoteTypeID valueForKey:@"_type"]];
-        for(NSNumber *type in typeSet)
-        {
-            NoteType *newNoteType = [noteType copy];
-            newNoteType.type = [type integerValue];
-            [_noteTypeList addObject:newNoteType];
-        }
-    }
-    _noteTypeList = [NoteType sort:_noteTypeList];
+//    /////////
+//    _noteTypeList = [[NSMutableArray alloc]init];
+//    NSSet *noteTypeIDSet = [NSSet setWithArray:[noteList valueForKey:@"_noteTypeID"]];
+//    for(NSNumber *noteTypeID in noteTypeIDSet)
+//    {
+//        NoteType *noteType = [NoteType getNoteType:[noteTypeID integerValue]];
+//        NSMutableArray *noteListByNoteTypeID = [Note getNoteListWithNoteTypeID:noteType.noteTypeID noteList:noteList];
+//        NSSet *typeSet = [NSSet setWithArray:[noteListByNoteTypeID valueForKey:@"_type"]];
+//        for(NSNumber *type in typeSet)
+//        {
+//            NoteType *newNoteType = [noteType copy];
+//            newNoteType.type = [type integerValue];
+//            [_noteTypeList addObject:newNoteType];
+//        }
+//    }
+//    _noteTypeList = [NoteType sort:_noteTypeList];
     
     [self loadViewProcess];
 }
@@ -411,7 +470,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
     
     
     //update ordertaking price
-    float takeAwayFee = orderTaking.takeAway?[[Setting getSettingValueWithKeyName:@"takeAwayFee"] floatValue]:0;
+    float takeAwayFee = orderTaking.takeAway?branch.takeAwayFee:0;
     Menu *menu = [Menu getMenu:orderTaking.menuID branchID:branch.branchID];
     SpecialPriceProgram *specialPriceProgram = [SpecialPriceProgram getSpecialPriceProgramTodayWithMenuID:menu.menuID branchID:branch.branchID];
     float specialPrice = specialPriceProgram?specialPriceProgram.specialPrice:menu.price;

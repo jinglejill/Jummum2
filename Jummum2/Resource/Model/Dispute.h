@@ -18,8 +18,8 @@
 @property (nonatomic) NSInteger type;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(Dispute *)initWithReceiptID:(NSInteger)receiptID disputeReasonID:(NSInteger)disputeReasonID refundAmount:(float)refundAmount detail:(NSString *)detail phoneNo:(NSString *)phoneNo type:(NSInteger)type;
 +(NSInteger)getNextID;

@@ -23,6 +23,7 @@
 @interface CustomViewController ()
 {
     UILabel *_lblStatus;
+    
 }
 @end
 
@@ -41,7 +42,27 @@ CGFloat animatedDistance;
 @synthesize lblAlertMsg;
 @synthesize lblWaiting;
 @synthesize toolBar;
+@synthesize selectedReceipt;
+@synthesize showOrderDetail;
 
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    
+//    //triangle band
+//    UIImageView *demoView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"triangle_and.png"]];
+//    CGRect frame = demoView.frame;
+//    frame.size.width = 64;
+//    frame.size.height = 64;
+//    frame.origin.x = self.view.frame.size.width - frame.size.width;
+//    frame.origin.y = 0;
+//    demoView.frame = frame;
+//    [self.view addSubview:demoView];
+//    demoView.layer.zPosition = 1;
+    
+}
 
 -(void)setCurrentVc
 {
@@ -560,370 +581,6 @@ CGFloat animatedDistance;
     
     UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
     label.attributedText = attrString;
-}
-
-- (void)itemsSynced:(NSArray *)items
-{
-    if([items count] == 0)
-    {
-        [self removeOverlayViews];
-        return;
-    }
-    NSMutableArray *pushSyncList = [[NSMutableArray alloc]init];
-    
-    
-    
-    //type == exit
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-        
-        
-        if([type isEqualToString:@"exitApp"])
-        {
-            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-            {
-                continue;
-            }
-            else
-            {
-                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-                [PushSync addObject:pushSync];
-                [pushSyncList addObject:pushSync];
-            }
-            
-            NSString *title = @"มีการปรับปรุงแอพ";
-            NSString *message = @"กรุณาเปิดแอพใหม่อีกครั้งเพื่อใช้งาน";
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                           message: message                                                                   preferredStyle:UIAlertControllerStyleAlert];
-            
-            
-            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-            [attrStringTitle addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                                    range:NSMakeRange(0, title.length)];
-            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
-            
-            
-            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-            [attrStringMsg addAttribute:NSFontAttributeName
-                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                                  range:NSMakeRange(0, message.length)];
-            [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, message.length)];
-            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-            
-            
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action)
-                                            {
-                                                exit(0);
-                                            }];
-            
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-            
-            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-            UIColor *color = cSystem1;
-            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-            
-            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-            label.attributedText = attrString;
-        }
-    }
-    
-    
-    
-    //type == alert
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-        NSArray *data = [payload objectForKey:@"data"];
-        
-        
-        if([type isEqualToString:@"alert"])
-        {
-            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-            {
-                continue;
-            }
-            else
-            {
-                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-                [PushSync addObject:pushSync];
-                [pushSyncList addObject:pushSync];
-            }
-            
-            NSString *title = [Utility getSqlFailTitle];
-            NSString *message = [NSString stringWithFormat:@"%@ is fail",(NSString *)data];
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                           message:message                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            
-            NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-            [attrStringTitle addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                                    range:NSMakeRange(0, title.length)];
-            [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-            [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, title.length)];
-            
-            
-            NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-            [attrStringMsg addAttribute:NSFontAttributeName
-                                  value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                                  range:NSMakeRange(0, message.length)];
-            [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                                    value:cSystem4
-                                    range:NSMakeRange(0, message.length)];
-            [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-            
-            
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action)
-                                            {
-                                                [self loadingOverlayView];
-                                                [homeModel downloadItems:dbMaster];
-                                            }];
-            
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-            
-            UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-            UIColor *color = cSystem1;
-            NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-            
-            UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-            label.attributedText = attrString;
-        }
-    }
-    
-    
-    
-    //type == usernameconflict
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-        NSArray *data = [payload objectForKey:@"data"];
-        
-        
-        if([type isEqualToString:@"usernameconflict"])
-        {
-            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-            {
-                continue;
-            }
-            else
-            {
-                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-                [PushSync addObject:pushSync];
-                [pushSyncList addObject:pushSync];
-            }
-            
-
-            //you have login in another device และ unwind to หน้า sign in
-            if(![self isMemberOfClass:[LogInViewController class]])
-            {
-                NSString *title = @"";
-                NSString *message = @"Username นี้กำลังถูกใช้เข้าระบบที่เครื่องอื่น";
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                               message:message                                                                       preferredStyle:UIAlertControllerStyleAlert];
-                
-                
-                NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-                [attrStringTitle addAttribute:NSFontAttributeName
-                                        value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                                        range:NSMakeRange(0, title.length)];
-                [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-                [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                                        value:cSystem4
-                                        range:NSMakeRange(0, title.length)];
-                
-                
-                NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-                [attrStringMsg addAttribute:NSFontAttributeName
-                                      value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                                      range:NSMakeRange(0, message.length)];
-                [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                                        value:cSystem4
-                                        range:NSMakeRange(0, message.length)];
-                [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-                
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action)
-                                                {
-                                                    
-                                                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                                    LogInViewController *logInViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogInViewController"];
-                                                    [UIApplication sharedApplication].keyWindow.rootViewController = logInViewController;
-                                                }];
-                
-                [alert addAction:defaultAction];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                
-                UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-                UIColor *color = cSystem1;
-                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-                
-                UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-                label.attributedText = attrString;
-            }
-        }
-    }
-    
-    
-    
-    
-    //type == currentUserAccount
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-        NSArray *data = [payload objectForKey:@"data"];
-        
-        
-        if([type isEqualToString:@"currentUserAccount"])
-        {
-            //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-            if([PushSync alreadySynced:[strPushSyncID integerValue]])
-            {
-                continue;
-            }
-            else
-            {
-                //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-                PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-                [PushSync addObject:pushSync];
-                [pushSyncList addObject:pushSync];
-            }
-            
-            
-            NSDictionary *jsonElement = data[0];
-            NSObject *object = [[NSClassFromString(@"UserAccount") alloc] init];
-            
-            unsigned int propertyCount = 0;
-            objc_property_t * properties = class_copyPropertyList([object class], &propertyCount);
-            
-            for (unsigned int i = 0; i < propertyCount; ++i)
-            {
-                objc_property_t property = properties[i];
-                const char * name = property_getName(property);
-                NSString *key = [NSString stringWithUTF8String:name];
-                
-                
-                NSString *dbColumnName = [Utility makeFirstLetterUpperCase:key];
-                if(!jsonElement[dbColumnName])
-                {
-                    continue;
-                }
-                
-                
-                if([Utility isDateColumn:dbColumnName])
-                {
-                    NSDate *date = [Utility stringToDate:jsonElement[dbColumnName] fromFormat:@"yyyy-MM-dd HH:mm:ss"];
-                    [object setValue:date forKey:key];
-                }
-                else
-                {
-                    [object setValue:jsonElement[dbColumnName] forKey:key];
-                }
-            }
-            
-            [UserAccount setCurrentUserAccount:(UserAccount *)object];            
-        }
-    }
-    
-    
-    
-    
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        NSString *action = [payload objectForKey:@"action"];
-        NSString *strPushSyncID = [payload objectForKey:@"pushSyncID"];
-        NSArray *data = [payload objectForKey:@"data"];
-        
-        
-        //เช็คว่าเคย sync pushsyncid นี้ไปแล้วยัง
-        if([PushSync alreadySynced:[strPushSyncID integerValue]])
-        {
-            continue;
-        }
-        else
-        {
-            //update shared ใช้ในกรณี เรียก homemodel > 1 อันต่อหนึ่ง click คำสั่ง ซึ่งทำให้เกิดการ เรียก function syncitems ตัวที่ 2 ก่อนเกิดการ update timesynced จึงทำให้เกิดการเบิ้ล sync
-            PushSync *pushSync = [[PushSync alloc]initWithPushSyncID:[strPushSyncID integerValue]];
-            [PushSync addObject:pushSync];
-            [pushSyncList addObject:pushSync];
-        }
-        
-        
-
-        if([data isKindOfClass:[NSArray class]])
-        {
-            [Utility itemsSynced:type action:action data:data];
-        }
-    }
-    
-    
-    //update pushsync ที่ sync แล้ว
-    if([pushSyncList count]>0)
-    {
-        [homeModel updateItems:dbPushSyncUpdateTimeSynced withData:pushSyncList actionScreen:@"Update synced time by id"];
-    }
-    
-    
-    //ให้ refresh ข้อมูลที่ Show ที่หน้านั้นหลังจาก sync ข้อมูลมาใหม่ //ใส่ทุกหน้าในนี้
-    NSMutableArray *arrAllType = [[NSMutableArray alloc]init];
-    for(int j=0; j<[items count]; j++)
-    {
-        NSDictionary *payload = items[j];
-        NSString *type = [payload objectForKey:@"type"];
-        [arrAllType addObject:type];
-    }
-    if([items count] > 0)
-    {
-        //ใส่ทุกหน้าในนี้
-        BOOL loadViewProcess = NO;
-        NSArray *arrReferenceTable;
-        NSArray *resultArray = [Utility intersectArray1:arrAllType array2:arrReferenceTable];
-        if([resultArray count] > 0)
-        {
-            if(loadViewProcess)
-            {
-                [self loadViewProcess];
-            }
-        }
-    }
-    [self removeOverlayViews];
 }
 
 -(void)itemsDownloaded:(NSArray *)items
@@ -1490,5 +1147,11 @@ CGFloat animatedDistance;
 {
     [self.view endEditing:YES];
 }
+
+//-(void)segueToOrderDetail:(Receipt *)receipt
+//{
+//    [self performSegueWithIdentifier:@"segOrderDetail" sender:self];
+//}
+
 @end
 

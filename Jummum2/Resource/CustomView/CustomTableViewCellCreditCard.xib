@@ -137,10 +137,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="คุณสามารถลบบัตรใบนี้ได้ที่เมนูโพร์ไฟล์ส่วนตัว" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFI-Xh-dzd">
-                    <rect key="frame" x="16" y="249" width="248" height="16"/>
+                    <rect key="frame" x="16" y="249" width="286" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="0kp-nt-3Tx"/>
-                        <constraint firstAttribute="width" constant="248" id="muQ-bh-nux"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="13"/>
                     <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,6 +216,7 @@
                 <constraint firstItem="SCs-nf-2sI" firstAttribute="leading" secondItem="a7S-hu-Vk3" secondAttribute="leading" id="ne4-z4-Oet"/>
                 <constraint firstItem="lgt-pY-aea" firstAttribute="trailing" secondItem="hzE-SK-V1z" secondAttribute="trailing" id="p1z-kJ-TqE"/>
                 <constraint firstItem="hzE-SK-V1z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="p54-aO-Tnr"/>
+                <constraint firstItem="c2o-tG-aXK" firstAttribute="leading" secondItem="rFI-Xh-dzd" secondAttribute="trailing" constant="8" id="q2p-HX-NDt"/>
                 <constraint firstAttribute="trailing" secondItem="1QS-QB-uZR" secondAttribute="trailing" constant="16" id="q7Q-u4-GE6"/>
                 <constraint firstItem="lgt-pY-aea" firstAttribute="leading" secondItem="hzE-SK-V1z" secondAttribute="leading" id="s0C-eH-g2N"/>
                 <constraint firstItem="dnO-dX-rZ1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="xFN-3N-h7E"/>

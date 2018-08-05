@@ -234,8 +234,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        NSString *imageFileName = [Utility isStringEmpty:branch.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
-        [self.homeModel downloadImageWithFileName:imageFileName completionBlock:^(BOOL succeeded, UIImage *image)
+        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
          {
              if (succeeded)
              {

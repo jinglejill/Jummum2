@@ -102,8 +102,8 @@
         [copy setUrl:self.url];
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Pic *)copy).replaceSelf = self.replaceSelf;
-        ((Pic *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

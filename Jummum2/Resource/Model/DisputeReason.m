@@ -108,8 +108,8 @@
         ((DisputeReason *)copy).orderNo = self.orderNo;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((DisputeReason *)copy).replaceSelf = self.replaceSelf;
-        ((DisputeReason *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

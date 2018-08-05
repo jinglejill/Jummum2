@@ -14,8 +14,8 @@
 @property (nonatomic) NSInteger noteID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(MenuNote *)initWithMenuID:(NSInteger)menuID noteID:(NSInteger)noteID;
 +(NSInteger)getNextID;

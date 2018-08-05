@@ -74,15 +74,6 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     
     [self setShadow:vwBottomShadow];
-    
-//    if([_customerTableList count] == 0)
-//    {
-//        [self loadingOverlayView];
-//        [self.homeModel downloadItems:dbCustomerTable withData:branch.dbName];
-//    }
-    
-    
-    
 }
 
 - (void)viewDidLoad
@@ -107,7 +98,8 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     
     
-    [self setData];
+    [self.homeModel downloadItems:dbCustomerTable withData:branch];
+    
 }
 
 ///tableview section
@@ -478,6 +470,12 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     {
         [tbvCustomerTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
+}
+
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
+{
+    [Utility updateSharedObject:items];
+    [self setData];
 }
 
 @end

@@ -110,8 +110,8 @@
         ((RewardPoint *)copy).promoCodeID = self.promoCodeID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((RewardPoint *)copy).replaceSelf = self.replaceSelf;
-        ((RewardPoint *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

@@ -139,8 +139,8 @@
         ((SpecialPriceProgram *)copy).specialPrice = self.specialPrice;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((SpecialPriceProgram *)copy).replaceSelf = self.replaceSelf;
-        ((SpecialPriceProgram *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

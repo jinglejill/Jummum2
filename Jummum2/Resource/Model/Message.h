@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface Message : NSObject
+@property (nonatomic) NSInteger messageID;
 @property (retain, nonatomic) NSString * text;
 @end

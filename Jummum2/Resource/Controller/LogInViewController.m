@@ -301,7 +301,7 @@
             //insert useraccount,receipt,ordertaking,ordernote,menu to sharedObject
             NSMutableArray *userAccountList = items[0];
             [UserAccount setCurrentUserAccount:userAccountList[0]];
-            [Utility addToSharedDataList:items];
+            [Utility updateSharedObject:items];
             
     
             [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"logInSession"];
@@ -357,7 +357,7 @@
         UserAccount *userAccount = userAccountList[0];
         _userAccount = userAccount;
         [UserAccount setCurrentUserAccount:userAccount];
-        [Utility addToSharedDataList:items];
+        [Utility updateSharedObject:items];
         if([Utility isStringEmpty:userAccount.phoneNo] || !userAccount.birthDate)
         {
             //go to register page

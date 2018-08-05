@@ -104,8 +104,8 @@
         ((PromotionMenu *)copy).menuID = self.menuID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((PromotionMenu *)copy).replaceSelf = self.replaceSelf;
-        ((PromotionMenu *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

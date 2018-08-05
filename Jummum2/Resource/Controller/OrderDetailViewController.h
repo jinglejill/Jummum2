@@ -21,6 +21,8 @@
 
 -(IBAction)unwindToOrderDetail:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;
+-(void)reloadTableView;
+- (IBAction)refresh:(id)sender;
 
 
 @end

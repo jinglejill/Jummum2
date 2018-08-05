@@ -97,7 +97,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             break;
         case 4:
         {
-            _dispute.phoneNo = [Utility trimString:textField.text];
+            _dispute.phoneNo = [Utility removeDashAndSpaceAndParenthesis:[Utility trimString:textField.text]];
         }
             break;
         default:
@@ -317,9 +317,12 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.tag = 4;
                 cell.txtValue.delegate = self;
                 cell.txtValue.placeholder = @"xxx-xxx-xxxx";
-                cell.txtValue.text = _dispute.phoneNo;
+                cell.txtValue.text = [Utility setPhoneNoFormat:_dispute.phoneNo];
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
                 [cell.txtValue setInputAccessoryView:self.toolBar];
+                [cell.txtValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
+                
+                
                 cell.lblRemark.text = strRemark;
                 [cell.lblRemark sizeToFit];
                 cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
@@ -519,9 +522,11 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.txtValue.tag = item;
                 cell.txtValue.delegate = self;
                 cell.txtValue.placeholder = @"xxx-xxx-xxxx";
-                cell.txtValue.text = _dispute.phoneNo;
+                cell.txtValue.text = [Utility setPhoneNoFormat:_dispute.phoneNo];
                 cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
                 [cell.txtValue setInputAccessoryView:self.toolBar];
+                [cell.txtValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
+                
                 
                 
                 cell.lblRemark.text = strRemark;
@@ -946,5 +951,11 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     }
     
     return YES;
+}
+
+-(void)txtPhoneNoDidChange:(id)sender
+{
+    UITextField *txtPhoneNo = sender;
+    txtPhoneNo.text = [Utility formatPhoneNo:[Utility removeDashAndSpaceAndParenthesis:txtPhoneNo.text]];
 }
 @end

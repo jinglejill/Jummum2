@@ -21,4 +21,9 @@
     // Configure the view for the selected state
 }
 
+-(void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self.txtValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+}
 @end

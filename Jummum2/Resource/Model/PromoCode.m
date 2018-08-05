@@ -106,8 +106,8 @@
         ((PromoCode *)copy).orderNo = self.orderNo;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((PromoCode *)copy).replaceSelf = self.replaceSelf;
-        ((PromoCode *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

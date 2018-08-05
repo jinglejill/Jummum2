@@ -23,12 +23,12 @@
 @property (nonatomic) NSInteger receiptID;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 @property (nonatomic) NSInteger menuOrderNo;
 @property (nonatomic) NSInteger subMenuOrderNo;
-@property (nonatomic) NSString *cancelDiscountReason;
+@property (nonatomic) NSInteger menuTypeOrderNo;
 
 
 
@@ -52,18 +52,17 @@
 +(NSInteger)getSubTotalAmountAllowDiscount:(NSMutableArray *)orderTakingList;
 +(NSMutableArray *)sortOrderTakingList:(NSMutableArray *)orderTakingList;
 //+(NSMutableArray *)sortOrderTakingListAndReason:(NSMutableArray *)orderTakingList;
-+(NSMutableArray *)createSumUpOrderTakingFromSeveralSendToKitchen:(NSMutableArray *)orderTakingList;
-+(NSMutableArray *)createSumUpOrderTakingGroupByNoteAndPriceFromSeveralSendToKitchen:(NSMutableArray *)orderTakingList;
+
 //+(NSMutableArray *)createSumUpOrderTakingGroupByNoteFromSeveralSendToKitchen:(NSMutableArray *)orderTakingList;
 +(NSMutableArray *)getOrderTakingListWithReceiptID:(NSInteger)receiptID orderTakingList:(NSMutableArray *)orderTakingList;
 +(NSMutableArray *)getOrderTakingListWithReceiptID:(NSInteger)receiptID;
 +(NSMutableArray *)getOrderTakingListWithReceiptList:(NSMutableArray *)receiptList;
 +(NSMutableArray *)getOrderTakingListWithMenuID:(NSInteger)menuID;
 +(NSMutableArray *)getOrderTakingListWithMenuID:(NSInteger)menuID orderTakingList:(NSMutableArray *)orderTakingList;
-+(void)updateIdInserted:(OrderTaking *)orderTaking;
+
 +(void)deleteOrderTakingDuplicateKey:(OrderTaking *)orderTaking;
-+(void)insertOrderTakingDuplicateKey:(OrderTaking *)orderTaking;
-+(BOOL)checkIdInserted:(NSMutableArray *)orderTakingList;
+
+
 +(NSMutableArray *)getOrderTakingListWithStatus:(NSInteger)status takeAway:(NSInteger)takeAway menuID:(NSInteger)menuID orderTakingList:(NSMutableArray *)orderTakingList;
 +(NSMutableArray *)sortListByNoteIDListInText:(NSMutableArray *)orderTakingList;
 +(NSMutableArray *)sortListByModifiedDateDesc:(NSMutableArray *)orderTakingList;

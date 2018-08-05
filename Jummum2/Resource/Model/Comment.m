@@ -108,8 +108,8 @@
         ((Comment *)copy).receiptID = self.receiptID;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Comment *)copy).replaceSelf = self.replaceSelf;
-        ((Comment *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

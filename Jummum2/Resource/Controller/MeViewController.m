@@ -8,9 +8,28 @@
 
 #import "MeViewController.h"
 #import "TosAndPrivacyPolicyViewController.h"
+#import "ReceiptSummaryViewController.h"
+#import "CommentViewController.h"
+#import "BasketViewController.h"
+#import "BranchSearchViewController.h"
+#import "CreditCardAndOrderSummaryViewController.h"
+#import "CreditCardViewController.h"
+#import "CustomerTableSearchViewController.h"
+#import "HotDealDetailViewController.h"
+#import "MenuSelectionViewController.h"
+#import "MyRewardViewController.h"
+#import "NoteViewController.h"
+#import "PaymentCompleteViewController.h"
+#import "PersonalDataViewController.h"
+#import "RecommendShopViewController.h"
+#import "RewardDetailViewController.h"
+#import "RewardRedemptionViewController.h"
+#import "SelectPaymentMethodViewController.h"
+#import "TosAndPrivacyPolicyViewController.h"
 #import "CustomTableViewCellImageText.h"
 #import "CustomTableViewCellProfile.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "LogIn.h"
 
 
 @interface MeViewController ()
@@ -36,7 +55,30 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue
 {
-    
+    self.showOrderDetail = 0;
+    if([[segue sourceViewController] isKindOfClass:[CommentViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[BasketViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[BranchSearchViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[CreditCardAndOrderSummaryViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[CreditCardViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[CustomerTableSearchViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[HotDealDetailViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[MenuSelectionViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[MyRewardViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[NoteViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[PersonalDataViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[RecommendShopViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[RewardDetailViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[RewardRedemptionViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[SelectPaymentMethodViewController class]] ||
+       [[segue sourceViewController] isKindOfClass:[TosAndPrivacyPolicyViewController class]]
+       )
+    {
+        CustomViewController *vc = segue.sourceViewController;
+        self.showOrderDetail = vc.showOrderDetail;
+        self.selectedReceipt = vc.selectedReceipt;
+    }
 }
 
 -(void)viewDidLayoutSubviews
@@ -46,6 +88,15 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(self.showOrderDetail)
+    {
+        [self segueToReceiptSummaryAuto];
+    }
 }
 
 -(void)loadView
@@ -254,6 +305,9 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     
                     [self removeMemberData];
                     [self removeOverlayViews];
+                    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+                    LogIn *logIn = [[LogIn alloc]initWithUsername:userAccount.username status:-1 deviceToken:[Utility deviceToken]];
+                    [self.homeModel insertItems:dbLogOut withData:logIn actionScreen:@"log out in Me screen"];
                     [self showAlert:@"" message:@"ออกจากระบบสำเร็จ" method:@selector(unwindToLogIn)];
                 }
                     break;
@@ -280,6 +334,12 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         TosAndPrivacyPolicyViewController *vc = segue.destinationViewController;
         vc.pageType = _pageType;
     }
+    else if([[segue identifier] isEqualToString:@"segReceiptSummary"])
+    {
+        ReceiptSummaryViewController *vc = segue.destinationViewController;
+        vc.showOrderDetail = self.showOrderDetail;
+        vc.selectedReceipt = self.selectedReceipt;
+    }
 }
 
 -(void)unwindToLogIn
@@ -290,5 +350,10 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 - (void)handleSingleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
     [self performSegueWithIdentifier:@"segPersonalData" sender:self];
+}
+
+-(void)segueToReceiptSummaryAuto
+{
+    [self performSegueWithIdentifier:@"segReceiptSummary" sender:self];
 }
 @end

@@ -112,8 +112,8 @@
         ((Dispute *)copy).type = self.type;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((Dispute *)copy).replaceSelf = self.replaceSelf;
-        ((Dispute *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

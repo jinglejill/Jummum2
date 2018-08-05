@@ -8,9 +8,18 @@
 
 #import "CreditCard.h"
 #import "UserAccount.h"
+#import "SharedCurrentCreditCard.h"
 
 
 @implementation CreditCard
+@synthesize firstName;
+@synthesize lastName;
+@synthesize creditCardNo;
+@synthesize month;
+@synthesize year;
+@synthesize ccv;
+@synthesize saveCard;
+
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -176,4 +185,18 @@
     return copy;
 }
 
++(CreditCard *)getCurrentCreditCard
+{
+    return [SharedCurrentCreditCard sharedCurrentCreditCard].creditCard;
+}
+
++(void)setCurrentCreditCard:(CreditCard *)creditCard
+{
+    [SharedCurrentCreditCard sharedCurrentCreditCard].creditCard = creditCard;
+}
+
++(void)removeCurrentCreditCard
+{
+    [SharedCurrentCreditCard sharedCurrentCreditCard].creditCard = nil;    
+}
 @end

@@ -146,8 +146,8 @@
         ((SubMenuType *)copy).status = self.status;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((SubMenuType *)copy).replaceSelf = self.replaceSelf;
-        ((SubMenuType *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;

@@ -13,8 +13,8 @@
 @property (retain, nonatomic) NSString * url;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
-@property (nonatomic) NSInteger replaceSelf;
-@property (nonatomic) NSInteger idInserted;
+
+
 
 -(Pic *)initWithUrl:(NSString *)url;
 +(NSInteger)getNextID;

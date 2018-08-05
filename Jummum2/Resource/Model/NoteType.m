@@ -106,8 +106,8 @@
         ((NoteType *)copy).orderNo = self.orderNo;
         [copy setModifiedUser:[Utility modifiedUser]];
         [copy setModifiedDate:[Utility currentDateTime]];
-        ((NoteType *)copy).replaceSelf = self.replaceSelf;
-        ((NoteType *)copy).idInserted = self.idInserted;
+        
+        
     }
     
     return copy;
