@@ -482,6 +482,9 @@ extern NSString *globalModifiedUser;
         case urlBranchAndCustomerTableGet:
             url = @"/Production/JUMMUM/JMMBranchAndCustomerTableGet.php";
             break;
+        case urlBranchAndCustomerTableQRGet:
+            url = @"/Production/JUMMUM/JMMBranchAndCustomerTableQRGet.php";
+            break;
         case urlBranchSearchGetList:
             url = @"/Production/JUMMUM/JMMBranchSearchGetList.php";
             break;

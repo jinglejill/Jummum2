@@ -184,6 +184,7 @@
         break;
         case dbBranch:
         case dbBranchAndCustomerTable:
+        case dbBranchAndCustomerTableQR:
         {
             arrClassName = @[@"Branch",@"CustomerTable"];
         }
@@ -264,7 +265,7 @@
             // Ready to notify delegate that data is ready and pass back items
             if (self.delegate)
             {
-                if(propCurrentDB == dbHotDeal || propCurrentDB == dbHotDealWithBranchID || propCurrentDB == dbReceiptSummary || propCurrentDB == dbReceiptMaxModifiedDate ||propCurrentDB == dbRewardPoint || propCurrentDB == dbRewardRedemptionWithBranchID || propCurrentDB == dbReceipt || propCurrentDB == dbOpeningTime || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingAllAfterReceipt || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTable || propCurrentDB == dbBranchSearch || propCurrentDB == dbBranchSearchMore || propCurrentDB == dbCustomerTable)
+                if(propCurrentDB == dbHotDeal || propCurrentDB == dbHotDealWithBranchID || propCurrentDB == dbReceiptSummary || propCurrentDB == dbReceiptMaxModifiedDate ||propCurrentDB == dbRewardPoint || propCurrentDB == dbRewardRedemptionWithBranchID || propCurrentDB == dbReceipt || propCurrentDB == dbOpeningTime || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingAllAfterReceipt || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTable || propCurrentDB == dbBranchAndCustomerTableQR || propCurrentDB == dbBranchSearch || propCurrentDB == dbBranchSearchMore || propCurrentDB == dbCustomerTable)
                 {
                     [self.delegate itemsDownloaded:arrItem manager:self];
                 }
@@ -633,6 +634,12 @@
             NSNumber *objCustomerTableID = dataList[1];
             noteDataString = [NSString stringWithFormat:@"branchID=%ld&customerTableID=%ld",[objBranchID integerValue],[objCustomerTableID integerValue]];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchAndCustomerTableGet]]];
+        }
+            break;
+        case dbBranchAndCustomerTableQR:
+        {            
+            noteDataString = [NSString stringWithFormat:@"decryptedMessage=%@",data];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchAndCustomerTableQRGet]]];
         }
             break;
         case dbBranchSearch:

@@ -20,7 +20,7 @@
 {
     Branch *_selectedBranch;
     CustomerTable *_selectedCustomerTable;
-    BOOL _performSegue;
+//    BOOL _performSegue;
     BOOL _fromOrderItAgain;
 }
 //@property (nonatomic) BOOL isReading;
@@ -93,7 +93,7 @@
     [super viewDidAppear:YES];
     
     
-    _performSegue = NO;
+//    _performSegue = NO;
 //    self.homeModel = [[HomeModel alloc]init];
 //    self.homeModel.delegate = self;
 //    Branch *branchWithMaxModifiedDate = [Branch getBranchWithMaxModifiedDate];
@@ -186,7 +186,8 @@
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
-    if (metadataObjects && [metadataObjects count] > 0 && !_performSegue)
+//    if (metadataObjects && [metadataObjects count] > 0 && !_performSegue)
+    if (metadataObjects && [metadataObjects count] > 0)
     {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
@@ -194,26 +195,28 @@
             _selectedBranch = nil;
             _selectedCustomerTable = nil;
             NSString *decryptedMessage = [metadataObj stringValue];
-            NSData *data = [Utility dataFromHexString:decryptedMessage];
-            NSString *strMessage = [Utility decryptData:data withKey:[Utility key]];
-            
-            NSArray *dataList = [strMessage componentsSeparatedByString: @","];
-            if([dataList count] == 2)
-            {
-                NSString *branchPart = dataList[0];
-                NSString *customerTablePart = dataList[1];
-                NSArray *branchPartList = [branchPart componentsSeparatedByString: @":"];
-                NSInteger branchID = [branchPartList[1] integerValue];
-//                _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
-                NSArray *customerTablePartList = [customerTablePart componentsSeparatedByString: @":"];
-                NSInteger customerTableID = [customerTablePartList[1] integerValue];
-//                _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
-                
-                _performSegue = YES;
-                [self.homeModel downloadItems:dbBranchAndCustomerTable withData:@[@(branchID),@(customerTableID)]];
-                
-            }
-            
+//            NSData *data = [Utility dataFromHexString:decryptedMessage];
+//            NSString *strMessage = [Utility decryptData:data withKey:[Utility key]];
+//
+//            NSArray *dataList = [strMessage componentsSeparatedByString: @","];
+//            if([dataList count] == 2)
+//            {
+//                NSString *branchPart = dataList[0];
+//                NSString *customerTablePart = dataList[1];
+//                NSArray *branchPartList = [branchPart componentsSeparatedByString: @":"];
+//                NSInteger branchID = [branchPartList[1] integerValue];
+////                _selectedBranch = [Branch getBranch:[branchPartList[1] integerValue]];
+//                NSArray *customerTablePartList = [customerTablePart componentsSeparatedByString: @":"];
+//                NSInteger customerTableID = [customerTablePartList[1] integerValue];
+////                _selectedCustomerTable = [CustomerTable getCustomerTable:[customerTablePartList[1] integerValue] branchID:_selectedBranch.branchID];
+//
+////                _performSegue = YES;
+////                [self.homeModel downloadItems:dbBranchAndCustomerTable withData:@[@(branchID),@(customerTableID)]];
+//
+//            }
+//            _performSegue = YES;
+            [self stopReading];
+            [self.homeModel downloadItems:dbBranchAndCustomerTableQR withData:decryptedMessage];
             
         
 //            if(!_selectedBranch || !_selectedCustomerTable)
@@ -221,8 +224,8 @@
 //                [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
 //            }
 //            else
-            {
-                [self stopReading];
+//            {
+//                [self stopReading];
 //                if(fromCreditCardAndOrderSummaryMenu)
 //                {
 //                    customerTable = _selectedCustomerTable;
@@ -240,7 +243,7 @@
 //                        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
 //                    });
 //                }
-            }
+//            }
         }
     }
 }
@@ -263,14 +266,15 @@
 //        [Utility updateSharedObject:items];
 //    }
 //    else
-    if(homeModel.propCurrentDB == dbBranchAndCustomerTable)
+    if(homeModel.propCurrentDB == dbBranchAndCustomerTableQR)
     {
         NSMutableArray *branchList = items[0];
         NSMutableArray *customerTableList = items[1];
         if([branchList count] == 0 || [customerTableList count] == 0)
         {
             [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
-            _performSegue = NO;
+            [self startReading];
+//            _performSegue = NO;
         }
         else
         {

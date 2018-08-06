@@ -32,7 +32,6 @@
 		EF13B63020D20701008CF35C /* check_green.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B62F20D20700008CF35C /* check_green.png */; };
 		EF13B63220D20853008CF35C /* jummumYeah.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63120D20852008CF35C /* jummumYeah.png */; };
 		EF13B63520D20B55008CF35C /* PaymentCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF13B63420D20B55008CF35C /* PaymentCompleteViewController.m */; };
-		EF13B63720D20EFE008CF35C /* jummumChef.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63620D20EFC008CF35C /* jummumChef.png */; };
 		EF13B63920D2106E008CF35C /* jummumChef_lightGray.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63820D2106D008CF35C /* jummumChef_lightGray.png */; };
 		EF13B67120D212E5008CF35C /* Prompt-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63B20D212E5008CF35C /* Prompt-ThinItalic.ttf */; };
 		EF13B67220D212E5008CF35C /* Kanit-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63C20D212E5008CF35C /* Kanit-ExtraLight.ttf */; };
@@ -88,7 +87,6 @@
 		EF13B6A420D212E5008CF35C /* Kanit-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66E20D212E5008CF35C /* Kanit-ExtraLightItalic.ttf */; };
 		EF13B6A520D212E5008CF35C /* Kanit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66F20D212E5008CF35C /* Kanit-Medium.ttf */; };
 		EF13B6A620D212E5008CF35C /* Kanit-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B67020D212E5008CF35C /* Kanit-SemiBoldItalic.otf */; };
-		EF13B6A820D218FF008CF35C /* chefHat.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6A720D218FF008CF35C /* chefHat.png */; };
 		EF13B6AA20D21A1E008CF35C /* chefHat_green.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6A920D21A1D008CF35C /* chefHat_green.png */; };
 		EF13B6C020D220F9008CF35C /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6AC20D220F6008CF35C /* Icon-Small-50@2x.png */; };
 		EF13B6C120D220F9008CF35C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6AD20D220F6008CF35C /* Icon@2x.png */; };
@@ -118,7 +116,6 @@
 		EF1AD15A20B0081600F6D223 /* CustomTableViewCellDisputeDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1AD15720B0081600F6D223 /* CustomTableViewCellDisputeDetail.m */; };
 		EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */; };
 		EF26676E20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */; };
-		EF26677820AA87B400969AB2 /* check2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF26677720AA87B300969AB2 /* check2.png */; };
 		EF5C2EDF2080BBB000084B7E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2EDE2080BBB000084B7E /* ViewController.m */; };
 		EF5C2EE42080BBB400084B7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2EE32080BBB400084B7E /* Assets.xcassets */; };
 		EF5C2EE72080BBB400084B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2EE52080BBB400084B7E /* LaunchScreen.storyboard */; };
@@ -145,9 +142,7 @@
 		EF5C30B12080C00500084B7E /* OmiseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2F3D2080C00400084B7E /* OmiseError.swift */; };
 		EF5C30B22080C00500084B7E /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2F3F2080C00400084B7E /* KeychainWrapper.m */; };
 		EF5C30B32080C00500084B7E /* me.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F432080C00400084B7E /* me.png */; };
-		EF5C30B62080C00500084B7E /* personalData.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F462080C00400084B7E /* personalData.png */; };
 		EF5C30BB2080C00500084B7E /* privacyPolicy.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F4B2080C00400084B7E /* privacyPolicy.png */; };
-		EF5C30C52080C00500084B7E /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F552080C00400084B7E /* home_icon.png */; };
 		EF5C30C82080C00500084B7E /* termsOfService.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F582080C00400084B7E /* termsOfService.png */; };
 		EF5C30CA2080C00500084B7E /* americanExpress.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F5A2080C00400084B7E /* americanExpress.png */; };
 		EF5C30CB2080C00500084B7E /* logOut.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F5B2080C00400084B7E /* logOut.png */; };
@@ -156,13 +151,10 @@
 		EF5C30D52080C00500084B7E /* collapse2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F652080C00400084B7E /* collapse2.png */; };
 		EF5C30D92080C00500084B7E /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F692080C00400084B7E /* search.png */; };
 		EF5C30DC2080C00500084B7E /* hotDeal.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F6C2080C00400084B7E /* hotDeal.png */; };
-		EF5C30DD2080C00500084B7E /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F6D2080C00400084B7E /* basket.png */; };
 		EF5C30E02080C00500084B7E /* added.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F702080C00400084B7E /* added.png */; };
-		EF5C30E32080C00500084B7E /* gift.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F732080C00400084B7E /* gift.png */; };
 		EF5C30E52080C00500084B7E /* removed.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F752080C00400084B7E /* removed.png */; };
 		EF5C30E82080C00500084B7E /* QR.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F782080C00400084B7E /* QR.png */; };
 		EF5C30E92080C00500084B7E /* jcb.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F792080C00400084B7E /* jcb.png */; };
-		EF5C30EB2080C00500084B7E /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F7B2080C00400084B7E /* checkbox.png */; };
 		EF5C30EF2080C00500084B7E /* security_code_back-512.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F7F2080C00400084B7E /* security_code_back-512.png */; };
 		EF5C30F12080C00500084B7E /* expand2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F812080C00400084B7E /* expand2.png */; };
 		EF5C30F32080C00500084B7E /* masterCard.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2F832080C00400084B7E /* masterCard.png */; };
@@ -273,7 +265,6 @@
 		EF5DC04C2115AE7500FFEA60 /* triangle_and_om.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0422115AE7300FFEA60 /* triangle_and_om.png */; };
 		EF5DC04D2115AE7500FFEA60 /* triangle_dev_om.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0432115AE7300FFEA60 /* triangle_dev_om.png */; };
 		EF5DC04E2115AE7500FFEA60 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0442115AE7300FFEA60 /* refresh.png */; };
-		EF5DC04F2115AE7500FFEA60 /* jummumLogoWithType_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0452115AE7300FFEA60 /* jummumLogoWithType_white.png */; };
 		EF5DC0502115AE7500FFEA60 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0462115AE7300FFEA60 /* iTunesArtwork */; };
 		EF5DC0512115AE7500FFEA60 /* triangle_dev.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0472115AE7400FFEA60 /* triangle_dev.png */; };
 		EF5DC0522115AE7500FFEA60 /* triangle_and.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0482115AE7400FFEA60 /* triangle_and.png */; };
@@ -339,7 +330,6 @@
 		EFD5B0CD20DE29E400D9434A /* gift_small.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD5B0CC20DE29E300D9434A /* gift_small.png */; };
 		EFD9BA3020E233E400A0A874 /* HotDealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */; };
 		EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */; };
-		EFE8BFE220A5C508005E0746 /* party.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE8BFE120A5C507005E0746 /* party.png */; };
 		EFF44D4720EFE2D300D07770 /* NoImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4620EFE2D200D07770 /* NoImage.jpg */; };
 		EFF44D4B20F05C6600D07770 /* CustomTableViewCellLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */; };
 		EFF44D4C20F05C6600D07770 /* CustomTableViewCellLogo.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF44D4A20F05C6600D07770 /* CustomTableViewCellLogo.xib */; };
@@ -410,7 +400,6 @@
 		EF13B63120D20852008CF35C /* jummumYeah.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jummumYeah.png; sourceTree = "<group>"; };
 		EF13B63320D20B55008CF35C /* PaymentCompleteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentCompleteViewController.h; sourceTree = "<group>"; };
 		EF13B63420D20B55008CF35C /* PaymentCompleteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentCompleteViewController.m; sourceTree = "<group>"; };
-		EF13B63620D20EFC008CF35C /* jummumChef.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jummumChef.png; sourceTree = "<group>"; };
 		EF13B63820D2106D008CF35C /* jummumChef_lightGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jummumChef_lightGray.png; sourceTree = "<group>"; };
 		EF13B63B20D212E5008CF35C /* Prompt-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ThinItalic.ttf"; sourceTree = "<group>"; };
 		EF13B63C20D212E5008CF35C /* Kanit-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -466,7 +455,6 @@
 		EF13B66E20D212E5008CF35C /* Kanit-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		EF13B66F20D212E5008CF35C /* Kanit-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Medium.ttf"; sourceTree = "<group>"; };
 		EF13B67020D212E5008CF35C /* Kanit-SemiBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-SemiBoldItalic.otf"; sourceTree = "<group>"; };
-		EF13B6A720D218FF008CF35C /* chefHat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chefHat.png; sourceTree = "<group>"; };
 		EF13B6A920D21A1D008CF35C /* chefHat_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chefHat_green.png; sourceTree = "<group>"; };
 		EF13B6AC20D220F6008CF35C /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		EF13B6AD20D220F6008CF35C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -499,7 +487,6 @@
 		EF26676A20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewHeaderFooterOkCancel.h; sourceTree = "<group>"; };
 		EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewHeaderFooterOkCancel.m; sourceTree = "<group>"; };
 		EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewHeaderFooterOkCancel.xib; sourceTree = "<group>"; };
-		EF26677720AA87B300969AB2 /* check2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check2.png; sourceTree = "<group>"; };
 		EF5C2ED72080BBB000084B7E /* Jummum2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jummum2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5C2EDD2080BBB000084B7E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF5C2EDE2080BBB000084B7E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -543,9 +530,7 @@
 		EF5C2F402080C00400084B7E /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		EF5C2F412080C00400084B7E /* ChristmasConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChristmasConstants.h; sourceTree = "<group>"; };
 		EF5C2F432080C00400084B7E /* me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me.png; sourceTree = "<group>"; };
-		EF5C2F462080C00400084B7E /* personalData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = personalData.png; sourceTree = "<group>"; };
 		EF5C2F4B2080C00400084B7E /* privacyPolicy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = privacyPolicy.png; sourceTree = "<group>"; };
-		EF5C2F552080C00400084B7E /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
 		EF5C2F582080C00400084B7E /* termsOfService.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = termsOfService.png; sourceTree = "<group>"; };
 		EF5C2F5A2080C00400084B7E /* americanExpress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = americanExpress.png; sourceTree = "<group>"; };
 		EF5C2F5B2080C00400084B7E /* logOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logOut.png; sourceTree = "<group>"; };
@@ -554,13 +539,10 @@
 		EF5C2F652080C00400084B7E /* collapse2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collapse2.png; sourceTree = "<group>"; };
 		EF5C2F692080C00400084B7E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		EF5C2F6C2080C00400084B7E /* hotDeal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotDeal.png; sourceTree = "<group>"; };
-		EF5C2F6D2080C00400084B7E /* basket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basket.png; sourceTree = "<group>"; };
 		EF5C2F702080C00400084B7E /* added.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = added.png; sourceTree = "<group>"; };
-		EF5C2F732080C00400084B7E /* gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift.png; sourceTree = "<group>"; };
 		EF5C2F752080C00400084B7E /* removed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removed.png; sourceTree = "<group>"; };
 		EF5C2F782080C00400084B7E /* QR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QR.png; sourceTree = "<group>"; };
 		EF5C2F792080C00400084B7E /* jcb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jcb.png; sourceTree = "<group>"; };
-		EF5C2F7B2080C00400084B7E /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		EF5C2F7F2080C00400084B7E /* security_code_back-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "security_code_back-512.png"; sourceTree = "<group>"; };
 		EF5C2F812080C00400084B7E /* expand2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand2.png; sourceTree = "<group>"; };
 		EF5C2F832080C00400084B7E /* masterCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masterCard.png; sourceTree = "<group>"; };
@@ -758,7 +740,6 @@
 		EF5DC0422115AE7300FFEA60 /* triangle_and_om.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_and_om.png; sourceTree = "<group>"; };
 		EF5DC0432115AE7300FFEA60 /* triangle_dev_om.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_dev_om.png; sourceTree = "<group>"; };
 		EF5DC0442115AE7300FFEA60 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
-		EF5DC0452115AE7300FFEA60 /* jummumLogoWithType_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jummumLogoWithType_white.png; sourceTree = "<group>"; };
 		EF5DC0462115AE7300FFEA60 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		EF5DC0472115AE7400FFEA60 /* triangle_dev.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_dev.png; sourceTree = "<group>"; };
 		EF5DC0482115AE7400FFEA60 /* triangle_and.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_and.png; sourceTree = "<group>"; };
@@ -860,7 +841,6 @@
 		EFD9BA2F20E233E400A0A874 /* HotDealDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotDealDetailViewController.m; sourceTree = "<group>"; };
 		EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+FontAppearance.h"; sourceTree = "<group>"; };
 		EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FontAppearance.m"; sourceTree = "<group>"; };
-		EFE8BFE120A5C507005E0746 /* party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = party.png; sourceTree = "<group>"; };
 		EFF44D4620EFE2D200D07770 /* NoImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NoImage.jpg; sourceTree = "<group>"; };
 		EFF44D4820F05C6600D07770 /* CustomTableViewCellLogo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellLogo.h; sourceTree = "<group>"; };
 		EFF44D4920F05C6600D07770 /* CustomTableViewCellLogo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellLogo.m; sourceTree = "<group>"; };
@@ -1142,14 +1122,10 @@
 				EF5C2F702080C00400084B7E /* added.png */,
 				EFF44F3A20F4C04800D07770 /* addRemove.png */,
 				EF5C2F5A2080C00400084B7E /* americanExpress.png */,
-				EF5C2F6D2080C00400084B7E /* basket.png */,
 				EF13B62D20D177FF008CF35C /* basketWhite.png */,
 				EF13B62F20D20700008CF35C /* check_green.png */,
-				EF26677720AA87B300969AB2 /* check2.png */,
 				EFB02F5D20D40FE00018E878 /* checkbox_gray.png */,
-				EF5C2F7B2080C00400084B7E /* checkbox.png */,
 				EF13B6A920D21A1D008CF35C /* chefHat_green.png */,
-				EF13B6A720D218FF008CF35C /* chefHat.png */,
 				EF13B62B20D1766D008CF35C /* circle_red.png */,
 				EF5C2F652080C00400084B7E /* collapse2.png */,
 				EF02455D20EC93BE0025B89D /* comment.png */,
@@ -1158,10 +1134,8 @@
 				EFAF78F820A53FA00069D6DA /* deleteAll3.png */,
 				EF5C2F812080C00400084B7E /* expand2.png */,
 				EFD5B0CC20DE29E300D9434A /* gift_small.png */,
-				EF5C2F732080C00400084B7E /* gift.png */,
 				EFCB3ADE20DA1060007E0896 /* history.png */,
 				EF13B62920D169C7008CF35C /* home_icon_red.png */,
-				EF5C2F552080C00400084B7E /* home_icon.png */,
 				EF5C2F6C2080C00400084B7E /* hotDeal.png */,
 				EF13B6D520D2237A008CF35C /* Icon-20.png */,
 				EF13B6B420D220F7008CF35C /* Icon-60.png */,
@@ -1188,10 +1162,8 @@
 				EF5DC04B2115AE7400FFEA60 /* iTunesArtwork@2x */,
 				EF5C2F792080C00400084B7E /* jcb.png */,
 				EF13B63820D2106D008CF35C /* jummumChef_lightGray.png */,
-				EF13B63620D20EFC008CF35C /* jummumChef.png */,
 				EF02455720EC67A50025B89D /* JummumLaunchBg.png */,
 				EF13B62720CFCB8D008CF35C /* jummumLogoCrop2.png */,
-				EF5DC0452115AE7300FFEA60 /* jummumLogoWithType_white.png */,
 				EF13B5FF20CECBC3008CF35C /* jummumLogoWithType.png */,
 				EF13B62520CFCB1F008CF35C /* jummumTypeWhite.png */,
 				EF13B63120D20852008CF35C /* jummumYeah.png */,
@@ -1199,8 +1171,6 @@
 				EF5C2F832080C00400084B7E /* masterCard.png */,
 				EF5C2F432080C00400084B7E /* me.png */,
 				EFF44D4620EFE2D200D07770 /* NoImage.jpg */,
-				EFE8BFE120A5C507005E0746 /* party.png */,
-				EF5C2F462080C00400084B7E /* personalData.png */,
 				EF5C2F4B2080C00400084B7E /* privacyPolicy.png */,
 				EF13B6DC20D22CE5008CF35C /* profilePic.png */,
 				EF5DC04A2115AE7400FFEA60 /* profilePicGirl.png */,
@@ -1689,9 +1659,7 @@
 			files = (
 				EF5C30E82080C00500084B7E /* QR.png in Resources */,
 				EF13B69820D212E5008CF35C /* Kanit-Medium.otf in Resources */,
-				EF26677820AA87B400969AB2 /* check2.png in Resources */,
 				EF26676E20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib in Resources */,
-				EF5C30E32080C00500084B7E /* gift.png in Resources */,
 				EF13B68C20D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf in Resources */,
 				EF13B6AA20D21A1E008CF35C /* chefHat_green.png in Resources */,
 				EF13B63220D20853008CF35C /* jummumYeah.png in Resources */,
@@ -1700,9 +1668,7 @@
 				EF93803A20A0539B00A714A3 /* takeAway2.png in Resources */,
 				EF13B68920D212E5008CF35C /* Prompt-Thin.ttf in Resources */,
 				EF5C30F12080C00500084B7E /* expand2.png in Resources */,
-				EF5C30DD2080C00500084B7E /* basket.png in Resources */,
 				EF13B67E20D212E5008CF35C /* Kanit-Black.ttf in Resources */,
-				EF13B63720D20EFE008CF35C /* jummumChef.png in Resources */,
 				EF5C316D2080C00500084B7E /* CustomTableViewCellOrder.xib in Resources */,
 				EF02456B20ECA7730025B89D /* Launch Screen.storyboard in Resources */,
 				EF5C30942080C00500084B7E /* Property List.plist in Resources */,
@@ -1736,7 +1702,6 @@
 				EFB91859208D9F960079FC15 /* CustomTableViewCellPromoThumbNail.xib in Resources */,
 				EF5C30D92080C00500084B7E /* search.png in Resources */,
 				EFB02F6020D40FE10018E878 /* uncheckbox_gray.png in Resources */,
-				EF5C30EB2080C00500084B7E /* checkbox.png in Resources */,
 				EFBBEEC020981BB4003884A9 /* CustomTableViewCellRedemption.xib in Resources */,
 				EF13B69B20D212E5008CF35C /* Kanit-BlackItalic.ttf in Resources */,
 				EFB9184A208C7CFD0079FC15 /* remove light color.png in Resources */,
@@ -1745,7 +1710,6 @@
 				EF5C315C2080C00500084B7E /* CustomTableViewCellText.xib in Resources */,
 				EF13B68520D212E5008CF35C /* Kanit-MediumItalic.ttf in Resources */,
 				EF13B69420D212E5008CF35C /* Kanit-Bold.ttf in Resources */,
-				EFE8BFE220A5C508005E0746 /* party.png in Resources */,
 				EFBBEEB820973F8D003884A9 /* CustomTableViewCellLabel.xib in Resources */,
 				EF13B63920D2106E008CF35C /* jummumChef_lightGray.png in Resources */,
 				EF02455A20EC69140025B89D /* Images.xcassets in Resources */,
@@ -1753,7 +1717,6 @@
 				EF13B6CD20D220F9008CF35C /* Icon-iPadPro@2x.png in Resources */,
 				EF5C30912080C00500084B7E /* Main.storyboard in Resources */,
 				EF5C30E02080C00500084B7E /* added.png in Resources */,
-				EF13B6A820D218FF008CF35C /* chefHat.png in Resources */,
 				EF13B6CA20D220F9008CF35C /* Icon-60@2x.png in Resources */,
 				EF5C30902080C00500084B7E /* iOSDeviceModelMapping.plist in Resources */,
 				EF02455820EC67A60025B89D /* JummumLaunchBg.png in Resources */,
@@ -1786,7 +1749,6 @@
 				EF5C31622080C00500084B7E /* CustomTableViewCellOrderSummary.xib in Resources */,
 				EF13B68420D212E5008CF35C /* Kanit-SemiBold.otf in Resources */,
 				EF93803C20A053E600A714A3 /* takeAwayGrayOut.png in Resources */,
-				EF5DC04F2115AE7500FFEA60 /* jummumLogoWithType_white.png in Resources */,
 				EF5C31692080C00500084B7E /* CustomTableViewCellLabelLabel.xib in Resources */,
 				EF13B68020D212E5008CF35C /* Kanit-ExtraBoldItalic.otf in Resources */,
 				EF13B62C20D1766D008CF35C /* circle_red.png in Resources */,
@@ -1844,14 +1806,12 @@
 				EF5C30EF2080C00500084B7E /* security_code_back-512.png in Resources */,
 				EF13B67C20D212E5008CF35C /* Kanit-SemiBold.ttf in Resources */,
 				EF5DC0512115AE7500FFEA60 /* triangle_dev.png in Resources */,
-				EF5C30B62080C00500084B7E /* personalData.png in Resources */,
 				EF13B69520D212E5008CF35C /* Prompt-Regular.ttf in Resources */,
 				EF13B6D120D220F9008CF35C /* Icon-76@3x.png in Resources */,
 				EFCB3ADA20D8BA1F007E0896 /* takeAwayNoti.png in Resources */,
 				EF5C30CA2080C00500084B7E /* americanExpress.png in Resources */,
 				EF13B6CE20D220F9008CF35C /* Icon-Spotlight-40@3x.png in Resources */,
 				EF5C30CE2080C00500084B7E /* visa.png in Resources */,
-				EF5C30C52080C00500084B7E /* home_icon.png in Resources */,
 				EF5C314F2080C00500084B7E /* CustomTableViewHeaderFooterButton.xib in Resources */,
 				EF13B6DD20D22CE5008CF35C /* profilePic.png in Resources */,
 				EF13B69620D212E5008CF35C /* Prompt-ExtraLightItalic.ttf in Resources */,

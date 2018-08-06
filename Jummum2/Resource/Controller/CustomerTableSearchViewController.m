@@ -70,7 +70,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     }
     else
     {
-        btnBack.imageView.image = [UIImage imageNamed:@"home_icon.png"];
+        btnBack.imageView.image = [UIImage imageNamed:@"home_icon_red.png"];
     }
     
     [self setShadow:vwBottomShadow];
