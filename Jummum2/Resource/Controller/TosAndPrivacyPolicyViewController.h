@@ -18,5 +18,4 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *webViewContainerTrailing;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *webViewContainerBottom;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 @end

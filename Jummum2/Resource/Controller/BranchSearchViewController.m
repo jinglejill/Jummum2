@@ -37,7 +37,6 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 @synthesize tbvBranch;
 @synthesize sbText;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
 
 
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue
@@ -54,7 +53,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;

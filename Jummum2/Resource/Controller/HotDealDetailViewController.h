@@ -15,7 +15,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) Promotion *promotion;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 - (IBAction)goBack:(id)sender;
 

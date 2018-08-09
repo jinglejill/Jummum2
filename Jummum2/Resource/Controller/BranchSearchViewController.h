@@ -14,7 +14,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *tbvBranch;
 @property (strong, nonatomic) IBOutlet UISearchBar *sbText;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 -(IBAction)unwindToBranchSearch:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;
 @end

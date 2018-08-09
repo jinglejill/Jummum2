@@ -16,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) RewardPoint *rewardPoint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+
 
 -(IBAction)unwindToMyReward:(UIStoryboardSegue *)segue;
 - (IBAction)goBack:(id)sender;

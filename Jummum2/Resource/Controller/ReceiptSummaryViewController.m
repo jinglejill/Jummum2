@@ -43,7 +43,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 @synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
+
 
 
 -(IBAction)unwindToReceiptSummary:(UIStoryboardSegue *)segue
@@ -76,7 +76,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;

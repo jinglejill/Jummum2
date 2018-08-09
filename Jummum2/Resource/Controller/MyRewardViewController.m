@@ -63,7 +63,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 @synthesize tbvData;
 @synthesize rewardPoint;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
+
 
 -(IBAction)unwindToMyReward:(UIStoryboardSegue *)segue
 {
@@ -74,7 +74,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;

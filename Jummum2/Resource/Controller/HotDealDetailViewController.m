@@ -28,14 +28,13 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
 @synthesize tbvData;
 @synthesize promotion;
 @synthesize topViewHeight;
-@synthesize bottomViewHeight;
 
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    bottomViewHeight.constant = window.safeAreaInsets.bottom;
+    
     
     float topPadding = window.safeAreaInsets.top;
     topViewHeight.constant = topPadding == 0?20:topPadding;

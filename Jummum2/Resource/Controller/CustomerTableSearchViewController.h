@@ -20,7 +20,6 @@
 @property (strong, nonatomic) CustomerTable *customerTable;
 @property (nonatomic) NSInteger fromCreditCardAndOrderSummaryMenu;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 -(IBAction)goBackHome:(id)sender;
 -(IBAction)unwindToCustomerTableSearch:(UIStoryboardSegue *)segue;
 
