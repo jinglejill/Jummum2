@@ -258,6 +258,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.sbText.delegate = self;
             cell.sbText.tag = 300;
+            [cell.sbText setInputAccessoryView:self.toolBar];
             UITextField *textField = [cell.sbText valueForKey:@"searchField"];
             textField.layer.borderColor = [cTextFieldBorder CGColor];
             textField.layer.borderWidth = 1;

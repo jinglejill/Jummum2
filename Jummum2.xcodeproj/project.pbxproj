@@ -272,6 +272,10 @@
 		EF5DC0542115AE7500FFEA60 /* profilePicGirl.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC04A2115AE7400FFEA60 /* profilePicGirl.png */; };
 		EF5DC0552115AE7500FFEA60 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC04B2115AE7400FFEA60 /* iTunesArtwork@2x */; };
 		EF5DC0A121164B5100FFEA60 /* SharedCurrentCreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5DC0A021164B5100FFEA60 /* SharedCurrentCreditCard.m */; };
+		EF639DE2211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m in Sources */ = {isa = PBXBuildFile; fileRef = EF639DE0211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m */; };
+		EF639DE3211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF639DE1211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib */; };
+		EF639DEE211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m in Sources */ = {isa = PBXBuildFile; fileRef = EF639DEC211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m */; };
+		EF639DEF211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF639DED211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib */; };
 		EF93803A20A0539B00A714A3 /* takeAway2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF93803920A0539B00A714A3 /* takeAway2.png */; };
 		EF93803C20A053E600A714A3 /* takeAwayGrayOut.png in Resources */ = {isa = PBXBuildFile; fileRef = EF93803B20A053E600A714A3 /* takeAwayGrayOut.png */; };
 		EFA9632A20A68C6400E2DB9C /* DisputeFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA9632920A68C6400E2DB9C /* DisputeFormViewController.m */; };
@@ -748,6 +752,12 @@
 		EF5DC04B2115AE7400FFEA60 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
 		EF5DC09F21164B5100FFEA60 /* SharedCurrentCreditCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedCurrentCreditCard.h; sourceTree = "<group>"; };
 		EF5DC0A021164B5100FFEA60 /* SharedCurrentCreditCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedCurrentCreditCard.m; sourceTree = "<group>"; };
+		EF639DDF211EC90B00C70A98 /* CustomTableViewCellLabelRemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellLabelRemark.h; sourceTree = "<group>"; };
+		EF639DE0211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellLabelRemark.m; sourceTree = "<group>"; };
+		EF639DE1211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCellLabelRemark.xib; sourceTree = "<group>"; };
+		EF639DEB211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellSeparatorLine.h; sourceTree = "<group>"; };
+		EF639DEC211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellSeparatorLine.m; sourceTree = "<group>"; };
+		EF639DED211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCellSeparatorLine.xib; sourceTree = "<group>"; };
 		EF93803920A0539B00A714A3 /* takeAway2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takeAway2.png; sourceTree = "<group>"; };
 		EF93803B20A053E600A714A3 /* takeAwayGrayOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takeAwayGrayOut.png; sourceTree = "<group>"; };
 		EFA9632820A68C6400E2DB9C /* DisputeFormViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisputeFormViewController.h; sourceTree = "<group>"; };
@@ -1439,6 +1449,9 @@
 		EF5C30292080C00500084B7E /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				EF639DDF211EC90B00C70A98 /* CustomTableViewCellLabelRemark.h */,
+				EF639DE0211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m */,
+				EF639DE1211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib */,
 				EF5C303C2080C00500084B7E /* CustomCollectionReusableView.h */,
 				EF5C30592080C00500084B7E /* CustomCollectionReusableView.m */,
 				EF5C30412080C00500084B7E /* CustomCollectionReusableView.xib */,
@@ -1539,6 +1552,9 @@
 				EF5C304B2080C00500084B7E /* CustomViewVoucher.xib */,
 				EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */,
 				EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */,
+				EF639DEB211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.h */,
+				EF639DEC211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m */,
+				EF639DED211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1770,6 +1786,7 @@
 				EF13B6A320D212E5008CF35C /* Prompt-Black.ttf in Resources */,
 				EF13B6C920D220F9008CF35C /* Icon-76@2x.png in Resources */,
 				EF13B68220D212E5008CF35C /* Kanit-ExtraBold.otf in Resources */,
+				EF639DE3211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib in Resources */,
 				EF5DC0522115AE7500FFEA60 /* triangle_and.png in Resources */,
 				EF13B62A20D169C8008CF35C /* home_icon_red.png in Resources */,
 				EF13B68D20D212E5008CF35C /* Kanit-ExtraBold.ttf in Resources */,
@@ -1777,6 +1794,7 @@
 				EF13B67120D212E5008CF35C /* Prompt-ThinItalic.ttf in Resources */,
 				EF5DC04C2115AE7500FFEA60 /* triangle_and_om.png in Resources */,
 				EF13B68620D212E5008CF35C /* Kanit-Black.otf in Resources */,
+				EF639DEF211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib in Resources */,
 				EF13B6C820D220F9008CF35C /* Icon-60.png in Resources */,
 				EF13B68320D212E5008CF35C /* Prompt-Light.ttf in Resources */,
 				EFB02F5F20D40FE10018E878 /* checkbox_gray.png in Resources */,
@@ -1928,6 +1946,7 @@
 				EF5C31352080C00500084B7E /* UserAccount.m in Sources */,
 				EF5C31382080C00500084B7E /* OrderTaking.m in Sources */,
 				EF5C30FD2080C00500084B7E /* LaunchScreenViewController.m in Sources */,
+				EF639DEE211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m in Sources */,
 				EF5C30AE2080C00500084B7E /* OmiseCard.swift in Sources */,
 				EFB9185C208DA1120079FC15 /* HotDeal.m in Sources */,
 				EF5C31062080C00500084B7E /* TermsOfServiceViewController.m in Sources */,
@@ -2045,6 +2064,7 @@
 				EF5C31412080C00500084B7E /* PushSync.m in Sources */,
 				EF1AD15A20B0081600F6D223 /* CustomTableViewCellDisputeDetail.m in Sources */,
 				EF5C31582080C00500084B7E /* CustomTableViewCellText.m in Sources */,
+				EF639DE2211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m in Sources */,
 				EF5C31282080C00500084B7E /* SharedCurrentOrderTaking.m in Sources */,
 				EF5C31022080C00500084B7E /* BranchSearchViewController.m in Sources */,
 				EF5C30A12080C00500084B7E /* OmiseAuthorizingPaymentViewController.swift in Sources */,
