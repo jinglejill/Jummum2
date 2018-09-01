@@ -143,7 +143,6 @@ enum enumDB
     dbReceiptMaxModifiedDate,
     dbReceipt,
     dbPromotion,
-    dbFacebookComment,
     dbRewardPoint,
     dbRewardPointList,
     dbRewardPointSpent,
@@ -185,9 +184,11 @@ enum enumDB
     dbReceiptDisputeRatingUpdateAndReload,
     dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload,
     dbMenuNote,
-    dbMenuNoteList,
-    dbOpeningTime
-
+    dbMenuNoteList,    
+    dbMenuBelongToBuffet,
+    dbBuffetOrder,
+    dbSettingWithKey,
+    dbPromotionAndRewardRedemption
 
     
 };
@@ -333,7 +334,13 @@ enum enumUrl
     urlMenuNoteUpdateList,
     urlMenuNoteDeleteList,
     urlOpeningTimeGet,
-    urlContactUs
+    urlOpeningTimeMenuBelongToBuffetGet,
+    urlContactUs,
+    urlMenuBelongToBuffetGetList,
+    urlBuffetOrderInsertList,
+    urlSettingWithKeyGet,
+    urlPromotionAndRewardRedemption,
+    urlMenuGet
     
 
     
@@ -360,6 +367,8 @@ enum enumUrl
 + (NSString *) deviceToken;
 + (NSInteger) deviceID;
 + (NSString *) dbName;
++(void)setBundleID:(NSString *)bundleID;
++(NSString *)bundleID;
 + (NSString *) formatDate:(NSString *)strDate fromFormat:(NSString *)fromFormat toFormat:(NSString *)toFormat;
 + (NSDate *) stringToDate:(NSString *)strDate fromFormat:(NSString *)fromFormat;
 + (NSString *) dateToString:(NSDate *)date toFormat:(NSString *)toFormat;
@@ -388,8 +397,6 @@ enum enumUrl
 + (NSString *)modifiedUser;
 + (NSString *)modifiedVC;
 + (void)setModifiedUser:(NSString *)modifiedUser;
-+ (BOOL) finishLoadSharedData;
-+ (void) setFinishLoadSharedData:(BOOL)finish;
 + (NSData *)dataFromHexString:(NSString *)string;
 + (NSString *)makeFirstLetterLowerCase:(NSString *)text;
 + (NSString *)makeFirstLetterUpperCase:(NSString *)text;

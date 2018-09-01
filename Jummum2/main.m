@@ -1,9 +1,9 @@
 //
 //  main.m
-//  Jummum
+//  DevJummum
 //
-//  Created by Thidaporn Kijkamjai on 15/2/2561 BE.
-//  Copyright © 2561 Appxelent. All rights reserved.
+//  Created by Thidaporn Kijkamjai on 9/8/2561 BE.
+//  Copyright © 2561 Jummum Tech. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,9 +15,11 @@ NSString *globalDomainName;
 NSString *globalSubjectNoConnection;
 NSString *globalDetailNoConnection;
 BOOL globalRotateFromSeg;
-BOOL globalFinishLoadSharedData;
 NSString *globalKey;
 NSString *globalModifiedUser;
+NSString *globalBundleID;
+
+
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));

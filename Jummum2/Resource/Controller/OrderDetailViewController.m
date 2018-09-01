@@ -104,7 +104,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
     lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
-//    tbvData.separatorColor = [UIColor clearColor];
+    tbvData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     
     tbvRating.delegate = self;
@@ -188,17 +188,24 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
         }
         else if(section == 1)
         {
-            NSInteger numberOfRow = 3+1;//total,vat,net total---->(1,0,0),(1,1,0),(1,0,1),(1,1,1) *** บวกหมายเหตุ 1 row
-            if(receipt.discountValue > 0)
+            if(receipt.buffetReceiptID)
             {
-                numberOfRow += 2 ;
+                return 1+1;//total and remark
             }
-            if(receipt.serviceChargePercent > 0)
+            else
             {
-                numberOfRow += 1;
+                NSInteger numberOfRow = 3+1;//total,vat,net total---->(1,0,0),(1,1,0),(1,0,1),(1,1,1) *** บวกหมายเหตุ 1 row
+                if(receipt.discountValue > 0)
+                {
+                    numberOfRow += 2 ;
+                }
+                if(receipt.serviceChargePercent > 0)
+                {
+                    numberOfRow += 1;
+                }
+                
+                return numberOfRow;
             }
-    
-            return numberOfRow;
         }
         else if(section == 2)
         {
@@ -260,7 +267,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
             
             
             Branch *branch = [Branch getBranch:receipt.branchID];
-            cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@", receipt.receiptNoID];
+            NSString *showBuffetOrder = receipt.buffetReceiptID?@" (Buffet)":@"";
+            cell.lblReceiptNo.text = [NSString stringWithFormat:@"Order no. #%@%@", receipt.receiptNoID,showBuffetOrder];
             cell.lblReceiptDate.text = [Utility dateToString:receipt.modifiedDate toFormat:@"d MMM yy HH:mm"];
             cell.lblBranchName.text = [NSString stringWithFormat:@"ร้าน %@",branch.name];
             cell.lblBranchName.textColor = cSystem1;
@@ -881,6 +889,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     cell.btnValue.backgroundColor = cSystem1;
                     [cell.btnValue setTitle:title forState:UIControlStateNormal];
+                    [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
                     [cell.btnValue addTarget:self action:@selector(cancelOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
                     
@@ -901,6 +910,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     [cell.btnValue setTitle:title forState:UIControlStateNormal];
                     cell.btnValue.backgroundColor = cSystem1;
+                    [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
                     [cell.btnValue addTarget:self action:@selector(disputeOrder:) forControlEvents:UIControlEventTouchUpInside];
                     [self setButtonDesign:cell.btnValue];
                     
@@ -1214,6 +1224,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         [cell.btnValue setTitle:@"Confirm" forState:UIControlStateNormal];
                         cell.btnValue.backgroundColor = cSystem2;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
                         [cell.btnValue addTarget:self action:@selector(confirmNegotiate:) forControlEvents:UIControlEventTouchUpInside];
                         [self setButtonDesign:cell.btnValue];
                         
@@ -1231,6 +1242,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         [cell.btnValue setTitle:@"Negotiate" forState:UIControlStateNormal];
                         cell.btnValue.backgroundColor = cSystem1;
                         [cell.btnValue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
                         [cell.btnValue addTarget:self action:@selector(negotiate:) forControlEvents:UIControlEventTouchUpInside];
                         [self setButtonDesign:cell.btnValue];
                         
@@ -1248,6 +1260,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         [cell.btnValue setTitle:@"Cancel" forState:UIControlStateNormal];
                         cell.btnValue.backgroundColor = cSystem4_10;
                         [cell.btnValue setTitleColor:cSystem4 forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
                         [cell.btnValue addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
                         [self setButtonDesign:cell.btnValue];
                         
@@ -2340,6 +2353,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
         vc.branch = _receiptBranch;
         vc.customerTable = nil;
         vc.fromOrderDetailMenu = 1;
+        Receipt *buffetReceipt = [Receipt getReceipt:receipt.buffetReceiptID];
+        vc.buffetReceipt = buffetReceipt;
     }
     else if([[segue identifier] isEqualToString:@"segConfirmDispute"])
     {

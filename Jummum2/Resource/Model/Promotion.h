@@ -45,6 +45,8 @@
 @property (nonatomic) NSInteger promoCodeID;
 @property (nonatomic) float frequency;
 @property (nonatomic) float sales;
+@property (nonatomic) BOOL selected;
+
 
 -(Promotion *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountMenuID:(NSInteger)discountMenuID noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status;
 
@@ -58,6 +60,7 @@
 +(Promotion *)getPromotion:(NSInteger)promotionID;
 -(BOOL)editPromotion:(Promotion *)editingPromotion;
 +(Promotion *)copyFrom:(Promotion *)fromPromotion to:(Promotion *)toPromotion;
-+(NSMutableArray *)sortWithdataList:(NSMutableArray *)dataList;
++(NSMutableArray *)getPromotionList;
++(void)removeAllObjects;
 
 @end

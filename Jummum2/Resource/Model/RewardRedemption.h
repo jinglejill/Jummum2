@@ -43,6 +43,8 @@
 @property (retain, nonatomic) NSDate * sortDate;
 @property (nonatomic) float frequency;
 @property (nonatomic) float sales;
+@property (retain, nonatomic) NSString * voucherCode;
+
 
 -(RewardRedemption *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl point:(NSInteger)point prefixPromoCode:(NSString *)prefixPromoCode suffixPromoCode:(NSString *)suffixPromoCode rewardLimit:(NSInteger)rewardLimit withInPeriod:(NSInteger)withInPeriod detail:(NSString *)detail termsConditions:(NSString *)termsConditions usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate discountType:(NSInteger)discountType discountAmount:(float)discountAmount minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountMenuID:(NSInteger)discountMenuID orderNo:(NSInteger)orderNo status:(NSInteger)status;
 +(NSInteger)getNextID;
@@ -54,5 +56,6 @@
 -(BOOL)editRewardRedemption:(RewardRedemption *)editingRewardRedemption;
 +(RewardRedemption *)copyFrom:(RewardRedemption *)fromRewardRedemption to:(RewardRedemption *)toRewardRedemption;
 +(NSMutableArray *)sort:(NSMutableArray *)rewardRedemptionList;
-+(NSMutableArray *)sortWithdataList:(NSMutableArray *)dataList;
++(NSMutableArray *)getRewardRedemptionList;
++(void)removeAllObjects;
 @end

@@ -26,10 +26,12 @@
 #import "RewardRedemptionViewController.h"
 #import "SelectPaymentMethodViewController.h"
 #import "TosAndPrivacyPolicyViewController.h"
+#import "VoucherCodeListViewController.h"
 #import "CustomTableViewCellImageText.h"
 #import "CustomTableViewCellProfile.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "LogIn.h"
+
 
 
 @interface MeViewController ()
@@ -41,6 +43,7 @@
     NSArray *_logOutList;
     NSArray *_logOutImageList;
     NSInteger _pageType;
+    BOOL _goToBuffetOrder;
 }
 @end
 
@@ -56,28 +59,47 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue
 {
     self.showOrderDetail = 0;
-    if([[segue sourceViewController] isKindOfClass:[CommentViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[BasketViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[BranchSearchViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[CreditCardAndOrderSummaryViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[CreditCardViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[CustomerTableSearchViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[HotDealDetailViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[MenuSelectionViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[MyRewardViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[NoteViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[PersonalDataViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[RecommendShopViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[RewardDetailViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[RewardRedemptionViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[SelectPaymentMethodViewController class]] ||
-       [[segue sourceViewController] isKindOfClass:[TosAndPrivacyPolicyViewController class]]
-       )
+    CustomViewController *vc = segue.sourceViewController;
+    if([[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] && !vc.showOrderDetail)
     {
-        CustomViewController *vc = segue.sourceViewController;
-        self.showOrderDetail = vc.showOrderDetail;
-        self.selectedReceipt = vc.selectedReceipt;
+        _goToBuffetOrder = 1;
+        PaymentCompleteViewController *vc = segue.sourceViewController;
+        if(vc.receipt.buffetReceiptID)
+        {
+            Receipt *buffetReceipt = [Receipt getReceipt:vc.receipt.buffetReceiptID];
+            self.selectedReceipt = buffetReceipt;
+        }
+        else
+        {
+            self.selectedReceipt = vc.receipt;
+        }
+    }
+    else
+    {
+        if([[segue sourceViewController] isKindOfClass:[CommentViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[BasketViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[BranchSearchViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[CreditCardAndOrderSummaryViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[CreditCardViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[CustomerTableSearchViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[HotDealDetailViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[MenuSelectionViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[MyRewardViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[NoteViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[PersonalDataViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[RecommendShopViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[RewardDetailViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[RewardRedemptionViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[SelectPaymentMethodViewController class]] ||
+           [[segue sourceViewController] isKindOfClass:[TosAndPrivacyPolicyViewController class]] ||
+            [[segue sourceViewController] isKindOfClass:[VoucherCodeListViewController class]]
+           )
+        {
+            CustomViewController *vc = segue.sourceViewController;
+            self.showOrderDetail = vc.showOrderDetail;
+            self.selectedReceipt = vc.selectedReceipt;
+        }
     }
 }
 
@@ -94,6 +116,10 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 {
     [super viewDidAppear:animated];
     if(self.showOrderDetail)
+    {
+        [self segueToReceiptSummaryAuto];
+    }
+    else if(_goToBuffetOrder)
     {
         [self segueToReceiptSummaryAuto];
     }
@@ -306,7 +332,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
                     [self removeMemberData];
                     [self removeOverlayViews];
                     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-                    LogIn *logIn = [[LogIn alloc]initWithUsername:userAccount.username status:-1 deviceToken:[Utility deviceToken]];
+                    LogIn *logIn = [[LogIn alloc]initWithUsername:userAccount.username status:-1 deviceToken:[Utility deviceToken] model:[self deviceName]];
                     [self.homeModel insertItems:dbLogOut withData:logIn actionScreen:@"log out in Me screen"];
                     [self showAlert:@"" message:@"ออกจากระบบสำเร็จ" method:@selector(unwindToLogIn)];
                 }
@@ -339,6 +365,16 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         ReceiptSummaryViewController *vc = segue.destinationViewController;
         vc.showOrderDetail = self.showOrderDetail;
         vc.selectedReceipt = self.selectedReceipt;
+        vc.goToBuffetOrder = _goToBuffetOrder;
+    }
+    else if([[segue identifier] isEqualToString:@"segReceiptSummaryNoAnimate"])
+    {
+        ReceiptSummaryViewController *vc = segue.destinationViewController;
+        vc.showOrderDetail = self.showOrderDetail;
+        vc.selectedReceipt = self.selectedReceipt;
+        vc.goToBuffetOrder = _goToBuffetOrder;
+        self.showOrderDetail = 0;
+        _goToBuffetOrder = 0;        
     }
 }
 
@@ -354,6 +390,6 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 
 -(void)segueToReceiptSummaryAuto
 {
-    [self performSegueWithIdentifier:@"segReceiptSummary" sender:self];
+    [self performSegueWithIdentifier:@"segReceiptSummaryNoAnimate" sender:self];
 }
 @end

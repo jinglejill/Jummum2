@@ -22,24 +22,18 @@
 #import "Utility.h"
 #import "Message.h"
 #import "CreditCard.h"
+#import "Branch.h"
+#import "MenuForBuffet.h"
 
 
 @interface MenuSelectionViewController ()
 {
     NSMutableArray *_menuList;
     NSMutableArray *_menuTypeList;
-    NSMutableArray *_menuNoteList;
-    NSMutableArray *_noteList;
-    NSMutableArray *_noteTypeList;
-    NSMutableArray *_subMenuTypeList;
-    NSMutableArray *_specialPriceProgramList;
-    
-
     NSMutableArray *_filterMenuList;
-    OrderTaking *_orderTaking;
-    OrderTaking *_copyOrderTaking;
-    NSInteger _showCheckOnly;
     NSInteger _selectedMenuTypeIndex;
+    NSMutableArray *_currentMenuTypeList;
+    UIScrollView *_horizontalScrollView;
 }
 
 @property (nonatomic)        BOOL           searchBarActive;
@@ -61,6 +55,9 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 @synthesize lblTotalAmount;
 @synthesize topViewHeight;
 @synthesize bottomButtonHeight;
+@synthesize buffetReceipt;
+@synthesize btnBack;
+
 
 -(IBAction)unwindToMenuSelection:(UIStoryboardSegue *)segue
 {
@@ -77,6 +74,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         BasketViewController *vc = segue.destinationViewController;
         vc.branch = branch;
         vc.customerTable = customerTable;
+        vc.buffetReceipt = buffetReceipt;
     }
 }
 
@@ -117,7 +115,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    _currentMenuTypeList = [[NSMutableArray alloc]init];
     
     
     
@@ -128,73 +126,107 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     tbvMenu.delegate = self;
     tbvMenu.dataSource = self;
     [self setShadow:vwBottomShadow];
-    NSMutableArray *orderTakingList = [OrderTaking getCurrentOrderTakingList];
-    if([orderTakingList count]>0)
+    if(buffetReceipt)
     {
-        OrderTaking *orderTaking = orderTakingList[0];
-        if(orderTaking.branchID == branch.branchID)
+        [OrderTaking removeCurrentOrderTakingList];
+        [CreditCard removeCurrentCreditCard];
+        lblTotalQuantity.text = @"0";
+        lblTotalQuantityTop.text = @"";
+        lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
+        [btnBack setImage:nil forState:UIControlStateNormal];
+        branch = [Branch getBranch:buffetReceipt.branchID];
+        customerTable = [CustomerTable getCustomerTable:buffetReceipt.customerTableID];
+        
+        
+        
+        //ถ้าเป็น branch เดิม ไม่ต้องโหลดเมนูใหม่ เช็ค openingTime แทน
+        MenuForBuffet *menuForBuffet = [Menu getCurrentMenuForBuffet];
+        if(!menuForBuffet || menuForBuffet.receiptID != buffetReceipt.receiptID)
         {
-            lblTotalQuantity.text = [Utility formatDecimal:[orderTakingList count] withMinFraction:0 andMaxFraction:0];
-            lblTotalQuantityTop.text = lblTotalQuantity.text;
+            [self loadingOverlayView];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbMenuBelongToBuffet withData:buffetReceipt];
+        }
+        else
+        {            
+            _menuList = [Menu getMenuBelongToBuffet:buffetReceipt];
+            _menuTypeList = [MenuType getMenuTypeListWithMenuList:_menuList];
+            _menuTypeList = [MenuType sortList:_menuTypeList];
+            _filterMenuList = _menuList;
+            [self setData];
             
             
-            NSString *strTotal = [Utility formatDecimal:[OrderTaking getSubTotalAmount:orderTakingList] withMinFraction:2 andMaxFraction:2];
-            strTotal = [Utility addPrefixBahtSymbol:strTotal];
-            lblTotalAmount.text = strTotal;
+            
+            //check opening time การสั่งอาหารด้วยตัวเอง
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbMenuBelongToBuffet withData:buffetReceipt];
+            
+        }
+    }
+    else
+    {
+        NSMutableArray *orderTakingList = [OrderTaking getCurrentOrderTakingList];
+        if([orderTakingList count]>0)
+        {
+            OrderTaking *orderTaking = orderTakingList[0];
+            if(orderTaking.branchID == branch.branchID)
+            {
+                lblTotalQuantity.text = [Utility formatDecimal:[orderTakingList count] withMinFraction:0 andMaxFraction:0];
+                lblTotalQuantityTop.text = lblTotalQuantity.text;
+                
+                
+                NSString *strTotal = [Utility formatDecimal:[OrderTaking getSubTotalAmount:orderTakingList] withMinFraction:2 andMaxFraction:2];
+                strTotal = [Utility addPrefixBahtSymbol:strTotal];
+                lblTotalAmount.text = strTotal;
+            }
+            else
+            {
+                [Menu removeCurrentMenuList];
+                [OrderTaking removeCurrentOrderTakingList];
+                [CreditCard removeCurrentCreditCard];
+                lblTotalQuantity.text = @"0";
+                lblTotalQuantityTop.text = @"";
+                lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
+            }
         }
         else
         {
-            [Menu removeCurrentMenuList];
-            [OrderTaking removeCurrentOrderTakingList];            
-            [CreditCard removeCurrentCreditCard];
             lblTotalQuantity.text = @"0";
             lblTotalQuantityTop.text = @"";
             lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
         }
-    }
-    else
-    {
-        [Menu removeCurrentMenuList];
-        lblTotalQuantity.text = @"0";
-        lblTotalQuantityTop.text = @"";
-        lblTotalAmount.text = [Utility addPrefixBahtSymbol:@"0.00"];
+        
+        
+        
+        
+        _menuList = [Menu getCurrentMenuList];
+        if([_menuList count] == 0)
+        {
+            [self loadingOverlayView];
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbMenuList withData:branch];
+        }
+        else
+        {
+            _menuList = [Menu getMenuListALaCarteWithBranchID:branch.branchID];
+            _menuTypeList = [MenuType getMenuTypeListALarCarteWithBranchID:branch.branchID];
+            _menuTypeList = [MenuType sortList:_menuTypeList];
+            _filterMenuList = _menuList;
+            [self setData];
+            
+            
+            
+            
+            //check opening time การสั่งอาหารด้วยตัวเอง
+            self.homeModel = [[HomeModel alloc]init];
+            self.homeModel.delegate = self;
+            [self.homeModel downloadItems:dbMenuList withData:branch];
+        }
     }
     
-    
-    _menuList = [Menu getCurrentMenuList];
-    if([_menuList count] == 0)
-    {
-        [self loadingOverlayView];
-        self.homeModel = [[HomeModel alloc]init];
-        self.homeModel.delegate = self;
-        [self.homeModel downloadItems:dbMenuList withData:branch];
-    }
-    else
-    {
-
-        _menuTypeList = [MenuType getMenuTypeList];
-        _menuNoteList = [MenuNote getMenuNoteList];
-        _noteList = [Note getNoteList];
-        _noteTypeList = [NoteType getNoteTypeList];
-        _subMenuTypeList = [SubMenuType getSubMenuTypeList];
-        _menuTypeList = [MenuType sortList:_menuTypeList];
-        
-        
-        
-        _filterMenuList = _menuList;
-        [self setData];
-        
-        
-        
-        
-        
-        
-        
-        //check opening time การสั่งอาหารด้วยตัวเอง
-        self.homeModel = [[HomeModel alloc]init];
-        self.homeModel.delegate = self;
-        [self.homeModel downloadItems:dbOpeningTime withData:branch];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -204,8 +236,15 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 
 - (IBAction)goBackHome:(id)sender
 {
-    [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
-//    [self performSegueWithIdentifier:@"segUnwindToBranchSearch" sender:self];
+    if(buffetReceipt)
+    {
+        [OrderTaking removeCurrentOrderTakingList];
+        [self performSegueWithIdentifier:@"segUnwindToReceiptSummary" sender:self];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
+    }
 }
 
 - (IBAction)viewBasket:(id)sender
@@ -317,6 +356,7 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
             }
             
             
+            
             NSString *imageFileName = [Utility isStringEmpty:menu.imageUrl]?@"./Image/NoImage.jpg":[NSString stringWithFormat:@"./%@/Image/Menu/%@",branch.dbName,menu.imageUrl];
             UIImage *image = [Utility getImageFromCache:imageFileName];
             if(image)
@@ -419,7 +459,6 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     HomeModel *homeModel = (HomeModel *)objHomeModel;
     if(homeModel.propCurrentDB == dbMenuList)
     {
-        NSLog(@"menuList");
         NSMutableArray *messageList = [items[0] mutableCopy];
         Message *message = messageList[0];
         if(![message.text integerValue])
@@ -429,47 +468,39 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
         }
         
         
-        _menuList = [items[1] mutableCopy];
-        _menuTypeList = [items[2] mutableCopy];
-        _noteList = [items[3] mutableCopy];
-        _noteTypeList = [items[4] mutableCopy];
-        _specialPriceProgramList = [items[5] mutableCopy];
+        [Utility updateSharedObject:items];
+        _menuList = [Menu getMenuListALaCarteWithBranchID:branch.branchID];
+        _menuTypeList = [MenuType getMenuTypeListALarCarteWithBranchID:branch.branchID];
         _menuTypeList = [MenuType sortList:_menuTypeList];
-        
-        
-//        _menuList = [Menu setBranchID:branch.branchID menuList:_menuList];
         _filterMenuList = _menuList;
         [Menu setCurrentMenuList:_menuList];
-        
-        [Utility updateSharedObject:items];
-//        [Menu addListCheckDuplicate:_menuList];//ต้องเฉพาะไม่ซ้ำ
-//        [MenuType setSharedData:_menuTypeList];
-//        [Note setSharedData:_noteList];
-//        [NoteType setSharedData:_noteTypeList];
-//        [SpecialPriceProgram setSharedData:_specialPriceProgramList];
-        
-        
-        
         [self setData];
         [self removeOverlayViews];
               
     }
-    else if(homeModel.propCurrentDB == dbOpeningTime)
+    else if(homeModel.propCurrentDB == dbMenuBelongToBuffet)
     {
-        NSLog(@"openingTime");
-        [self removeOverlayViews];
-        NSMutableArray *messageList = items[0];
+        NSMutableArray *messageList = [items[0] mutableCopy];
         Message *message = messageList[0];
-        if(![message.text integerValue])//open
+        if(![message.text integerValue])
         {
             NSString *message = [Setting getValue:@"124m" example:@"ทางร้านไม่ได้เปิดระบบการสั่งอาหารด้วยตนเองตอนนี้ ขออภัยในความไม่สะดวกค่ะ"];
             [self showAlert:@"" message:message];
         }
-    }
-    else if(homeModel.propCurrentDB == dbMenuNoteList)
-    {
-        _menuNoteList = [items[0] mutableCopy];
-        [MenuNote setSharedData:_menuNoteList];
+        
+        
+        [Utility updateSharedObject:items];
+        _menuList = [Menu getMenuBelongToBuffet:buffetReceipt];
+        _menuTypeList = [MenuType getMenuTypeListWithMenuList:_menuList];
+        _menuTypeList = [MenuType sortList:_menuTypeList];
+        _filterMenuList = _menuList;
+        
+        NSMutableArray *receiptList = items[6];
+        Receipt *receipt = receiptList[0];
+        MenuForBuffet *menuForBuffet = [[MenuForBuffet alloc]initWithReceiptID:receipt.receiptID menuList:_menuList];
+        [Menu setCurrentMenuForBuffet:menuForBuffet];
+        [self setData];
+        [self removeOverlayViews];
     }
 }
 
@@ -479,10 +510,11 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     [tbvMenu reloadData];
     if([_menuTypeList count]>0)
     {
-        MenuType *menuType = _menuTypeList[0];
+        MenuType *menuType = _menuTypeList[_selectedMenuTypeIndex];
         NSMutableArray *menuList = [Menu getMenuListWithMenuType:menuType.menuTypeID menuList:_filterMenuList];
         if([menuList count]>0)
         {
+            //hide searchBar
             [tbvMenu scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         }
         else
@@ -498,47 +530,56 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
 
 - (void)createHorizontalScroll
 {
-    UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    float topPadding = window.safeAreaInsets.top;
-    topPadding = topPadding == 0?20:topPadding;
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topPadding+44, self.view.frame.size.width, 44)];
-    scrollView.delegate = self;
-    int buttonX = 15;
-    for (int i = 0; i < [_menuTypeList count]; i++)
+    if(![_currentMenuTypeList isEqualToArray:_menuTypeList])
     {
-        MenuType *menuType = _menuTypeList[i];
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 0, 100, 44)];
-        button.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-        if(i==0)
+        if(_horizontalScrollView)
         {
-            [button setTitleColor:cSystem1 forState:UIControlStateNormal];
+            [_horizontalScrollView removeFromSuperview];
         }
-        else
-        {
-            [button setTitleColor:cSystem4 forState:UIControlStateNormal];
-        }
-        [button setTitle:menuType.name forState:UIControlStateNormal];
-        [button sizeToFit];
-        [scrollView addSubview:button];
-        buttonX = 15 + buttonX+button.frame.size.width;
-        [button addTarget:self action:@selector(menuTypeSelected:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = i+1;
         
-        CGRect frame = button.frame;
-        frame.size.height = 2;
-        frame.origin.y = button.frame.origin.y + button.frame.size.height-2;
-    
-        UIView *highlightBottomBorder = [[UIView alloc]initWithFrame:frame];
-        highlightBottomBorder.backgroundColor = cSystem2;
-        highlightBottomBorder.tag = i+1+100;
-        highlightBottomBorder.hidden = i!=0;
-        [scrollView addSubview:highlightBottomBorder];
+        
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        float topPadding = window.safeAreaInsets.top;
+        topPadding = topPadding == 0?20:topPadding;
+        _horizontalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topPadding+44, self.view.frame.size.width, 44)];
+        _horizontalScrollView.delegate = self;
+        int buttonX = 15;
+        _currentMenuTypeList = [NSMutableArray arrayWithArray:_menuTypeList];
+        for (int i = 0; i < [_menuTypeList count]; i++)
+        {
+            MenuType *menuType = _menuTypeList[i];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 0, 100, 44)];
+            button.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+            if(i==0)
+            {
+                [button setTitleColor:cSystem1 forState:UIControlStateNormal];
+            }
+            else
+            {
+                [button setTitleColor:cSystem4 forState:UIControlStateNormal];
+            }
+            [button setTitle:menuType.name forState:UIControlStateNormal];
+            [button sizeToFit];
+            [_horizontalScrollView addSubview:button];
+            buttonX = 15 + buttonX+button.frame.size.width;
+            [button addTarget:self action:@selector(menuTypeSelected:) forControlEvents:UIControlEventTouchUpInside];
+            button.tag = i+1;
+            
+            CGRect frame = button.frame;
+            frame.size.height = 2;
+            frame.origin.y = button.frame.origin.y + button.frame.size.height-2;
+            
+            UIView *highlightBottomBorder = [[UIView alloc]initWithFrame:frame];
+            highlightBottomBorder.backgroundColor = cSystem2;
+            highlightBottomBorder.tag = i+1+100;
+            highlightBottomBorder.hidden = i!=0;
+            [_horizontalScrollView addSubview:highlightBottomBorder];
+        }
+        
+        _horizontalScrollView.contentSize = CGSizeMake(buttonX, _horizontalScrollView.frame.size.height);
+        _horizontalScrollView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_horizontalScrollView];
     }
-    
-    scrollView.contentSize = CGSizeMake(buttonX, scrollView.frame.size.height);
-    scrollView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:scrollView];
-    
 }
 
 -(void)menuTypeSelected:(UIButton*)sender

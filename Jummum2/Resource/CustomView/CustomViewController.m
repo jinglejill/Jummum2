@@ -18,6 +18,9 @@
 #import "Receipt.h"
 #import "OrderTaking.h"
 #import "OrderNote.h"
+#import "CreditCard.h"
+#import "RewardRedemption.h"
+#import "Promotion.h"
 
 
 @interface CustomViewController ()
@@ -51,8 +54,8 @@ CGFloat animatedDistance;
     [super viewDidLayoutSubviews];
     
     
-//    //triangle band
-//    UIImageView *demoView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"triangle_and.png"]];
+////    //triangle band
+//    UIImageView *demoView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"triangle_dev.png"]];
 //    CGRect frame = demoView.frame;
 //    frame.size.width = 64;
 //    frame.size.height = 64;
@@ -74,7 +77,7 @@ CGFloat animatedDistance;
 {
     [super viewWillAppear:animated];
     
-    
+    [self setCurrentVc];
     [self.tabBarController.tabBar setHidden:NO];
     [self.tabBarController.tabBar setFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
 }
@@ -381,13 +384,6 @@ CGFloat animatedDistance;
     [self showAlert:@"" message:msg];
 }
 
-- (void)syncItems
-{
-    PushSync *pushSync = [[PushSync alloc]init];
-    pushSync.deviceToken = [Utility deviceToken];
-    [homeModel syncItems:dbPushSync withData:pushSync];
-}
-
 - (void) showAlert:(NSString *)title message:(NSString *)message
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
@@ -464,64 +460,6 @@ CGFloat animatedDistance;
                                                           handler:^(UIAlertAction * action)
                                     {
                                         [self performSelector:method withObject:self afterDelay: 0.0];
-                                    }];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    
-    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
-    UIColor *color = cSystem1;
-    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"OK" attributes:attribute];
-    
-    UILabel *label = [[defaultAction valueForKey:@"__representer"] valueForKey:@"label"];
-    label.attributedText = attrString;
-}
-
-- (void)vibrateAndCallPushSync
-{
-    [self loadingOverlayView];
-    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-    
-    
-    [self syncItems];
-}
-
-- (void) showAlertAndCallPushSync:(NSString *)title message:(NSString *)message
-{
-    [self loadingOverlayView];
-    [self syncItems];
-    
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    NSMutableAttributedString *attrStringTitle = [[NSMutableAttributedString alloc] initWithString:title];
-    [attrStringTitle addAttribute:NSFontAttributeName
-                            value:[UIFont fontWithName:@"Prompt-SemiBold" size:17]
-                            range:NSMakeRange(0, title.length)];
-    [alert setValue:attrStringTitle forKey:@"attributedTitle"];
-    [attrStringTitle addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, title.length)];
-    
-    
-    NSMutableAttributedString *attrStringMsg = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrStringMsg addAttribute:NSFontAttributeName
-                          value:[UIFont fontWithName:@"Prompt-Regular" size:15]
-                          range:NSMakeRange(0, message.length)];
-    [attrStringMsg addAttribute:NSForegroundColorAttributeName
-                            value:cSystem4
-                            range:NSMakeRange(0, message.length)];
-    [alert setValue:attrStringMsg forKey:@"attributedMessage"];
-    
-    
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action)
-                                    {
-                                        
                                     }];
     
     [alert addAction:defaultAction];
@@ -1056,6 +994,10 @@ CGFloat animatedDistance;
     [Receipt removeAllObjects];
     [OrderTaking removeAllObjects];
     [OrderNote removeAllObjects];
+    [OrderTaking removeCurrentOrderTakingList];
+    [CreditCard removeCurrentCreditCard];
+    [Promotion removeAllObjects];
+    [RewardRedemption removeAllObjects];
 }
 
 -(UIImage *)combineImage:(NSArray *)arrImage
