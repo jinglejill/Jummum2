@@ -5,7 +5,7 @@
 	<key>Key</key>
 	<string>jmmom</string>
 	<key>DomainName</key>
-	<string>http://www.jummum.co/Production_JUMMUM1.5.2/JUMMUM/</string>
+	<string>http://www.jummum.co/Production_JUMMUM1.6.1/</string>
 	<key>PingAddress</key>
 	<string>www.google.com</string>
 	<key>SubjectNoConnection</key>

@@ -456,12 +456,15 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                             
                             NSString *strDiscount = [Utility formatDecimal:receipt.discountAmount withMinFraction:0 andMaxFraction:2];
                             strDiscount = [NSString stringWithFormat:@"ส่วนลด %@%%",strDiscount];
+                            strDiscount = receipt.discountType==1?@"ส่วนลด":strDiscount;
+                            strDiscount = ![Utility isStringEmpty:receipt.voucherCode]?[NSString stringWithFormat:@"คูปองส่วนลด %@",receipt.voucherCode]:strDiscount;
+                            
                             
                             NSString *strAmount = [Utility formatDecimal:receipt.discountValue withMinFraction:2 andMaxFraction:2];
                             strAmount = [Utility addPrefixBahtSymbol:strAmount];
                             strAmount = [NSString stringWithFormat:@"-%@",strAmount];
                             
-                            cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
+                            cell.lblTitle.text = strDiscount;
                             cell.lblAmount.text = strAmount;
                             cell.vwTopBorder.hidden = YES;
                             cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
@@ -693,7 +696,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                 }
                 else
                 {
-                    switch (item)
+                    switch (item-1)
                     {
                         case 0:
                         {
@@ -726,13 +729,16 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                             
                             NSString *strDiscount = [Utility formatDecimal:receipt.discountAmount withMinFraction:0 andMaxFraction:2];
                             strDiscount = [NSString stringWithFormat:@"ส่วนลด %@%%",strDiscount];
+                            strDiscount = receipt.discountType==1?@"ส่วนลด":strDiscount;
+                            strDiscount = ![Utility isStringEmpty:receipt.voucherCode]?[NSString stringWithFormat:@"คูปองส่วนลด %@",receipt.voucherCode]:strDiscount;
+                            
                             
                             NSString *strAmount = [Utility formatDecimal:receipt.discountValue withMinFraction:2 andMaxFraction:2];
                             strAmount = [Utility addPrefixBahtSymbol:strAmount];
                             strAmount = [NSString stringWithFormat:@"-%@",strAmount];
                             
                             
-                            cell.lblTitle.text = receipt.discountType==1?@"ส่วนลด":strDiscount;
+                            cell.lblTitle.text = strDiscount;
                             cell.lblAmount.text = strAmount;
                             cell.vwTopBorder.hidden = YES;
                             cell.lblTitle.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
