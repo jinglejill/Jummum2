@@ -24,7 +24,7 @@
     
     Promotion *_promotion;
     BOOL _lastItemReached;
-    BOOL _unwind;
+//    BOOL _unwind;
 }
 @property (nonatomic)        BOOL           searchBarActive;
 @end
@@ -42,7 +42,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 
 -(IBAction)unwindToHotDeal:(UIStoryboardSegue *)segue
 {
-    _unwind = YES;
+//    _unwind = YES;
 }
 
 -(void)viewDidLayoutSubviews
@@ -67,7 +67,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 {
     [super viewDidAppear:animated];
     
-    if(_unwind)
+//    if(_unwind)
     {
         UserAccount *userAccount = [UserAccount getCurrentUserAccount];
         self.homeModel = [[HomeModel alloc]init];

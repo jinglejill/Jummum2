@@ -28,7 +28,7 @@
     NSMutableArray *_filterRewardRedemptionList;
     RewardRedemption *_rewardRedemption;
     BOOL _lastItemReached;
-    BOOL _unwind;
+//    BOOL _unwind;
 }
 
 @property (nonatomic)        BOOL           searchBarActive;
@@ -48,6 +48,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 
 -(IBAction)unwindToReward:(UIStoryboardSegue *)segue
 {
+//    _unwind = YES;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     CustomTableViewCellLabelDetailLabelWithImage *cell = [tbvData cellForRowAtIndexPath:indexPath];
     NSInteger point = (int)floor(_rewardPoint.point);
@@ -69,15 +70,13 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 -(void)loadView
 {
     [super loadView];
-    
-
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if(_unwind)
+//    if(_unwind)
     {
         UserAccount *userAccount = [UserAccount getCurrentUserAccount];
         self.homeModel = [[HomeModel alloc]init];

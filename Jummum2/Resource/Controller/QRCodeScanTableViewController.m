@@ -21,8 +21,8 @@
     Branch *_selectedBranch;
     CustomerTable *_selectedCustomerTable;
     BOOL _fromOrderItAgain;
+    BOOL _alreadySeg;
 }
-//@property (nonatomic) BOOL isReading;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
@@ -92,6 +92,7 @@
     [super viewDidAppear:YES];
     
     
+    _alreadySeg = NO;
     if(_fromOrderItAgain)
     {
         _fromOrderItAgain = NO;
@@ -177,7 +178,7 @@
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
-    if (metadataObjects && [metadataObjects count] > 0)
+    if (metadataObjects && [metadataObjects count] > 0 && !_alreadySeg)
     {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
@@ -186,7 +187,7 @@
             _selectedCustomerTable = nil;
             NSString *decryptedMessage = [metadataObj stringValue];
 
-            [self stopReading];
+            _alreadySeg = YES;
             [self.homeModel downloadItems:dbBranchAndCustomerTableQR withData:decryptedMessage];
         }
     }
@@ -211,8 +212,7 @@
         NSMutableArray *customerTableList = items[1];
         if([branchList count] == 0 || [customerTableList count] == 0)
         {
-            [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง"];
-            [self startReading];
+            [self showAlert:@"" message:@"QR Code ไม่ถูกต้อง" method:@selector(setAlreadySegToNo)];
         }
         else
         {
@@ -236,6 +236,11 @@
             }
         }
     }
+}
+
+-(void)setAlreadySegToNo
+{
+    _alreadySeg = NO;
 }
 @end
 
