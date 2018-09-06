@@ -1229,8 +1229,6 @@
 		EF5C2F8C2080C00400084B7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EF880055213A6D2E0062D9D4 /* VoucherCodeListViewController.h */,
-				EF880054213A6D2D0062D9D4 /* VoucherCodeListViewController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
@@ -1297,6 +1295,8 @@
 				EF5C2FA32080C00400084B7E /* TermsOfServiceViewController.m */,
 				EF5C2F982080C00400084B7E /* TosAndPrivacyPolicyViewController.h */,
 				EF5C2FAB2080C00400084B7E /* TosAndPrivacyPolicyViewController.m */,
+				EF880055213A6D2E0062D9D4 /* VoucherCodeListViewController.h */,
+				EF880054213A6D2D0062D9D4 /* VoucherCodeListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

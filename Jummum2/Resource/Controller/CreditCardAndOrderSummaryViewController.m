@@ -661,6 +661,14 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
                         cell.txtCCV.text = _creditCard.ccv;
                         
                         
+                        cell.txtFirstName.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                        cell.txtLastName.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                        cell.txtCardNo.autocapitalizationType = UITextAutocapitalizationTypeNone;
+                        cell.txtMonth.autocapitalizationType = UITextAutocapitalizationTypeNone;
+                        cell.txtYear.autocapitalizationType = UITextAutocapitalizationTypeNone;
+                        cell.txtCCV.autocapitalizationType = UITextAutocapitalizationTypeNone;
+                        
+                        
                         cell.swtSave.on = _creditCard.saveCard;
                         [cell.swtSave addTarget:self action:@selector(swtSaveDidChange:) forControlEvents:UIControlEventValueChanged];
                         [cell.txtCardNo addTarget:self action:@selector(txtCardNoDidChange:) forControlEvents:UIControlEventEditingChanged];
