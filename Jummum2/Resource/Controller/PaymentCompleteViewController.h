@@ -10,7 +10,7 @@
 #import "Receipt.h"
 
 
-@interface PaymentCompleteViewController : CustomViewController
+@interface PaymentCompleteViewController : CustomViewController<CAAnimationDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *btnSaveToCameraRoll;
 @property (strong, nonatomic) IBOutlet UIButton *btnOrderBuffet;
 
@@ -18,8 +18,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UILabel *lblMessage;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwCheckTop;
-
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *btnOrderBuffetHeight;
+@property (nonatomic) NSInteger numberOfGift;
+@property (strong, nonatomic) IBOutlet UIImageView *imgVwCheck;
+@property (strong, nonatomic) IBOutlet UIButton *btnBackToHome;
+@property (nonatomic) NSInteger orderBuffet;
+@property (nonatomic) NSInteger goToHotDeal;
 
 
 - (IBAction)button1Clicked:(id)sender;

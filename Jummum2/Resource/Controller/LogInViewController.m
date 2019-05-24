@@ -20,6 +20,7 @@
 #import "FacebookComment.h"
 
 
+
 @interface LogInViewController ()
 {
     FBSDKLoginButton *_loginButton;
@@ -30,6 +31,7 @@
     NSMutableArray *allComments;
     BOOL _autoLogIn;
     UserAccount *_userAccount;
+    BOOL _viewDidAppear;
 }
 @end
 
@@ -37,11 +39,18 @@
 @synthesize txtEmail;
 @synthesize txtPassword;
 @synthesize btnRememberMe;
+@synthesize btnRememberMeWidth;
+@synthesize btnRegisterNow;
+@synthesize btnForgotPassword;
 @synthesize btnLogIn;
 @synthesize imgVwValueHeight;
 @synthesize lblOrBottom;
 @synthesize imgVwLogoText;
 @synthesize lblLogInTop;
+@synthesize lblLogInBottom;
+@synthesize lblPipeLeading;
+@synthesize btnLangEn;
+@synthesize btnLangTH;
 
 
 -(void)viewDidLayoutSubviews
@@ -54,26 +63,56 @@
     
     UIWindow *window = UIApplication.sharedApplication.keyWindow;
     float bottomPadding = window.safeAreaInsets.bottom;
-    float topPadding = window.safeAreaInsets.top;
+//    float topPadding = window.safeAreaInsets.top;
     _loginButton.center = self.view.center;
     CGRect frame = _loginButton.frame;
-    frame.origin.y = self.view.frame.size.height - bottomPadding - bottom + 11;//frame.origin.y + 33;
+    frame.origin.y = self.view.frame.size.height - bottomPadding - bottom + 11;
     _loginButton.frame = frame;
     
     
-    
-    lblLogInTop.constant = 7 + bottomPadding;
+    float spaceHeading = bottomPadding?30:0;
+    lblLogInTop.constant = 7 + spaceHeading;
+    lblLogInBottom.constant = 7 + spaceHeading;
     if(bottom+286+40>self.view.frame.size.height)
     {
         //hide jummum text
         imgVwLogoText.hidden = YES;
     }
+    
+    
+
+    if(_rememberMe)
+    {
+        [btnRememberMe setTitle:[Language getText:@"◼︎ จำฉันไว้ในระบบ"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [btnRememberMe setTitle:[Language getText:@"◻︎ จำฉันไว้ในระบบ"] forState:UIControlStateNormal];
+    }
+    [btnRememberMe sizeToFit];
+    btnRememberMeWidth.constant = btnRememberMe.frame.size.width;
+    
+    
+    
+    [btnRegisterNow setTitle:[Language getText:@"ลงทะเบียน"] forState:UIControlStateNormal];
+    [btnRegisterNow sizeToFit];
+    
+    
+    
+    [btnForgotPassword setTitle:[Language getText:@"ลืมรหัสผ่าน"] forState:UIControlStateNormal];
+    [btnForgotPassword sizeToFit];
+    
+    
+    
+    lblPipeLeading.constant = (btnForgotPassword.frame.origin.x - (btnRegisterNow.frame.origin.x + btnRegisterNow.frame.size.width))/2;
+    
+    
 }
 
 - (IBAction)rememberMe:(id)sender
 {
-    _rememberMe = !_rememberMe;
-    if(_rememberMe)
+    
+    if(!_rememberMe)
     {
         [btnRememberMe setTitle:@"◼︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
     }
@@ -81,6 +120,7 @@
     {
         [btnRememberMe setTitle:@"◻︎ จำฉันไว้ในระบบ" forState:UIControlStateNormal];
     }
+    _rememberMe = !_rememberMe;
 }
 
 - (IBAction)logIn:(id)sender
@@ -236,15 +276,61 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (_faceBookLogIn)
+    
+    BOOL firstTimeInstalled = [[NSUserDefaults standardUserDefaults] boolForKey:@"firstTimeInstalled"];
+    if(!_viewDidAppear && !firstTimeInstalled)
     {
-        // User is logged in, do work such as go to next view controller.
-        [self insertUserLoginAndUserAccount];
+        _viewDidAppear = YES;
+        [self performSegueWithIdentifier:@"segFirstInstallAlert" sender:self];
     }
-    else if(_appLogIn)
+    else
     {
-        [self logIn:nil];
+        if (_faceBookLogIn)
+        {
+            // User is logged in, do work such as go to next view controller.
+            [self insertUserLoginAndUserAccount];
+        }
+        else if(_appLogIn)
+        {
+            [self logIn:nil];
+        }
+        
+        [self setLanguageButton];
     }
+}
+
+-(void)setLanguageButton
+{
+    if([[Language getLanguage] isEqualToString:@"TH"])
+    {
+        [btnLangTH setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btnLangEn setTitleColor:cSystem5 forState:UIControlStateNormal];
+        
+        btnLangTH.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:14];
+        btnLangEn.titleLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:14];
+    }
+    else
+    {
+        [btnLangTH setTitleColor:cSystem5 forState:UIControlStateNormal];
+        [btnLangEn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        btnLangTH.titleLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:14];
+        btnLangEn.titleLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:14];
+    }
+}
+
+- (IBAction)switchToEN:(id)sender
+{
+    [Language setLanguage:@"EN"];
+    [self setLanguageButton];
+    [self viewDidLayoutSubviews];
+}
+
+- (IBAction)switchToTH:(id)sender
+{
+    [Language setLanguage:@"TH"];
+    [self setLanguageButton];
+    [self viewDidLayoutSubviews];
 }
 
 //facebook

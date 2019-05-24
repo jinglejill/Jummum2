@@ -9,11 +9,12 @@
 #import "CustomViewController.h"
 #import "Branch.h"
 #import "CustomerTable.h"
-#import "CustomViewVoucher.h"
+//#import "CustomViewVoucher.h"
 #import "Promotion.h"
 #import "Receipt.h"
 #import "RewardRedemption.h"
 #import "Promotion.h"
+#import "SaveReceipt.h"
 
 
 @interface CreditCardAndOrderSummaryViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate,UIPopoverPresentationControllerDelegate>
@@ -21,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tbvData;
 @property (strong, nonatomic) IBOutlet UITableView *tbvTotal;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tbvTotalHeightConstant;
-@property (strong, nonatomic) IBOutlet CustomViewVoucher *voucherView;
+//@property (strong, nonatomic) IBOutlet CustomViewVoucher *voucherView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomButtonHeight;
 @property (strong, nonatomic) IBOutlet UIButton *btnAddRemoveMenu;
@@ -35,7 +36,12 @@
 @property (nonatomic) NSInteger fromOrderDetailMenu;
 @property (nonatomic) NSInteger fromRewardRedemption;
 @property (nonatomic) NSInteger fromHotDealDetail;
+@property (nonatomic) NSInteger fromLuckyDraw;
+@property (nonatomic) NSInteger addRemoveMenu;
 - (IBAction)addRemoveMenu:(id)sender;
 - (IBAction)goBack:(id)sender;
 -(IBAction)unwindToCreditCardAndOrderSummary:(UIStoryboardSegue *)segue;
+- (IBAction)shareMenuToOrder:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *btnShareMenuToOrder;
+
 @end

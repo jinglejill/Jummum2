@@ -14,10 +14,14 @@
 #import "Promotion.h"
 #import "RewardRedemption.h"
 #import "Branch.h"
+#import "Time.h"
+#import "UserAccount.h"
 
 
 @interface VoucherCodeListViewController ()
 {
+    NSMutableArray *_promotionList;
+    NSMutableArray *_rewardRedemptionList;
 }
 @end
 
@@ -30,8 +34,9 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 @synthesize lblNavTitle;
 @synthesize tbvData;
 @synthesize topViewHeight;
-@synthesize promotionList;
-@synthesize rewardRedemptionList;
+@synthesize branch;
+//@synthesize promotionList;
+//@synthesize rewardRedemptionList;
 @synthesize selectedVoucherCode;
 
 
@@ -51,7 +56,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Setting getValue:@"129t" example:@"เลือก Voucher Code"];
+    NSString *title = [Language getText:@"เลือก Voucher Code"];
     lblNavTitle.text = title;
     tbvData.delegate = self;
     tbvData.dataSource = self;
@@ -69,6 +74,102 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         UINib *nib = [UINib nibWithNibName:reuseIdentifierReward bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierReward];
     }
+    
+    
+    [self loadingOverlayView];
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    [self.homeModel downloadItems:dbPromotionAndRewardRedemption withData:@[branch,userAccount]];
+}
+
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
+{
+    [self removeOverlayViews];
+    _promotionList = items[0];
+    _rewardRedemptionList = items[1];
+    for(int i=0; i<[_rewardRedemptionList count]; i++)
+    {
+        //timeToCountDown กับ UsingEndDate เช็คทั้งสอง ว่า อันไหนหมดก่อนกัน เช็คพร้อมกันใช้ timer อันเดียว
+        //พอเวลาหมดก็ invalidate แล้ว remove rewardRedemption
+        //หาก withInPeriod = 0 ไม่ต้อง countDown ให้เช็ค usingEndDate อย่างเดียว
+        RewardRedemption *rewardRedemption = _rewardRedemptionList[i];
+        if(rewardRedemption.withInPeriod == 0)
+        {
+            NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
+            NSInteger timeToCountDownUsingEndDate = seconds2>0?seconds2:0;
+            
+            
+            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+            NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeToCountDownUsingEndDate target:self selector:@selector(updateTimer2:) userInfo:rewardRedemption repeats:NO];
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        }
+        else
+        {
+            NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardRedemption.redeemDate];
+            NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
+            
+            
+            NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
+            NSInteger timeToCountDownUsingEndDate = seconds2>0?seconds2:0;
+            
+            
+            timeToCountDown = timeToCountDown <= timeToCountDownUsingEndDate?timeToCountDown:timeToCountDownUsingEndDate;
+            Time *time = [[Time alloc]init];
+            time.countDown = timeToCountDown;
+            
+            
+            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+            NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:@[rewardRedemption, time] repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        }
+    }
+    [tbvData reloadData];
+}
+
+-(void)updateTimer:(NSTimer *)timer
+{
+    NSArray *dataList = timer.userInfo;
+    RewardRedemption *rewardRedemptionSelected = dataList[0];
+    Time *time = dataList[1];
+    time.countDown--;
+    time.countDown = time.countDown < 0?0:time.countDown;
+    
+
+    
+    
+    
+    [self populateLabelwithTime:time.countDown rewardRedemption:rewardRedemptionSelected];
+    if(time.countDown == 0)
+    {
+        [timer invalidate];
+        [_rewardRedemptionList removeObject:rewardRedemptionSelected];
+        [tbvData reloadData];
+    }
+}
+
+-(void)updateTimer2:(NSTimer *)timer
+{
+    RewardRedemption *rewardRedemptionSelected = timer.userInfo;
+    [_rewardRedemptionList removeObject:rewardRedemptionSelected];
+    [tbvData reloadData];
+}
+
+- (void)populateLabelwithTime:(NSInteger)seconds rewardRedemption:(RewardRedemption *)rewardRedemptionSelected
+{
+    NSInteger minutes = seconds / 60;
+    NSInteger hours = minutes / 60;
+
+    seconds -= minutes * 60;
+    minutes -= hours * 60;
+
+
+
+    NSInteger index = [RewardRedemption getIndexOfObject:rewardRedemptionSelected rewardRedemptionList:_rewardRedemptionList];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:1];
+    CustomTableViewCellReward *cell = [tbvData cellForRowAtIndexPath:indexPath];
+    cell.lblCountDown.text = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", hours, minutes, seconds];
+    
 }
 
 ///tableview section
@@ -82,11 +183,11 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     // Return the number of rows in the section.
     if(section == 0)
     {
-        return [promotionList count];
+        return [_promotionList count];
     }
     else if(section == 1)
     {
-        return [rewardRedemptionList count];
+        return [_rewardRedemptionList count];
     }
     return 0;
 }
@@ -99,7 +200,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     
     if(section == 0)
     {
-        Promotion *promotion = promotionList[item];
+        Promotion *promotion = _promotionList[item];
         if(promotion.type == 0)
         {
             CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
@@ -118,14 +219,28 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             
             
             
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+            imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
+            UIImage *image = [Utility getImageFromCache:imageFileName];
+            if(image)
+            {
+                cell.imgVwValue.image = image;
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     NSLog(@"succeed");
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
+            
+            
+            
             float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
             cell.imgVwValueHeight.constant = imageWidth/16*9;
             cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
@@ -149,14 +264,25 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             
             
             
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+            imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
+            UIImage *image = [Utility getImageFromCache:imageFileName];
+            if(image)
+            {
+                cell.imgVwValue.image = image;
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     NSLog(@"succeed");
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
             
             
             
@@ -168,7 +294,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         CustomTableViewCellReward *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierReward];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        RewardRedemption *rewardRedemption = rewardRedemptionList[item];
+        RewardRedemption *rewardRedemption = _rewardRedemptionList[item];
         cell.lblHeader.text = rewardRedemption.header;
         [cell.lblHeader sizeToFit];
         cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>70?70:cell.lblHeader.frame.size.height;
@@ -186,22 +312,36 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
+        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
+        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        imageFileName = [Utility isStringEmpty:branch.imageUrl]?noImageFileName:imageFileName;
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
+        {
+            cell.imgVwValue.image = image;
+        }
+        else
+        {
+            [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
-                 NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
-             }
-         }];
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgVwValue.image = image;
+                 }
+             }];
+        }
+        [self setImageDesign:cell.imgVwValue];
         
+
         
-        cell.lblCountDownTop.constant = 0;
-        cell.lblCountDownHeight.constant = 0;
-        
-        
-        
+        if(rewardRedemption.withInPeriod == 0)
+        {
+            NSString *message = [Language getText:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
+            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+        }
+
+
         return cell;
     }
     
@@ -215,7 +355,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     
     if(section == 0)
     {
-        Promotion *promotion = promotionList[item];
+        Promotion *promotion = _promotionList[item];
         if(promotion.type == 0)
         {
             CustomTableViewCellPromoBanner *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierPromoBanner];
@@ -233,14 +373,28 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             
             
             
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+            imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
+            UIImage *image = [Utility getImageFromCache:imageFileName];
+            if(image)
+            {
+                cell.imgVwValue.image = image;
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     NSLog(@"succeed");
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
+            
+            
+            
             float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
             cell.imgVwValueHeight.constant = imageWidth/16*9;
             
@@ -272,12 +426,12 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     NSInteger item = indexPath.item;
     if(section == 0)
     {
-        Promotion *promotion = promotionList[item];
+        Promotion *promotion = _promotionList[item];
         selectedVoucherCode = promotion.voucherCode;
     }
     else if(section == 1)
     {
-        RewardRedemption *rewardRedemption = rewardRedemptionList[item];
+        RewardRedemption *rewardRedemption = _rewardRedemptionList[item];
         selectedVoucherCode = rewardRedemption.voucherCode;
     }
     [self dismissViewController:nil];

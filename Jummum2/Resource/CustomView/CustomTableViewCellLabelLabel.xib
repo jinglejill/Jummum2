@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +28,7 @@
                         <constraint firstAttribute="width" constant="40" id="cxQ-ll-N4m"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
-                    <color key="textColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvO-lc-vzk">
@@ -36,7 +37,7 @@
                         <constraint firstAttribute="height" constant="18" id="Cqu-73-74z"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Prompt-Regular" family="Prompt" pointSize="15"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="textColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -45,12 +46,13 @@
                 <constraint firstItem="VvO-lc-vzk" firstAttribute="leading" secondItem="GMF-Z9-vv5" secondAttribute="trailing" constant="8" id="KGo-RC-Qu0"/>
                 <constraint firstItem="GMF-Z9-vv5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="13" id="KgR-oL-Vo0"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VvO-lc-vzk" secondAttribute="trailing" constant="16" id="a63-ZQ-5kU"/>
+                <constraint firstItem="VvO-lc-vzk" firstAttribute="centerY" secondItem="GMF-Z9-vv5" secondAttribute="centerY" id="bBP-HY-GWT"/>
                 <constraint firstItem="GMF-Z9-vv5" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="bvR-MU-a0T"/>
-                <constraint firstItem="VvO-lc-vzk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="13" id="yTX-ef-S9m"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="lblText" destination="GMF-Z9-vv5" id="rB7-ZV-7He"/>
+                <outlet property="lblTextTop" destination="KgR-oL-Vo0" id="MgP-1Q-xKq"/>
                 <outlet property="lblTextWidthConstant" destination="cxQ-ll-N4m" id="XcL-jY-LMa"/>
                 <outlet property="lblValue" destination="VvO-lc-vzk" id="vHs-Mk-bp6"/>
             </connections>

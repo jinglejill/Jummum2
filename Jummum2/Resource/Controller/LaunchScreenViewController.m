@@ -9,6 +9,8 @@
 #import "LaunchScreenViewController.h"
 #import "LogInViewController.h"
 #import "NewVersionUpdateViewController.h"
+#import "Card.h"
+#import "Language.h"
 
 
 @interface LaunchScreenViewController ()
@@ -61,11 +63,7 @@
             }
             else
             {
-                NSString *strKey = [NSString stringWithFormat:@"UpdateVersion%@",_appStoreVersion];
-                Setting *setting = [[Setting alloc]initWithKeyName:strKey value:@"" type:0 remark:@""];
-                self.homeModel = [[HomeModel alloc]init];
-                self.homeModel.delegate = self;
-                [self.homeModel downloadItems:dbSettingWithKey withData:setting];
+                [self performSegueWithIdentifier:@"segNewVersionUpdate" sender:self];
             }
         }
         else
@@ -73,6 +71,18 @@
             [self downloadSetting];
         }
     }
+    
+    [Card setUpCards];
+    
+    
+    //delete image in cache
+    [Utility deleteFileInCache:@"/JMM"];
+    
+    
+    [Utility createCacheFoler:@"/JMM"];
+    [Utility createCacheFoler:@"/JMM/Image"];
+    [Utility createCacheFoler:@"/JMM/Image/Promotion"];
+    [Utility createCacheFoler:@"/JMM/Image/Reward"];
 }
 
 -(void)viewDidLayoutSubviews
@@ -105,9 +115,14 @@
     
     
     NSString *title = [Setting getValue:@"002t" example:@"Welcome"];
-    NSString *message = [Setting getValue:@"002m" example:@"Pay for your order, earn and track rewards, ckeck your balance and more, all from your mobile device"];
+    NSString *message = [Setting getValue:@"002m" example:@"Pay for your order, earn and track rewards, check your balance and more, all from your mobile device"];
     lblTitle.text = title;
     lblMessage.text = message;
+    
+    
+    [Language setSupportLanguage];
+//    [[NSUserDefaults standardUserDefaults] setValue:@"TH" forKey:@"language"];
+    
 }
 
 - (void)downloadProgress:(float)percent
@@ -133,26 +148,16 @@
     [self performSegueWithIdentifier:@"segLogIn" sender:self];
 }
 
-- (void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
-{
-    HomeModel *homeModel = (HomeModel *)objHomeModel;
-    if(homeModel.propCurrentDB == dbSettingWithKey)
-    {
-        [Utility updateSharedObject:items];
-        [self performSegueWithIdentifier:@"segNewVersionUpdate" sender:self];
-    }
-}
-
 -(BOOL) needsUpdate
 {
-//    return YES;
-//    //test
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
-    //test
-//    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.jummum.co/DEV/DEV_JUMMUM/test.php"]];
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", [Utility bundleID]]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
+    if(!data)
+    {
+        return NO;
+    }
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
     if ([lookup[@"resultCount"] integerValue] == 1)

@@ -21,16 +21,35 @@
 #import "CreditCard.h"
 #import "RewardRedemption.h"
 #import "Promotion.h"
+#import "VoucherCode.h"
+#import "Branch.h"
+#import "Menu.h"
+#import "SaveReceipt.h"
+#import "CustomTableViewCellLogo.h"
+#import "CustomTableViewCellReceiptSummary.h"
+#import "CustomTableViewCellOrderSummary.h"
+#import "CustomTableViewCellTotal.h"
+#import "CustomTableViewCellLabelRemark.h"
+#import "CustomTableViewCellSeparatorLine.h"
 
 
 @interface CustomViewController ()
 {
     UILabel *_lblStatus;
+    UIActivityIndicatorView *_indicatorWaiting;
     
+    BOOL _logoDownloaded;
+    UITableView *tbvData;
 }
 @end
 
 @implementation CustomViewController
+static NSString * const reuseIdentifierLogo = @"CustomTableViewCellLogo";
+static NSString * const reuseIdentifierReceiptSummary = @"CustomTableViewCellReceiptSummary";
+static NSString * const reuseIdentifierOrderSummary = @"CustomTableViewCellOrderSummary";
+static NSString * const reuseIdentifierTotal = @"CustomTableViewCellTotal";
+static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelRemark";
+static NSString * const reuseIdentifierSeparatorLine = @"CustomTableViewCellSeparatorLine";
 CGFloat animatedDistance;
 
 
@@ -45,6 +64,7 @@ CGFloat animatedDistance;
 @synthesize lblAlertMsg;
 @synthesize lblWaiting;
 @synthesize toolBar;
+@synthesize toolBarNext;
 @synthesize selectedReceipt;
 @synthesize showOrderDetail;
 
@@ -106,6 +126,10 @@ CGFloat animatedDistance;
     waitingView.layer.cornerRadius = 8;
     
     
+    _indicatorWaiting = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _indicatorWaiting.frame = CGRectMake(self.view.bounds.size.width/2-_indicatorWaiting.frame.size.width/2,self.view.bounds.size.height/2-_indicatorWaiting.frame.size.height/2,_indicatorWaiting.frame.size.width,_indicatorWaiting.frame.size.height);
+    
+    
     addedNotiView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"added.png"]];
     addedNotiView.center = self.view.center;
     
@@ -120,13 +144,22 @@ CGFloat animatedDistance;
     
     lblAlertMsg = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-16*2, 44)];
     lblAlertMsg.center = self.view.center;
+    lblAlertMsg.numberOfLines = 0;
     
     
     lblWaiting = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-16*2, 44)];
     lblWaiting.center = self.view.center;
     CGRect frame = lblWaiting.frame;
-    frame.origin.y = frame.origin.y + indicator.frame.size.height;
+    frame.origin.y = frame.origin.y + _indicatorWaiting.frame.size.height;
     lblWaiting.frame = frame;
+    
+    {
+        _indicatorWaiting.center = self.view.center;
+        CGRect frame = _indicatorWaiting.frame;
+        frame.origin.y = frame.origin.y - _indicatorWaiting.frame.size.height/2;
+        _indicatorWaiting.frame = frame;
+    }
+    
     
     
     _lblStatus = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, 150)];
@@ -153,6 +186,50 @@ CGFloat animatedDistance;
     doneBtn.tintColor = cSystem1;
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
+    
+    
+    {
+        //toolbarNext
+        toolBarNext=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        [toolBarNext setTintColor:cSystem4_10];
+        UIBarButtonItem *nextBtn=[[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(goToNextResponder:)];
+        nextBtn.tintColor = cSystem1;
+        UIBarButtonItem *spaceNext=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *doneBtn=[[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissKeyboard)];
+        doneBtn.tintColor = cSystem1;        
+        [toolBarNext setItems:[NSArray arrayWithObjects:spaceNext,doneBtn,nextBtn, nil]];
+    }
+    
+    //screen capture
+    {
+        tbvData = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierLogo bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLogo];
+        }
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierReceiptSummary bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierReceiptSummary];
+        }
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierOrderSummary bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierOrderSummary];
+        }
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierTotal bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierTotal];
+        }
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelRemark bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelRemark];
+        }
+        {
+            UINib *nib = [UINib nibWithNibName:reuseIdentifierSeparatorLine bundle:nil];
+            [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierSeparatorLine];
+        }
+    }
+    
+    
 }
 
 -(void) blinkAddedNotiView
@@ -206,6 +283,14 @@ CGFloat animatedDistance;
 -(void) blinkAlertMsg:(NSString *)alertMsg
 {
     lblAlertMsg.text = alertMsg;
+    [lblAlertMsg sizeToFit];
+    CGRect frame = lblAlertMsg.frame;
+//    frame.size.height = frame.size.height < 44?44:frame.size.height;
+    frame.size.height = frame.size.height + 2*11;
+    frame.size.width = self.view.frame.size.width-16*2;
+    lblAlertMsg.frame = frame;
+    lblAlertMsg.center = self.view.center;
+    
     lblAlertMsg.backgroundColor = cSystem4;
     lblAlertMsg.textColor = [UIColor whiteColor];
     lblAlertMsg.textAlignment = NSTextAlignmentCenter;
@@ -259,16 +344,16 @@ CGFloat animatedDistance;
 
 -(void) loadWaitingView
 {
-    [indicator startAnimating];
-    indicator.alpha = 1;
+    [_indicatorWaiting startAnimating];
+    _indicatorWaiting.alpha = 1;
     overlayView.alpha = 1;
     waitingView.alpha = 1;
     
     
-    indicator.opaque = NO;
-    indicator.backgroundColor = [UIColor clearColor];
-    [indicator setColor:[UIColor whiteColor]];
-//    indicator.layer.zPosition = 1;
+    _indicatorWaiting.opaque = NO;
+    _indicatorWaiting.backgroundColor = [UIColor clearColor];
+    [_indicatorWaiting setColor:[UIColor whiteColor]];
+//    _indicatorWaiting.layer.zPosition = 1;
     
     
     lblWaiting.text = @"Processing...";
@@ -278,10 +363,10 @@ CGFloat animatedDistance;
     lblWaiting.alpha = 1;
     
     
-    indicator.center = self.view.center;
-    CGRect frame = indicator.frame;
-    frame.origin.y = frame.origin.y - indicator.frame.size.height/2;
-    indicator.frame = frame;
+//    _indicatorWaiting.center = self.view.center;
+//    CGRect frame = _indicatorWaiting.frame;
+//    frame.origin.y = frame.origin.y - _indicatorWaiting.frame.size.height/2;
+//    _indicatorWaiting.frame = frame;
     
     
     
@@ -289,11 +374,11 @@ CGFloat animatedDistance;
     [self.view addSubview:waitingView];
     [self.view addSubview:lblWaiting];
     [self.view addSubview:overlayView];
-//    [indicator removeFromSuperview];
-//    [waitingView addSubview:indicator];
+//    [_indicatorWaiting removeFromSuperview];
+//    [waitingView addSubview:_indicatorWaiting];
     
-    [self.view addSubview:indicator];
-    [self.view bringSubviewToFront:indicator];
+    [self.view addSubview:_indicatorWaiting];
+    [self.view bringSubviewToFront:_indicatorWaiting];
 }
 
 -(void)removeWaitingView
@@ -305,15 +390,15 @@ CGFloat animatedDistance;
                          lblWaiting.alpha = 0.0;
                          waitingView.alpha = 0.0;
                          view.alpha = 0.0;
-                         indicator.alpha = 0;
+                         _indicatorWaiting.alpha = 0;
                      }
                      completion:^(BOOL finished){
                          dispatch_async(dispatch_get_main_queue(),^ {
                              [lblWaiting removeFromSuperview];
                              [waitingView removeFromSuperview];
                              [view removeFromSuperview];
-                             [indicator stopAnimating];
-                             [indicator removeFromSuperview];
+                             [_indicatorWaiting stopAnimating];
+                             [_indicatorWaiting removeFromSuperview];
                          } );
                      }
      ];
@@ -364,6 +449,7 @@ CGFloat animatedDistance;
 
 - (void)itemsFail
 {
+    [self removeWaitingView];
     [self removeOverlayViews];
     NSString *title = [Utility getErrorOccurTitle];
     NSString *message = [Utility getErrorOccurMessage];
@@ -548,6 +634,18 @@ CGFloat animatedDistance;
     view.layer.shadowRadius = radius;
     view.layer.shadowOpacity = 0.8f;
     view.layer.masksToBounds = NO;
+}
+
+-(void)setCornerDesign:(UIView *)view
+{
+    UILabel *label = (UILabel *)view;
+//    label.layer.cornerRadius = 14;
+    
+    
+    CAShapeLayer * maskLayer = [CAShapeLayer layer];
+    maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: label.bounds byRoundingCorners: UIRectCornerTopLeft cornerRadii: (CGSize){14.0}].CGPath;
+    
+    label.layer.mask = maskLayer;
 }
 
 -(void)setButtonDesign:(UIView *)view
@@ -996,6 +1094,7 @@ CGFloat animatedDistance;
     [OrderNote removeAllObjects];
     [OrderTaking removeCurrentOrderTakingList];
     [CreditCard removeCurrentCreditCard];
+    [SaveReceipt removeCurrentSaveReceipt];
     [Promotion removeAllObjects];
     [RewardRedemption removeAllObjects];
 }
@@ -1090,10 +1189,119 @@ CGFloat animatedDistance;
     [self.view endEditing:YES];
 }
 
-//-(void)segueToOrderDetail:(Receipt *)receipt
-//{
-//    [self performSegueWithIdentifier:@"segOrderDetail" sender:self];
-//}
+-(void)goToNextResponder:(id)sender
+{
+    
+}
+
+- (UIImage *)addWatermarkOnImage:(UIImage *)origin withImage:(UIImage *)template {
+    if (origin == nil || template == nil) return [[UIImage init] alloc];
+
+    double width = origin.size.width;
+    double height = origin.size.height;
+    
+
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), NO, [UIScreen mainScreen].scale);
+    [origin drawInRect:CGRectMake(0.0, 0.0, width, height)];
+    [template drawInRect:CGRectMake((width-template.size.width)/2, (height-template.size.height)/2, template.size.width, template.size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return newImage;
+}
+
+- (UIImage *)imageByScalingProportionallyToSize:(CGSize)targetSize sourceImage:(UIImage *)sourceImage
+{
+
+    UIImage *newImage = nil;
+
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO) {
+
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+
+        if (widthFactor < heightFactor)
+            scaleFactor = widthFactor;
+        else
+            scaleFactor = heightFactor;
+
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+
+        // center the image
+
+        if (widthFactor < heightFactor) {
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+        } else if (widthFactor > heightFactor) {
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+        }
+    }
+
+
+    // this is actually the interesting part:
+
+    UIGraphicsBeginImageContext(targetSize);
+
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+
+    [sourceImage drawInRect:thumbnailRect];
+
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    if(newImage == nil) NSLog(@"could not scale image");
+
+
+    return newImage ;
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image convertToSize:(CGSize)size {
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return destImage;
+}
+
+- (UIImage *)cropImageByImage:(UIImage *)img toRect:(CGRect)rect
+{
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    // translated rectangle for drawing sub image
+    CGRect drawRect = CGRectMake(-rect.origin.x, -rect.origin.y, img.size.width, img.size.height);
+
+    // clip to the bounds of the image context
+    // not strictly necessary as it will get clipped anyway?
+    CGContextClipToRect(context, CGRectMake(0, 0, rect.size.width, rect.size.height));
+
+    // draw image
+    [img drawInRect:drawRect];
+
+    // grab image
+    UIImage* subImage = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+
+    return subImage;
+}
 
 @end
 

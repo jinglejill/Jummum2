@@ -6,6 +6,7 @@ target 'Jummum2' do
   # use_frameworks!
 
   # Pods for Jummum2
+  pod 'FBSDKLoginKit'
 
   target 'Jummum2Tests' do
     inherit! :search_paths
@@ -16,5 +17,5 @@ target 'Jummum2' do
     inherit! :search_paths
     # Pods for testing
   end
-pod 'FBSDKLoginKit'
+
 end

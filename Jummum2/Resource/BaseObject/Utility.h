@@ -43,11 +43,14 @@
 #define cSystem2     [UIColor colorWithRed:100/255.0 green:220/255.0 blue:200/255.0 alpha:1]
 #define cSystem3     [UIColor colorWithRed:0/255.0 green:90/255.0 blue:80/255.0 alpha:1]
 #define cSystem4     [UIColor colorWithRed:70/255.0 green:70/255.0 blue:70/255.0 alpha:1]
+#define cSystem5     [UIColor colorWithRed:35/255.0 green:35/255.0 blue:35/255.0 alpha:1]
 #define cSystem4_10     [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1]
 #define cSystem1_20     [UIColor colorWithRed:255/255.0 green:215/255.0 blue:218/255.0 alpha:1]
+#define cSystem1_30     [UIColor colorWithRed:255/255.0 green:196/255.0 blue:200/255.0 alpha:1]
+#define cSystem2_20     [UIColor colorWithRed:223/255.0 green:247/255.0 blue:243/255.0 alpha:1]
+#define cSystem2_30     [UIColor colorWithRed:208/255.0 green:244/255.0 blue:238/255.0 alpha:1]
+#define cRibbon     [UIColor colorWithRed:246/255.0 green:166/255.0 blue:171/255.0 alpha:1]
 
-//#define cSystem4_10     [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]
-//#define cSystem1_20     [UIColor colorWithRed:255/255.0 green:215/255.0 blue:218/255.0 alpha:1]
 
 #define cTextFieldBorder     [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]
 #define UIColorFromRGB(rgbValue) \
@@ -55,6 +58,7 @@
 green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
 blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
 alpha:1.0]
+
 
 
 
@@ -94,7 +98,6 @@ enum enumMessage
     codeMismatch,
     passwordIncorrect,
     emailIncorrect
-    
 };
 enum enumSetting
 {
@@ -109,6 +112,14 @@ enum enumSetting
     vAdminDeviceToken,
     vAdminEmail,
     vExpiredDate
+};
+enum mainTab
+{
+    mainTabHotDeal = 0,
+    mainTabReward = 1,
+    mainTabQrScan = 2,
+    mainTabHistory = 3,
+    mainTabMe = 4
 };
 enum enumDB
 {
@@ -139,9 +150,9 @@ enum enumDB
     dbReceiptOrderTakingOrderNote,
     dbOmiseCheckOut,
     dbCustomerTable,
-    dbReceiptSummary,
-    dbReceiptMaxModifiedDate,
+    dbReceiptSummaryPage,
     dbReceipt,
+    dbReceiptAndLuckyDraw,
     dbPromotion,
     dbRewardPoint,
     dbRewardPointList,
@@ -157,7 +168,6 @@ enum enumDB
     dbHotDealWithBranchID,
     dbRewardRedemption,
     dbRewardRedemptionList,
-    dbRewardRedemptionWithBranchID,
     dbPromoCode,
     dbPromoCodeList,
     dbUserRewardRedemptionUsed,
@@ -167,12 +177,9 @@ enum enumDB
     dbDispute,
     dbDisputeList,
     dbDisputeCancel,
-    dbReceiptWithModifiedDate,
     dbBranch,
-    dbBranchAndCustomerTable,
     dbBranchAndCustomerTableQR,
     dbBranchSearch,
-    dbBranchSearchMore,
     dbComment,
     dbCommentList,
     dbRecommendShop,
@@ -180,15 +187,24 @@ enum enumDB
     dbRating,
     dbRatingList,
     dbReceiptDisputeRating,
-    dbReceiptDisputeRatingAllAfterReceipt,    
     dbReceiptDisputeRatingUpdateAndReload,
-    dbReceiptDisputeRatingAllAfterReceiptUpdateAndReload,
+    dbReceiptBuffetEnded,
     dbMenuNote,
     dbMenuNoteList,    
     dbMenuBelongToBuffet,
-    dbBuffetOrder,
     dbSettingWithKey,
-    dbPromotionAndRewardRedemption
+    dbPromotionAndRewardRedemption,
+    dbLuckyDrawTicket,
+    dbLuckyDrawTicketList,
+    dbRewardRedemptionLuckyDraw,
+    dbBuffetMenuMap,
+    dbBuffetMenuMapList,
+    dbOrderJoiningShareQr,
+    dbOrderJoiningScanQr,
+    dbOrderJoining,
+    dbSaveOrder,
+    dbOrderItAgain,
+    dbReceiptAndPromoCode
 
     
 };
@@ -200,13 +216,12 @@ enum enumUrl
     urlUploadPhoto,
     urlDownloadPhoto,
     urlDownloadFile,
-    urlUserAccountDeviceTokenUpdate,
+    urlQRToPayDownload,
     urlLogInUserAccountInsert,
     urlLogInInsert,
     urlLogOutInsert,
     urlPushSyncSync,
     urlPushSyncUpdateByDeviceToken,
-    urlDeviceInsert,
     urlPushSyncUpdateTimeSynced,
     urlWriteLog,
     urlMenuInsert,
@@ -263,7 +278,6 @@ enum enumUrl
     urlHotDealUpdateList,
     urlHotDealDeleteList,
     urlHotDealGetList,
-    urlHotDealWithBranchGetList,
     urlRewardRedemptionWithBranchGetList,
     urlRewardRedemptionInsert,
     urlRewardRedemptionUpdate,
@@ -326,21 +340,40 @@ enum enumUrl
     urlRatingUpdateList,
     urlRatingDeleteList,
     urlReceiptDisputeRatingGet,
-    urlReceiptDisputeRatingAllAfterReceiptGet,
     urlMenuNoteInsert,
     urlMenuNoteUpdate,
     urlMenuNoteDelete,
     urlMenuNoteInsertList,
     urlMenuNoteUpdateList,
     urlMenuNoteDeleteList,
-    urlOpeningTimeGet,
     urlOpeningTimeMenuBelongToBuffetGet,
     urlContactUs,
     urlMenuBelongToBuffetGetList,
     urlBuffetOrderInsertList,
     urlSettingWithKeyGet,
     urlPromotionAndRewardRedemption,
-    urlMenuGet
+    urlMenuGet,
+    urlLuckyDrawTicketInsert,
+    urlLuckyDrawTicketUpdate,
+    urlLuckyDrawTicketDelete,
+    urlLuckyDrawTicketInsertList,
+    urlLuckyDrawTicketUpdateList,
+    urlLuckyDrawTicketDeleteList,
+    urlRewardRedemptionLuckyDrawGet,
+    urlBuffetMenuMapInsert,
+    urlBuffetMenuMapUpdate,
+    urlBuffetMenuMapDelete,
+    urlBuffetMenuMapInsertList,
+    urlBuffetMenuMapUpdateList,
+    urlBuffetMenuMapDeleteList,
+    urlReceiptSummaryPageGetList,
+    urlOrderJoiningShareQrGet,
+    urlOrderJoiningScanQrInsert,
+    urlOrderJoiningPageGetList,
+    urlSaveOrderInsertList,
+    urlOrderItAgainGetList,
+    urlReceiptAndLuckyDrawGetList,
+    urlReceiptAndPromoCodeUpdate
     
 
     
@@ -457,12 +490,14 @@ enum enumUrl
 +(BOOL)validateStrongPassword:(NSString *)password;
 +(void)addToSharedDataList:(NSArray *)items;
 +(NSString *)hideCreditCardNo:(NSString *)creditCardNo;
++ (void)updateSharedDataList:(NSMutableArray *)itemList className:(NSString *)className branchID:(NSInteger)branchID;
 +(void)updateSharedObject:(NSArray *)arrOfObjectList;
 + (void)addUpdateObject:(NSObject *)object;
-+(void)updateItemIfModify:(NSObject *)object;
-+(BOOL)updateDataList:(NSArray *)itemList dataList:(NSMutableArray *)dataList;
++(void)createCacheFoler:(NSString *)folderName;
 +(UIImage *)getImageFromCache:(NSString *)imageName;
 +(void)saveImageInCache:(UIImage *)image imageName:(NSString *)imageName;
++(void)deleteFileInCache:(NSString *)fileName;
 +(NSString *)formatPhoneNo:(NSString *)phoneNo;
+
 @end
 

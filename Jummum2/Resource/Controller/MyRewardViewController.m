@@ -12,6 +12,7 @@
 #import "RewardRedemption.h"
 #import "Branch.h"
 #import "Setting.h"
+#import "Time.h"
 
 
 
@@ -20,34 +21,29 @@
     NSMutableArray *_rewardRedemptionList;
     NSMutableArray *_rewardPointList;
     NSMutableArray *_promoCodeList;
-    NSMutableArray *_timeToCountDownList;
-    NSMutableArray *_timerList;
     BOOL _lastItemReached;
-    
+    NSInteger _page;
+    NSInteger _perPage;
     
     
     
     NSMutableArray *_rewardRedemptionUsedList;
     NSMutableArray *_rewardPointUsedList;
     NSMutableArray *_promoCodeUsedList;
-    NSMutableArray *_timeToCountDownUsedList;
-    NSMutableArray *_timerUsedList;
     BOOL _lastItemReachedUsed;
-    
+    NSInteger _pageUsed;
+    NSInteger _perPageUsed;
     
     
     
     NSMutableArray *_rewardRedemptionExpiredList;
     NSMutableArray *_rewardPointExpiredList;
     NSMutableArray *_promoCodeExpiredList;
-    NSMutableArray *_timeToCountDownExpiredList;
-    NSMutableArray *_timerExpiredList;
     BOOL _lastItemReachedExpired;
+    NSInteger _pageExpired;
+    NSInteger _perPageExpired;
     
-    
-    
-    
-    
+
     RewardRedemption *_rewardRedemption;
     RewardPoint *_rewardPointSpent;
     PromoCode *_promoCode;
@@ -83,6 +79,12 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:12.0f];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
     [segConValue setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    
+    
+    [segConValue setTitle:[Language getText:@"ปัจจุบัน"] forSegmentAtIndex:0];
+    [segConValue setTitle:[Language getText:@"ใช้ไปแล้ว"] forSegmentAtIndex:1];
+    [segConValue setTitle:[Language getText:@"หมดอายุ"] forSegmentAtIndex:2];
 }
 
 - (void)viewDidLoad
@@ -92,7 +94,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     
     
     
-    NSString *title = [Setting getValue:@"069t" example:@"รางวัลของฉัน"];
+    NSString *title = [Language getText:@"รางวัลของฉัน"];
     lblNavTitle.text = title;
     tbvData.dataSource = self;
     tbvData.delegate = self;
@@ -105,27 +107,34 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierReward];
     }
     
-    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    [self.homeModel downloadItems:dbRewardPointSpent withData:userAccount];
-    [self loadingOverlayView];
-    _timeToCountDownList = [[NSMutableArray alloc]init];
+    
     _rewardPointList = [[NSMutableArray alloc]init];
     _promoCodeList = [[NSMutableArray alloc]init];
     _rewardRedemptionList = [[NSMutableArray alloc]init];
+    _page = 1;
+    _perPage = 10;
+    _lastItemReached = NO;
     
     
-    _timeToCountDownUsedList = [[NSMutableArray alloc]init];
     _rewardPointUsedList = [[NSMutableArray alloc]init];
     _promoCodeUsedList = [[NSMutableArray alloc]init];
     _rewardRedemptionUsedList = [[NSMutableArray alloc]init];
+    _pageUsed = 1;
+    _perPageUsed = 10;
+    _lastItemReachedUsed = NO;
     
-    
-    _timeToCountDownExpiredList = [[NSMutableArray alloc]init];
+
     _rewardPointExpiredList = [[NSMutableArray alloc]init];
     _promoCodeExpiredList = [[NSMutableArray alloc]init];
     _rewardRedemptionExpiredList = [[NSMutableArray alloc]init];
-    _timerList = [[NSMutableArray alloc]init];
-    _timerUsedList = [[NSMutableArray alloc]init];
+    _pageExpired = 1;
+    _perPageExpired = 10;
+    _lastItemReachedExpired = NO;
+    
+    
+    [self loadingOverlayView];
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    [self.homeModel downloadItems:dbRewardPointSpent withData:@[@"",@(_page),@(_perPage),userAccount]];
 }
 
 ///tableview section
@@ -162,7 +171,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         }
         else
         {
-            NSString *message = [Setting getValue:@"081m" example:@"คุณยังไม่มีรางวัล"];
+            NSString *message = [Language getText:@"คุณยังไม่มีรางวัล"];
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
             noDataLabel.text             = message;
             noDataLabel.textColor        = cSystem4;
@@ -183,7 +192,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         }
         else
         {
-            NSString *message = [Setting getValue:@"081m" example:@"คุณยังไม่มีรางวัล"];
+            NSString *message = [Language getText:@"คุณยังไม่มีรางวัล"];
             UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
             noDataLabel.text             = message;
             noDataLabel.textColor        = cSystem4;
@@ -245,31 +254,42 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
+        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
+        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        imageFileName = [Utility isStringEmpty:branch.imageUrl]?noImageFileName:imageFileName;
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
+        {
+            cell.imgVwValue.image = image;
+        }
+        else
+        {
+            [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
-                 NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
-             }
-         }];
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgVwValue.image = image;
+                 }
+             }];
+        }
+        [self setImageDesign:cell.imgVwValue];
+        
+        
+        
         if(rewardRedemption.withInPeriod == 0)
         {
-            NSString *message = [Setting getValue:@"043m" example:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
+            NSString *message = [Language getText:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
             cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
         }
 
         
         
-        
-        
-        
         if (!_lastItemReached && item == [_rewardRedemptionList count]-1)
         {
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            RewardPoint *rewardPointSpent = _rewardPointList[item];
-            [self.homeModel downloadItems:dbRewardPointSpentMore withData:@[rewardPointSpent,userAccount]];
+//            RewardPoint *rewardPointSpent = _rewardPointList[item];
+            [self.homeModel downloadItems:dbRewardPointSpent withData:@[@"",@(_page),@(_perPage),userAccount]];
         }
         
         
@@ -299,25 +319,40 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
+        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
+        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        imageFileName = [Utility isStringEmpty:branch.imageUrl]?noImageFileName:imageFileName;
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
+        {
+            cell.imgVwValue.image = image;
+        }
+        else
+        {
+            [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
-                 NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
-             }
-         }];
-        cell.lblCountDown.hidden = YES;
-
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgVwValue.image = image;
+                 }
+             }];
+        }
+        [self setImageDesign:cell.imgVwValue];
+        
+        
+        NSString *message = [Language getText:@"ใช้ไปเมื่อ %@"];
+        PromoCode *promoCode = _promoCodeUsedList[item];
+        cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:promoCode.modifiedDate toFormat:@"d MMM yyyy HH:mm"]];
+        
         
         
         
         if (!_lastItemReachedUsed && item == [_rewardRedemptionUsedList count]-1)
         {
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            RewardPoint *rewardPointSpent = _rewardPointUsedList[item];
-            [self.homeModel downloadItems:dbRewardPointSpentUsedMore withData:@[rewardPointSpent,userAccount]];
+//            RewardPoint *rewardPointSpent = _rewardPointUsedList[item];
+            [self.homeModel downloadItems:dbRewardPointSpentUsed withData:@[@"",@(_pageUsed),@(_perPageUsed),userAccount]];
         }
         
         
@@ -347,23 +382,39 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
-             {
-                 NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
-             }
-         }];
-        if(rewardRedemption.withInPeriod == 0)
+        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
+        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        imageFileName = [Utility isStringEmpty:branch.imageUrl]?noImageFileName:imageFileName;
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
         {
-            cell.lblCountDown.text = [NSString stringWithFormat:@"หมดอายุเมื่อ %@",[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+            cell.imgVwValue.image = image;
         }
         else
         {
-            cell.lblCountDown.text = @"00:00:00";
-            
+            [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
+             {
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgVwValue.image = image;
+                 }
+             }];
+        }
+        [self setImageDesign:cell.imgVwValue];
+        
+        
+        if(rewardRedemption.withInPeriod == 0)
+        {
+            NSString *message = [Language getText:@"หมดอายุเมื่อ %@"];
+            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
+        }
+        else
+        {
+            NSString *message = [Language getText:@"หมดอายุเมื่อ %@"];
+            RewardPoint *rewardPoint = _rewardPointExpiredList[item];
+            NSDate *expiredDate = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
+            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:expiredDate toFormat:@"d MMM yyyy HH:mm"]];
         }
         
         
@@ -372,8 +423,8 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         if (!_lastItemReachedExpired && item == [_rewardRedemptionExpiredList count]-1)
         {
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            RewardPoint *rewardPointSpent = _rewardPointExpiredList[item];
-            [self.homeModel downloadItems:dbRewardPointSpentExpiredMore withData:@[rewardPointSpent,userAccount]];
+//            RewardPoint *rewardPointSpent = _rewardPointExpiredList[item];
+            [self.homeModel downloadItems:dbRewardPointSpentExpired withData:@[@"",@(_pageExpired),@(_perPageExpired),userAccount]];
         }
         
         
@@ -446,8 +497,9 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     {
         if([_rewardRedemptionUsedList count] == 0)
         {
+            [self loadingOverlayView];
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            [self.homeModel downloadItems:dbRewardPointSpentUsed withData:userAccount];
+            [self.homeModel downloadItems:dbRewardPointSpentUsed withData:@[@"",@(_pageUsed),@(_perPageUsed),userAccount]];
             [self loadingOverlayView];
         }
         else
@@ -505,58 +557,13 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     {
         if([_rewardRedemptionExpiredList count] == 0)
         {
+            [self loadingOverlayView];
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-            [self.homeModel downloadItems:dbRewardPointSpentExpired withData:userAccount];
+            [self.homeModel downloadItems:dbRewardPointSpentExpired withData:@[@"",@(_pageExpired),@(_perPageExpired),userAccount]];
             [self loadingOverlayView];
         }
         else
-        {
-            //sort by หมดอายุก่อนหลัง
-            //ให้เช็คว่า แยกเป็น 2 กรณี 1.within=0-->sort by rewardRedemption.usingEndDate desc, rewardPoint.modifiedDate Desc 2.countDown-->sort by within+reward.modifiedDate>rewardRedemption.usingEndDate?rewardRedemption.usingEndDate:within+reward.modifiedDate
-            for(int i=0; i<[_rewardRedemptionExpiredList count]; i++)
-            {
-                RewardRedemption *rewardRedemption = _rewardRedemptionExpiredList[i];
-                RewardPoint *rewardPoint = _rewardPointExpiredList[i];
-                
-                
-                if(rewardRedemption.withInPeriod == 0)
-                {
-                    rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                }
-                else
-                {
-                    NSDate *modifiedDateAddWithInPeriod = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
-                    
-                    NSTimeInterval seconds = [modifiedDateAddWithInPeriod timeIntervalSinceDate:[Utility setEndOfTheDay:rewardRedemption.usingEndDate]];
-                    if(seconds > 0)
-                    {
-                        rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                    }
-                    else
-                    {
-                        rewardRedemption.sortDate = modifiedDateAddWithInPeriod;
-                    }
-                }
-            }
-            _rewardRedemptionExpiredList = [RewardRedemption sort:_rewardRedemptionExpiredList];
-            
-            
-            for(PromoCode *item in _promoCodeExpiredList)
-            {
-                RewardRedemption *rewardRedemption = [RewardRedemption getRewardRedemption:item.rewardRedemptionID];
-                item.rewardRedemptionSortDate = rewardRedemption.sortDate;
-            }
-            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
-            
-            
-            for(RewardPoint *item in _rewardPointExpiredList)
-            {
-                PromoCode *promoCode = [PromoCode getPromoCode:item.promoCodeID];
-                item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
-            }
-            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
-            
-            
+        {            
             [tbvData reloadData];
         }
     }
@@ -566,188 +573,183 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     }
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
     [self removeOverlayViews];
-    if(segConValue.selectedSegmentIndex == 0)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbRewardPointSpent)
     {
+        if(_page == 1)
+        {
+            _rewardPointList = items[0];
+            _promoCodeList = items[1];
+            _rewardRedemptionList = items[2];
+        }
+        else
+        {
+            NSInteger remaining = [_rewardPointList count]%_perPage;
+            for(int i=0; i<remaining; i++)
+            {
+                [_rewardPointList removeLastObject];
+                [_promoCodeList removeLastObject];
+                [_rewardRedemptionList removeLastObject];
+            }
+            
+            [_rewardPointList addObjectsFromArray:items[0]];
+            [_promoCodeList addObjectsFromArray:items[1]];
+            [_rewardRedemptionList addObjectsFromArray:items[2]];
+            
+            
+//            //set timer ของตัวที่มาใหม่
+//            NSMutableArray *rewardPointList = items[0];
+//            NSMutableArray *promoCodeList = items[1];
+//            NSMutableArray *rewardRedemptionList = items[2];
+//            for(int i=0; i<[rewardPointList count]; i++)
+//            {
+//                RewardRedemption *rewardRedemption = rewardRedemptionList[i];
+//                RewardPoint *rewardPoint = rewardPointList[i];
+//                PromoCode *promoCode = promoCodeList[i];
+//
+//
+//                if(rewardRedemption.withInPeriod == 0)//1 time trigger
+//                {
+//                    NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
+//                    NSInteger timeToCountDownUsingEndDate = seconds2>0?seconds2:0;
+//
+//
+//                    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+//                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeToCountDownUsingEndDate target:self selector:@selector(updateTimer2:) userInfo:@[rewardRedemption,rewardPoint,promoCode] repeats:NO];
+//                    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//                }
+//                else//trigger every sec
+//                {
+//                    NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
+//                    NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
+//
+//
+//
+//                    Time *time = [[Time alloc]init];
+//                    time.countDown = timeToCountDown;
+//
+//
+//                    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+//                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:@[rewardRedemption, time, rewardPoint, promoCode] repeats:YES];
+//                    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//                }
+//            }
+        }
+        //set timer ของตัวที่มาใหม่
         NSMutableArray *rewardPointList = items[0];
         NSMutableArray *promoCodeList = items[1];
         NSMutableArray *rewardRedemptionList = items[2];
+        for(int i=0; i<[rewardPointList count]; i++)
+        {
+            RewardRedemption *rewardRedemption = rewardRedemptionList[i];
+            RewardPoint *rewardPoint = rewardPointList[i];
+            PromoCode *promoCode = promoCodeList[i];
+
+
+            if(rewardRedemption.withInPeriod == 0)//1 time trigger
+            {
+                NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
+                NSInteger timeToCountDownUsingEndDate = seconds2>0?seconds2:0;
+                
+                
+                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeToCountDownUsingEndDate target:self selector:@selector(updateTimer2:) userInfo:@[rewardRedemption,rewardPoint,promoCode] repeats:NO];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+            }
+            else//trigger every sec
+            {
+                NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
+                NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
+                
+
+
+                Time *time = [[Time alloc]init];
+                time.countDown = timeToCountDown;
+                
+                
+                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:@[rewardRedemption, time, rewardPoint, promoCode] repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+            }
+        }
         
-        
-        
-        if([rewardPointList count]==0)
+        if([items[0] count] < _perPage)
         {
             _lastItemReached = YES;
         }
         else
         {
-            for(int i=0; i<[rewardPointList count]; i++)
+            _page += 1;
+        }
+        
+    }
+    else if(homeModel.propCurrentDB == dbRewardPointSpentUsed)
+    {
+        if(_pageUsed == 1)
+        {
+            _rewardPointUsedList = items[0];
+            _promoCodeUsedList = items[1];
+            _rewardRedemptionUsedList = items[2];
+        }
+        else
+        {
+            NSInteger remaining = [_rewardPointUsedList count]%_perPage;
+            for(int i=0; i<remaining; i++)
             {
-                RewardRedemption *rewardRedemption = rewardRedemptionList[i];
-                RewardPoint *rewardPoint = rewardPointList[i];
-                NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
-                NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
-                if(rewardRedemption.withInPeriod == 0)
-                {
-                    timeToCountDown = 0;
-                }
-                [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
-                NSNumber *objIndex = [NSNumber numberWithInt:i];
-                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-                [_timerList addObject:timer];
-                
-                
-
-                NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
-                seconds2 = seconds2>0?seconds2:0;
-                [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-                NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-                [_timerUsedList addObject:timer2];                
+                [_rewardPointUsedList removeLastObject];
+                [_promoCodeUsedList removeLastObject];
+                [_rewardRedemptionUsedList removeLastObject];
             }
             
-            
-            [_rewardPointList addObjectsFromArray:rewardPointList];
-            [_promoCodeList addObjectsFromArray:promoCodeList];
-            [_rewardRedemptionList addObjectsFromArray:rewardRedemptionList];
+            [_rewardPointUsedList addObjectsFromArray:items[0]];
+            [_promoCodeUsedList addObjectsFromArray:items[1]];
+            [_rewardRedemptionUsedList addObjectsFromArray:items[2]];
         }
-    }
-    else if(segConValue.selectedSegmentIndex == 1)
-    {
-        NSMutableArray *rewardPointUsedList = items[0];
-        NSMutableArray *promoCodeUsedList = items[1];
-        NSMutableArray *rewardRedemptionUsedList = items[2];
         
         
-        if([rewardPointUsedList count]==0)
+        if([items[0] count] < _perPageUsed)
         {
             _lastItemReachedUsed = YES;
         }
         else
         {
-            
-            [_rewardPointUsedList addObjectsFromArray:rewardPointUsedList];
-            [_promoCodeUsedList addObjectsFromArray:promoCodeUsedList];
-            [_rewardRedemptionUsedList addObjectsFromArray:rewardRedemptionUsedList];
-            
-            
-            //sort
-            //sort by หมดอายุก่อนหลัง
-            //ให้เช็คว่า แยกเป็น 2 กรณี 1.within=0-->sort by rewardRedemption.usingEndDate desc, rewardPoint.modifiedDate Desc 2.countDown-->sort by within+reward.modifiedDate>rewardRedemption.usingEndDate?rewardRedemption.usingEndDate:within+reward.modifiedDate
-            for(int i=0; i<[_rewardRedemptionUsedList count]; i++)
-            {
-                RewardRedemption *rewardRedemption = _rewardRedemptionUsedList[i];
-                RewardPoint *rewardPoint = _rewardPointUsedList[i];
-                
-                
-                if(rewardRedemption.withInPeriod == 0)
-                {
-                    rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                }
-                else
-                {
-                    NSDate *modifiedDateAddWithInPeriod = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
-                    
-                    NSTimeInterval seconds = [modifiedDateAddWithInPeriod timeIntervalSinceDate:[Utility setEndOfTheDay:rewardRedemption.usingEndDate]];
-                    if(seconds > 0)
-                    {
-                        rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                    }
-                    else
-                    {
-                        rewardRedemption.sortDate = modifiedDateAddWithInPeriod;
-                    }
-                }
-            }
-            _rewardRedemptionUsedList = [RewardRedemption sort:_rewardRedemptionUsedList];
-            
-            
-            for(PromoCode *item in _promoCodeUsedList)
-            {
-                RewardRedemption *rewardRedemption = [RewardRedemption getRewardRedemption:item.rewardRedemptionID];
-                item.rewardRedemptionSortDate = rewardRedemption.sortDate;
-            }
-            _promoCodeUsedList = [PromoCode sort:_promoCodeUsedList];
-            
-            
-            for(RewardPoint *item in _rewardPointUsedList)
-            {
-                PromoCode *promoCode = [PromoCode getPromoCode:item.promoCodeID];
-                item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
-            }
-            _promoCodeUsedList = [PromoCode sort:_promoCodeUsedList];
-            
+            _pageUsed += 1;
         }
     }
-    else if(segConValue.selectedSegmentIndex == 2)
+    else if(homeModel.propCurrentDB == dbRewardPointSpentExpired)
     {
-        NSMutableArray *rewardPointExpiredList = items[0];
-        NSMutableArray *promoCodeExpiredList = items[1];
-        NSMutableArray *rewardRedemptionExpiredList = items[2];
+        if(_pageExpired == 1)
+        {
+            _rewardPointExpiredList = items[0];
+            _promoCodeExpiredList = items[1];
+            _rewardRedemptionExpiredList = items[2];
+        }
+        else
+        {
+            NSInteger remaining = [_rewardPointExpiredList count]%_perPageExpired;
+            for(int i=0; i<remaining; i++)
+            {
+                [_rewardPointExpiredList removeLastObject];
+                [_promoCodeExpiredList removeLastObject];
+                [_rewardRedemptionExpiredList removeLastObject];
+            }
+            
+            [_rewardPointExpiredList addObjectsFromArray:items[0]];
+            [_promoCodeExpiredList addObjectsFromArray:items[1]];
+            [_rewardRedemptionExpiredList addObjectsFromArray:items[2]];
+        }
         
         
-        if([rewardPointExpiredList count]==0)
+        if([items[0] count] < _perPageExpired)
         {
             _lastItemReachedExpired = YES;
         }
         else
         {
-            
-            [_rewardPointExpiredList addObjectsFromArray:rewardPointExpiredList];
-            [_promoCodeExpiredList addObjectsFromArray:promoCodeExpiredList];
-            [_rewardRedemptionExpiredList addObjectsFromArray:rewardRedemptionExpiredList];
-            
-            
-            //sort
-            //sort by หมดอายุก่อนหลัง
-            //ให้เช็คว่า แยกเป็น 2 กรณี 1.within=0-->sort by rewardRedemption.usingEndDate desc, rewardPoint.modifiedDate Desc 2.countDown-->sort by within+reward.modifiedDate>rewardRedemption.usingEndDate?rewardRedemption.usingEndDate:within+reward.modifiedDate
-            for(int i=0; i<[_rewardRedemptionExpiredList count]; i++)
-            {
-                RewardRedemption *rewardRedemption = _rewardRedemptionExpiredList[i];
-                RewardPoint *rewardPoint = _rewardPointExpiredList[i];
-                
-                
-                if(rewardRedemption.withInPeriod == 0)
-                {
-                    rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                }
-                else
-                {
-                    NSDate *modifiedDateAddWithInPeriod = [Utility addSecond:rewardPoint.modifiedDate numberOfSecond:rewardRedemption.withInPeriod];
-                    
-                    NSTimeInterval seconds = [modifiedDateAddWithInPeriod timeIntervalSinceDate:[Utility setEndOfTheDay:rewardRedemption.usingEndDate]];
-                    if(seconds > 0)
-                    {
-                        rewardRedemption.sortDate = [Utility setEndOfTheDay:rewardRedemption.usingEndDate];
-                    }
-                    else
-                    {
-                        rewardRedemption.sortDate = modifiedDateAddWithInPeriod;
-                    }
-                }
-            }
-            _rewardRedemptionExpiredList = [RewardRedemption sort:_rewardRedemptionExpiredList];
-            
-            
-            for(PromoCode *item in _promoCodeExpiredList)
-            {
-                RewardRedemption *rewardRedemption = [RewardRedemption getRewardRedemption:item.rewardRedemptionID];
-                item.rewardRedemptionSortDate = rewardRedemption.sortDate;
-            }
-            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
-            
-            
-            for(RewardPoint *item in _rewardPointExpiredList)
-            {
-                PromoCode *promoCode = [PromoCode getPromoCode:item.promoCodeID];
-                item.rewardRedemptionSortDate = promoCode.rewardRedemptionSortDate;
-            }
-            _promoCodeExpiredList = [PromoCode sort:_promoCodeExpiredList];
-            
+            _pageExpired += 1;
         }
     }
     
@@ -769,154 +771,66 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
 
 -(void)updateTimer:(NSTimer *)timer
 {
-    NSInteger index = [timer.userInfo integerValue];
-    _timeToCountDownList[index] = @([_timeToCountDownList[index] integerValue] - 1);
-    _timeToCountDownList[index] = [_timeToCountDownList[index] integerValue] < 0?@0:_timeToCountDownList[index];
+    NSArray *dataList = timer.userInfo;
+    RewardRedemption *rewardRedemptionSelected = dataList[0];
     
-    [self populateLabelwithTime:[_timeToCountDownList[index] integerValue] index:index];
-    if([_timeToCountDownList[index] integerValue] == 0)
+    
+    //timer not in list(when download new and remove old) -> invalidate
+    NSInteger index = [RewardRedemption getIndexOfObject:rewardRedemptionSelected rewardRedemptionList:_rewardRedemptionList];
+    if(index == -1)
+    {
+        [timer invalidate];
+        return;
+    }
+    
+    
+    Time *time = dataList[1];
+    time.countDown--;
+    time.countDown = time.countDown < 0?0:time.countDown;
+    RewardPoint *rewardPointSelected = dataList[2];
+    PromoCode *promoCodeSelected = dataList[3];
+    
+    
+    
+    [self populateLabelwithTime:time.countDown rewardRedemption:rewardRedemptionSelected];
+    if(time.countDown == 0)
     {
         [timer invalidate];
         
         
-        RewardPoint *rewardPoint = _rewardPointList[index];
-        PromoCode *promoCode = _promoCodeList[index];
-        RewardRedemption *rewardRedemption = _rewardRedemptionList[index];
-        
-        
-        if(rewardRedemption.withInPeriod == 0)
-        {
-            return;
-        }
-        
-        
-        
-        
-        for(NSInteger i=0; i<[_timerList count]; i++)
-        {
-            NSTimer *timerCountDown = _timerList[i];
-            NSTimer *timer2 = _timerUsedList[i];
-            
-            [timerCountDown invalidate];
-            [timer2 invalidate];
-        }
-        
-        
-        [_rewardPointUsedList addObject:rewardPoint];
-        [_promoCodeUsedList addObject:promoCode];
-        [_rewardRedemptionUsedList addObject:rewardRedemption];
-        [_rewardPointList removeObject:rewardPoint];
-        [_promoCodeList removeObject:promoCode];
-        [_rewardRedemptionList removeObject:rewardRedemption];
-        
-        
-        
-        [_timerList removeAllObjects];
-        [_timerUsedList removeAllObjects];
-        [_timeToCountDownList removeAllObjects];
-        for(int i=0; i<[_rewardPointList count]; i++)
-        {
-            RewardRedemption *rewardRedemption = _rewardRedemptionList[i];
-            RewardPoint *rewardPoint = _rewardPointList[i];
-            NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
-            NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
-            if(rewardRedemption.withInPeriod == 0)
-            {
-                timeToCountDown = 0;
-            }
-            [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
-            NSNumber *objIndex = [NSNumber numberWithInt:i];
-            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-            NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
-            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-            [_timerList addObject:timer];
-            
-            
-            
-            NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
-            seconds2 = seconds2>0?seconds2:0;
-            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-            NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
-            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-            [_timerUsedList addObject:timer2];
-        }
+
+        [_rewardPointExpiredList insertObject:rewardPointSelected atIndex:0];
+        [_promoCodeExpiredList insertObject:promoCodeSelected atIndex:0];
+        [_rewardRedemptionExpiredList insertObject:rewardRedemptionSelected atIndex:0];
+        [_rewardPointList removeObject:rewardPointSelected];
+        [_promoCodeList removeObject:promoCodeSelected];
+        [_rewardRedemptionList removeObject:rewardRedemptionSelected];
         
         
         [tbvData reloadData];
     }
 }
 
--(void)updateTimer2:(NSTimer *)timer//---> สำหรับหมดอายุ ตาม enddate , พดหมดอายุก็ย้ายไป ถูกใช้แล้ว ควรจะหยุด timer ตัว countdown ด้วย  ,---> กรณีตัวย้ายไปถูกใช้แล้ว ให้ stop all timer and start new timers
+-(void)updateTimer2:(NSTimer *)timer//---> สำหรับหมดอายุ ตาม enddate , พดหมดอายุก็ย้ายไป ถูกใช้แล้ว
 {
-    NSInteger index = [timer.userInfo integerValue];
-//    [timer invalidate];
+    NSArray *dataList = timer.userInfo;
+    RewardRedemption *rewardRedemptionSelected = dataList[0];
+    RewardPoint *rewardPointSelected = dataList[1];
+    PromoCode *promoCodeSelected = dataList[2];
     
     
-//    NSTimer *timerCountDown = _timerList[index];
-//    [timerCountDown invalidate];
-    
-    
-    
-    RewardPoint *rewardPoint = _rewardPointList[index];
-    PromoCode *promoCode = _promoCodeList[index];
-    RewardRedemption *rewardRedemption = _rewardRedemptionList[index];
-    
-    
-    for(NSInteger i=0; i<[_timerList count]; i++)
-    {
-        NSTimer *timerCountDown = _timerList[i];
-        NSTimer *timer2 = _timerUsedList[i];
-        
-        [timerCountDown invalidate];
-        [timer2 invalidate];
-    }
-    
-    
-    [_rewardPointUsedList addObject:rewardPoint];
-    [_promoCodeUsedList addObject:promoCode];
-    [_rewardRedemptionUsedList addObject:rewardRedemption];
-    [_rewardPointList removeObject:rewardPoint];
-    [_promoCodeList removeObject:promoCode];
-    [_rewardRedemptionList removeObject:rewardRedemption];
-    
-    
-    
-    [_timerList removeAllObjects];
-    [_timerUsedList removeAllObjects];
-    [_timeToCountDownList removeAllObjects];
-    for(int i=0; i<[_rewardPointList count]; i++)
-    {
-        RewardRedemption *rewardRedemption = _rewardRedemptionList[i];
-        RewardPoint *rewardPoint = _rewardPointList[i];
-        NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
-        NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
-        if(rewardRedemption.withInPeriod == 0)
-        {
-            timeToCountDown = 0;
-        }
-        [_timeToCountDownList addObject:[NSNumber numberWithInteger:timeToCountDown]];
-        NSNumber *objIndex = [NSNumber numberWithInt:i];
-        [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:objIndex repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        [_timerList addObject:timer];
-        
-        
-        
-        NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
-        seconds2 = seconds2>0?seconds2:0;
-        [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-        NSTimer *timer2 = [NSTimer scheduledTimerWithTimeInterval:seconds2 target:self selector:@selector(updateTimer2:) userInfo:objIndex repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        [_timerUsedList addObject:timer2];
-    }
-    
+    [_rewardPointExpiredList insertObject:rewardPointSelected atIndex:0];
+    [_promoCodeExpiredList insertObject:promoCodeSelected atIndex:0];
+    [_rewardRedemptionExpiredList insertObject:rewardRedemptionSelected atIndex:0];
+    [_rewardPointList removeObject:rewardPointSelected];
+    [_promoCodeList removeObject:promoCodeSelected];
+    [_rewardRedemptionList removeObject:rewardRedemptionSelected];
     
     
     [tbvData reloadData];
 }
 
-- (void)populateLabelwithTime:(NSInteger)seconds index:(NSInteger)index
+- (void)populateLabelwithTime:(NSInteger)seconds rewardRedemption:(RewardRedemption *)rewardRedemptionSelected
 {
     if(segConValue.selectedSegmentIndex == 0)
     {
@@ -928,19 +842,11 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         
         
         
+        NSInteger index = [RewardRedemption getIndexOfObject:rewardRedemptionSelected rewardRedemptionList:_rewardRedemptionList];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
         CustomTableViewCellReward *cell = [tbvData cellForRowAtIndexPath:indexPath];
-        RewardRedemption *rewardRedemption = _rewardRedemptionList[index];
-        if(rewardRedemption.withInPeriod == 0)
-        {
-            NSString *message = [Setting getValue:@"043m" example:@"ใช้ได้ 1 ครั้ง ภายใน %@"];
-            cell.lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:rewardRedemption.usingEndDate toFormat:@"d MMM yyyy"]];
-        }
-        else
-        {
-            cell.lblCountDown.text = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", hours, minutes, seconds];
-        }
+        cell.lblCountDown.text = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", hours, minutes, seconds];
+        
     }
-    
 }
 @end

@@ -8,6 +8,7 @@
 
 #import "CustomViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Branch.h"
 #import "CustomerTable.h"
 
 
@@ -19,7 +20,18 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnBack;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 @property (strong, nonatomic) IBOutlet UIButton *btnBranchSearch;
+@property (nonatomic) BOOL alreadySeg;
+@property (strong, nonatomic) Branch *selectedBranch;
+@property (strong, nonatomic) CustomerTable *selectedCustomerTable;
+@property (nonatomic) BOOL fromOrderNow;
+@property (nonatomic) BOOL fromOrderItAgain;
+@property (strong, nonatomic) Receipt *buffetReceipt;
+@property (strong, nonatomic) Receipt *orderItAgainReceipt;
+@property (nonatomic) NSInteger goToMenuSelection;
 
+
+@property (strong, nonatomic) IBOutlet UIImageView *imgPeekABoo;
+@property (strong, nonatomic) IBOutlet UIImageView *imgPeekABooFromRight;
 
 
 - (IBAction)branchSearch:(id)sender;

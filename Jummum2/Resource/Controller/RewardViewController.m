@@ -28,7 +28,9 @@
     NSMutableArray *_filterRewardRedemptionList;
     RewardRedemption *_rewardRedemption;
     BOOL _lastItemReached;
-//    BOOL _unwind;
+    NSInteger _page;
+    NSInteger _perPage;
+    BOOL _viewDidLoad;
 }
 
 @property (nonatomic)        BOOL           searchBarActive;
@@ -48,7 +50,6 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 
 -(IBAction)unwindToReward:(UIStoryboardSegue *)segue
 {
-//    _unwind = YES;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     CustomTableViewCellLabelDetailLabelWithImage *cell = [tbvData cellForRowAtIndexPath:indexPath];
     NSInteger point = (int)floor(_rewardPoint.point);
@@ -70,22 +71,28 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 -(void)loadView
 {
     [super loadView];
+    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-//    if(_unwind)
+    if(_viewDidLoad)
     {
+        _viewDidLoad = false;
+    }
+    else
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellSearchBar *cell = [tbvData cellForRowAtIndexPath:indexPath];
+        
         UserAccount *userAccount = [UserAccount getCurrentUserAccount];
         self.homeModel = [[HomeModel alloc]init];
         self.homeModel.delegate = self;
-        
-        //เพิ่งสั่งอาหารร้านนี้ไปครั้งแรก ในหน้านี้ก็จะ โหลดข้อมูล rewardRedemption จาก db ของร้านนี้มาแสดง
-        NSInteger branchID = [Receipt getBranchIDWithMaxModifiedDateWithMemberID:userAccount.userAccountID];
-        [self.homeModel downloadItems:dbRewardRedemptionWithBranchID withData:@[userAccount,@(branchID),@([_rewardRedemptionList count])]];
-    }    
+        [self.homeModel downloadItems:dbRewardPoint withData:@[cell.sbText.text,@(_page),@(_perPage),userAccount]];
+    }
 }
 
 - (void)viewDidLoad
@@ -94,14 +101,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Setting getValue:@"066t" example:@"แต้มสะสม/แลกของรางวัล"];
+    NSString *title = [Language getText:@"แต้มสะสม/แลกของรางวัล"];
     lblNavTitle.text = title;
-    [self loadingOverlayView];
-    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    [self.homeModel downloadItems:dbRewardPoint withData:@[userAccount,@0]];
+    
     tbvData.delegate = self;
     tbvData.dataSource = self;
-
+    
+    _page = 1;
+    _perPage = 10;
+    _lastItemReached = NO;
     
     {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierSearchBar bundle:nil];
@@ -115,6 +123,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         UINib *nib = [UINib nibWithNibName:reuseIdentifierLabelDetailLabelWithImage bundle:nil];
         [tbvData registerNib:nib forCellReuseIdentifier:reuseIdentifierLabelDetailLabelWithImage];
     }
+    
+    
+    _viewDidLoad = YES;
+    [self loadingOverlayView];
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    [self.homeModel downloadItems:dbRewardPoint withData:@[@"",@(_page),@(_perPage),userAccount]];
+    
 }
 
 ///tableview section
@@ -148,13 +165,12 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     
     
     if(section == 0)
-    {
-        NSString *message = [Setting getValue:@"115m" example:@"ค้นหา Reward"];
+    {        
         CustomTableViewCellSearchBar *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSearchBar];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.sbText.delegate = self;
         cell.sbText.tag = 300;
-        cell.sbText.placeholder = message;
+        cell.sbText.placeholder = [Language getText:@"ค้นหา Reward"];
         [cell.sbText setInputAccessoryView:self.toolBar];
         UITextField *textField = [cell.sbText valueForKey:@"searchField"];
         textField.layer.borderColor = [cTextFieldBorder CGColor];
@@ -180,7 +196,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
 
-            cell.lblText.text = @"แต้มสะสม";
+            cell.lblText.text = [Language getText:@"แต้มสะสม"];
             cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
             NSInteger point = (int)floor(_rewardPoint.point);
             NSString *strPoint = [Utility formatDecimal:point];
@@ -201,7 +217,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = @"รางวัลของฉัน";
+            cell.textLabel.text = [Language getText:@"รางวัลของฉัน"];
             cell.textLabel.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
             cell.textLabel.textColor = cSystem4;
             
@@ -227,7 +243,12 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         cell.lblSubTitle.text = rewardRedemption.subTitle;
         [cell.lblSubTitle sizeToFit];
+        
+
         cell.lblSubTitleHeight.constant = 70-8-cell.lblHeaderHeight.constant<0?0:70-8-cell.lblHeaderHeight.constant;
+        NSLog(@"left space: %f",70-8-cell.lblHeaderHeight.constant);
+        NSLog(@"cell.lblHeaderHeight.constant: %f",cell.lblHeaderHeight.constant);
+        NSLog(@"update cell.lblSubTitleHeight.constant: %f",cell.lblSubTitleHeight.constant);
         
         
         NSString *strPoint = [Utility formatDecimal:rewardRedemption.point];
@@ -237,15 +258,26 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         Branch *branch = [Branch getBranch:rewardRedemption.mainBranchID];
-        [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
-         {
-             if (succeeded)
+        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
+        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/Logo/%@",branch.dbName,branch.imageUrl];
+        imageFileName = [Utility isStringEmpty:branch.imageUrl]?noImageFileName:imageFileName;
+        UIImage *image = [Utility getImageFromCache:imageFileName];
+        if(image)
+        {
+            cell.imgVwValue.image = image;
+        }
+        else
+        {
+            [self.homeModel downloadImageWithFileName:branch.imageUrl type:2 branchID:branch.branchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
-                 NSLog(@"succeed");
-                 cell.imgVwValue.image = image;
-                 [self setImageDesign:cell.imgVwValue];
-             }
-         }];
+                 if (succeeded)
+                 {
+                     [Utility saveImageInCache:image imageName:imageFileName];
+                     cell.imgVwValue.image = image;
+                 }
+             }];
+        }
+        [self setImageDesign:cell.imgVwValue];
         
         
         cell.lblCountDownTop.constant = 0;
@@ -257,7 +289,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             UserAccount *userAccount = [UserAccount getCurrentUserAccount];
             self.homeModel = [[HomeModel alloc]init];
             self.homeModel.delegate = self;
-            [self.homeModel downloadItems:dbRewardPoint withData:@[userAccount,@([_rewardRedemptionList count])]];
+            [self.homeModel downloadItems:dbRewardPoint withData:@[@"",@(_page),@(_perPage),userAccount]];
         }
         
         
@@ -344,13 +376,15 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 {
     
     HomeModel *homeModel = (HomeModel *)objHomeModel;
-    if(homeModel.propCurrentDB == dbRewardPoint || homeModel.propCurrentDB == dbRewardRedemptionWithBranchID)
+    if(homeModel.propCurrentDB == dbRewardPoint)
     {
         [self removeOverlayViews];
+        [Utility updateSharedObject:items];
         
         //rewardPoint
         NSMutableArray *rewardPointList = items[0];
         _rewardPoint = rewardPointList[0];
+        
         NSRange range = NSMakeRange(1, 1);
         NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
         [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
@@ -359,20 +393,36 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         
         
         //rewardRedemptionList
-        NSMutableArray *rewardRedemptionList = items[1];
-        if([rewardRedemptionList count] == 0 && homeModel.propCurrentDB == dbRewardPoint)
+        if(_page == 1)
+        {
+            _filterRewardRedemptionList = items[1];
+        }
+        else
+        {
+            NSInteger remaining = [_filterRewardRedemptionList count]%_perPage;
+            for(int i=0; i<remaining; i++)
+            {
+                [_filterRewardRedemptionList removeLastObject];
+            }
+            
+            [_filterRewardRedemptionList addObjectsFromArray:items[0]];
+        }
+        
+        
+        if([items[0] count] < _perPage)
         {
             _lastItemReached = YES;
-            return;
         }
-        if(!_rewardRedemptionList)
+        else
         {
-            _rewardRedemptionList = [[NSMutableArray alloc]init];
+            _page += 1;
         }
-        [Utility updateSharedObject:items];
-        _rewardRedemptionList = [RewardRedemption getRewardRedemptionList];
-        UISearchBar *sbText = [self.view viewWithTag:300];
-        [self searchBar:sbText textDidChange:sbText.text];
+        
+        {
+            NSRange range = NSMakeRange(2, 1);
+            NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+            [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
 }
 
@@ -402,19 +452,22 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     {
         // search and reload data source
         self.searchBarActive = YES;
-        [self filterContentForSearchText:searchText scope:@""];
-        NSRange range = NSMakeRange(2, 1);
-        NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
-        [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
-
     }
     else
     {
         // if text length == 0
         // we will consider the searchbar is not active
         self.searchBarActive = NO;
-        [self cancelSearching];
     }
+    
+    
+    [self loadingOverlayView];
+    _page = 1;
+    _lastItemReached = NO;
+    UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+    self.homeModel = [[HomeModel alloc]init];
+    self.homeModel.delegate = self;
+    [self.homeModel downloadItems:dbRewardPoint withData:@[searchText,@(_page),@(_perPage),userAccount]];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -452,8 +505,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     self.searchBarActive = NO;
     [sbText resignFirstResponder];
     sbText.text  = @"";
-    [self filterContentForSearchText:sbText.text scope:@""];
-    
+    [self searchBar:sbText textDidChange:sbText.text];
 }
 
 @end

@@ -12,13 +12,14 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imgMenuPic;
 @property (strong, nonatomic) IBOutlet UILabel *lblMenuName;
 @property (strong, nonatomic) IBOutlet UILabel *lblTotalPrice;
-@property (strong, nonatomic) IBOutlet UILabel *lblQuantity;
 @property (strong, nonatomic) IBOutlet UITableView *tbvNote;
 @property (strong, nonatomic) IBOutlet UIButton *btnAddQuantity;
 @property (strong, nonatomic) IBOutlet UIButton *btnDeleteQuantity;
 @property (strong, nonatomic) IBOutlet UIImageView *imgExpandCollapse;
 @property (strong, nonatomic) IBOutlet UITextField *txtQuantity;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblMenuNameHeight;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgExpandCollapseTrailing;
 
 @property (nonatomic) NSInteger stepperValue;
 @end
