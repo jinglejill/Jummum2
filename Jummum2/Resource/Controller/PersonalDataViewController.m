@@ -36,14 +36,20 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"ข้อมูลส่วนตัว"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"ข้อมูลส่วนตัว"];
-    lblNavTitle.text = title;
+    
     tbvData.dataSource = self;
     tbvData.delegate = self;
     

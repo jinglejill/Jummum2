@@ -57,8 +57,7 @@ static NSString * const reuseIdentifierHeaderFooterButtonButton = @"CustomTableV
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"สแกน QR เพื่อโอนเงิน"];
-    lblNavTitle.text = title;
+    
     
     
     tbvData.delegate = self;
@@ -85,7 +84,8 @@ static NSString * const reuseIdentifierHeaderFooterButtonButton = @"CustomTableV
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    NSString *title = [Language getText:@"สแกน QR เพื่อโอนเงิน"];
+    lblNavTitle.text = title;
     
 }
 

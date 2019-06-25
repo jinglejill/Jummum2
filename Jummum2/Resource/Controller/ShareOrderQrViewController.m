@@ -40,14 +40,20 @@ static NSString * const reuseIdentifierImageLabel = @"CustomTableViewCellImageLa
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"QR Code สำหรับสั่งบุฟเฟ่ต์"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"QR Code สำหรับสั่งบุฟเฟ่ต์"];
-    lblNavTitle.text = title;
+    
     tbvData.dataSource = self;
     tbvData.delegate = self;
     tbvData.scrollEnabled = NO;

@@ -27,7 +27,6 @@
 +(DisputeReason *)getDisputeReason:(NSInteger)disputeReasonID;
 -(BOOL)editDisputeReason:(DisputeReason *)editingDisputeReason;
 +(DisputeReason *)copyFrom:(DisputeReason *)fromDisputeReason to:(DisputeReason *)toDisputeReason;
-+(DisputeReason *)getDisputeReasonWithText:(NSString *)text;
 +(void)setSharedData:(NSMutableArray *)dataList;
 
 

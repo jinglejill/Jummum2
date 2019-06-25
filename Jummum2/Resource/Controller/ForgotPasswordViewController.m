@@ -40,13 +40,19 @@
     return YES;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"ลืมรหัสผ่าน"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     
-    NSString *title = [Language getText:@"ลืมรหัสผ่าน"];
-    lblNavTitle.text = title;
+    
     txtEmail.delegate = self;
     [txtEmail setInputAccessoryView:self.toolBar];
     

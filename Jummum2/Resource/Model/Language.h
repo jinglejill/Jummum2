@@ -19,4 +19,6 @@
 +(NSString *)getText:(NSString *)key;
 +(BOOL)langIsEN;
 +(BOOL)langIsTH;
++(NSArray *)getLanguageList;
++(NSInteger)getSelectedIndex;
 @end

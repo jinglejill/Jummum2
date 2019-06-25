@@ -70,30 +70,43 @@
     [self.webView loadRequest:request];
 }
 
-- (void)viewDidLoad
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
+    [super viewDidAppear:animated];
     NSString *title = [Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
     lblNavTitle.text = title;
     if(pageType == 1)
     {
         NSString *title = [Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
         lblNavTitle.text = title;
-        [self webViewLoadUrl:[Utility url:urlTermsOfService]];
     }
     else if(pageType == 2)
     {
         NSString *title = [Language getText:@"นโยบายความเป็นส่วนตัว"];
         lblNavTitle.text = title;
-        [self webViewLoadUrl:[Utility url:urlPrivacyPolicy]];
     }
     else if(pageType == 3)
     {
         NSString *title = [Language getText:@"ติดต่อ JUMMUM"];
         lblNavTitle.text = title;
+    }
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    
+    if(pageType == 1)
+    {
+        [self webViewLoadUrl:[Utility url:urlTermsOfService]];
+    }
+    else if(pageType == 2)
+    {
+        [self webViewLoadUrl:[Utility url:urlPrivacyPolicy]];
+    }
+    else if(pageType == 3)
+    {     
         [self webViewLoadUrl:[Utility url:urlContactUs]];
     }
     

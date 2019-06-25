@@ -75,7 +75,8 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
 {
     [super viewDidAppear:animated];
     
-    
+    NSString *title = [Language getText:@"Hot Deal"];
+    lblNavTitle.text = title;
     [self searchBar:searchBar textDidChange:searchBar.text];
 }
 
@@ -85,9 +86,7 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    NSString *title = [Language getText:@"Hot Deal"];
-    lblNavTitle.text = title;
+
     
     
     tbvData.delegate = self;
@@ -169,9 +168,23 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
 
         
+        NSLog(@"%li->imgurl=%@",(long)section,promotion.imageUrl);
+        
+        
         
         NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
-        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        NSString *imageFileName;
+        if(promotion.shopType == 0)
+        {
+            imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        }
+        else
+        {
+            Branch *branch = [Branch getBranch:promotion.branchID];
+            imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/DiscountProgram/%@",branch.dbName,promotion.imageUrl];
+        }
+        
+        
         imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
         if(image)
@@ -180,19 +193,32 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            if(promotion.shopType == 0)
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     [Utility saveImageInCache:image imageName:imageFileName];
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:6 branchID:promotion.branchID completionBlock:^(BOOL succeeded, UIImage *image)
+                 {
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
         }
         
         
-        
-        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
+        float imageWidth = self.view.frame.size.width -2*16;
         cell.imgVwValueHeight.constant = imageWidth/16*9;
         cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
         
@@ -212,17 +238,27 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.lblHeader.text = promotion.header;
         [cell.lblHeader sizeToFit];
-        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>90?90:cell.lblHeader.frame.size.height;
+        cell.lblHeaderHeight.constant = cell.lblHeader.frame.size.height>43?43:cell.lblHeader.frame.size.height;
         
         
         cell.lblSubTitle.text = promotion.subTitle;
         [cell.lblSubTitle sizeToFit];
-        cell.lblSubTitleHeight.constant = 90-8-cell.lblHeaderHeight.constant<0?0:90-8-cell.lblHeaderHeight.constant;
+        cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
         
         
         
         NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
-        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        NSString *imageFileName;
+        if(promotion.shopType == 0)
+        {
+            imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        }
+        else
+        {
+            Branch *branch = [Branch getBranch:promotion.branchID];
+            imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/DiscountProgram/%@",branch.dbName,promotion.imageUrl];
+        }
+        
         imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
         if(image)
@@ -231,14 +267,28 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            if(promotion.shopType == 0)
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     [Utility saveImageInCache:image imageName:imageFileName];
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:6 branchID:promotion.branchID completionBlock:^(BOOL succeeded, UIImage *image)
+                 {
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
         }
         
         
@@ -282,7 +332,17 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         
     
         NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
-        NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        NSString *imageFileName;
+        if(promotion.shopType == 0)
+        {
+            imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+        }
+        else
+        {
+            Branch *branch = [Branch getBranch:promotion.branchID];
+            imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/DiscountProgram/%@",branch.dbName,promotion.imageUrl];
+        }
+        
         imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
         if(image)
@@ -291,18 +351,32 @@ static NSString * const reuseIdentifierPromoThumbNail = @"CustomTableViewCellPro
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
-             {
-                 if (succeeded)
+            if(promotion.shopType == 0)
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
                  {
-                     [Utility saveImageInCache:image imageName:imageFileName];
-                     cell.imgVwValue.image = image;
-                 }
-             }];
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
+            else
+            {
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:6 branchID:promotion.branchID completionBlock:^(BOOL succeeded, UIImage *image)
+                 {
+                     if (succeeded)
+                     {
+                         [Utility saveImageInCache:image imageName:imageFileName];
+                         cell.imgVwValue.image = image;
+                     }
+                 }];
+            }
         }
 
 
-        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
+        float imageWidth = self.view.frame.size.width -2*16;
         cell.imgVwValueHeight.constant = imageWidth/16*9;        
 
         

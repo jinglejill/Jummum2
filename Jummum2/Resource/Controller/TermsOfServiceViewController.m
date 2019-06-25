@@ -83,14 +83,20 @@
     [self.webView loadRequest:request];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"];
-    lblNavTitle.text = title;
+    
     [self webViewLoadUrl:[Utility url:urlTermsOfService]];
     [self addWebView:webViewContainer];
 }

@@ -74,16 +74,16 @@ CGFloat animatedDistance;
     [super viewDidLayoutSubviews];
     
     
-////    //triangle band
-//    UIImageView *demoView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"triangle_dev.png"]];
-//    CGRect frame = demoView.frame;
-//    frame.size.width = 64;
-//    frame.size.height = 64;
-//    frame.origin.x = self.view.frame.size.width - frame.size.width;
-//    frame.origin.y = 0;
-//    demoView.frame = frame;
-//    [self.view addSubview:demoView];
-//    demoView.layer.zPosition = 1;
+//    //triangle band
+    //    UIImageView *demoView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"triangle_dev.png"]];
+    //    CGRect frame = demoView.frame;
+    //    frame.size.width = 64;
+    //    frame.size.height = 64;
+    //    frame.origin.x = self.view.frame.size.width - frame.size.width;
+    //    frame.origin.y = 0;
+    //    demoView.frame = frame;
+    //    [self.view addSubview:demoView];
+    //    demoView.layer.zPosition = 1;
     
 }
 
@@ -607,8 +607,9 @@ CGFloat animatedDistance;
     label.attributedText = attrString;
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
     if(homeModel.propCurrentDB == dbMaster || homeModel.propCurrentDB == dbMasterWithProgressBar)
     {       
         [Utility itemsDownloaded:items];

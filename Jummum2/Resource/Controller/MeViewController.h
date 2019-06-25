@@ -8,10 +8,10 @@
 
 #import "CustomViewController.h"
 
-@interface MeViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MeViewController : CustomViewController<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *tbvMe;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
+@property (strong, nonatomic) IBOutlet UIPickerView *pickerVw;
 
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue;
--(void)segueToReceiptSummaryAuto;
 @end

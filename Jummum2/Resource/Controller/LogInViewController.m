@@ -346,7 +346,7 @@
                  
                  NSLog(@"fetched user:%@", result);
                  NSLog(@"birthday:%@",result[@"birthday"]);
-                 NSDate *birthday = [Utility stringToDate:result[@"birthday"] fromFormat:@"dd/MM/yyyy"];
+                 NSDate *birthday = [Utility stringToDate:result[@"birthday"] fromFormat:@"MM/dd/yyyy"];
                  
                  //1.insert userlogin
                  //2.insert useraccount if not exist

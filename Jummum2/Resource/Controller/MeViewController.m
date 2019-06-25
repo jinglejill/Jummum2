@@ -28,6 +28,7 @@
 #import "TosAndPrivacyPolicyViewController.h"
 #import "VoucherCodeListViewController.h"
 #import "CustomTableViewCellImageText.h"
+#import "CustomTableViewCellImageLabelText.h"
 #import "CustomTableViewCellProfile.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "LogIn.h"
@@ -40,67 +41,28 @@
     NSArray *_meImageList;
     NSArray *_aboutUsList;
     NSArray *_aboutUsImageList;
-    NSArray *_logOutList;
-    NSArray *_logOutImageList;
     NSInteger _pageType;
     BOOL _goToBuffetOrder;
+    NSInteger _selectedIndexPicker;
+    NSArray *_languageList;
+    NSString *_selectedLangText;
 }
 @end
 
 @implementation MeViewController
 static NSString * const reuseIdentifierImageText = @"CustomTableViewCellImageText";
+static NSString * const reuseIdentifierImageLabelText = @"CustomTableViewCellImageLabelText";
 static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
 
 
 @synthesize tbvMe;
 @synthesize topViewHeight;
+@synthesize pickerVw;
 
 
 -(IBAction)unwindToMe:(UIStoryboardSegue *)segue
 {
     self.showOrderDetail = 0;
-//    CustomViewController *vc = segue.sourceViewController;
-//    if([[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] && !vc.showOrderDetail)
-//    {
-//        _goToBuffetOrder = 1;
-//        PaymentCompleteViewController *vc = segue.sourceViewController;
-//        if(vc.receipt.buffetReceiptID)
-//        {
-//            Receipt *buffetReceipt = [Receipt getReceipt:vc.receipt.buffetReceiptID];
-//            self.selectedReceipt = buffetReceipt;
-//        }
-//        else
-//        {
-//            self.selectedReceipt = vc.receipt;
-//        }
-//    }
-//    else
-//    {
-//        if([[segue sourceViewController] isKindOfClass:[CommentViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[BasketViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[BranchSearchViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[CreditCardAndOrderSummaryViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[CreditCardViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[CustomerTableSearchViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[HotDealDetailViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[MenuSelectionViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[MyRewardViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[NoteViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[PaymentCompleteViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[PersonalDataViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[RecommendShopViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[RewardDetailViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[RewardRedemptionViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[SelectPaymentMethodViewController class]] ||
-//           [[segue sourceViewController] isKindOfClass:[TosAndPrivacyPolicyViewController class]] ||
-//            [[segue sourceViewController] isKindOfClass:[VoucherCodeListViewController class]]
-//           )
-//        {
-//            CustomViewController *vc = segue.sourceViewController;
-//            self.showOrderDetail = vc.showOrderDetail;
-//            self.selectedReceipt = vc.selectedReceipt;
-//        }
-//    }
 }
 
 -(void)viewDidLayoutSubviews
@@ -112,31 +74,42 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (textField.tag)
+    {
+        case 1:
+        {
+            Language *language = _languageList[_selectedIndexPicker];
+            _selectedLangText = language.code;
+        }
+            break;
+    }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.tag == 1)
+    {
+        _selectedIndexPicker = [Language getSelectedIndex];
+        [pickerVw selectRow:_selectedIndexPicker inComponent:0 animated:NO];
+    }
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    if(self.showOrderDetail)
-//    {
-//        [self segueToReceiptSummaryAuto];
-//    }
-//    else if(_goToBuffetOrder)
-//    {
-//        [self segueToReceiptSummaryAuto];
-//    }
 }
 
 -(void)loadView
 {
     [super loadView];
     
-//    _meList = @[[Language getText:@"ประวัติการสั่งอาหาร"],[Language getText:@"บัตรเครดิต/เดบิต"],[Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"],[Language getText:@"นโยบายความเป็นส่วนตัว"]];
-//    _meImageList = @[@"history.png",@"creditCard.png",@"termsOfService.png",@"privacyPolicy.png"];
-    _meList = @[[Language getText:@"บัตรเครดิต/เดบิต"],[Language getText:@"ข้อกำหนดและเงื่อนไขของ JUMMUM"],[Language getText:@"นโยบายความเป็นส่วนตัว"]];
-    _meImageList = @[@"creditCard.png",@"termsOfService.png",@"privacyPolicy.png"];
-    _aboutUsList = @[[Language getText:@"แนะนำร้านอาหาร"],[Language getText:@"แนะนำ ติชม"],[Language getText:@"ติดต่อ JUMMUM"],@"Log out"];
+    _meList = @[@"Change language",@"บัตรเครดิต/เดบิต",@"ข้อกำหนดและเงื่อนไขของ JUMMUM",@"นโยบายความเป็นส่วนตัว"];
+    _meImageList = @[@"changeLang.png",@"creditCard.png",@"termsOfService.png",@"privacyPolicy.png"];
+    _aboutUsList = @[@"แนะนำร้านอาหาร",@"แนะนำ ติชม",@"ติดต่อ JUMMUM",@"Log out"];
     _aboutUsImageList = @[@"recommendShop.png",@"comment.png",@"contactUs.png",@"logOut.png"];
-    _logOutList = @[@"Log out"];
-    _logOutImageList = @[@"logOut.png"];
+    
     tbvMe.delegate = self;
     tbvMe.dataSource = self;
     
@@ -152,6 +125,10 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         [tbvMe registerNib:nib forCellReuseIdentifier:reuseIdentifierImageText];
     }
     {
+        UINib *nib = [UINib nibWithNibName:reuseIdentifierImageLabelText bundle:nil];
+        [tbvMe registerNib:nib forCellReuseIdentifier:reuseIdentifierImageLabelText];
+    }
+    {
         UINib *nib = [UINib nibWithNibName:reuseIdentifierProfile bundle:nil];
         [tbvMe registerNib:nib forCellReuseIdentifier:reuseIdentifierProfile];
     }
@@ -161,11 +138,25 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     CustomTableViewCellProfile *cell = [tbvMe dequeueReusableCellWithIdentifier:reuseIdentifierProfile];
 
     
+    _languageList = [Language getLanguageList];
+    [pickerVw removeFromSuperview];
+    pickerVw.delegate = self;
+    pickerVw.dataSource = self;
+    pickerVw.showsSelectionIndicator = YES;
+    
+    
     cell.imgValue.layer.cornerRadius = 35;
     cell.imgValue.layer.masksToBounds = YES;
     cell.imgValue.layer.borderWidth = 0;
     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-    cell.lblEmail.text = userAccount.email;
+    if([userAccount.fullName isEqualToString:@""])
+    {
+        cell.lblEmail.text = [NSString stringWithFormat:@"%@ %@", userAccount.firstName,userAccount.lastName];
+    }
+    else
+    {
+        cell.lblEmail.text = userAccount.fullName;
+    }
     
     
     
@@ -223,14 +214,39 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     {
         if (section == 0)
         {
-            CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            
-            cell.imgVwIcon.image = [UIImage imageNamed:_meImageList[item]];
-            cell.lblText.text = _meList[item];
-            cell.lblText.textColor = cSystem4;
-            return cell;
+            if(item == 0)
+            {
+                CustomTableViewCellImageLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageLabelText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                cell.imgVwIcon.image = [UIImage imageNamed:_meImageList[item]];
+                cell.lblText.text =  [Language getText:_meList[item]];
+                cell.lblText.textColor = cSystem4;
+                
+                
+                cell.txtValue.tag = 1;
+                cell.txtValue.delegate = self;
+                cell.txtValue.inputView = pickerVw;
+                [cell.txtValue setInputAccessoryView:self.toolBar];
+                [cell.txtValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+                
+                
+                cell.txtValue.text = [Language getLanguage];
+                
+                
+                return cell;
+            }
+            else
+            {
+                CustomTableViewCellImageText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierImageText];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                
+                cell.imgVwIcon.image = [UIImage imageNamed:_meImageList[item]];
+                cell.lblText.text = [Language getText:_meList[item]];
+                cell.lblText.textColor = cSystem4;
+                return cell;
+            }
         }
         else if (section == 1)
         {
@@ -239,7 +255,7 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
             
             
             cell.imgVwIcon.image = [UIImage imageNamed:_aboutUsImageList[item]];
-            cell.lblText.text = _aboutUsList[item];
+            cell.lblText.text = [Language getText:_aboutUsList[item]];
             cell.lblText.textColor = cSystem4;
             return cell;
         }
@@ -269,16 +285,22 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
             {
                 case 0:
                 {
-                    [self performSegueWithIdentifier:@"segCreditCard" sender:self];
+                    UITextField *textField = [self.view viewWithTag:1];
+                    [textField becomeFirstResponder];
                 }
                     break;
                 case 1:
+                {
+                    [self performSegueWithIdentifier:@"segCreditCard" sender:self];
+                }
+                    break;
+                case 2:
                 {
                     _pageType = 1;
                     [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
                 }
                     break;
-                case 2:
+                case 3:
                 {
                     _pageType = 2;
                     [self performSegueWithIdentifier:@"segTosAndPrivacyPolicy" sender:self];
@@ -357,7 +379,6 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
         vc.selectedReceipt = self.selectedReceipt;
         vc.goToBuffetOrder = _goToBuffetOrder;
     }
-
 }
 
 -(void)unwindToLogIn
@@ -370,4 +391,73 @@ static NSString * const reuseIdentifierProfile = @"CustomTableViewCellProfile";
     [self performSegueWithIdentifier:@"segPersonalData" sender:self];
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component
+{
+    // Handle the selection
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    CustomTableViewCellImageLabelText *cell = [tbvMe cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        _selectedIndexPicker = row;
+        Language *language = _languageList[row];
+        [Language setLanguage:language.code];
+        
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        CustomTableViewCellImageLabelText *cell = [tbvMe cellForRowAtIndexPath:indexPath];
+        cell.txtValue.text = [Language getLanguage];
+    }
+}
+
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    CustomTableViewCellImageLabelText *cell = [tbvMe cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        return [_languageList count];
+    }
+    
+    return 0;
+}
+
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *strText = @"";
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    CustomTableViewCellImageLabelText *cell = [tbvMe cellForRowAtIndexPath:indexPath];
+    
+    
+    if([cell.txtValue isFirstResponder])
+    {
+        Language *language = _languageList[row];
+        strText = language.code;
+    }
+    
+    return strText;
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return self.view.frame.size.width;
+}
+
+-(void)dismissKeyboard
+{
+    [self.view endEditing:YES];
+    [tbvMe reloadData];
+}
 @end

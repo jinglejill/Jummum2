@@ -78,6 +78,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"แต้มสะสม/แลกของรางวัล"];
+    lblNavTitle.text = title;
     
     if(_viewDidLoad)
     {
@@ -101,8 +103,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"แต้มสะสม/แลกของรางวัล"];
-    lblNavTitle.text = title;
+    
     
     tbvData.delegate = self;
     tbvData.dataSource = self;

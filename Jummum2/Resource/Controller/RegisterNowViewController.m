@@ -102,12 +102,14 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = userAccount?[Language getText:@"ข้อมูลส่วนตัว"]:[Language getText:@"สร้างบัญชีใหม่"];
+    lblNavTitle.text = title;
     
     if(userAccount && !_updateBirthDateAndPhoneNo)
     {
         _userAccount = userAccount;
         [tbvData reloadData];
-        NSString *message = [Language getText:@"คุณล็อคอินผ่าน facebook สำเร็จแล้ว กรุณาอัพเดตวันเกิด และเบอร์โทรศัพท์ของคุณ"];
+        NSString *message = [Language getText:@"คุณล็อคอินผ่าน facebook สำเร็จแล้ว กรุณากรอกวันเกิด และเบอร์โทรศัพท์ของคุณ"];
         [self showAlert:@"" message:message method:@selector(setResponder)];
     }
 }
@@ -223,8 +225,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     // Do any additional setup after loading the view.
     
     
-    NSString *title = userAccount?[Language getText:@"ข้อมูลส่วนตัว"]:[Language getText:@"สร้างบัญชีใหม่"];
-    lblNavTitle.text = title;
+    
     _userAccount = [[UserAccount alloc]init];
     tbvData.delegate = self;
     tbvData.dataSource = self;
@@ -546,8 +547,10 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
 - (IBAction)skip:(id)sender {
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    
     [self removeOverlayViews];
     
     

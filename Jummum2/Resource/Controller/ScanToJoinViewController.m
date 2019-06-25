@@ -55,13 +55,15 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *title = [Language getText:@"สแกน QR Code เพื่อร่วมสั่งอาหาร"];
+    lblNavTitle.text = title;
+}
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSString *title = [Language getText:@"สแกน QR Code เพื่อร่วมสั่งอาหาร"];
-    lblNavTitle.text = title;
-    
     
     _captureSession = nil;
     [self loadBeepSound];

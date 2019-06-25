@@ -41,6 +41,8 @@
 #import "SaveOrderNote.h"
 #import "CreditCardAndOrderSummary.h"
 #import "GBPrimeQr.h"
+#import "TransferForm.h"
+#import "Bank.h"
 #import "CustomViewController.h"
 
 
@@ -187,7 +189,7 @@
         case dbReceiptDisputeRatingUpdateAndReload:
         case dbReceiptBuffetEnded:
         {
-            arrClassName = @[@"Receipt",@"Dispute",@"Rating",@"OrderTaking",@"OrderNote",@"Menu"];
+            arrClassName = @[@"Receipt",@"Dispute",@"Rating",@"OrderTaking",@"OrderNote",@"Menu",@"DisputeReason"];
         }
             break;
         case dbDisputeReasonList:
@@ -230,6 +232,16 @@
         case dbReceiptAndLuckyDraw:
         {
             arrClassName = @[@"Receipt", @"LuckyDrawTicket"];
+        }
+            break;
+        case dbBankList:
+        {
+            arrClassName = @[@"Bank"];
+        }
+            break;
+        case dbTransferFormAndBankList:
+        {
+            arrClassName = @[@"TransferForm",@"Bank"];
         }
             break;
         default:
@@ -321,14 +333,15 @@
                 // Ready to notify delegate that data is ready and pass back items
                 if (self.delegate)
                 {
-                    if(propCurrentDB == dbHotDeal || propCurrentDB == dbReceiptSummaryPage || propCurrentDB == dbOrderJoining ||propCurrentDB == dbRewardPoint || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptBuffetEnded || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTableQR || propCurrentDB == dbBranchSearch || propCurrentDB == dbCustomerTable || propCurrentDB == dbSettingWithKey || propCurrentDB == dbMenuBelongToBuffet || propCurrentDB == dbPromotionAndRewardRedemption || propCurrentDB == dbPromotion || propCurrentDB == dbMenu || propCurrentDB == dbRewardRedemptionLuckyDraw || propCurrentDB == dbOrderJoiningShareQr || propCurrentDB == dbOrderItAgain || propCurrentDB == dbReceiptAndLuckyDraw || propCurrentDB == dbRewardPointSpent || propCurrentDB == dbRewardPointSpentUsed || propCurrentDB == dbRewardPointSpentExpired)
-                    {
-                        [self.delegate itemsDownloaded:arrItem manager:self];
-                    }                    
-                    else
-                    {
-                        [self.delegate itemsDownloaded:arrItem];
-                    }
+//                    if(propCurrentDB == dbHotDeal || propCurrentDB == dbReceiptSummaryPage || propCurrentDB == dbOrderJoining ||propCurrentDB == dbRewardPoint || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptBuffetEnded || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTableQR || propCurrentDB == dbBranchSearch || propCurrentDB == dbCustomerTable || propCurrentDB == dbSettingWithKey || propCurrentDB == dbMenuBelongToBuffet || propCurrentDB == dbPromotionAndRewardRedemption || propCurrentDB == dbPromotion || propCurrentDB == dbMenu || propCurrentDB == dbRewardRedemptionLuckyDraw || propCurrentDB == dbOrderJoiningShareQr || propCurrentDB == dbOrderItAgain || propCurrentDB == dbReceiptAndLuckyDraw || propCurrentDB == dbRewardPointSpent || propCurrentDB == dbRewardPointSpentUsed || propCurrentDB == dbRewardPointSpentExpired)
+//                    {
+//                        [self.delegate itemsDownloaded:arrItem manager:self];
+//                    }                    
+//                    else
+//                    {
+//                        [self.delegate itemsDownloaded:arrItem];
+//                    }
+                    [self.delegate itemsDownloaded:arrItem manager:self];
                 }
             }
         }
@@ -723,6 +736,17 @@
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlReceiptAndLuckyDrawGetList]]];
         }
             break;
+        case dbBankList:
+        {
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBankGetList]]];
+        }
+            break;
+        case dbTransferFormAndBankList:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlTransferFormAndBankGetList]]];
+        }
+            break;
         default:
             break;
     }
@@ -787,7 +811,7 @@
             
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlPromotionGetList]]];
         }
-            break;        
+            break;
         default:
             break;
     }
@@ -1226,6 +1250,48 @@
             url = [NSURL URLWithString:[Utility url:urlOrderJoiningScanQrInsert]];
         }
             break;
+        case dbBank:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlBankInsert]];
+        }
+        break;
+        case dbBankList:
+        {
+            NSMutableArray *bankList = (NSMutableArray *)data;
+            NSInteger countBank = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countBank=%ld",[bankList count]];
+            for(Bank *item in bankList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countBank]];
+                countBank++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlBankInsertList]];
+        }
+        break;
+        case dbTransferForm:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlTransferFormInsert]];
+        }
+        break;
+        case dbTransferFormList:
+        {
+            NSMutableArray *transferFormList = (NSMutableArray *)data;
+            NSInteger countTransferForm = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countTransferForm=%ld",[transferFormList count]];
+            for(TransferForm *item in transferFormList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countTransferForm]];
+                countTransferForm++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlTransferFormInsertList]];
+        }
+        break;
         default:
             break;
     }
@@ -1954,6 +2020,49 @@
             url = [NSURL URLWithString:[Utility url:urlReceiptAndPromoCodeUpdate]];
         }
         break;
+        case dbTransferForm:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlTransferFormUpdate]];
+        }
+        break;
+        case dbTransferFormList:
+        {
+            NSMutableArray *transferFormList = (NSMutableArray *)data;
+            NSInteger countTransferForm = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countTransferForm=%ld",[transferFormList count]];
+            for(TransferForm *item in transferFormList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countTransferForm]];
+                countTransferForm++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlTransferFormUpdateList]];
+        }
+        break;
+        case dbBank:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlBankUpdate]];
+        }
+        break;
+        case dbBankList:
+        {
+            NSMutableArray *bankList = (NSMutableArray *)data;
+            NSInteger countBank = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countBank=%ld",[bankList count]];
+            for(Bank *item in bankList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countBank]];
+                countBank++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlBankUpdateList]];
+        }
+        break;
+
         default:
             break;
     }
@@ -2357,6 +2466,48 @@
             }
             
             url = [NSURL URLWithString:[Utility url:urlBuffetMenuMapDeleteList]];
+        }
+        break;
+        case dbTransferForm:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlTransferFormDelete]];
+        }
+        break;
+        case dbTransferFormList:
+        {
+            NSMutableArray *transferFormList = (NSMutableArray *)data;
+            NSInteger countTransferForm = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countTransferForm=%ld",[transferFormList count]];
+            for(TransferForm *item in transferFormList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countTransferForm]];
+                countTransferForm++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlTransferFormDeleteList]];
+        }
+        break;
+        case dbBank:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility url:urlBankDelete]];
+        }
+        break;
+        case dbBankList:
+        {
+            NSMutableArray *bankList = (NSMutableArray *)data;
+            NSInteger countBank = 0;
+
+            noteDataString = [NSString stringWithFormat:@"countBank=%ld",[bankList count]];
+            for(Bank *item in bankList)
+            {
+                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countBank]];
+                countBank++;
+            }
+
+            url = [NSURL URLWithString:[Utility url:urlBankDeleteList]];
         }
         break;
         default:

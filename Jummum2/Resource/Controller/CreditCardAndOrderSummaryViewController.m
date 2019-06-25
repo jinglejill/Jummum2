@@ -201,6 +201,10 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"ชำระเงิน"];
+    lblNavTitle.text = title;
+    
+    
     [UIView animateWithDuration:.25 animations:^{
         if(_currentScrollIndexPath)
         {
@@ -413,9 +417,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
-    NSString *title = [Language getText:@"ชำระเงิน"];
-    lblNavTitle.text = title;
+    
     NSString *message = [Language getText:@"ใส่หมายเหตุที่ต้องการแจ้งเพิ่มเติมกับทางร้านอาหาร"];
     _strPlaceHolder = message;
 

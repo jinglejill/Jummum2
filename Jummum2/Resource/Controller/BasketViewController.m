@@ -220,15 +220,19 @@ static NSString * const reuseIdentifierNote = @"CustomTableViewCellNote";
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"สรุปรายการที่สั่ง"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    
-    NSString *title = [Language getText:@"สรุปรายการที่สั่ง"];
-    lblNavTitle.text = title;
     tbvOrder.delegate = self;
     tbvOrder.dataSource = self;
     [tbvOrder setSeparatorColor:[UIColor clearColor]];

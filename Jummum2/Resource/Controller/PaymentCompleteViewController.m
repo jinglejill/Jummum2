@@ -117,14 +117,14 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         UILabel *lblGiftNum = [[UILabel alloc]init];
         lblGiftNum.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
         lblGiftNum.textColor = [UIColor whiteColor];
-        lblGiftNum.textAlignment = NSTextAlignmentRight;
+        lblGiftNum.textAlignment = NSTextAlignmentRight;        
         lblGiftNum.numberOfLines = 1;
         lblGiftNum.text = [NSString stringWithFormat:@"You've got %ld %@",numberOfGift,strTicket];
         [lblGiftNum sizeToFit];
         lblGiftNum.center = animatedImageView.center;
         CGRect frame = lblGiftNum.frame;
-        frame.origin.x = self.view.frame.size.width-16-animatedImageView.frame.size.width-8-lblGiftNum.frame.size.width;
-        lblGiftNum.frame = frame;
+        frame.origin.x = self.view.frame.size.width-16-animatedImageView.frame.size.width-8-lblGiftNum.frame.size.width;        
+        lblGiftNum.frame = frame;        
         [self.view addSubview:lblGiftNum];
         
 
@@ -807,7 +807,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
             cell.lblAmount.textColor = cSystem4;
 
 
-            UIImage *image = [self imageFromView:cell];
+            UIImage *image = [self imageFromView:cell];            
             if((branch.serviceChargePercent>0 && branch.percentVat>0) || (branch.serviceChargePercent == 0 && branch.percentVat>0 && branch.priceIncludeVat))
             {
                 [arrImage addObject:image];

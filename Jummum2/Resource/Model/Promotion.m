@@ -25,6 +25,8 @@
             [Utility dateToString:[self valueForKey:@"endDate"] toFormat:@"yyyy-MM-dd HH:mm:ss"],@"endDate",
             [Utility dateToString:[self valueForKey:@"usingStartDate"] toFormat:@"yyyy-MM-dd HH:mm:ss"],@"usingStartDate",
             [Utility dateToString:[self valueForKey:@"usingEndDate"] toFormat:@"yyyy-MM-dd HH:mm:ss"],@"usingEndDate",
+            [self valueForKey:@"branchID"]?[self valueForKey:@"branchID"]:[NSNull null],@"branchID",
+            [self valueForKey:@"shopType"]?[self valueForKey:@"shopType"]:[NSNull null],@"shopType",
             [self valueForKey:@"header"]?[self valueForKey:@"header"]:[NSNull null],@"header",
             [self valueForKey:@"subTitle"]?[self valueForKey:@"subTitle"]:[NSNull null],@"subTitle",
             [self valueForKey:@"imageUrl"]?[self valueForKey:@"imageUrl"]:[NSNull null],@"imageUrl",
@@ -53,7 +55,7 @@
             nil];
 }
 
--(Promotion *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount shopDiscount:(float)shopDiscount jummumDiscount:(float)jummumDiscount sharedDiscountType:(NSInteger)sharedDiscountType sharedDiscountAmountMax:(float)sharedDiscountAmountMax minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountGroupMenuID:(NSInteger)discountGroupMenuID discountMenuMaxQuantity:(NSInteger)discountMenuMaxQuantity noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status
+-(Promotion *)initWithMainBranchID:(NSInteger)mainBranchID startDate:(NSDate *)startDate endDate:(NSDate *)endDate usingStartDate:(NSDate *)usingStartDate usingEndDate:(NSDate *)usingEndDate branchID:(NSInteger)branchID shopType:(NSInteger)shopType header:(NSString *)header subTitle:(NSString *)subTitle imageUrl:(NSString *)imageUrl discountType:(NSInteger)discountType discountAmount:(float)discountAmount shopDiscount:(float)shopDiscount jummumDiscount:(float)jummumDiscount sharedDiscountType:(NSInteger)sharedDiscountType sharedDiscountAmountMax:(float)sharedDiscountAmountMax minimumSpending:(NSInteger)minimumSpending maxDiscountAmountPerDay:(NSInteger)maxDiscountAmountPerDay allowEveryone:(NSInteger)allowEveryone allowDiscountForAllMenuType:(NSInteger)allowDiscountForAllMenuType discountGroupMenuID:(NSInteger)discountGroupMenuID discountMenuMaxQuantity:(NSInteger)discountMenuMaxQuantity noOfLimitUse:(NSInteger)noOfLimitUse noOfLimitUsePerUser:(NSInteger)noOfLimitUsePerUser noOfLimitUsePerUserPerDay:(NSInteger)noOfLimitUsePerUserPerDay voucherCode:(NSString *)voucherCode termsConditions:(NSString *)termsConditions type:(NSInteger)type orderNo:(NSInteger)orderNo status:(NSInteger)status
 {
     self = [super init];
     if(self)
@@ -64,6 +66,8 @@
         self.endDate = endDate;
         self.usingStartDate = usingStartDate;
         self.usingEndDate = usingEndDate;
+        self.branchID = branchID;
+        self.shopType = shopType;
         self.header = header;
         self.subTitle = subTitle;
         self.imageUrl = imageUrl;
@@ -171,6 +175,8 @@
         [copy setEndDate:self.endDate];
         [copy setUsingStartDate:self.usingStartDate];
         [copy setUsingEndDate:self.usingEndDate];
+        ((Promotion *)copy).branchID = self.branchID;
+        ((Promotion *)copy).shopType = self.shopType;
         [copy setHeader:self.header];
         [copy setSubTitle:self.subTitle];
         [copy setImageUrl:self.imageUrl];
@@ -209,6 +215,8 @@
        && [self.endDate isEqual:editingPromotion.endDate]
        && [self.usingStartDate isEqual:editingPromotion.usingStartDate]
        && [self.usingEndDate isEqual:editingPromotion.usingEndDate]
+       && self.branchID == editingPromotion.branchID
+       && self.shopType == editingPromotion.shopType
        && [self.header isEqualToString:editingPromotion.header]
        && [self.subTitle isEqualToString:editingPromotion.subTitle]
        && [self.imageUrl isEqualToString:editingPromotion.imageUrl]
@@ -247,6 +255,8 @@
     toPromotion.endDate = fromPromotion.endDate;
     toPromotion.usingStartDate = fromPromotion.usingStartDate;
     toPromotion.usingEndDate = fromPromotion.usingEndDate;
+    toPromotion.branchID = fromPromotion.branchID;
+    toPromotion.shopType = fromPromotion.shopType;
     toPromotion.header = fromPromotion.header;
     toPromotion.subTitle = fromPromotion.subTitle;
     toPromotion.imageUrl = fromPromotion.imageUrl;

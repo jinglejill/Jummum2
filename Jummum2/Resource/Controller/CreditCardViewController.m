@@ -40,14 +40,20 @@ static NSString * const reuseIdentifierImageLabelRemove = @"CustomTableViewCellI
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"บัตรเครดิต/เดบิต"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"บัตรเครดิต/เดบิต"];
-    lblNavTitle.text = title;
+    
     tbvData.delegate = self;
     tbvData.dataSource = self;
     

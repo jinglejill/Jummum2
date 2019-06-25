@@ -86,7 +86,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     {
         case 1:
         {
-            DisputeReason *disputeReason = [DisputeReason getDisputeReasonWithText:textField.text];
+            DisputeReason *disputeReason = _disputeReasonList[_selectedIndexPicker];
             _dispute.disputeReasonID = disputeReason.disputeReasonID;
         }
             break;
@@ -112,8 +112,23 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     if(textField.tag == 1)
     {
         DisputeReason *disputeReason = _disputeReasonList[_selectedIndexPicker];
-        textField.text = [Language langIsEN]?disputeReason.text:disputeReason.text;
+        textField.text = [Language langIsEN]?disputeReason.textEn:disputeReason.text;
         [pickerVw selectRow:_selectedIndexPicker inComponent:0 animated:NO];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animate
+{
+    [super viewDidAppear:animate];
+    if(fromType == 1)
+    {
+        NSString *title = [Language getText:@"ยกเลิกบิลนี้"];
+        lblNavTitle.text = title;
+    }
+    else if(fromType == 2)
+    {
+        NSString *title = [Language getText:@"Open dispute"];
+        lblNavTitle.text = title;
     }
 }
 
@@ -124,7 +139,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     
     
 
-    NSString *message = [Language getText:@"กรุณาใส่รายละเอียดเหตุผลในการขอเงินคืน"];
+    NSString *message = [Language getText:@"กรุณาใส่รายละเอียดเหตุผลในการขอคืนเงิน"];
     _strPlaceHolder = message;
     [pickerVw removeFromSuperview];
     pickerVw.delegate = self;
@@ -139,7 +154,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     tbvData.separatorColor = [UIColor clearColor];
     tbvData.backgroundColor = [UIColor whiteColor];
     _dispute = [[Dispute alloc]init];
-    
+    _dispute.refundAmount = fromType == 1?receipt.netTotal:0;
     
     
     tbvAction.delegate = self;
@@ -169,14 +184,10 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     [self loadingOverlayView];
     if(fromType == 1)
     {
-        NSString *title = [Setting getValue:@"080t" example:@"Cancel order"];
-        lblNavTitle.text = title;
         [self.homeModel downloadItems:dbDisputeReasonList withData:@(1)];
     }
     else if(fromType == 2)
-    {
-        NSString *title = [Setting getValue:@"073t" example:@"Open dispute"];
-        lblNavTitle.text = title;
+    {        
         [self.homeModel downloadItems:dbDisputeReasonList withData:@(2)];
     }
   
@@ -200,11 +211,11 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     
     if([tableView isEqual:tbvData])
     {
-        if(fromType == 1)
-        {
-            return 3;
-        }
-        else if(fromType == 2)
+//        if(fromType == 1)
+//        {
+//            return 3;
+//        }
+//        else if(fromType == 2)
         {
             return 5;
         }
@@ -223,7 +234,115 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     
     if([tableView isEqual:tbvData])
     {
-        if(fromType == 1)
+//        if(fromType == 1)
+//        {
+//            if(item == 0)
+//            {
+//                UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"cell"];
+//                if (!cell) {
+//                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+//                }
+//                cell.backgroundColor = [UIColor whiteColor];
+//
+//
+//                NSString *message = [Language getText:@"กรุณาใส่รายละเอียดด้านล่างนี้"];
+//                cell.textLabel.text = message;
+//                cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+//                cell.textLabel.textColor = [UIColor lightGrayColor];
+//
+//
+//                return cell;
+//            }
+//            else if(item == 1)
+//            {
+//                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//
+//                NSString *message = [Language getText:@"เหตุผลในการขอคืนเงิน"];
+//                NSString *strTitle = message;
+//
+//
+//
+//                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+//                UIColor *color = cSystem1;;
+//                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+//                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+//
+//
+//                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+//                UIColor *color2 = cSystem4;
+//                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+//                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+//
+//
+//                [attrString appendAttributedString:attrString2];
+//                cell.lblTitle.attributedText = attrString;
+//
+//
+//
+//                NSString *message2 = [Language getText:@"กรุณาเลือกเหตุผลในการขอคืนเงิน"];
+//                cell.txtValue.tag = item;
+//                cell.txtValue.placeholder = message2;
+//                cell.txtValue.delegate = self;
+//                cell.txtValue.inputView = pickerVw;
+//                [cell.txtValue setInputAccessoryView:self.toolBarNext];
+//                [cell.txtValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+//
+//
+//                DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
+//                cell.txtValue.text = [Language langIsEN]?disputeReason.textEn:disputeReason.text;
+//                cell.lblRemark.text = @"";
+//
+//
+//                return cell;
+//            }
+//            else if(item == 2)
+//            {
+//                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//
+//                NSString *message = [Language getText:@"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน"];
+//                NSString *strTitle = [Language getText:@"เบอร์โทร."];
+//                NSString *strRemark = message;
+//
+//
+//
+//                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
+//                UIColor *color = cSystem1;
+//                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+//                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
+//
+//
+//                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
+//                UIColor *color2 = cSystem4;
+//                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+//                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
+//
+//
+//                [attrString appendAttributedString:attrString2];
+//                cell.lblTitle.attributedText = attrString;
+//
+//
+//
+//                cell.txtValue.tag = 4;
+//                cell.txtValue.delegate = self;
+//                cell.txtValue.placeholder = @"xxx-xxx-xxxx";
+//                cell.txtValue.text = [Utility setPhoneNoFormat:_dispute.phoneNo];
+//                cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
+//                [cell.txtValue setInputAccessoryView:self.toolBar];
+//                [cell.txtValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
+//
+//
+//                cell.lblRemark.text = strRemark;
+//                [cell.lblRemark sizeToFit];
+//                cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+//
+//                return cell;
+//            }
+//        }
+//        else if(fromType == 2)
         {
             if(item == 0)
             {
@@ -248,53 +367,9 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 
-                NSString *message = [Language getText:@"เหตุผลในการขอเงินคืน"];
+                
+                NSString *message = [Language getText:@"เหตุผลในการขอคืนเงิน"];
                 NSString *strTitle = message;
-                
-                
-                
-                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                UIColor *color = cSystem1;;
-                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
-                
-                
-                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                UIColor *color2 = cSystem4;
-                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
-                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
-                
-                
-                [attrString appendAttributedString:attrString2];
-                cell.lblTitle.attributedText = attrString;
-                
-                
-                
-                NSString *message2 = [Language getText:@"กรุณาเลือกเหตุผลในการขอเงินคืน"];
-                cell.txtValue.tag = item;
-                cell.txtValue.placeholder = message2;
-                cell.txtValue.delegate = self;
-                cell.txtValue.inputView = pickerVw;
-                [cell.txtValue setInputAccessoryView:self.toolBarNext];
-                [cell.txtValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
-                
-                
-                DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
-                cell.txtValue.text = [Language langIsEN]?disputeReason.text:disputeReason.text;
-                cell.lblRemark.text = @"";
-                
-                
-                return cell;
-            }
-            else if(item == 2)
-            {
-                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                
-                NSString *message = [Language getText:@"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน"];
-                NSString *strTitle = [Language getText:@"เบอร์โทร."];
-                NSString *strRemark = message;
                 
                 
                 
@@ -315,71 +390,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 
-                cell.txtValue.tag = 4;
-                cell.txtValue.delegate = self;
-                cell.txtValue.placeholder = @"xxx-xxx-xxxx";
-                cell.txtValue.text = [Utility setPhoneNoFormat:_dispute.phoneNo];
-                cell.txtValue.keyboardType = UIKeyboardTypePhonePad;
-                [cell.txtValue setInputAccessoryView:self.toolBar];
-                [cell.txtValue addTarget:self action:@selector(txtPhoneNoDidChange:) forControlEvents:UIControlEventEditingChanged];
-                
-                
-                cell.lblRemark.text = strRemark;
-                [cell.lblRemark sizeToFit];
-                cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                
-                return cell;
-            }
-        }
-        else if(fromType == 2)
-        {
-            if(item == 0)
-            {
-                UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"cell"];
-                if (!cell) {
-                    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-                }
-                cell.backgroundColor = [UIColor whiteColor];
-                
-                
-                NSString *message = [Language getText:@"กรุณาใส่รายละเอียดด้านล่างนี้"];
-                cell.textLabel.text = message;
-                cell.textLabel.font = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                cell.textLabel.textColor = [UIColor lightGrayColor];
-                
-                
-                return cell;
-            }
-            else if(item == 1)
-            {
-                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                
-                
-                NSString *message = [Language getText:@"เหตุผลในการขอเงินคืน"];
-                NSString *strTitle = message;
-                
-                
-                
-                UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                UIColor *color = cSystem1;;
-                NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes:attribute];
-                
-                
-                UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:15];
-                UIColor *color2 = cSystem4;
-                NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
-                NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:strTitle attributes:attribute2];
-                
-                
-                [attrString appendAttributedString:attrString2];
-                cell.lblTitle.attributedText = attrString;
-                
-                
-                
-                NSString *message2 = [Language getText:@"กรุณาเลือกเหตุผลในการขอเงินคืน"];
+                NSString *message2 = [Language getText:@"กรุณาเลือกเหตุผลในการขอคืนเงิน"];
                 cell.txtValue.tag = item;
                 cell.txtValue.placeholder = message2;
                 cell.txtValue.delegate = self;
@@ -389,7 +400,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 
                 
                 DisputeReason *disputeReason = [DisputeReason getDisputeReason:_dispute.disputeReasonID];
-                cell.txtValue.text = [Language langIsEN]?disputeReason.text:disputeReason.text;
+                cell.txtValue.text = [Language langIsEN]?disputeReason.textEn:disputeReason.text;;
                 cell.lblRemark.text = @"";
                 
                 
@@ -449,7 +460,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 
-                NSString *message = [Language getText:@"รายละเอียดเหตุผลในการขอเงินคืน"];
+                NSString *message = [Language getText:@"รายละเอียดเหตุผลในการขอคืนเงิน"];
                 NSString *strTitle = message;
                 
                 
@@ -552,29 +563,29 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     NSInteger item = indexPath.item;
     if([tableView isEqual:tbvData])
     {
-        if(fromType == 1)
-        {
-            if(item == 0)
-            {
-                return 44;
-            }
-            else if(item == 1)
-            {
-                return 102-8-16;
-            }
-            else if(item == 2)
-            {
-                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
-                NSString *message = [Language getText:@"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน"];
-                NSString *strRemark = message;
-                
-                
-                cell.lblRemark.text = strRemark;
-                [cell.lblRemark sizeToFit];
-                return 102-16+cell.lblRemark.frame.size.height;
-            }
-        }
-        else if(fromType == 2)
+//        if(fromType == 1)
+//        {
+//            if(item == 0)
+//            {
+//                return 44;
+//            }
+//            else if(item == 1)
+//            {
+//                return 102-8-16;
+//            }
+//            else if(item == 2)
+//            {
+//                CustomTableViewCellLabelText *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelText];
+//                NSString *message = [Language getText:@"กรุณาใส่เบอร์โทรติดต่อกลับ เพื่อเจ้าหน้าที่จะโทรสอบถามข้อมูลเพิ่มเติมสำหรับการโอนเงินคืนท่าน"];
+//                NSString *strRemark = message;
+//
+//
+//                cell.lblRemark.text = strRemark;
+//                [cell.lblRemark sizeToFit];
+//                return 102-16+cell.lblRemark.frame.size.height;
+//            }
+//        }
+//        else if(fromType == 2)
         {
             if(item == 0)
             {
@@ -655,9 +666,10 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     [self performSegueWithIdentifier:@"segUnwindToOrderDetail" sender:self];
 }
 
--(void)itemsDownloaded:(NSArray *)items
+-(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
 {
-    if(self.homeModel.propCurrentDB == dbDisputeReasonList)
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDB == dbDisputeReasonList)
     {
         [self removeOverlayViews];
         
@@ -682,7 +694,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
         CustomTableViewCellLabelText *cell = [tbvData cellForRowAtIndexPath:indexPath];
-        cell.txtValue.text = [Language langIsEN]?disputeReason.text:disputeReason.text;
+        cell.txtValue.text = [Language langIsEN]?disputeReason.textEn:disputeReason.text;;
     }
 }
 
@@ -718,7 +730,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     if([cell.txtValue isFirstResponder])
     {
         DisputeReason *disputeReason = _disputeReasonList[row];
-        strText = [Language langIsEN]?disputeReason.text:disputeReason.text;
+        strText = [Language langIsEN]?disputeReason.textEn:disputeReason.text;;
     }
     
     return strText;
@@ -732,51 +744,79 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 -(void)submit:(id)sender
 {
-    if(fromType == 1)
-    {
-        [self.view endEditing:YES];
-        if(![self validate])
-        {
-            return;
-        }
-        
-        
-        [self loadingOverlayView];
-        _dispute.receiptID = receipt.receiptID;
-        _dispute.type = fromType;
-        _dispute.modifiedUser = [Utility modifiedUser];
-        _dispute.modifiedDate = [Utility currentDateTime];
-        
-        Branch *branch = [Branch getBranch:receipt.branchID];
-        [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
-        
-    }
-    else if(fromType == 2)
-    {
-        [self submit];
-    }
-}
-
--(void)submit
-{
     [self.view endEditing:YES];
-    
-    
     if(![self validate])
     {
         return;
     }
+
+
     [self loadingOverlayView];
-    
-    
     _dispute.receiptID = receipt.receiptID;
     _dispute.type = fromType;
+//    _dispute.refundAmount = receipt.netTotal;
     _dispute.modifiedUser = [Utility modifiedUser];
     _dispute.modifiedDate = [Utility currentDateTime];
-    
+
     Branch *branch = [Branch getBranch:receipt.branchID];
-    [self.homeModel insertItems:dbDispute withData:@[_dispute,branch] actionScreen:@"insert dispute"];
+//    [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
+    
+    
+    
+    if(fromType == 1)
+    {
+        [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
+    }
+    else if(fromType == 2)
+    {
+        [self.homeModel insertItems:dbDispute withData:@[_dispute,branch] actionScreen:@"insert dispute"];
+    }
+//    if(fromType == 1)
+//    {
+//        [self.view endEditing:YES];
+//        if(![self validate])
+//        {
+//            return;
+//        }
+//
+//
+//        [self loadingOverlayView];
+//        _dispute.receiptID = receipt.receiptID;
+//        _dispute.type = fromType;
+//        _dispute.refundAmount = receipt.netTotal;
+//        _dispute.modifiedUser = [Utility modifiedUser];
+//        _dispute.modifiedDate = [Utility currentDateTime];
+//
+//        Branch *branch = [Branch getBranch:receipt.branchID];
+//        [self.homeModel insertItems:dbDisputeCancel withData:@[_dispute,branch] actionScreen:@"insert dispute cancel"];
+//
+//    }
+//    else if(fromType == 2)
+//    {
+//        [self submit];
+//    }
 }
+
+//-(void)submit
+//{
+//    [self.view endEditing:YES];
+//
+//
+//    if(![self validate])
+//    {
+//        return;
+//    }
+//    [self loadingOverlayView];
+//
+//
+//    _dispute.receiptID = receipt.receiptID;
+//    _dispute.type = fromType;
+//    _dispute.modifiedUser = [Utility modifiedUser];
+//    _dispute.modifiedDate = [Utility currentDateTime];
+//
+//    Branch *branch = [Branch getBranch:receipt.branchID];
+//    [self.homeModel insertItems:dbDispute withData:@[_dispute,branch] actionScreen:@"insert dispute"];
+//}
 
 -(void)cancel:(id)sender
 {
@@ -798,13 +838,13 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     }
     else if(downloadReceipt.status == 7)
     {
-        NSString *message = [Language getText:@"คำร้องขอเงินคืนเต็มจำนวนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
+        NSString *message = [Language getText:@"คำร้องขอคืนเงินเต็มจำนวนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
         [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
         [self removeOverlayViews];
     }
     else if(downloadReceipt.status == 8)
     {
-        NSString *message = [Language getText:@"คำร้องขอเงินคืนได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
+        NSString *message = [Language getText:@"คำร้องขอคืนเงินได้ถูกส่งไปแล้ว กรุณารอการยืนยันจากร้านค้า"];
         [self showAlert:@"" message:message method:@selector(unwindToReceiptSummary)];
         [self removeOverlayViews];
     }
@@ -813,34 +853,34 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 -(BOOL)validate
 {
-    if(fromType == 1)
+//    if(fromType == 1)
+//    {
+//        {
+//            UITextField *textField = [self.view viewWithTag:1];
+//            if([Utility isStringEmpty:textField.text])
+//            {
+//                NSString *message = [Language getText:@"กรุณาเลือกเหตุผลในการขอคืนเงิน"];
+//                [self blinkAlertMsg:message];
+//                return NO;
+//            }
+//        }
+//
+//        {
+//            UITextField *textField = [self.view viewWithTag:4];
+//            if([Utility isStringEmpty:textField.text])
+//            {
+//                [self blinkAlertMsg:[Language getText:@"กรุณาใส่เบอร์โทร"]];
+//                return NO;
+//            }
+//        }
+//    }
+//    else if(fromType == 2)
     {
         {
             UITextField *textField = [self.view viewWithTag:1];
             if([Utility isStringEmpty:textField.text])
             {
-                NSString *message = [Language getText:@"กรุณาเลือกเหตุผลในการขอเงินคืน"];
-                [self blinkAlertMsg:message];
-                return NO;
-            }
-        }       
-        
-        {
-            UITextField *textField = [self.view viewWithTag:4];
-            if([Utility isStringEmpty:textField.text])
-            {
-                [self blinkAlertMsg:[Language getText:@"กรุณาใส่เบอร์โทร"]];
-                return NO;
-            }
-        }
-    }
-    else if(fromType == 2)
-    {
-        {
-            UITextField *textField = [self.view viewWithTag:1];
-            if([Utility isStringEmpty:textField.text])
-            {
-                NSString *message = [Language getText:@"กรุณาเลือกเหตุผลในการขอเงินคืน"];
+                NSString *message = [Language getText:@"กรุณาเลือกเหตุผลในการขอคืนเงิน"];
                 [self blinkAlertMsg:message];
                 return NO;
             }
@@ -871,7 +911,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
             UITextView *textView = [self.view viewWithTag:3];
             if([textView.text isEqualToString:_strPlaceHolder])
             {
-                NSString *message = [Language getText:@"กรุณาใส่รายละเอียดเหตุผลในการขอเงินคืน"];
+                NSString *message = [Language getText:@"กรุณาใส่รายละเอียดเหตุผลในการขอคืนเงิน"];
                 [self blinkAlertMsg:message];            
                 return NO;
             }
@@ -928,7 +968,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSInteger textFieldTag = fromType == 1?2:4;
+    NSInteger textFieldTag = 4;//fromType == 1?2:4;
     
     if(textField.tag == textFieldTag)
     {
@@ -943,7 +983,7 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    NSInteger textFieldTag = fromType == 1?2:4;
+    NSInteger textFieldTag = 4;//fromType == 1?2:4;
     
     if(textField.tag == textFieldTag)
     {
@@ -972,12 +1012,12 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
         NSInteger tag = firstResponder.tag;
         if(tag == 1)
         {
-            if(fromType == 1)
-            {
-                UITextField *textField = [self.view viewWithTag:4];
-                [textField becomeFirstResponder];
-            }
-            else if(fromType == 2)
+//            if(fromType == 1)
+//            {
+//                UITextField *textField = [self.view viewWithTag:4];
+//                [textField becomeFirstResponder];
+//            }
+//            else if(fromType == 2)
             {
                 UITextField *textField = [self.view viewWithTag:2];
                 [textField becomeFirstResponder];

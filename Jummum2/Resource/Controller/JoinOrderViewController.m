@@ -70,8 +70,7 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"รายการอาหารของเพื่อน"];
-    lblNavTitle.text = title;
+    
     tbvData.dataSource = self;
     tbvData.delegate = self;
     tbvData.separatorColor = [UIColor clearColor];
@@ -108,7 +107,8 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    NSString *title = [Language getText:@"รายการอาหารของเพื่อน"];
+    lblNavTitle.text = title;
     
     if(!_loadData)
     {

@@ -77,14 +77,20 @@ static NSString * const reuseIdentifierSearchBar = @"CustomTableViewCellSearchBa
     [self setShadow:vwBottomShadow];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"เลือกโต๊ะ"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"เลือกโต๊ะ"];
-    lblNavTitle.text = title;
+    
     tbvCustomerTable.delegate = self;
     tbvCustomerTable.dataSource = self;
 

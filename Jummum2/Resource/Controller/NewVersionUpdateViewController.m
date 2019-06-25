@@ -46,7 +46,6 @@
     [self setButtonDesign:btnCancel];
     
 
-   
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
     if(_strUpdateVersion && [_strUpdateVersion integerValue] && [_strUpdateVersion integerValue]>[currentVersion integerValue])

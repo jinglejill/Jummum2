@@ -264,8 +264,21 @@ static NSString * const reuseIdentifierNoteWithQuantity = @"CustomCollectionView
         }
         else//ไม่ใส่
         {
+            UIFont *font = [UIFont fontWithName:@"Prompt-Regular" size:14];
+            NSDictionary *attribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSFontAttributeName: font};
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[Language getText:branch.wordNo] attributes:attribute];
+            
+            
             NSString *noteName = [Language langIsTH]?note.name:note.nameEn;
-            cell.lblNoteName.text = [NSString stringWithFormat:[Language getText:@"ไม่ใส่ %@"],noteName];
+            UIFont *font2 = [UIFont fontWithName:@"Prompt-Regular" size:14];
+            NSDictionary *attribute2 = @{NSFontAttributeName: font2};
+            NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@",noteName] attributes:attribute2];
+            
+            
+            [attrString appendAttributedString:attrString2];
+            
+            
+            cell.lblNoteName.attributedText = attrString;
             cell.lblNoteName.tag = note.noteID;
         }
         

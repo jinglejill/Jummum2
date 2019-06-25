@@ -144,19 +144,6 @@
     return toDisputeReason;
 }
 
-+(DisputeReason *)getDisputeReasonWithText:(NSString *)text
-{
-    NSMutableArray *dataList = [SharedDisputeReason sharedDisputeReason].disputeReasonList;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"_text = %@",text];
-    NSArray *filterArray = [dataList filteredArrayUsingPredicate:predicate];
-    
-    if([filterArray count]>0)
-    {
-        return filterArray[0];
-    }
-    return nil;
-}
-
 +(void)setSharedData:(NSMutableArray *)dataList
 {
     [SharedDisputeReason sharedDisputeReason].disputeReasonList = dataList;

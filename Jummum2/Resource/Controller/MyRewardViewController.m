@@ -87,15 +87,19 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
     [segConValue setTitle:[Language getText:@"หมดอายุ"] forSegmentAtIndex:2];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"รางวัลของฉัน"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    
-    NSString *title = [Language getText:@"รางวัลของฉัน"];
-    lblNavTitle.text = title;
     tbvData.dataSource = self;
     tbvData.delegate = self;
     [tbvData setSeparatorColor:cTextFieldBorder];

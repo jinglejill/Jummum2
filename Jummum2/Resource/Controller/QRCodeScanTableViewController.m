@@ -102,8 +102,7 @@
     [super viewDidLoad];
     
     
-    NSString *title = [Language getText:@"สแกน QR Code เลขโต๊ะ"];
-    lblNavTitle.text = title;
+    
     btnBack.hidden = fromCreditCardAndOrderSummaryMenu?NO:YES;
     btnBranchSearch.hidden = !btnBack.hidden;
     imgPeekABoo.hidden = YES;
@@ -112,14 +111,14 @@
     
     _captureSession = nil;
     [self loadBeepSound];
-//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
 
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    
+    NSString *title = [Language getText:@"สแกน QR Code เลขโต๊ะ"];
+    lblNavTitle.text = title;
     
     if(fromOrderNow)
     {

@@ -622,6 +622,48 @@ extern NSString *globalBundleID;
         case urlReceiptAndPromoCodeUpdate:
             url = @"JMMReceiptAndPromoCodeUpdate.php";
             break;
+        case urlTransferFormInsert:
+            url = @"JMMTransferFormInsert.php";
+            break;
+        case urlTransferFormUpdate:
+            url = @"JMMTransferFormUpdate.php";
+            break;
+        case urlTransferFormDelete:
+            url = @"JMMTransferFormDelete.php";
+            break;
+        case urlTransferFormInsertList:
+            url = @"JMMTransferFormInsertList.php";
+            break;
+        case urlTransferFormUpdateList:
+            url = @"JMMTransferFormUpdateList.php";
+            break;
+        case urlTransferFormDeleteList:
+            url = @"JMMTransferFormDeleteList.php";
+            break;
+        case urlBankInsert:
+            url = @"JMMBankInsert.php";
+            break;
+        case urlBankUpdate:
+            url = @"JMMBankUpdate.php";
+            break;
+        case urlBankDelete:
+            url = @"JMMBankDelete.php";
+            break;
+        case urlBankInsertList:
+            url = @"JMMBankInsertList.php";
+            break;
+        case urlBankUpdateList:
+            url = @"JMMBankUpdateList.php";
+            break;
+        case urlBankDeleteList:
+            url = @"JMMBankDeleteList.php";
+            break;
+        case urlBankGetList:
+            url = @"JMMBankGetList.php";
+            break;
+        case urlTransferFormAndBankGetList:
+            url = @"JMMTransferFormAndBankGetList.php";
+            break;
         default:
             break;
     }

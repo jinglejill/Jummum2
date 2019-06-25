@@ -119,8 +119,7 @@ static NSString * const reuseIdentifierSquareThumbNail = @"CustomTableViewCellSq
     
   
     
-    NSString *title = [Language getText:@"เลือกเมนู"];
-    lblNavTitle.text = title;
+    
     lblTotalQuantityTop.text = @"0";
     lblTotalQuantity.text = @"0";
     lblTotalAmount.text = @"฿ 0.00";
@@ -156,6 +155,8 @@ static NSString * const reuseIdentifierSquareThumbNail = @"CustomTableViewCellSq
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"เลือกเมนู"];
+    lblNavTitle.text = title;
     
     if(saveReceipt)
     {
@@ -666,7 +667,6 @@ static NSString * const reuseIdentifierSquareThumbNail = @"CustomTableViewCellSq
     }
     else
     {
-//        if([Menu hasRecommendedMenuWithMenuList:_filterMenuList] && _selectedMenuTypeIndex == 0)
         if(_selectedMenuTypeIndex == 0)
         {
             return 4 + (self.view.frame.size.width - 3*8)/2 + 44 + 4 + 30;

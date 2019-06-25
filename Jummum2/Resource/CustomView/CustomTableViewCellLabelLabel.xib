@@ -46,13 +46,13 @@
                 <constraint firstItem="VvO-lc-vzk" firstAttribute="leading" secondItem="GMF-Z9-vv5" secondAttribute="trailing" constant="8" id="KGo-RC-Qu0"/>
                 <constraint firstItem="GMF-Z9-vv5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="13" id="KgR-oL-Vo0"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VvO-lc-vzk" secondAttribute="trailing" constant="16" id="a63-ZQ-5kU"/>
-                <constraint firstItem="VvO-lc-vzk" firstAttribute="centerY" secondItem="GMF-Z9-vv5" secondAttribute="centerY" id="bBP-HY-GWT"/>
                 <constraint firstItem="GMF-Z9-vv5" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="bvR-MU-a0T"/>
+                <constraint firstItem="VvO-lc-vzk" firstAttribute="centerY" secondItem="GMF-Z9-vv5" secondAttribute="centerY" id="sft-AX-LXj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="lblText" destination="GMF-Z9-vv5" id="rB7-ZV-7He"/>
-                <outlet property="lblTextTop" destination="KgR-oL-Vo0" id="MgP-1Q-xKq"/>
+                <outlet property="lblTextTop" destination="KgR-oL-Vo0" id="jD6-gV-eTx"/>
                 <outlet property="lblTextWidthConstant" destination="cxQ-ll-N4m" id="XcL-jY-LMa"/>
                 <outlet property="lblValue" destination="VvO-lc-vzk" id="vHs-Mk-bp6"/>
             </connections>

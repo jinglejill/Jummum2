@@ -88,7 +88,6 @@
             _selectedReceipt = vcPaymentComplete.receipt;
         }
         
-        
         _switchToReceiptSummaryTab = 1;
     }
     else if([vc isKindOfClass:[PaymentCompleteViewController class]] && ((PaymentCompleteViewController *)vc).goToHotDeal)
@@ -103,8 +102,7 @@
     {
         ReceiptSummaryViewController *receiptSummaryVc = (ReceiptSummaryViewController *)vc;
         _orderItAgainReceipt = receiptSummaryVc.orderItAgainReceipt;
-        receiptSummaryVc.orderItAgainReceipt = nil;
-        
+        receiptSummaryVc.orderItAgainReceipt = nil;        
         
         _fromOrderItAgain = YES;
         _switchToQRTab = 1;

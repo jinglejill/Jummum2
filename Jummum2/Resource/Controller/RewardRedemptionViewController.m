@@ -63,14 +63,20 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     topViewHeight.constant = topPadding == 0?20:topPadding;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"แสดงโค้ด เพื่อรับสิทธิ์"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"แสดงโค้ด เพื่อรับสิทธิ์"];
-    lblNavTitle.text = title;
+    
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -374,6 +380,11 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             }
             else
             {
+                SaveReceipt *saveReceipt = [[SaveReceipt alloc]init];
+                saveReceipt.voucherCode = rewardRedemption.voucherCode;
+                [SaveReceipt setCurrentSaveReceipt:saveReceipt];
+                
+                
                 branch = [Branch getBranch:rewardRedemption.mainBranchID];
                 goToMenuSelection = 1;
                 [self performSegueWithIdentifier:@"segUnwindToMainTabBar" sender:self];

@@ -66,6 +66,8 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"เลือกร้าน"];
+    lblNavTitle.text = title;
 }
 
 - (void)viewDidLoad
@@ -74,8 +76,6 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     // Do any additional setup after loading the view.
        
     
-    NSString *title = [Language getText:@"เลือกร้าน"];
-    lblNavTitle.text = title;
     tbvBranch.delegate = self;
     tbvBranch.dataSource = self;
     
@@ -314,6 +314,8 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
     if(homeModel.propCurrentDB == dbBranchSearch)
     {
         [self removeOverlayViews];
+//        [Utility updateSharedObject:items];//test
+        
         if(_page == 1)
         {
             _filterBranchList = items[0];
@@ -341,6 +343,7 @@ static NSString * const reuseIdentifierMenu = @"CustomTableViewCellMenu";
         
         
         [tbvBranch reloadData];
+        Branch *branch = [Branch getBranch:1];//test
     }
 }
 @end

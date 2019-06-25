@@ -79,14 +79,20 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"แนะนำ ติชม"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"แนะนำ ติชม"];
-    lblNavTitle.text = title;
+    
     NSString *message = [Language getText:@"กรุณาใส่ข้อเสนอแนะ คำติชม หรือปัญหาที่พบเจอ"];
     _strPlaceHolder = message;
     

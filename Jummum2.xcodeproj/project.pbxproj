@@ -34,59 +34,23 @@
 		EF13B63520D20B55008CF35C /* PaymentCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF13B63420D20B55008CF35C /* PaymentCompleteViewController.m */; };
 		EF13B63920D2106E008CF35C /* jummumChef_lightGray.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63820D2106D008CF35C /* jummumChef_lightGray.png */; };
 		EF13B67120D212E5008CF35C /* Prompt-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63B20D212E5008CF35C /* Prompt-ThinItalic.ttf */; };
-		EF13B67220D212E5008CF35C /* Kanit-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63C20D212E5008CF35C /* Kanit-ExtraLight.ttf */; };
 		EF13B67320D212E5008CF35C /* Prompt-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63D20D212E5008CF35C /* Prompt-BlackItalic.ttf */; };
-		EF13B67420D212E5008CF35C /* Kanit-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63E20D212E5008CF35C /* Kanit-ThinItalic.ttf */; };
 		EF13B67520D212E5008CF35C /* Prompt-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B63F20D212E5008CF35C /* Prompt-ExtraLight.ttf */; };
-		EF13B67620D212E5008CF35C /* Kanit-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64020D212E5008CF35C /* Kanit-Bold.otf */; };
-		EF13B67720D212E5008CF35C /* Kanit-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64120D212E5008CF35C /* Kanit-BoldItalic.ttf */; };
 		EF13B67820D212E5008CF35C /* Prompt-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64220D212E5008CF35C /* Prompt-MediumItalic.ttf */; };
 		EF13B67920D212E5008CF35C /* Prompt-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64320D212E5008CF35C /* Prompt-BoldItalic.ttf */; };
 		EF13B67A20D212E5008CF35C /* Prompt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64420D212E5008CF35C /* Prompt-Medium.ttf */; };
-		EF13B67B20D212E5008CF35C /* Kanit-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64520D212E5008CF35C /* Kanit-MediumItalic.otf */; };
-		EF13B67C20D212E5008CF35C /* Kanit-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64620D212E5008CF35C /* Kanit-SemiBold.ttf */; };
-		EF13B67D20D212E5008CF35C /* Kanit-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64720D212E5008CF35C /* Kanit-Thin.otf */; };
-		EF13B67E20D212E5008CF35C /* Kanit-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64820D212E5008CF35C /* Kanit-Black.ttf */; };
-		EF13B67F20D212E5008CF35C /* Kanit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64920D212E5008CF35C /* Kanit-Regular.ttf */; };
-		EF13B68020D212E5008CF35C /* Kanit-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64A20D212E5008CF35C /* Kanit-ExtraBoldItalic.otf */; };
-		EF13B68120D212E5008CF35C /* Kanit-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64B20D212E5008CF35C /* Kanit-Italic.ttf */; };
-		EF13B68220D212E5008CF35C /* Kanit-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64C20D212E5008CF35C /* Kanit-ExtraBold.otf */; };
 		EF13B68320D212E5008CF35C /* Prompt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64D20D212E5008CF35C /* Prompt-Light.ttf */; };
-		EF13B68420D212E5008CF35C /* Kanit-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64E20D212E5008CF35C /* Kanit-SemiBold.otf */; };
-		EF13B68520D212E5008CF35C /* Kanit-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B64F20D212E5008CF35C /* Kanit-MediumItalic.ttf */; };
-		EF13B68620D212E5008CF35C /* Kanit-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65020D212E5008CF35C /* Kanit-Black.otf */; };
 		EF13B68720D212E5008CF35C /* Prompt-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65120D212E5008CF35C /* Prompt-ExtraBold.ttf */; };
-		EF13B68820D212E5008CF35C /* Kanit-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65220D212E5008CF35C /* Kanit-Thin.ttf */; };
 		EF13B68920D212E5008CF35C /* Prompt-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65320D212E5008CF35C /* Prompt-Thin.ttf */; };
-		EF13B68A20D212E5008CF35C /* Kanit-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65420D212E5008CF35C /* Kanit-Italic.otf */; };
-		EF13B68B20D212E5008CF35C /* Kanit-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65520D212E5008CF35C /* Kanit-Regular.otf */; };
-		EF13B68C20D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65620D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf */; };
-		EF13B68D20D212E5008CF35C /* Kanit-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65720D212E5008CF35C /* Kanit-ExtraBold.ttf */; };
 		EF13B68E20D212E5008CF35C /* Prompt-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65820D212E5008CF35C /* Prompt-LightItalic.ttf */; };
-		EF13B68F20D212E5008CF35C /* Kanit-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65920D212E5008CF35C /* Kanit-ExtraLight.otf */; };
-		EF13B69020D212E5008CF35C /* Kanit-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65A20D212E5008CF35C /* Kanit-ThinItalic.otf */; };
 		EF13B69120D212E5008CF35C /* Prompt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65B20D212E5008CF35C /* Prompt-Bold.ttf */; };
-		EF13B69220D212E5008CF35C /* Kanit-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65C20D212E5008CF35C /* Kanit-BoldItalic.otf */; };
 		EF13B69320D212E5008CF35C /* Prompt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65D20D212E5008CF35C /* Prompt-SemiBold.ttf */; };
-		EF13B69420D212E5008CF35C /* Kanit-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65E20D212E5008CF35C /* Kanit-Bold.ttf */; };
 		EF13B69520D212E5008CF35C /* Prompt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B65F20D212E5008CF35C /* Prompt-Regular.ttf */; };
 		EF13B69620D212E5008CF35C /* Prompt-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66020D212E5008CF35C /* Prompt-ExtraLightItalic.ttf */; };
-		EF13B69720D212E5008CF35C /* Kanit-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66120D212E5008CF35C /* Kanit-SemiBoldItalic.ttf */; };
-		EF13B69820D212E5008CF35C /* Kanit-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66220D212E5008CF35C /* Kanit-Medium.otf */; };
 		EF13B69920D212E5008CF35C /* Prompt-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66320D212E5008CF35C /* Prompt-SemiBoldItalic.ttf */; };
-		EF13B69A20D212E5008CF35C /* Kanit-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66420D212E5008CF35C /* Kanit-Light.otf */; };
-		EF13B69B20D212E5008CF35C /* Kanit-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66520D212E5008CF35C /* Kanit-BlackItalic.ttf */; };
-		EF13B69C20D212E5008CF35C /* Kanit-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66620D212E5008CF35C /* Kanit-LightItalic.otf */; };
-		EF13B69D20D212E5008CF35C /* Kanit-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66720D212E5008CF35C /* Kanit-ExtraLightItalic.otf */; };
-		EF13B69E20D212E5008CF35C /* Kanit-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66820D212E5008CF35C /* Kanit-Light.ttf */; };
-		EF13B69F20D212E5008CF35C /* Kanit-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66920D212E5008CF35C /* Kanit-BlackItalic.otf */; };
-		EF13B6A020D212E5008CF35C /* Kanit-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66A20D212E5008CF35C /* Kanit-LightItalic.ttf */; };
 		EF13B6A120D212E5008CF35C /* Prompt-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66B20D212E5008CF35C /* Prompt-ExtraBoldItalic.ttf */; };
 		EF13B6A220D212E5008CF35C /* Prompt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66C20D212E5008CF35C /* Prompt-Italic.ttf */; };
 		EF13B6A320D212E5008CF35C /* Prompt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66D20D212E5008CF35C /* Prompt-Black.ttf */; };
-		EF13B6A420D212E5008CF35C /* Kanit-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66E20D212E5008CF35C /* Kanit-ExtraLightItalic.ttf */; };
-		EF13B6A520D212E5008CF35C /* Kanit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B66F20D212E5008CF35C /* Kanit-Medium.ttf */; };
-		EF13B6A620D212E5008CF35C /* Kanit-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF13B67020D212E5008CF35C /* Kanit-SemiBoldItalic.otf */; };
 		EF13B6AA20D21A1E008CF35C /* chefHat_green.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6A920D21A1D008CF35C /* chefHat_green.png */; };
 		EF13B6C020D220F9008CF35C /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6AC20D220F6008CF35C /* Icon-Small-50@2x.png */; };
 		EF13B6C120D220F9008CF35C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B6AD20D220F6008CF35C /* Icon@2x.png */; };
@@ -428,6 +392,15 @@
 		EF5C316E2080C00500084B7E /* CustomTableViewCellMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C305D2080C00500084B7E /* CustomTableViewCellMenu.m */; };
 		EF5C316F2080C00500084B7E /* CustomTableViewCellImageLabelRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C30602080C00500084B7E /* CustomTableViewCellImageLabelRemove.m */; };
 		EF5C319A20820A1700084B7E /* SelectPaymentMethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C319920820A1700084B7E /* SelectPaymentMethodViewController.m */; };
+		EF5D42A1229814F7003E5E09 /* ConfirmTransferFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42A0229814F7003E5E09 /* ConfirmTransferFormViewController.m */; };
+		EF5D42A62298150A003E5E09 /* TestSpecialPriceProgram.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5D42A22298150A003E5E09 /* TestSpecialPriceProgram.xib */; };
+		EF5D42A72298150A003E5E09 /* CustomTableViewCellImageLabelText.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42A32298150A003E5E09 /* CustomTableViewCellImageLabelText.m */; };
+		EF5D42A82298150A003E5E09 /* CustomTableViewCellImageLabelText.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5D42A42298150A003E5E09 /* CustomTableViewCellImageLabelText.xib */; };
+		EF5D42AA22981537003E5E09 /* changeLang.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5D42A922981537003E5E09 /* changeLang.png */; };
+		EF5D42B322981547003E5E09 /* TransferForm.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42AF22981547003E5E09 /* TransferForm.m */; };
+		EF5D42B422981547003E5E09 /* SharedTransferForm.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42B022981547003E5E09 /* SharedTransferForm.m */; };
+		EF5D42B522981547003E5E09 /* Bank.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42B122981547003E5E09 /* Bank.m */; };
+		EF5D42B622981547003E5E09 /* SharedBank.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5D42B222981547003E5E09 /* SharedBank.m */; };
 		EF5DC04C2115AE7500FFEA60 /* triangle_and_om.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0422115AE7300FFEA60 /* triangle_and_om.png */; };
 		EF5DC04D2115AE7500FFEA60 /* triangle_dev_om.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0432115AE7300FFEA60 /* triangle_dev_om.png */; };
 		EF5DC04E2115AE7500FFEA60 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC0442115AE7300FFEA60 /* refresh.png */; };
@@ -578,59 +551,23 @@
 		EF13B63420D20B55008CF35C /* PaymentCompleteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentCompleteViewController.m; sourceTree = "<group>"; };
 		EF13B63820D2106D008CF35C /* jummumChef_lightGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jummumChef_lightGray.png; sourceTree = "<group>"; };
 		EF13B63B20D212E5008CF35C /* Prompt-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ThinItalic.ttf"; sourceTree = "<group>"; };
-		EF13B63C20D212E5008CF35C /* Kanit-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLight.ttf"; sourceTree = "<group>"; };
 		EF13B63D20D212E5008CF35C /* Prompt-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-BlackItalic.ttf"; sourceTree = "<group>"; };
-		EF13B63E20D212E5008CF35C /* Kanit-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ThinItalic.ttf"; sourceTree = "<group>"; };
 		EF13B63F20D212E5008CF35C /* Prompt-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraLight.ttf"; sourceTree = "<group>"; };
-		EF13B64020D212E5008CF35C /* Kanit-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Bold.otf"; sourceTree = "<group>"; };
-		EF13B64120D212E5008CF35C /* Kanit-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-BoldItalic.ttf"; sourceTree = "<group>"; };
 		EF13B64220D212E5008CF35C /* Prompt-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-MediumItalic.ttf"; sourceTree = "<group>"; };
 		EF13B64320D212E5008CF35C /* Prompt-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-BoldItalic.ttf"; sourceTree = "<group>"; };
 		EF13B64420D212E5008CF35C /* Prompt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Medium.ttf"; sourceTree = "<group>"; };
-		EF13B64520D212E5008CF35C /* Kanit-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-MediumItalic.otf"; sourceTree = "<group>"; };
-		EF13B64620D212E5008CF35C /* Kanit-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-SemiBold.ttf"; sourceTree = "<group>"; };
-		EF13B64720D212E5008CF35C /* Kanit-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Thin.otf"; sourceTree = "<group>"; };
-		EF13B64820D212E5008CF35C /* Kanit-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Black.ttf"; sourceTree = "<group>"; };
-		EF13B64920D212E5008CF35C /* Kanit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Regular.ttf"; sourceTree = "<group>"; };
-		EF13B64A20D212E5008CF35C /* Kanit-ExtraBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
-		EF13B64B20D212E5008CF35C /* Kanit-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Italic.ttf"; sourceTree = "<group>"; };
-		EF13B64C20D212E5008CF35C /* Kanit-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraBold.otf"; sourceTree = "<group>"; };
 		EF13B64D20D212E5008CF35C /* Prompt-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Light.ttf"; sourceTree = "<group>"; };
-		EF13B64E20D212E5008CF35C /* Kanit-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-SemiBold.otf"; sourceTree = "<group>"; };
-		EF13B64F20D212E5008CF35C /* Kanit-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-MediumItalic.ttf"; sourceTree = "<group>"; };
-		EF13B65020D212E5008CF35C /* Kanit-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Black.otf"; sourceTree = "<group>"; };
 		EF13B65120D212E5008CF35C /* Prompt-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraBold.ttf"; sourceTree = "<group>"; };
-		EF13B65220D212E5008CF35C /* Kanit-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Thin.ttf"; sourceTree = "<group>"; };
 		EF13B65320D212E5008CF35C /* Prompt-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Thin.ttf"; sourceTree = "<group>"; };
-		EF13B65420D212E5008CF35C /* Kanit-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Italic.otf"; sourceTree = "<group>"; };
-		EF13B65520D212E5008CF35C /* Kanit-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Regular.otf"; sourceTree = "<group>"; };
-		EF13B65620D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		EF13B65720D212E5008CF35C /* Kanit-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraBold.ttf"; sourceTree = "<group>"; };
 		EF13B65820D212E5008CF35C /* Prompt-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-LightItalic.ttf"; sourceTree = "<group>"; };
-		EF13B65920D212E5008CF35C /* Kanit-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLight.otf"; sourceTree = "<group>"; };
-		EF13B65A20D212E5008CF35C /* Kanit-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ThinItalic.otf"; sourceTree = "<group>"; };
 		EF13B65B20D212E5008CF35C /* Prompt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Bold.ttf"; sourceTree = "<group>"; };
-		EF13B65C20D212E5008CF35C /* Kanit-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-BoldItalic.otf"; sourceTree = "<group>"; };
 		EF13B65D20D212E5008CF35C /* Prompt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-SemiBold.ttf"; sourceTree = "<group>"; };
-		EF13B65E20D212E5008CF35C /* Kanit-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Bold.ttf"; sourceTree = "<group>"; };
 		EF13B65F20D212E5008CF35C /* Prompt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Regular.ttf"; sourceTree = "<group>"; };
 		EF13B66020D212E5008CF35C /* Prompt-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		EF13B66120D212E5008CF35C /* Kanit-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		EF13B66220D212E5008CF35C /* Kanit-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Medium.otf"; sourceTree = "<group>"; };
 		EF13B66320D212E5008CF35C /* Prompt-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		EF13B66420D212E5008CF35C /* Kanit-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Light.otf"; sourceTree = "<group>"; };
-		EF13B66520D212E5008CF35C /* Kanit-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-BlackItalic.ttf"; sourceTree = "<group>"; };
-		EF13B66620D212E5008CF35C /* Kanit-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-LightItalic.otf"; sourceTree = "<group>"; };
-		EF13B66720D212E5008CF35C /* Kanit-ExtraLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLightItalic.otf"; sourceTree = "<group>"; };
-		EF13B66820D212E5008CF35C /* Kanit-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Light.ttf"; sourceTree = "<group>"; };
-		EF13B66920D212E5008CF35C /* Kanit-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-BlackItalic.otf"; sourceTree = "<group>"; };
-		EF13B66A20D212E5008CF35C /* Kanit-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-LightItalic.ttf"; sourceTree = "<group>"; };
 		EF13B66B20D212E5008CF35C /* Prompt-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		EF13B66C20D212E5008CF35C /* Prompt-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Italic.ttf"; sourceTree = "<group>"; };
 		EF13B66D20D212E5008CF35C /* Prompt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Black.ttf"; sourceTree = "<group>"; };
-		EF13B66E20D212E5008CF35C /* Kanit-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		EF13B66F20D212E5008CF35C /* Kanit-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Medium.ttf"; sourceTree = "<group>"; };
-		EF13B67020D212E5008CF35C /* Kanit-SemiBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-SemiBoldItalic.otf"; sourceTree = "<group>"; };
 		EF13B6A920D21A1D008CF35C /* chefHat_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chefHat_green.png; sourceTree = "<group>"; };
 		EF13B6AC20D220F6008CF35C /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		EF13B6AD20D220F6008CF35C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -1124,6 +1061,21 @@
 		EF5C30602080C00500084B7E /* CustomTableViewCellImageLabelRemove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellImageLabelRemove.m; sourceTree = "<group>"; };
 		EF5C319820820A1700084B7E /* SelectPaymentMethodViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectPaymentMethodViewController.h; sourceTree = "<group>"; };
 		EF5C319920820A1700084B7E /* SelectPaymentMethodViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectPaymentMethodViewController.m; sourceTree = "<group>"; };
+		EF5D429F229814F6003E5E09 /* ConfirmTransferFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmTransferFormViewController.h; sourceTree = "<group>"; };
+		EF5D42A0229814F7003E5E09 /* ConfirmTransferFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmTransferFormViewController.m; sourceTree = "<group>"; };
+		EF5D42A22298150A003E5E09 /* TestSpecialPriceProgram.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestSpecialPriceProgram.xib; sourceTree = "<group>"; };
+		EF5D42A32298150A003E5E09 /* CustomTableViewCellImageLabelText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellImageLabelText.m; sourceTree = "<group>"; };
+		EF5D42A42298150A003E5E09 /* CustomTableViewCellImageLabelText.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCellImageLabelText.xib; sourceTree = "<group>"; };
+		EF5D42A52298150A003E5E09 /* CustomTableViewCellImageLabelText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellImageLabelText.h; sourceTree = "<group>"; };
+		EF5D42A922981537003E5E09 /* changeLang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = changeLang.png; sourceTree = "<group>"; };
+		EF5D42AB22981546003E5E09 /* SharedBank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedBank.h; sourceTree = "<group>"; };
+		EF5D42AC22981546003E5E09 /* TransferForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferForm.h; sourceTree = "<group>"; };
+		EF5D42AD22981546003E5E09 /* SharedTransferForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedTransferForm.h; sourceTree = "<group>"; };
+		EF5D42AE22981547003E5E09 /* Bank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bank.h; sourceTree = "<group>"; };
+		EF5D42AF22981547003E5E09 /* TransferForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferForm.m; sourceTree = "<group>"; };
+		EF5D42B022981547003E5E09 /* SharedTransferForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedTransferForm.m; sourceTree = "<group>"; };
+		EF5D42B122981547003E5E09 /* Bank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bank.m; sourceTree = "<group>"; };
+		EF5D42B222981547003E5E09 /* SharedBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedBank.m; sourceTree = "<group>"; };
 		EF5DC0422115AE7300FFEA60 /* triangle_and_om.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_and_om.png; sourceTree = "<group>"; };
 		EF5DC0432115AE7300FFEA60 /* triangle_dev_om.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_dev_om.png; sourceTree = "<group>"; };
 		EF5DC0442115AE7300FFEA60 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
@@ -1322,42 +1274,6 @@
 		EF13B63A20D212E5008CF35C /* font */ = {
 			isa = PBXGroup;
 			children = (
-				EF13B65020D212E5008CF35C /* Kanit-Black.otf */,
-				EF13B64820D212E5008CF35C /* Kanit-Black.ttf */,
-				EF13B66920D212E5008CF35C /* Kanit-BlackItalic.otf */,
-				EF13B66520D212E5008CF35C /* Kanit-BlackItalic.ttf */,
-				EF13B64020D212E5008CF35C /* Kanit-Bold.otf */,
-				EF13B65E20D212E5008CF35C /* Kanit-Bold.ttf */,
-				EF13B65C20D212E5008CF35C /* Kanit-BoldItalic.otf */,
-				EF13B64120D212E5008CF35C /* Kanit-BoldItalic.ttf */,
-				EF13B64C20D212E5008CF35C /* Kanit-ExtraBold.otf */,
-				EF13B65720D212E5008CF35C /* Kanit-ExtraBold.ttf */,
-				EF13B64A20D212E5008CF35C /* Kanit-ExtraBoldItalic.otf */,
-				EF13B65620D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf */,
-				EF13B65920D212E5008CF35C /* Kanit-ExtraLight.otf */,
-				EF13B63C20D212E5008CF35C /* Kanit-ExtraLight.ttf */,
-				EF13B66720D212E5008CF35C /* Kanit-ExtraLightItalic.otf */,
-				EF13B66E20D212E5008CF35C /* Kanit-ExtraLightItalic.ttf */,
-				EF13B65420D212E5008CF35C /* Kanit-Italic.otf */,
-				EF13B64B20D212E5008CF35C /* Kanit-Italic.ttf */,
-				EF13B66420D212E5008CF35C /* Kanit-Light.otf */,
-				EF13B66820D212E5008CF35C /* Kanit-Light.ttf */,
-				EF13B66620D212E5008CF35C /* Kanit-LightItalic.otf */,
-				EF13B66A20D212E5008CF35C /* Kanit-LightItalic.ttf */,
-				EF13B66220D212E5008CF35C /* Kanit-Medium.otf */,
-				EF13B66F20D212E5008CF35C /* Kanit-Medium.ttf */,
-				EF13B64520D212E5008CF35C /* Kanit-MediumItalic.otf */,
-				EF13B64F20D212E5008CF35C /* Kanit-MediumItalic.ttf */,
-				EF13B65520D212E5008CF35C /* Kanit-Regular.otf */,
-				EF13B64920D212E5008CF35C /* Kanit-Regular.ttf */,
-				EF13B64E20D212E5008CF35C /* Kanit-SemiBold.otf */,
-				EF13B64620D212E5008CF35C /* Kanit-SemiBold.ttf */,
-				EF13B67020D212E5008CF35C /* Kanit-SemiBoldItalic.otf */,
-				EF13B66120D212E5008CF35C /* Kanit-SemiBoldItalic.ttf */,
-				EF13B64720D212E5008CF35C /* Kanit-Thin.otf */,
-				EF13B65220D212E5008CF35C /* Kanit-Thin.ttf */,
-				EF13B65A20D212E5008CF35C /* Kanit-ThinItalic.otf */,
-				EF13B63E20D212E5008CF35C /* Kanit-ThinItalic.ttf */,
 				EF13B66D20D212E5008CF35C /* Prompt-Black.ttf */,
 				EF13B63D20D212E5008CF35C /* Prompt-BlackItalic.ttf */,
 				EF13B65B20D212E5008CF35C /* Prompt-Bold.ttf */,
@@ -1656,6 +1572,7 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EF5D42A922981537003E5E09 /* changeLang.png */,
 				EFF109752204050C00DE0578 /* orderNowEng.png */,
 				EF5C2F702080C00400084B7E /* added.png */,
 				EFF44F3A20F4C04800D07770 /* addRemove.png */,
@@ -1763,6 +1680,8 @@
 		EF5C2F8C2080C00400084B7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EF5D429F229814F6003E5E09 /* ConfirmTransferFormViewController.h */,
+				EF5D42A0229814F7003E5E09 /* ConfirmTransferFormViewController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
@@ -1862,6 +1781,14 @@
 		EF5C2FBA2080C00400084B7E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EF5D42AE22981547003E5E09 /* Bank.h */,
+				EF5D42B122981547003E5E09 /* Bank.m */,
+				EF5D42AB22981546003E5E09 /* SharedBank.h */,
+				EF5D42B222981547003E5E09 /* SharedBank.m */,
+				EF5D42AD22981546003E5E09 /* SharedTransferForm.h */,
+				EF5D42B022981547003E5E09 /* SharedTransferForm.m */,
+				EF5D42AC22981546003E5E09 /* TransferForm.h */,
+				EF5D42AF22981547003E5E09 /* TransferForm.m */,
 				EF5C2FD02080C00400084B7E /* Branch.h */,
 				EF5C2FFC2080C00500084B7E /* Branch.m */,
 				EF1F4F7721F0029C00915BFD /* BuffetMenuMap.h */,
@@ -2079,6 +2006,10 @@
 		EF5C30292080C00500084B7E /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				EF5D42A52298150A003E5E09 /* CustomTableViewCellImageLabelText.h */,
+				EF5D42A32298150A003E5E09 /* CustomTableViewCellImageLabelText.m */,
+				EF5D42A42298150A003E5E09 /* CustomTableViewCellImageLabelText.xib */,
+				EF5D42A22298150A003E5E09 /* TestSpecialPriceProgram.xib */,
 				EF1F4E7321F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.h */,
 				EF1F4E7421F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.m */,
 				EF1F4E6921F0019F00915BFD /* CustomCollectionViewCellNoteWithQuantity.xib */,
@@ -2330,16 +2261,14 @@
 				EF1F4F4721F0024000915BFD /* giftBoxAwesome00020.png in Resources */,
 				EF1F4F1921F0024000915BFD /* giftBoxGood00023.png in Resources */,
 				EF5C30E82080C00500084B7E /* QR.png in Resources */,
-				EF13B69820D212E5008CF35C /* Kanit-Medium.otf in Resources */,
 				EF26676E20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib in Resources */,
 				EF1F4F3721F0024000915BFD /* giftBoxBoo00003.png in Resources */,
 				EF1F4F3E21F0024000915BFD /* giftBoxBoo00008.png in Resources */,
-				EF13B68C20D212E5008CF35C /* Kanit-ExtraBoldItalic.ttf in Resources */,
 				EF1F4F0521F0024000915BFD /* giftBoxExcellent00014.png in Resources */,
 				EF13B6AA20D21A1E008CF35C /* chefHat_green.png in Resources */,
 				EF13B63220D20853008CF35C /* jummumYeah.png in Resources */,
 				EF13B6CB20D220F9008CF35C /* Icon-Small.png in Resources */,
-				EF13B69E20D212E5008CF35C /* Kanit-Light.ttf in Resources */,
+				EF5D42AA22981537003E5E09 /* changeLang.png in Resources */,
 				EF93803A20A0539B00A714A3 /* takeAway2.png in Resources */,
 				EF1F4F3621F0024000915BFD /* giftBoxBoo00017.png in Resources */,
 				EF13B68920D212E5008CF35C /* Prompt-Thin.ttf in Resources */,
@@ -2349,7 +2278,6 @@
 				EF1F4F3A21F0024000915BFD /* giftBoxBoo00018.png in Resources */,
 				EF1F4F4921F0024000915BFD /* giftBoxAwesome00023.png in Resources */,
 				EF5C30F12080C00500084B7E /* expand2.png in Resources */,
-				EF13B67E20D212E5008CF35C /* Kanit-Black.ttf in Resources */,
 				EF5C316D2080C00500084B7E /* CustomTableViewCellOrder.xib in Resources */,
 				EF02456B20ECA7730025B89D /* Launch Screen.storyboard in Resources */,
 				EF5C30942080C00500084B7E /* Property List.plist in Resources */,
@@ -2366,7 +2294,6 @@
 				EF5C314E2080C00500084B7E /* CustomTableViewCellMenu.xib in Resources */,
 				EF5C2EE72080BBB400084B7E /* LaunchScreen.storyboard in Resources */,
 				EF1F4F6921F0024000915BFD /* QRTab.png in Resources */,
-				EF13B69220D212E5008CF35C /* Kanit-BoldItalic.otf in Resources */,
 				EF5C315B2080C00500084B7E /* CustomCollectionReusableView.xib in Resources */,
 				EF1F4F4021F0024000915BFD /* giftBoxBoo00022.png in Resources */,
 				EF1F4F2A21F0024000915BFD /* giftBoxGood00010.png in Resources */,
@@ -2376,21 +2303,17 @@
 				EF1F4F0621F0024000915BFD /* giftBoxExcellent00015.png in Resources */,
 				EF1F4F0921F0024000915BFD /* giftBoxExcellent00003.png in Resources */,
 				EF1F4F6021F0024000915BFD /* QR-white.png in Resources */,
-				EF13B67F20D212E5008CF35C /* Kanit-Regular.ttf in Resources */,
 				EF1F4E8521F001A200915BFD /* CustomTableViewCellApplyVoucherCode.xib in Resources */,
 				EF5DC0542115AE7500FFEA60 /* profilePicGirl.png in Resources */,
 				EFB91849208C7CFD0079FC15 /* remove.png in Resources */,
-				EF13B68820D212E5008CF35C /* Kanit-Thin.ttf in Resources */,
 				EF1F4F5621F0024000915BFD /* giftBoxAwesome00017.png in Resources */,
 				EFF44D4720EFE2D300D07770 /* NoImage.jpg in Resources */,
 				EF1F4F1D21F0024000915BFD /* giftBoxGood00001.png in Resources */,
 				EF13B6C620D220F9008CF35C /* Icon-Spotlight-40@2x.png in Resources */,
 				EF5C30E92080C00500084B7E /* jcb.png in Resources */,
-				EF13B6A020D212E5008CF35C /* Kanit-LightItalic.ttf in Resources */,
 				EF13B6D020D220F9008CF35C /* Icon-72@2x.png in Resources */,
 				EFF44D4C20F05C6600D07770 /* CustomTableViewCellLogo.xib in Resources */,
 				EF13B6C320D220F9008CF35C /* Icon-Small-50.png in Resources */,
-				EF13B67420D212E5008CF35C /* Kanit-ThinItalic.ttf in Resources */,
 				EF1F4F2C21F0024000915BFD /* giftBoxBoo00006.png in Resources */,
 				EF02456020EC93BF0025B89D /* comment.png in Resources */,
 				EF1F4EFD21F0024000915BFD /* giftBoxExcellent00021.png in Resources */,
@@ -2414,14 +2337,11 @@
 				EF1F4E7E21F001A200915BFD /* CustomTableViewCellQRToPay.xib in Resources */,
 				EF1F4F3D21F0024000915BFD /* giftBoxBoo00009.png in Resources */,
 				EF1F4EFC21F0024000915BFD /* jummumWatermark.jpg in Resources */,
-				EF13B69B20D212E5008CF35C /* Kanit-BlackItalic.ttf in Resources */,
 				EFB9184A208C7CFD0079FC15 /* remove light color.png in Resources */,
 				EF02455E20EC93BF0025B89D /* recommendShop.png in Resources */,
 				EFAF790320A540CE0069D6DA /* CustomTableViewCellButton.xib in Resources */,
 				EF5C315C2080C00500084B7E /* CustomTableViewCellText.xib in Resources */,
-				EF13B68520D212E5008CF35C /* Kanit-MediumItalic.ttf in Resources */,
 				EF1F4F5021F0024000915BFD /* giftBoxAwesome00004.png in Resources */,
-				EF13B69420D212E5008CF35C /* Kanit-Bold.ttf in Resources */,
 				EFBBEEB820973F8D003884A9 /* CustomTableViewCellLabel.xib in Resources */,
 				EF1F4F3C21F0024000915BFD /* giftBoxBoo00021.png in Resources */,
 				EF13B63920D2106E008CF35C /* jummumChef_lightGray.png in Resources */,
@@ -2447,11 +2367,8 @@
 				EF5C30C82080C00500084B7E /* termsOfService.png in Resources */,
 				EF5C31502080C00500084B7E /* CustomCollectionViewCellNote.xib in Resources */,
 				EF1F4F5721F0024000915BFD /* giftBoxAwesome00016.png in Resources */,
-				EF13B69020D212E5008CF35C /* Kanit-ThinItalic.otf in Resources */,
-				EF13B68A20D212E5008CF35C /* Kanit-Italic.otf in Resources */,
 				EF1F4F0321F0024000915BFD /* giftBoxExcellent00018.png in Resources */,
 				EF1F4F1321F0024000915BFD /* giftBoxExcellent00004.png in Resources */,
-				EF13B69C20D212E5008CF35C /* Kanit-LightItalic.otf in Resources */,
 				EFF44F3320F1CE6700D07770 /* starRatingGray.png in Resources */,
 				EF1F4F1B21F0024000915BFD /* giftBoxGood00019.png in Resources */,
 				EF1F4F6A21F0024000915BFD /* pinkBackground.png in Resources */,
@@ -2461,17 +2378,11 @@
 				EF13B6C220D220F9008CF35C /* Icon-60@3x.png in Resources */,
 				EF1F4F2321F0024000915BFD /* giftBoxGood00006.png in Resources */,
 				EF5DC04E2115AE7500FFEA60 /* refresh.png in Resources */,
-				EF13B68B20D212E5008CF35C /* Kanit-Regular.otf in Resources */,
-				EF13B6A520D212E5008CF35C /* Kanit-Medium.ttf in Resources */,
 				EF5DC0552115AE7500FFEA60 /* iTunesArtwork@2x in Resources */,
-				EF13B67220D212E5008CF35C /* Kanit-ExtraLight.ttf in Resources */,
 				EF1F4F2421F0024000915BFD /* giftBoxGood00012.png in Resources */,
 				EF1F4F3821F0024000915BFD /* giftBoxBoo00002.png in Resources */,
 				EF5C315A2080C00500084B7E /* CustomTableViewCellSearchBar.xib in Resources */,
-				EF13B69A20D212E5008CF35C /* Kanit-Light.otf in Resources */,
 				EF13B63020D20701008CF35C /* check_green.png in Resources */,
-				EF13B68F20D212E5008CF35C /* Kanit-ExtraLight.otf in Resources */,
-				EF13B69720D212E5008CF35C /* Kanit-SemiBoldItalic.ttf in Resources */,
 				EF1F4F2D21F0024000915BFD /* giftBoxBoo00007.png in Resources */,
 				EFB91854208D9F750079FC15 /* CustomTableViewCellPromoBanner.xib in Resources */,
 				EF13B62E20D17800008CF35C /* basketWhite.png in Resources */,
@@ -2487,14 +2398,11 @@
 				EF1F4F4F21F0024000915BFD /* giftBoxAwesome00005.png in Resources */,
 				EF13B67820D212E5008CF35C /* Prompt-MediumItalic.ttf in Resources */,
 				EF5C31622080C00500084B7E /* CustomTableViewCellOrderSummary.xib in Resources */,
-				EF13B68420D212E5008CF35C /* Kanit-SemiBold.otf in Resources */,
 				EF93803C20A053E600A714A3 /* takeAwayGrayOut.png in Resources */,
 				EF5C31692080C00500084B7E /* CustomTableViewCellLabelLabel.xib in Resources */,
-				EF13B68020D212E5008CF35C /* Kanit-ExtraBoldItalic.otf in Resources */,
 				EF1F4F5221F0024000915BFD /* giftBoxAwesome00014.png in Resources */,
 				EF13B62C20D1766D008CF35C /* circle_red.png in Resources */,
 				EF1F4F6621F0024000915BFD /* handEmpty.png in Resources */,
-				EF13B67B20D212E5008CF35C /* Kanit-MediumItalic.otf in Resources */,
 				EFBBEEB32096DD72003884A9 /* CustomTableViewCellRewardDetail.xib in Resources */,
 				EF13B68720D212E5008CF35C /* Prompt-ExtraBold.ttf in Resources */,
 				EFA9632F20A6922E00E2DB9C /* CustomTableViewCellLabelText.xib in Resources */,
@@ -2503,34 +2411,27 @@
 				EF1F4F3921F0024000915BFD /* giftBoxBoo00016.png in Resources */,
 				EF1F4E7A21F001A200915BFD /* CustomTableViewCellImageLabel.xib in Resources */,
 				EF1F4F1621F0024000915BFD /* giftBoxGood00008.png in Resources */,
-				EF13B69D20D212E5008CF35C /* Kanit-ExtraLightItalic.otf in Resources */,
 				EF5C30E52080C00500084B7E /* removed.png in Resources */,
 				EF5C30DC2080C00500084B7E /* hotDeal.png in Resources */,
-				EF13B6A620D212E5008CF35C /* Kanit-SemiBoldItalic.otf in Resources */,
 				EF13B60020CECBC4008CF35C /* jummumLogoWithType.png in Resources */,
 				EF1F4F2221F0024000915BFD /* giftBoxGood00002.png in Resources */,
-				EF13B68120D212E5008CF35C /* Kanit-Italic.ttf in Resources */,
 				EF880061213A6D530062D9D4 /* CustomTableViewCellVoucherCodeExist.xib in Resources */,
 				EF13B6D220D220F9008CF35C /* Icon-76.png in Resources */,
 				EF1F4F5321F0024000915BFD /* giftBoxAwesome00001.png in Resources */,
 				EF1F4F0121F0024000915BFD /* giftBoxExcellent00022.png in Resources */,
-				EF13B69F20D212E5008CF35C /* Kanit-BlackItalic.otf in Resources */,
 				EFB02F5C20D3455D0018E878 /* CustomTableViewCellLabelDetailLabelWithImage.xib in Resources */,
 				EF5C31682080C00500084B7E /* CustomTableViewCellNote.xib in Resources */,
 				EF13B6A320D212E5008CF35C /* Prompt-Black.ttf in Resources */,
 				EF13B6C920D220F9008CF35C /* Icon-76@2x.png in Resources */,
-				EF13B68220D212E5008CF35C /* Kanit-ExtraBold.otf in Resources */,
 				EF1F4F3F21F0024000915BFD /* giftBoxBoo00020.png in Resources */,
 				EF1F4F2921F0024000915BFD /* giftBoxGood00004.png in Resources */,
 				EF639DE3211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib in Resources */,
 				EF5DC0522115AE7500FFEA60 /* triangle_and.png in Resources */,
 				EF13B62A20D169C8008CF35C /* home_icon_red.png in Resources */,
-				EF13B68D20D212E5008CF35C /* Kanit-ExtraBold.ttf in Resources */,
 				EF1F4F3B21F0024000915BFD /* giftBoxBoo00019.png in Resources */,
 				EFCB3ADF20DA1061007E0896 /* history.png in Resources */,
 				EF13B67120D212E5008CF35C /* Prompt-ThinItalic.ttf in Resources */,
 				EF5DC04C2115AE7500FFEA60 /* triangle_and_om.png in Resources */,
-				EF13B68620D212E5008CF35C /* Kanit-Black.otf in Resources */,
 				EF639DEF211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib in Resources */,
 				EF13B6C820D220F9008CF35C /* Icon-60.png in Resources */,
 				EF1F4F4221F0024000915BFD /* giftBoxAwesome00018.png in Resources */,
@@ -2539,6 +2440,7 @@
 				EF1F4F2521F0024000915BFD /* giftBoxGood00013.png in Resources */,
 				EF1F4F0B21F0024000915BFD /* giftBoxExcellent00016.png in Resources */,
 				EF1F4F5521F0024000915BFD /* giftBoxAwesome00003.png in Resources */,
+				EF5D42A82298150A003E5E09 /* CustomTableViewCellImageLabelText.xib in Resources */,
 				EF1F4F0221F0024000915BFD /* giftBoxExcellent00023.png in Resources */,
 				EF1F4F1421F0024000915BFD /* giftBoxGood00021.png in Resources */,
 				EF1F4F6221F0024000915BFD /* twirlArrow.png in Resources */,
@@ -2550,10 +2452,8 @@
 				EF1F4F5D21F0024000915BFD /* handTap.png in Resources */,
 				EF1F4F4421F0024000915BFD /* giftBoxAwesome00021.png in Resources */,
 				EF13B69120D212E5008CF35C /* Prompt-Bold.ttf in Resources */,
-				EF13B67D20D212E5008CF35C /* Kanit-Thin.otf in Resources */,
 				EF1F4F3421F0024000915BFD /* giftBoxBoo00015.png in Resources */,
 				EF1F4F0421F0024000915BFD /* giftBoxExcellent00019.png in Resources */,
-				EF13B67720D212E5008CF35C /* Kanit-BoldItalic.ttf in Resources */,
 				EF02455F20EC93BF0025B89D /* contactUs.png in Resources */,
 				EF5DC0532115AE7500FFEA60 /* triangle_demo.png in Resources */,
 				EFD5B0CB20DE249F00D9434A /* search_white.png in Resources */,
@@ -2581,12 +2481,12 @@
 				EF13B6DB20D227BC008CF35C /* CustomTableViewCellProfile.xib in Resources */,
 				EF5DC0502115AE7500FFEA60 /* iTunesArtwork in Resources */,
 				EF5C30EF2080C00500084B7E /* security_code_back-512.png in Resources */,
-				EF13B67C20D212E5008CF35C /* Kanit-SemiBold.ttf in Resources */,
 				EF5DC0512115AE7500FFEA60 /* triangle_dev.png in Resources */,
 				EF13B69520D212E5008CF35C /* Prompt-Regular.ttf in Resources */,
 				EF13B6D120D220F9008CF35C /* Icon-76@3x.png in Resources */,
 				EFCB3ADA20D8BA1F007E0896 /* takeAwayNoti.png in Resources */,
 				EF1F4F5421F0024000915BFD /* giftBoxAwesome00015.png in Resources */,
+				EF5D42A62298150A003E5E09 /* TestSpecialPriceProgram.xib in Resources */,
 				EF1F4F4321F0024000915BFD /* giftBoxAwesome00019.png in Resources */,
 				EF5C30CA2080C00500084B7E /* americanExpress.png in Resources */,
 				EF1F4F3521F0024000915BFD /* giftBoxBoo00001.png in Resources */,
@@ -2598,7 +2498,6 @@
 				EF1F4E7C21F001A200915BFD /* CustomCollectionViewCellNoteWithQuantity.xib in Resources */,
 				EFA9634020A7B54E00E2DB9C /* CustomTableViewCellLabelTextView.xib in Resources */,
 				EF1F4F5B21F0024000915BFD /* orderNow.png in Resources */,
-				EF13B6A420D212E5008CF35C /* Kanit-ExtraLightItalic.ttf in Resources */,
 				EF5C31642080C00500084B7E /* CustomViewVoucher.xib in Resources */,
 				EF1F4F2E21F0024000915BFD /* giftBoxBoo00013.png in Resources */,
 				EFF44F3B20F4C04900D07770 /* addRemove.png in Resources */,
@@ -2613,7 +2512,6 @@
 				EF13B67920D212E5008CF35C /* Prompt-BoldItalic.ttf in Resources */,
 				EF13B6A220D212E5008CF35C /* Prompt-Italic.ttf in Resources */,
 				EF1F4F1221F0024000915BFD /* giftBoxExcellent00010.png in Resources */,
-				EF13B67620D212E5008CF35C /* Kanit-Bold.otf in Resources */,
 				EF1F4E4921EFFFB400915BFD /* TH.strings in Resources */,
 				EF1F4F2B21F0024000915BFD /* giftBoxBoo00012.png in Resources */,
 				EF1F4F6821F0024000915BFD /* jummumGiftBoxPop.png in Resources */,
@@ -2768,6 +2666,7 @@
 				EF5C31112080C00500084B7E /* MenuSelectionViewController.m in Sources */,
 				EF1F4FAD21F002A200915BFD /* SaveOrderNote.m in Sources */,
 				EFE882C720D80A22007509C3 /* UILabel+FontAppearance.m in Sources */,
+				EF5D42B522981547003E5E09 /* Bank.m in Sources */,
 				EFA9632A20A68C6400E2DB9C /* DisputeFormViewController.m in Sources */,
 				EF1F4FB621F002A200915BFD /* DiscountProgram.m in Sources */,
 				EFBBEEBB2098191A003884A9 /* RewardRedemptionViewController.m in Sources */,
@@ -2806,6 +2705,7 @@
 				EF5C2EEA2080BBB400084B7E /* main.m in Sources */,
 				EFA9633220A6B52800E2DB9C /* DisputeReason.m in Sources */,
 				EF5C316F2080C00500084B7E /* CustomTableViewCellImageLabelRemove.m in Sources */,
+				EF5D42A72298150A003E5E09 /* CustomTableViewCellImageLabelText.m in Sources */,
 				EF5C31362080C00500084B7E /* SharedShop.m in Sources */,
 				EF1F4FB221F002A200915BFD /* SharedSaveOrderNote.m in Sources */,
 				EF5C312C2080C00500084B7E /* SpecialPriceProgram.m in Sources */,
@@ -2821,6 +2721,7 @@
 				EF1F4FAE21F002A200915BFD /* LuckyDrawTicket.m in Sources */,
 				EF5C30962080C00500084B7E /* NSData+AES.m in Sources */,
 				EF5C31342080C00500084B7E /* TableNo.m in Sources */,
+				EF5D42B622981547003E5E09 /* SharedBank.m in Sources */,
 				EF5C31422080C00500084B7E /* SharedMenuType.m in Sources */,
 				EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */,
 				EF5C319A20820A1700084B7E /* SelectPaymentMethodViewController.m in Sources */,
@@ -2856,6 +2757,7 @@
 				EF02457420ECDDA30025B89D /* RecommendShop.m in Sources */,
 				EF5C311B2080C00500084B7E /* SharedRewardPoint.m in Sources */,
 				EF5C31462080C00500084B7E /* SharedSpecialPriceProgram.m in Sources */,
+				EF5D42B322981547003E5E09 /* TransferForm.m in Sources */,
 				EFF44F2E20F1CC7B00D07770 /* CustomTableViewCellRating.m in Sources */,
 				EF5C31402080C00500084B7E /* SharedCustomerTable.m in Sources */,
 				EF5C313C2080C00500084B7E /* SharedCurrentUserAccount.m in Sources */,
@@ -2899,6 +2801,7 @@
 				EF5C30A22080C00500084B7E /* OmiseJsonParser.swift in Sources */,
 				EF5C31152080C00500084B7E /* Pic.m in Sources */,
 				EFF44F3E20F5DA2400D07770 /* MenuNote.m in Sources */,
+				EF5D42A1229814F7003E5E09 /* ConfirmTransferFormViewController.m in Sources */,
 				EF02457720ECDE300025B89D /* SharedRecommendShop.m in Sources */,
 				EF5C30AF2080C00500084B7E /* CardNumber.swift in Sources */,
 				EF5C31192080C00500084B7E /* SharedMenu.m in Sources */,
@@ -2911,6 +2814,7 @@
 				EF1F4FBD21F002A200915BFD /* SharedSaveOrderTaking.m in Sources */,
 				EF5C31612080C00500084B7E /* CustomTableViewCellOrderSummary.m in Sources */,
 				EF5C31542080C00500084B7E /* CustomTableViewCellOrder.m in Sources */,
+				EF5D42B422981547003E5E09 /* SharedTransferForm.m in Sources */,
 				EF1F4FB521F002A200915BFD /* Language.m in Sources */,
 				EF5C312F2080C00500084B7E /* MenuPic.m in Sources */,
 				EF5C316E2080C00500084B7E /* CustomTableViewCellMenu.m in Sources */,

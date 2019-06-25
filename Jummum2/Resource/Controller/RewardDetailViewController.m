@@ -55,14 +55,21 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     [btnRedeem setTitle:[Language getText:@"รับสิทธิ์"] forState:UIControlStateNormal];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"แลกของรางวัล"];
+    lblNavTitle.text = title;
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"แลกของรางวัล"];
-    lblNavTitle.text = title;
+    
     _expandCollapse = 1;
     tbvData.delegate = self;
     tbvData.dataSource = self;
@@ -128,7 +135,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
 
-        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
+        float imageWidth = self.view.frame.size.width -2*16;
         cell.imgVwValueHeight.constant = imageWidth/16*9;
         cell.imgVwValue.contentMode = UIViewContentModeScaleAspectFit;
         
@@ -210,8 +217,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        float imageWidth = cell.frame.size.width -2*16 > 375?375:cell.frame.size.width -2*16;
-        cell.imgVwValueHeight.constant = imageWidth/16*9;        
+        float imageWidth = self.view.frame.size.width -2*16;
+        cell.imgVwValueHeight.constant = imageWidth/16*9;
         
         
         

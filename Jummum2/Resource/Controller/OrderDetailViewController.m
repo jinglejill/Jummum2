@@ -11,6 +11,7 @@
 #import "DisputeFormViewController.h"
 #import "CreditCardAndOrderSummaryViewController.h"
 #import "CommentRatingViewController.h"
+#import "ConfirmTransferFormViewController.h"
 #import "CustomTableViewCellReceiptSummary.h"
 #import "CustomTableViewCellOrderSummary.h"
 #import "CustomTableViewCellTotal.h"
@@ -102,8 +103,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"รายละเอียดการสั่งอาหาร"];
-    lblNavTitle.text = title;
+    
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -159,6 +159,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"รายละเอียดการสั่งอาหาร"];
+    lblNavTitle.text = title;
     
     [self.homeModel downloadItems:dbReceiptDisputeRating withData:@(receipt.receiptID)];
 }
@@ -214,7 +216,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
             {
                 return 1+1;
             }
-            else if(receipt.status == 9 || receipt.status == 10 || receipt.status == 11)
+            else if(receipt.status == 9 || receipt.status == 10)
+            {
+                return 1+1+1;//add button for transfer money back
+            }
+            else if(receipt.status == 11)
             {
                 return 1+1;
             }
@@ -228,7 +234,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
             }
             else if(receipt.status == 14)
             {
-                return 1+1;
+                return 1+1+1;//add button for transfer money back
             }
         }
     }
@@ -614,7 +620,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 
-                NSString *strStatus = [Receipt getStrStatus:receipt];
+                Receipt *selectedReceipt = [Receipt getReceipt:receipt.receiptID];
+                NSString *strStatus = [Receipt getStrStatus:selectedReceipt];
                 UIColor *color = cSystem2;
                 
                 
@@ -714,7 +721,6 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
                     
-                    
                     NSString *message3 = [Language getText:@"เหตุผล: "];
                     Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:1];
                     DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
@@ -725,15 +731,16 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    float totalAmount = [Receipt getTotalAmount:receipt];
-                    NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetailHeight.constant = 0;
-                    cell.lblReasonDetailTop.constant = 0;
+                    NSString *message4 = [Language getText:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message4 text:dispute.detail];
+                    [cell.lblReasonDetail sizeToFit];
+                    cell.lblReasonDetailTop.constant = 8;
+                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                     
                     
                     
@@ -756,6 +763,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     cell.lblRemark.text = message;
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                    
                     
                     
                     NSString *message3 = [Language getText:@"เหตุผล: "];
@@ -788,114 +796,154 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                 }
                 else if(receipt.status == 9)
                 {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    NSInteger priorStatusIsTwo = [Receipt getPriorStatus:receipt]==2;
-                    NSString *message;
-                    if(priorStatusIsTwo)
+                    if(item == 1)
                     {
-                        message = [Language getText:@"ร้านค้าทำเรื่องยกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    else//8
-                    {
-                        message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืน ภายใน 48 ชม."];
-                    }
-                    
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:1];
-                    if(!dispute)
-                    {
-                        dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:3];
-                    }
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    float totalAmount = [Receipt getTotalAmount:receipt];
-                    NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSInteger priorStatusIsTwo = [Receipt getPriorStatus:receipt]==2;
+                        NSString *message;
+                        if(priorStatusIsTwo)
+                        {
+                            message = [Language getText:@"ร้านค้าทำเรื่องยกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        else//8
+                        {
+                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืน ภายใน 48 ชม."];
+                        }
+                        
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:1];
+                        if(!dispute)
+                        {
+                            dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:3];
+                        }
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
                     strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
-                    
-                    
-                    cell.lblReasonDetailHeight.constant = 0;
-                    cell.lblReasonDetailTop.constant = 0;
-                    
-                    
-                    NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
-                    
-                    return cell;
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return cell;
+                    }
+                    else if(item == 2)
+                    {
+                        CustomTableViewCellButton *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierButton];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSString *title = [Language getText:@"ยืนยันการโอนเงิน"];
+                        
+                        cell.btnValue.backgroundColor = cSystem1;
+                        [cell.btnValue setTitle:title forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+                        [cell.btnValue addTarget:self action:@selector(confirmTransferForm:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
+                        
+                        
+                        return cell;
+                    }
                 }
                 else if(receipt.status == 10)
                 {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    NSInteger priorStatusIsFiveOrSix = [Receipt getPriorStatus:receipt]==5||[Receipt getPriorStatus:receipt]==6;
-                    NSString *message;
-                    if(priorStatusIsFiveOrSix)
+                    if(item == 1)
                     {
-                        message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    else//8
-                    {
-                        message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
-                    if(!dispute)
-                    {
-                        dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:4];
-                    }
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSInteger priorStatusIsFiveOrSix = [Receipt getPriorStatus:receipt]==5||[Receipt getPriorStatus:receipt]==6;
+                        NSString *message;
+                        if(priorStatusIsFiveOrSix)
+                        {
+                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        else//8
+                        {
+                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
+                        if(!dispute)
+                        {
+                            dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:4];
+                        }
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
-                    
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
-                    
-                    return cell;
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return cell;
+                    }
+                    else if(item == 2)
+                    {
+                        CustomTableViewCellButton *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierButton];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSString *title = [Language getText:@"ยืนยันการโอนเงิน"];
+                        
+                        cell.btnValue.backgroundColor = cSystem1;
+                        [cell.btnValue setTitle:title forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+                        [cell.btnValue addTarget:self action:@selector(confirmTransferForm:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
+                        
+                        
+                        return cell;
+                    }
                 }
                 else if(receipt.status == 11)
                 {
@@ -909,7 +957,6 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     [cell.lblRemark sizeToFit];
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
-                    
                     NSInteger statusBeforeLast = [Receipt getStateBeforeLast:receipt];
                     if(statusBeforeLast == 8)
                     {
@@ -922,9 +969,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         
                         
                         NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                        NSString *message4 = [Language getText:@"%@ บาท"];
                         NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                        strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                         cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                         
                         
@@ -935,17 +981,19 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                         
                         
-                        NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                        cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
                         [cell.lblPhoneNo sizeToFit];
                         cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                     }
                     else if(statusBeforeLast == 12 || statusBeforeLast == 13)
                     {
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
                         Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                        cell.lblReasonTop.constant = 0;
-                        cell.lblReasonHeight.constant = 0;
-                        
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                         
                         
                         NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
@@ -954,15 +1002,17 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                         
                         
-                        NSString *message3 = [Language getText:@"รายละเอียดเหตุผล: "];
-                        cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
                         [cell.lblReasonDetail sizeToFit];
                         cell.lblReasonDetailTop.constant = 8;
                         cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                         
                         
-                        cell.lblPhoneNoTop.constant = 0;
-                        cell.lblPhoneNoHeight.constant = 0;
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                     }
                     
                     return cell;
@@ -984,29 +1034,33 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         
                         
                         
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
                         Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                        cell.lblReasonTop.constant = 0;
-                        cell.lblReasonHeight.constant = 0;
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                         
                         
                         
                         NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                        NSString *message4 = [Language getText:@"%@ บาท"];
                         NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                        strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                         cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                         
                         
                         
-                        NSString *message5 = [Language getText:@"เหตุผล: "];
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
                         cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
                         [cell.lblReasonDetail sizeToFit];
                         cell.lblReasonDetailTop.constant = 8;
                         cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                         
                         
-                        cell.lblPhoneNoTop.constant = 0;
-                        cell.lblPhoneNoHeight.constant = 0;
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                         
                         
                         return cell;
@@ -1081,69 +1135,100 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                    cell.lblReasonTop.constant = 0;
-                    cell.lblReasonHeight.constant = 0;
+                    NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
                     
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    NSString *message3 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                    
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                     
                     
-                    cell.lblPhoneNoTop.constant = 0;
-                    cell.lblPhoneNoHeight.constant = 0;
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                     
                     return cell;
                 }
                 else if(receipt.status == 14)
                 {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    
-                    NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                    cell.lblReasonTop.constant = 0;
-                    cell.lblReasonHeight.constant = 0;
-                    
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
-                    
-                    
-                    NSString *message3 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message3 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    cell.lblPhoneNoTop.constant = 0;
-                    cell.lblPhoneNoHeight.constant = 0;
-                    
-                    return cell;
+                    if(item == 1)
+                    {
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        
+                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return cell;
+                    }
+                    else if(item == 2)
+                    {
+                        CustomTableViewCellButton *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierButton];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSString *title = [Language getText:@"ยืนยันการโอนเงิน"];
+                        
+                        cell.btnValue.backgroundColor = cSystem1;
+                        [cell.btnValue setTitle:title forState:UIControlStateNormal];
+                        [cell.btnValue removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+                        [cell.btnValue addTarget:self action:@selector(confirmTransferForm:) forControlEvents:UIControlEventTouchUpInside];
+                        [self setButtonDesign:cell.btnValue];
+                        
+                        
+                        return cell;
+                    }
                 }
             }
         }
@@ -1668,15 +1753,17 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    float totalAmount = [Receipt getTotalAmount:receipt];
-                    NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    cell.lblReasonDetailHeight.constant = 0;
-                    cell.lblReasonDetailTop.constant = 0;
+                    NSString *message4 = [Language getText:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message4 text:dispute.detail];
+                    [cell.lblReasonDetail sizeToFit];
+                    cell.lblReasonDetailTop.constant = 8;
+                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                    
                     
                     
                     NSString *message5 = [Language getText:@"เบอร์โทรติดต่อ: "];
@@ -1710,71 +1797,16 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                    NSString *message4 = [Language getText:@"รายละเอียดเหตุผล: "];
+                    cell.lblReasonDetail.attributedText = [self setAttributedString:message4 text:dispute.detail];
                     [cell.lblReasonDetail sizeToFit];
                     cell.lblReasonDetailTop.constant = 8;
                     cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
-                    
-                    return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
-                }
-                else if(receipt.status == 9)
-                {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    NSInteger priorStatusIsTwo = [Receipt getPriorStatus:receipt]==2;
-                    NSString *message;
-                    if(priorStatusIsTwo)
-                    {
-                        message = [Language getText:@"ร้านค้ายกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    else//8
-                    {
-                        message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:1];
-                    if(!dispute)
-                    {
-                        dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:3];
-                    }
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    float totalAmount = [Receipt getTotalAmount:receipt];
-                    NSString *strTotalAmount = [Utility formatDecimal:totalAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
-                    
-                    
-                    cell.lblReasonDetailHeight.constant = 0;
-                    cell.lblReasonDetailTop.constant = 0;
                     
                     
                     NSString *message5 = [Language getText:@"เบอร์โทรติดต่อ: "];
@@ -1784,64 +1816,131 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
                 }
+                else if(receipt.status == 9)
+                {
+                    if(item == 1)
+                    {
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        NSInteger priorStatusIsTwo = [Receipt getPriorStatus:receipt]==2;
+                        NSString *message;
+                        if(priorStatusIsTwo)
+                        {
+                            message = [Language getText:@"ร้านค้ายกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        else//8
+                        {
+                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:1];
+                        if(!dispute)
+                        {
+                            dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:3];
+                        }
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
+                    }
+                    else if(item == 2)
+                    {
+                        return 44;
+                    }
+                }
                 else if(receipt.status == 10)
                 {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    
-                    NSInteger priorStatusIsFiveOrSix = [Receipt getPriorStatus:receipt]==5||[Receipt getPriorStatus:receipt]==6;
-                    NSString *message;
-                    if(priorStatusIsFiveOrSix)
+                    if(item == 1)
                     {
-                        message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    else//8
-                    {
-                        message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    }
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
-                    if(!dispute)
-                    {
-                        dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:4];
-                    }
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        
+                        NSInteger priorStatusIsFiveOrSix = [Receipt getPriorStatus:receipt]==5||[Receipt getPriorStatus:receipt]==6;
+                        NSString *message;
+                        if(priorStatusIsFiveOrSix)
+                        {
+                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        else//8
+                        {
+                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        }
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
+                        if(!dispute)
+                        {
+                            dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:4];
+                        }
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
                     NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
+                    strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
                     cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
-                    
-                    
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
-                    
-                    return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
+                    }
+                    else if(item == 2)
+                    {
+                        return 44;
+                    }
                 }
                 else if(receipt.status == 11)
                 {
@@ -1857,33 +1956,63 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
                     
                     
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
-                    
-                    
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                    NSInteger statusBeforeLast = [Receipt getStateBeforeLast:receipt];
+                    if(statusBeforeLast == 8)
+                    {
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:2];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                    }
+                    else if(statusBeforeLast == 12 || statusBeforeLast == 13)
+                    {
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                    }
                     
                     return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
                 }
@@ -1902,28 +2031,33 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                    cell.lblReasonTop.constant = 0;
-                    cell.lblReasonHeight.constant = 0;
+                    NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
                     
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    NSString *message5 = [Language getText:@"เหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                    
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
                     
                     
-                    cell.lblPhoneNoTop.constant = 0;
-                    cell.lblPhoneNoHeight.constant = 0;
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                     
                     return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
                 }
@@ -1942,79 +2076,88 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                     
                     
                     NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
                     
                     
                     
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
                     
                     
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                    
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                    
+                    
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
                     
                     
                     return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
                 }
                 else if(receipt.status == 14)
                 {
-                    CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
-                    
-                    NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
-                    cell.lblRemark.textColor = cSystem1;
-                    cell.lblRemark.text = message;
-                    [cell.lblRemark sizeToFit];
-                    cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
-                    
-                    
-                    
-                    NSString *message3 = [Language getText:@"เหตุผล: "];
-                    Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
-                    DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
-                    cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
-                    [cell.lblReason sizeToFit];
-                    cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
-                    
-                    
-                    NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
-                    NSString *message4 = [Language getText:@"%@ บาท"];
-                    NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
-                    strTotalAmount = [NSString stringWithFormat:message4,strTotalAmount];
-                    cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
-                    
-                    
-                    NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
-                    cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
-                    [cell.lblReasonDetail sizeToFit];
-                    cell.lblReasonDetailTop.constant = 8;
-                    cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
-                    
-                    
-                    NSString *message6 = [Language getText:@"เบอร์โทรติดต่อ: "];
-                    cell.lblPhoneNo.attributedText = [self setAttributedString:message6 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
-                    [cell.lblPhoneNo sizeToFit];
-                    cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
-                    
-                    return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
+                    if(item == 1)
+                    {
+                        CustomTableViewCellDisputeDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierDisputeDetail];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                        
+                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        cell.lblRemark.textColor = cSystem1;
+                        cell.lblRemark.text = message;
+                        [cell.lblRemark sizeToFit];
+                        cell.lblRemarkHeight.constant = cell.lblRemark.frame.size.height;
+                        
+                        
+                        
+                        NSString *message3 = [Language getText:@"เหตุผล: "];
+                        Dispute *dispute = [Dispute getDisputeWithReceiptID:receipt.receiptID type:5];
+                        DisputeReason *disputeReason = [DisputeReason getDisputeReason:dispute.disputeReasonID];
+                        cell.lblReason.attributedText = [self setAttributedString:message3 text:disputeReason.text];
+                        [cell.lblReason sizeToFit];
+                        cell.lblReasonHeight.constant = cell.lblReason.frame.size.height;
+                        
+                        
+                        
+                        NSString *message2 = [Language getText:@"จำนวนเงินที่ขอคืน: "];
+                        NSString *strTotalAmount = [Utility formatDecimal:dispute.refundAmount withMinFraction:2 andMaxFraction:2];
+                        strTotalAmount = [NSString stringWithFormat:@"%@ บาท",strTotalAmount];
+                        cell.lblAmount.attributedText = [self setAttributedString:message2 text:strTotalAmount];
+                        
+                        
+                        
+                        NSString *message5 = [Language getText:@"รายละเอียดเหตุผล: "];
+                        cell.lblReasonDetail.attributedText = [self setAttributedString:message5 text:dispute.detail];
+                        [cell.lblReasonDetail sizeToFit];
+                        cell.lblReasonDetailTop.constant = 8;
+                        cell.lblReasonDetailHeight.constant = cell.lblReasonDetail.frame.size.height;
+                        
+                        
+                        NSString *message4 = [Language getText:@"เบอร์โทรติดต่อ: "];
+                        cell.lblPhoneNo.attributedText = [self setAttributedString:message4 text:[Utility setPhoneNoFormat:dispute.phoneNo]];
+                        [cell.lblPhoneNo sizeToFit];
+                        cell.lblPhoneNoHeight.constant = cell.lblPhoneNo.frame.size.height;
+                        
+                        return 11+cell.lblRemarkHeight.constant+cell.lblReasonTop.constant+cell.lblReasonHeight.constant+8+18+cell.lblReasonDetailTop.constant+cell.lblReasonDetailHeight.constant+cell.lblPhoneNoTop.constant+cell.lblPhoneNoHeight.constant+11;
+                        
+                    }
+                    else if(item == 2)
+                    {
+                        return 44;
+                    }
                 }
             }
             else
@@ -2151,7 +2294,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
 }
 
 -(void)itemsDownloaded:(NSArray *)items manager:(NSObject *)objHomeModel
-{
+{    
     HomeModel *homeModel = (HomeModel *)objHomeModel;
     if(homeModel.propCurrentDB == dbReceiptDisputeRating)
     {
@@ -2254,6 +2397,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
         vc.rating = _rating;
         vc.viewComment = 1;
     }
+    else if([[segue identifier] isEqualToString:@"segConfirmTransferForm"])
+    {
+        ConfirmTransferFormViewController *vc = segue.destinationViewController;
+        vc.receipt = receipt;
+    }
 }
 
 -(void)disputeOrder:(id)sender
@@ -2280,6 +2428,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
     self.homeModel = [[HomeModel alloc]init];
     self.homeModel.delegate = self;
     [self.homeModel updateItems:dbReceiptAndPromoCode withData:receipt actionScreen:@"delete order in order detail screen"];
+}
+
+-(void)confirmTransferForm:(id)sender
+{
+    [self performSegueWithIdentifier:@"segConfirmTransferForm" sender:nil];
 }
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller

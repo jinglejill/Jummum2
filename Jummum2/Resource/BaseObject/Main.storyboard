@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="SJ6-yX-h6O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="SJ6-yX-h6O">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,7 +50,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="|" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WvY-Ty-B20">
-                                        <rect key="frame" x="327" y="34" width="6" height="21"/>
+                                        <rect key="frame" x="327" y="34.5" width="6" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="6mv-I6-0Oa"/>
                                             <constraint firstAttribute="height" constant="21" id="oaE-5H-cqJ"/>
@@ -88,7 +88,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jummumTypeWhite.png" translatesAutoresizingMaskIntoConstraints="NO" id="IKv-xd-xKz">
-                                <rect key="frame" x="87.5" y="60" width="200" height="50"/>
+                                <rect key="frame" x="87.5" y="59.5" width="200" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="K9x-F4-D8n"/>
                                     <constraint firstAttribute="height" constant="50" id="pFm-4O-MwP"/>
@@ -201,7 +201,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bu-jx-Ubn">
-                                <rect key="frame" x="161.5" y="117" width="52" height="26"/>
+                                <rect key="frame" x="161.5" y="116.5" width="52" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="52" id="o3U-ju-sDI"/>
                                     <constraint firstAttribute="height" constant="26" id="sbk-6M-Nwd"/>
@@ -288,7 +288,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jummumLogoWithType.png" translatesAutoresizingMaskIntoConstraints="NO" id="8w8-WA-Jfh">
-                                        <rect key="frame" x="80" y="94" width="214" height="258"/>
+                                        <rect key="frame" x="80.5" y="94" width="214" height="258"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="258" id="9N1-7C-9lx"/>
                                             <constraint firstAttribute="width" constant="214" id="d2Q-fn-Iow"/>
@@ -327,7 +327,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pH-z6-uxZ">
-                                <rect key="frame" x="67" y="164" width="240" height="338"/>
+                                <rect key="frame" x="67.5" y="164.5" width="240" height="338"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZjT-TB-zab">
                                         <rect key="frame" x="8" y="258.5" width="224" height="30"/>
@@ -454,7 +454,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPQ-zf-eTD">
-                                <rect key="frame" x="67" y="225" width="240" height="216"/>
+                                <rect key="frame" x="67.5" y="225.5" width="240" height="216"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can log in via facebook or tap at register now to register." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cnq-4n-XTX">
                                         <rect key="frame" x="8" y="66" width="224" height="68.5"/>
@@ -562,7 +562,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="สแกน QR Code เลขโต๊ะ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlF-Ej-s0u">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="12.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="c9C-qt-rzi"/>
                                         </constraints>
@@ -881,7 +881,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="สรุปรายการที่สั่ง" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeQ-T4-ld0">
-                                        <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="qIX-Hw-Sbs"/>
                                         </constraints>
@@ -890,7 +890,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIP-dl-fvq">
-                                        <rect key="frame" x="340" y="6" width="28" height="31"/>
+                                        <rect key="frame" x="340" y="6.5" width="28" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="28" id="I7q-bU-zQD"/>
                                             <constraint firstAttribute="height" constant="31" id="eh0-PP-hdZ"/>
@@ -1028,7 +1028,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mE-gP-XeJ">
-                                        <rect key="frame" x="302" y="7" width="28" height="31"/>
+                                        <rect key="frame" x="302" y="6.5" width="28" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="28" id="qva-a7-hSE"/>
                                             <constraint firstAttribute="height" constant="31" id="s6g-8I-hao"/>
@@ -1041,7 +1041,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ยืนยันการสั่งอาหาร" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TP8-ny-J3D">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="KzG-Nq-Nxi"/>
                                         </constraints>
@@ -1050,7 +1050,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3o3-rr-Zaw">
-                                        <rect key="frame" x="343" y="10.5" width="24" height="24"/>
+                                        <rect key="frame" x="343" y="10" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="vUR-EY-wbA"/>
                                             <constraint firstAttribute="height" constant="24" id="wec-N6-fF1"/>
@@ -1209,7 +1209,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="เลือกช่องทางชำระเงิน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qoz-7W-v4X">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="smF-vf-5pT"/>
                                         </constraints>
@@ -1309,7 +1309,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="เลือก Voucher Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a24-yR-sDY">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="4Gk-dz-td2"/>
                                         </constraints>
@@ -1507,7 +1507,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="เลือกร้าน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PC9-d6-PcY">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="nTY-iC-Tsi"/>
                                         </constraints>
@@ -1615,7 +1615,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hot Deal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obh-OW-FzG">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="vjc-3y-Pan"/>
                                         </constraints>
@@ -1707,7 +1707,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hot Deal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdb-jd-LEa">
-                                        <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="aaZ-gp-05r"/>
                                         </constraints>
@@ -1808,7 +1808,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan เพื่อโอนเงิน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMM-lo-svV">
-                                        <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="jK5-pw-HpG"/>
                                         </constraints>
@@ -1923,7 +1923,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="รางวัลของฉัน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHc-zS-nNU">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="dr9-zL-z0b"/>
                                         </constraints>
@@ -2024,7 +2024,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แต้มสะสม/แลกของรางวัล" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hjz-rB-69J">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="rfM-BM-OUc"/>
                                         </constraints>
@@ -2111,7 +2111,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แลกของรางวัล" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69F-Ta-hrB">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Equ-aq-kpC"/>
                                         </constraints>
@@ -2241,7 +2241,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แสดงโค้ด เพื่อรับสิทธิ์" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6r-ed-fyr">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="uTY-LN-EMx"/>
                                         </constraints>
@@ -2370,7 +2370,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ลืมรหัสผ่าน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjf-m4-4du">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Nzt-sM-Nh9"/>
                                         </constraints>
@@ -2513,7 +2513,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ข้อกำหนดและเงื่อนไขของ JUMMUM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErA-rQ-g6w">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="RTr-iP-dxv"/>
                                         </constraints>
@@ -2566,7 +2566,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ujc-wH-KxS">
-                                <rect key="frame" x="186" y="596" width="2" height="30"/>
+                                <rect key="frame" x="186.5" y="596" width="2" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="2" id="Bhd-Zz-Ws2"/>
@@ -2670,7 +2670,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="บัตรเครดิต/เดบิต" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tYK-oz-zSP">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="T3X-S2-ohV"/>
                                         </constraints>
@@ -2769,7 +2769,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ข้อกำหนดและเงื่อนไขของ JUMMUM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e66-od-FrZ">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="ADt-HQ-cnU"/>
                                         </constraints>
@@ -2861,7 +2861,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="สร้างบัญชีใหม่" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSQ-Cc-BHP">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="XsY-TX-sd4"/>
                                         </constraints>
@@ -2999,6 +2999,12 @@
                                 <rect key="frame" x="0.0" y="134" width="375" height="484"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0e-9R-7nR">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="qE4-6K-91V"/>
+                                </constraints>
+                            </pickerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFm-ee-2zZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3010,10 +3016,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zFm-ee-2zZ" firstAttribute="top" secondItem="TNW-M5-a96" secondAttribute="top" id="6i1-Ux-VV1"/>
+                            <constraint firstItem="e0e-9R-7nR" firstAttribute="trailing" secondItem="c2z-WI-eDe" secondAttribute="trailing" id="HgN-db-cN1"/>
                             <constraint firstItem="MJu-LY-vVh" firstAttribute="bottom" secondItem="c2z-WI-eDe" secondAttribute="bottom" id="M4u-d3-5Lr"/>
+                            <constraint firstItem="e0e-9R-7nR" firstAttribute="leading" secondItem="c2z-WI-eDe" secondAttribute="leading" id="S5P-LM-lmY"/>
                             <constraint firstItem="zFm-ee-2zZ" firstAttribute="trailing" secondItem="c2z-WI-eDe" secondAttribute="trailing" id="Tka-MS-Go0"/>
                             <constraint firstItem="zFm-ee-2zZ" firstAttribute="leading" secondItem="c2z-WI-eDe" secondAttribute="leading" id="W3z-sr-Avi"/>
                             <constraint firstItem="MJu-LY-vVh" firstAttribute="top" secondItem="zFm-ee-2zZ" secondAttribute="bottom" constant="90" id="f6Q-Ih-d1X"/>
+                            <constraint firstAttribute="bottom" secondItem="e0e-9R-7nR" secondAttribute="bottom" id="qoH-7A-tkQ"/>
                             <constraint firstItem="MJu-LY-vVh" firstAttribute="trailing" secondItem="c2z-WI-eDe" secondAttribute="trailing" id="uqi-0Z-z5h"/>
                             <constraint firstItem="MJu-LY-vVh" firstAttribute="leading" secondItem="c2z-WI-eDe" secondAttribute="leading" id="whj-z7-9xt"/>
                         </constraints>
@@ -3021,6 +3030,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Me" image="me.png" id="XNC-sg-40T"/>
                     <connections>
+                        <outlet property="pickerVw" destination="e0e-9R-7nR" id="aml-CU-pdA"/>
                         <outlet property="tbvMe" destination="MJu-LY-vVh" id="gXv-N3-yOa"/>
                         <outlet property="topViewHeight" destination="INs-DT-XDN" id="iQE-sa-j8O"/>
                         <segue destination="geV-BG-a7e" kind="unwind" identifier="segUnwindToLogIn" unwindAction="unwindToLogIn:" id="HXu-AX-fvF"/>
@@ -3038,7 +3048,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qsi-Kf-hXK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="geV-BG-a7e" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1780" y="-4349"/>
+            <point key="canvasLocation" x="1780" y="-4349.7751124437782"/>
         </scene>
         <!--Personal Data View Controller-->
         <scene sceneID="8KK-fg-PGr">
@@ -3066,7 +3076,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ข้อมูลส่วนตัว" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJR-c3-AGR">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="7JJ-ps-uK0"/>
                                         </constraints>
@@ -3165,7 +3175,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QR Code สำหรับสั่งบุฟเฟ่ต์" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRS-lf-8eC">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="38v-mY-Afr"/>
                                         </constraints>
@@ -3263,7 +3273,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QR Code รายการอาหารที่ต้องการสั่ง" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vup-lO-n4W">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="kAu-nh-fjI"/>
                                         </constraints>
@@ -3364,7 +3374,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="รายการอาหารของเพื่อน" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-rE-ejd">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="KJy-p0-GeN"/>
                                         </constraints>
@@ -3373,7 +3383,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InT-3a-Sgr">
-                                        <rect key="frame" x="342" y="7.5" width="30" height="30"/>
+                                        <rect key="frame" x="342" y="7" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="HQ9-dV-ewK"/>
                                             <constraint firstAttribute="height" constant="30" id="mej-pY-dxK"/>
@@ -3477,7 +3487,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="สแกน QR เพื่อร่วมสั่งอาหาร" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUF-gu-cLi">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="MdF-ya-2ww"/>
                                         </constraints>
@@ -3566,7 +3576,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ประวัติการสั่งอาหาร" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgo-cP-uPj">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="3E4-qc-7y5"/>
                                         </constraints>
@@ -3681,7 +3691,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="รายละเอียดการสั่งอาหาร" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vhh-RY-qMW">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="UG8-Te-Cuz"/>
                                         </constraints>
@@ -3799,6 +3809,7 @@
                         <segue destination="uxx-Px-8LI" kind="show" identifier="segCreditCardAndOrderSummary" id="0UA-kM-pwb"/>
                         <segue destination="8Ok-4Q-dTd" kind="unwind" identifier="segUnwindToLaunchScreen" animates="NO" unwindAction="unwindToLaunchScreen:" id="6Rh-Pn-ZUA"/>
                         <segue destination="8Ok-4Q-dTd" kind="unwind" identifier="segUnwindToMainTabBar" animates="NO" unwindAction="unwindToMainTabBar:" id="j0z-bE-1Hx"/>
+                        <segue destination="whW-5g-aZx" kind="show" identifier="segConfirmTransferForm" id="ykX-Gm-9ig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NSK-5i-aen" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4035,7 +4046,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open dispute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgK-Tc-Bsb">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="qfb-SI-wWx"/>
                                         </constraints>
@@ -4178,7 +4189,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แนะนำร้านอาหาร" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qD-1v-K0s">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="az9-Ra-nNj"/>
                                         </constraints>
@@ -4309,7 +4320,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แนะนำ ติชม" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFY-j3-yIA">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="0gh-A2-sgP"/>
                                         </constraints>
@@ -4447,7 +4458,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="แนะนำ ติชม" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFS-Dz-KS8">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="r6h-29-o3X"/>
                                         </constraints>
@@ -4607,7 +4618,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="เลือกโต๊ะ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ST-wY-hEG">
-                                        <rect key="frame" x="16" y="12" width="343" height="21"/>
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="E0t-5R-z26"/>
                                         </constraints>
@@ -4694,14 +4705,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check_green.png" translatesAutoresizingMaskIntoConstraints="NO" id="P2e-kj-xQ8">
-                                        <rect key="frame" x="157" y="69" width="60" height="60"/>
+                                        <rect key="frame" x="157.5" y="69" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="1sd-vf-jma"/>
                                             <constraint firstAttribute="width" constant="60" id="r7a-cp-6fw"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jummumYeah.png" translatesAutoresizingMaskIntoConstraints="NO" id="1C2-zA-bd4">
-                                        <rect key="frame" x="67" y="142" width="240" height="240"/>
+                                        <rect key="frame" x="67.5" y="142" width="240" height="240"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="240" id="REG-eY-ycw"/>
                                             <constraint firstAttribute="width" constant="240" id="Sk9-5e-75M"/>
@@ -4868,7 +4879,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jummumLogoWithType.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSA-Uc-g8P">
-                                        <rect key="frame" x="80" y="94" width="214" height="258"/>
+                                        <rect key="frame" x="80.5" y="94" width="214" height="258"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="214" id="ZD4-kl-w5O"/>
                                             <constraint firstAttribute="height" constant="258" id="bNH-xh-Drs"/>
@@ -4930,6 +4941,142 @@
             </objects>
             <point key="canvasLocation" x="-1140" y="133"/>
         </scene>
+        <!--Confirm Transfer Form View Controller-->
+        <scene sceneID="nw9-z8-7oB">
+            <objects>
+                <viewController id="whW-5g-aZx" customClass="ConfirmTransferFormViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ySC-wR-5Sc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yby-jh-P16">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="Upg-fU-6pP"/>
+                                </constraints>
+                            </pickerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FG6-Bc-vjX">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAD-tx-stP">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.3921568627" green="0.86274509799999999" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Eqa-1b-xjv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="20"/>
+                                        <state key="normal" title="&lt;">
+                                            <color key="titleColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="goBack:" destination="btE-BM-gjN" eventType="touchUpInside" id="VrB-vp-401"/>
+                                            <action selector="goBack:" destination="4KA-2f-I38" eventType="touchUpInside" id="X6W-qG-VUb"/>
+                                            <action selector="goBack:" destination="KW5-aB-qha" eventType="touchUpInside" id="eHR-ZW-eZs"/>
+                                            <action selector="goBack:" destination="whW-5g-aZx" eventType="touchUpInside" id="hEY-KH-C1q"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXt-xr-iIv">
+                                        <rect key="frame" x="16" y="11.5" width="343" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="hBC-vX-kzV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Prompt-SemiBold" family="Prompt" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="JXt-xr-iIv" firstAttribute="centerY" secondItem="yAD-tx-stP" secondAttribute="centerY" id="2sj-Ah-1jO"/>
+                                    <constraint firstAttribute="trailing" secondItem="JXt-xr-iIv" secondAttribute="trailing" constant="16" id="3FL-Va-LmH"/>
+                                    <constraint firstAttribute="bottom" secondItem="yAD-tx-stP" secondAttribute="bottom" id="3TW-oM-uml"/>
+                                    <constraint firstItem="yAD-tx-stP" firstAttribute="top" secondItem="FG6-Bc-vjX" secondAttribute="top" id="QdT-t1-S9H"/>
+                                    <constraint firstItem="JXt-xr-iIv" firstAttribute="leading" secondItem="FG6-Bc-vjX" secondAttribute="leading" constant="16" id="QzP-ms-yLa"/>
+                                    <constraint firstItem="yAD-tx-stP" firstAttribute="leading" secondItem="FG6-Bc-vjX" secondAttribute="leading" id="rT5-L6-45h"/>
+                                    <constraint firstAttribute="height" constant="44" id="xlI-3h-v9L"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-JU-lUq">
+                                <rect key="frame" x="0.0" y="88" width="375" height="461"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NsF-iD-gFd">
+                                <rect key="frame" x="0.0" y="549" width="375" height="84"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="C1t-az-LJf"/>
+                                </constraints>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nkr-pI-F9e">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaq-Uy-w0P">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.3921568627" green="0.86274509799999999" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="bw7-N4-1SK"/>
+                                        </constraints>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.23529411759999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="qaq-Uy-w0P" firstAttribute="top" secondItem="nkr-pI-F9e" secondAttribute="top" id="0g8-OD-Jz3"/>
+                                    <constraint firstAttribute="height" constant="44" id="2Kp-A2-jIo"/>
+                                    <constraint firstItem="qaq-Uy-w0P" firstAttribute="leading" secondItem="nkr-pI-F9e" secondAttribute="leading" id="MYq-mq-Jdr"/>
+                                    <constraint firstAttribute="bottom" secondItem="qaq-Uy-w0P" secondAttribute="bottom" id="cq6-43-U56"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GT-YC-2yR">
+                                <rect key="frame" x="0.0" y="633" width="375" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="q6f-cl-bWx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NwP-JU-lUq" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="3R6-kK-Wul"/>
+                            <constraint firstItem="nkr-pI-F9e" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="4ux-Wg-rWA"/>
+                            <constraint firstItem="8GT-YC-2yR" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="82w-M1-jwZ"/>
+                            <constraint firstItem="8GT-YC-2yR" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="MDB-zJ-Oam"/>
+                            <constraint firstItem="FG6-Bc-vjX" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="PFt-S3-vhg"/>
+                            <constraint firstItem="nkr-pI-F9e" firstAttribute="top" secondItem="ySC-wR-5Sc" secondAttribute="top" id="Qv3-qJ-6EG"/>
+                            <constraint firstItem="NwP-JU-lUq" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="Vjl-tE-gKC"/>
+                            <constraint firstItem="FG6-Bc-vjX" firstAttribute="top" secondItem="nkr-pI-F9e" secondAttribute="bottom" id="X89-10-0um"/>
+                            <constraint firstItem="yby-jh-P16" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="Xoo-Tc-Fg5"/>
+                            <constraint firstItem="gNg-av-E8t" firstAttribute="bottom" secondItem="yby-jh-P16" secondAttribute="bottom" id="ZSd-Pd-nhX"/>
+                            <constraint firstItem="8GT-YC-2yR" firstAttribute="top" secondItem="NsF-iD-gFd" secondAttribute="bottom" id="cqx-pw-f7R"/>
+                            <constraint firstItem="NsF-iD-gFd" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="dGn-Qd-WLN"/>
+                            <constraint firstItem="nkr-pI-F9e" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="eqa-Po-F5a"/>
+                            <constraint firstItem="NwP-JU-lUq" firstAttribute="top" secondItem="FG6-Bc-vjX" secondAttribute="bottom" id="lJz-cn-16b"/>
+                            <constraint firstItem="yby-jh-P16" firstAttribute="leading" secondItem="gNg-av-E8t" secondAttribute="leading" id="lVP-CT-rGT"/>
+                            <constraint firstAttribute="bottom" secondItem="8GT-YC-2yR" secondAttribute="bottom" id="mje-is-h0r"/>
+                            <constraint firstItem="NsF-iD-gFd" firstAttribute="top" secondItem="NwP-JU-lUq" secondAttribute="bottom" id="q86-c8-mV7"/>
+                            <constraint firstItem="NsF-iD-gFd" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="rD5-VB-wEm"/>
+                            <constraint firstItem="FG6-Bc-vjX" firstAttribute="trailing" secondItem="gNg-av-E8t" secondAttribute="trailing" id="z24-Vc-oKk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gNg-av-E8t"/>
+                    </view>
+                    <connections>
+                        <outlet property="bottomViewHeight" destination="q6f-cl-bWx" id="KPV-kM-8sN"/>
+                        <outlet property="lblNavTitle" destination="JXt-xr-iIv" id="KDc-cY-Eif"/>
+                        <outlet property="pickerVw" destination="yby-jh-P16" id="89e-AF-FBG"/>
+                        <outlet property="tbvAction" destination="NsF-iD-gFd" id="436-6s-0H6"/>
+                        <outlet property="tbvData" destination="NwP-JU-lUq" id="Hcd-XZ-XWr"/>
+                        <outlet property="topViewHeight" destination="2Kp-A2-jIo" id="CHu-AW-ZIM"/>
+                        <segue destination="4KA-2f-I38" kind="unwind" identifier="segUnwindToOrderDetail" animates="NO" unwindAction="unwindToOrderDetail:" id="jzd-YV-2su"/>
+                        <segue destination="4KA-2f-I38" kind="unwind" identifier="segUnwindToReceiptSummary" animates="NO" unwindAction="unwindToReceiptSummary:" id="lTt-I8-bqG"/>
+                        <segue destination="4KA-2f-I38" kind="unwind" identifier="segUnwindToLaunchScreen" animates="NO" unwindAction="unwindToLaunchScreen:" id="r2o-ZI-ah7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fum-X7-1hh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="4KA-2f-I38" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4089" y="-554"/>
+        </scene>
     </scenes>
     <resources>
         <image name="QR-white.png" width="30" height="30"/>
@@ -4966,13 +5113,13 @@
         <segue reference="DCf-pC-0Ih"/>
         <segue reference="wrG-EY-VUV"/>
         <segue reference="SMW-0E-KhF"/>
-        <segue reference="Q9v-Ni-Bw8"/>
+        <segue reference="KhZ-ad-Xeo"/>
         <segue reference="oHQ-Ni-B76"/>
         <segue reference="C1B-oJ-Xmi"/>
-        <segue reference="2Iw-Lt-h1E"/>
+        <segue reference="iUw-Wp-Uz3"/>
         <segue reference="3fp-yp-yps"/>
         <segue reference="Kj7-hm-H17"/>
-        <segue reference="jVQ-j3-veY"/>
+        <segue reference="fi3-c3-4Ra"/>
         <segue reference="OAF-dr-auG"/>
         <segue reference="BEB-iv-AGa"/>
         <segue reference="aNU-Zf-Wbq"/>

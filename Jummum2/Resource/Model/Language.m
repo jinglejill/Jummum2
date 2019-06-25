@@ -72,4 +72,24 @@
 {
     return [[self getLanguage] isEqualToString:@"TH"];
 }
+
++(NSArray *)getLanguageList
+{
+    return [SharedLanguage sharedLanguage].languageList;
+}
+
++(NSInteger)getSelectedIndex
+{
+    NSMutableArray *languageList = [SharedLanguage sharedLanguage].languageList;
+    for(int i=0; i<[languageList count]; i++)
+    {
+        Language *language = languageList[i];
+        if([language.code isEqualToString:[Language getLanguage]])
+        {
+            return i;
+        }
+    }
+    
+    return 0;
+}
 @end

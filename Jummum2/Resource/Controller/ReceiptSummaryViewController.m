@@ -81,7 +81,8 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    NSString *title = [Language getText:@"ประวัติการสั่งอาหาร"];
+    lblNavTitle.text = title;
     
     if(!_loadData)
     {
@@ -117,8 +118,7 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"ประวัติการสั่งอาหาร"];
-    lblNavTitle.text = title;
+    
     tbvData.delegate = self;
     tbvData.dataSource = self;
     tbvData.separatorColor = [UIColor clearColor];
@@ -942,8 +942,13 @@ static NSString * const reuseIdentifierButton = @"CustomTableViewCellButton";
     if(homeModel.propCurrentDB == dbReceiptSummaryPage)
     {
         [self removeOverlayViews];
+        {
+            Branch *branch = [Branch getBranch:1];//test
+        }
         [Utility updateSharedObject:items];
-
+        {
+            Branch *branch = [Branch getBranch:1];//test
+        }
 
         if(_page == 1)
         {

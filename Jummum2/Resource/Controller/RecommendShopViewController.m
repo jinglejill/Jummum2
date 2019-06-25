@@ -72,14 +72,20 @@ static NSString * const reuseIdentifierHeaderFooterOkCancel = @"CustomTableViewH
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *title = [Language getText:@"แนะนำร้านอาหาร"];
+    lblNavTitle.text = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    NSString *title = [Language getText:@"แนะนำร้านอาหาร"];
-    lblNavTitle.text = title;
+    
     NSString *message = [Language getText:@"- แนะนำร้านอาหาร/สาขา/เบอร์โทร ที่คุณต้องการให้ JUMMUM เข้าไปติดต่อ \n- ให้เหตุผลที่คุณต้องการให้ร้านอาหารโปรดของคุณมาอยู่ในแอพ JUMMUM"];
     _strPlaceHolder = message;
     tbvData.delegate = self;
