@@ -204,16 +204,9 @@
     return toSaveOrderTaking;
 }
 
-+(NSMutableArray *)createSaveOrderTakingList:(NSMutableArray *)orderTakingList
++(SaveOrderTaking *)createSaveOrderTaking:(OrderTaking *)orderTaking
 {
-    NSMutableArray *saveOrderTakingList = [[NSMutableArray alloc]init];
-    for(OrderTaking *item in orderTakingList)
-    {
-        SaveOrderTaking *saveOrderTaking = [[SaveOrderTaking alloc]initWithBranchID:item.branchID customerTableID:item.customerTableID menuID:item.menuID quantity:item.quantity specialPrice:item.specialPrice price:item.price takeAway:item.takeAway takeAwayPrice:item.takeAwayPrice noteIDListInText:item.noteIDListInText notePrice:item.notePrice discountValue:0 orderNo:item.orderNo status:item.status saveReceiptID:0];
-        [saveOrderTakingList addObject:saveOrderTaking];
-        [SaveOrderTaking addObject:saveOrderTaking];
-    }
-    
-    return saveOrderTakingList;
+    SaveOrderTaking *saveOrderTaking = [[SaveOrderTaking alloc]initWithBranchID:orderTaking.branchID customerTableID:orderTaking.customerTableID menuID:orderTaking.menuID quantity:orderTaking.quantity specialPrice:orderTaking.specialPrice price:orderTaking.price takeAway:orderTaking.takeAway takeAwayPrice:orderTaking.takeAwayPrice noteIDListInText:orderTaking.noteIDListInText notePrice:orderTaking.notePrice discountValue:0 orderNo:orderTaking.orderNo status:orderTaking.status saveReceiptID:0];
+    return saveOrderTaking;
 }
 @end

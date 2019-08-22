@@ -281,6 +281,7 @@ static NSString * const reuseIdentifierSquareThumbNail = @"CustomTableViewCellSq
     }
     else
     {
+        [SaveReceipt removeCurrentSaveReceipt];
         [self performSegueWithIdentifier:@"segUnwindToQRCodeScanTable" sender:self];
     }
 }

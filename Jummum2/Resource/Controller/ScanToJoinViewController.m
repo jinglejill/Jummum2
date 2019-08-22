@@ -7,7 +7,7 @@
 //
 
 #import "ScanToJoinViewController.h"
-
+#import "Message.h"
 
 @interface ScanToJoinViewController ()
 {
@@ -151,14 +151,23 @@
 {
     [self removeOverlayViews];
     NSMutableArray *orderJoiningList = items[0];
-    if([orderJoiningList count] > 0)
+    NSMutableArray *messageList = items[1];
+    if([messageList count]>0)
     {
-        [self goBack:nil];
+        Message *message = messageList[0];
+        [self showAlert:@"" message:message.text method:@selector(setAlreadyDetectToNo)];
     }
     else
     {
-        [self showAlert:@"" message:[Language getText:@"QR Code สำหรับร่วมสั่งอาหารไม่ถูกต้อง"] method:@selector(setAlreadyDetectToNo)];
-    }
+        if([orderJoiningList count] > 0)
+        {
+            [self goBack:nil];
+        }
+        else
+        {
+            [self showAlert:@"" message:[Language getText:@"QR Code สำหรับร่วมสั่งอาหารไม่ถูกต้อง"] method:@selector(setAlreadyDetectToNo)];
+        }
+    }  
 }
 
 -(void)setAlreadyDetectToNo

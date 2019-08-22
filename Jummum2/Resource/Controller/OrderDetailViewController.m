@@ -193,7 +193,8 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
         }
         else if(section == 1)
         {
-            if(receipt.buffetReceiptID)
+//            if(receipt.buffetReceiptID)
+            if(receipt.totalAmount == 0)
             {
                 return 1+1;//remark, total
             }

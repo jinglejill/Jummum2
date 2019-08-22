@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OrderNote.h"
 
 @interface SaveOrderNote : NSObject
 @property (nonatomic) NSInteger saveOrderNoteID;
@@ -26,6 +27,6 @@
 +(SaveOrderNote *)getSaveOrderNote:(NSInteger)saveOrderNoteID;
 -(BOOL)editSaveOrderNote:(SaveOrderNote *)editingSaveOrderNote;
 +(SaveOrderNote *)copyFrom:(SaveOrderNote *)fromSaveOrderNote to:(SaveOrderNote *)toSaveOrderNote;
-+(NSMutableArray *)createSaveOrderNoteList:(NSMutableArray *)orderNoteList;
++(SaveOrderNote *)createSaveOrderNote:(OrderNote *)orderNote;
 +(NSMutableArray *)getOrderNoteListWithSaveOrderTakingID:(NSInteger)saveOrderTakingID;
 @end

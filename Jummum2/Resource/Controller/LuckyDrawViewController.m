@@ -17,6 +17,7 @@
 #import "Branch.h"
 #import "Card.h"
 #import "DiscountGroupMenuMap.h"
+#import "CreditCard.h"
 
 
 @interface LuckyDrawViewController ()
@@ -175,6 +176,8 @@
         }
         else
         {
+            [OrderTaking removeCurrentOrderTakingList];
+            
             NSMutableArray *discountGroupMenuMapList = items[3];
             if(_rewardRedemption.discountGroupMenuID && [discountGroupMenuMapList count]>0)
             {

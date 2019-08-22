@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OrderTaking.h"
 
 @interface SaveOrderTaking : NSObject
 @property (nonatomic) NSInteger saveOrderTakingID;
@@ -37,7 +38,7 @@
 +(SaveOrderTaking *)getSaveOrderTaking:(NSInteger)saveOrderTakingID;
 -(BOOL)editSaveOrderTaking:(SaveOrderTaking *)editingSaveOrderTaking;
 +(SaveOrderTaking *)copyFrom:(SaveOrderTaking *)fromSaveOrderTaking to:(SaveOrderTaking *)toSaveOrderTaking;
-+(NSMutableArray *)createSaveOrderTakingList:(NSMutableArray *)orderTakingList;
++(SaveOrderTaking *)createSaveOrderTaking:(OrderTaking *)orderTaking;
 
 
 

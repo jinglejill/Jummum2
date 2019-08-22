@@ -53,7 +53,7 @@
 "เพิ่ม" = "Add";
 "เลือก" = "Choose";
 "หมายเหตุ: " = "Remark: ";
-"รวมทั้งหมด" = "Net total";
+"รวมทั้งสิ้น" = "Net total";
 "สั่งบุฟเฟ่ต์" = "Order Buffet";
 "รายละเอียดการสั่งอาหาร" = "Order Detail";
 "%ld รายการ" = "%ld item(s)";
@@ -142,7 +142,7 @@
 "เพิ่มบัตรเครดิต/เดบิต" = "Add credit/debit card";
 "สั่งบุฟเฟ่ต์สำเร็จ" = "Order complete";
 "ชำระเงินสำเร็จ" = "Payment complete";
-"บันทึกใบเสร็จ และสั่งบุฟเฟต์" = "Save receipt & order buffet";
+"บันทึกใบเสร็จ และสั่งบุฟเฟ่ต์" = "Save receipt & order buffet";
 "บันทึกใบเสร็จลงอัลบั้ม" = "Save receipt in camera roll";
 "ขอบคุณที่ใช้บริการ ​JUMMUM" = "Thank you";
 "- กรุณากดเลือกโต๊ะเพื่อสแกน QR Code เลขโต๊ะ\n- คุณสามารถแก้ไขรายการอาหารได้โดยกดที่ปุ่ม +/-ด้านบนขวามือ" = "- Please tap Choose table no. to scan QR Code table no.\n- You can add/edit your order by tapping at +/- on the top right";

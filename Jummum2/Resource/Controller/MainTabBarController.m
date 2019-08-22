@@ -125,11 +125,14 @@
     else if([vc isKindOfClass:[RewardRedemptionViewController class]] && ((RewardRedemptionViewController *)vc).goToMenuSelection)
     {
         RewardRedemptionViewController *rewardRedemptionVc = (RewardRedemptionViewController *)vc;
-        rewardRedemptionVc.goToMenuSelection = 0;
+//        rewardRedemptionVc.goToMenuSelection = 0;
 
         _selectedBranch = rewardRedemptionVc.branch;
-        _showMenuSelection = 1;
+        _showMenuSelection = rewardRedemptionVc.goToMenuSelection;
+        _fromOrderNow = YES;
         _switchToQRTab = 1;
+        
+        rewardRedemptionVc.goToMenuSelection = 0;
     }
     else if([vc isKindOfClass:[CommentViewController class]] ||
                  [vc isKindOfClass:[BasketViewController class]] ||
@@ -192,6 +195,8 @@
             QRCodeScanTableViewController *vc = (QRCodeScanTableViewController *)self.selectedViewController;
             vc.orderItAgainReceipt = _orderItAgainReceipt;
             vc.fromOrderItAgain = _fromOrderItAgain;
+            _fromOrderItAgain = NO;
+            
             [vc viewDidAppear:NO];
         }
         else if(_fromOrderNow)
@@ -202,6 +207,8 @@
             vc.selectedCustomerTable = _selectedCustomerTable;
             vc.fromOrderNow = _fromOrderNow;
             vc.buffetReceipt = _buffetReceipt;
+            _fromOrderNow = NO;
+            
             [vc viewDidAppear:NO];
         }
         else if(_showMenuSelection)

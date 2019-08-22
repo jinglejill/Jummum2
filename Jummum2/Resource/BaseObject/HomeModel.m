@@ -144,7 +144,7 @@
         {
             arrClassName = @[@"Receipt",@"CustomerTable",@"Branch",@"OrderTaking",@"Menu",@"OrderNote",@"Note"];
         }
-            break;        
+            break;
         case dbPromotion:
         {
             arrClassName = @[@"Message",@"Message",@"OrderTaking",@"OrderNote",@"Promotion",@"CreditCardAndOrderSummary"];
@@ -202,11 +202,11 @@
             arrClassName = @[@"Dispute"];
         }
         break;
-        case dbBranch:
+//        case dbBranch:
         case dbBranchAndCustomerTableQR:
         case dbOrderItAgain:
         {
-            arrClassName = @[@"Branch",@"CustomerTable",@"SaveReceipt",@"SaveOrderTaking",@"SaveOrderNote",@"Receipt"];
+            arrClassName = @[@"Branch",@"CustomerTable",@"SaveReceipt",@"SaveOrderTaking",@"SaveOrderNote",@"Receipt",@"Note"];
         }
             break;
         case dbBranchSearch:
@@ -336,7 +336,7 @@
 //                    if(propCurrentDB == dbHotDeal || propCurrentDB == dbReceiptSummaryPage || propCurrentDB == dbOrderJoining ||propCurrentDB == dbRewardPoint || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptBuffetEnded || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTableQR || propCurrentDB == dbBranchSearch || propCurrentDB == dbCustomerTable || propCurrentDB == dbSettingWithKey || propCurrentDB == dbMenuBelongToBuffet || propCurrentDB == dbPromotionAndRewardRedemption || propCurrentDB == dbPromotion || propCurrentDB == dbMenu || propCurrentDB == dbRewardRedemptionLuckyDraw || propCurrentDB == dbOrderJoiningShareQr || propCurrentDB == dbOrderItAgain || propCurrentDB == dbReceiptAndLuckyDraw || propCurrentDB == dbRewardPointSpent || propCurrentDB == dbRewardPointSpentUsed || propCurrentDB == dbRewardPointSpentExpired)
 //                    {
 //                        [self.delegate itemsDownloaded:arrItem manager:self];
-//                    }                    
+//                    }
 //                    else
 //                    {
 //                        [self.delegate itemsDownloaded:arrItem];
@@ -555,7 +555,7 @@
             NSNumber *objPage = dataList[1];
             NSNumber *objPerPage = dataList[2];
             UserAccount *userAccount = (UserAccount *)dataList[3];
-            noteDataString = [NSString stringWithFormat:@"searchText=%@&page=%ld&perPage=%ld&memberID=%ld",searchText,[objPage integerValue],[objPerPage integerValue],userAccount.userAccountID];            
+            noteDataString = [NSString stringWithFormat:@"searchText=%@&page=%ld&perPage=%ld&memberID=%ld",searchText,[objPage integerValue],[objPerPage integerValue],userAccount.userAccountID];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlRewardPointSpentGetList]]];
         }
             break;
@@ -631,7 +631,7 @@
         }
             break;
         case dbBranchAndCustomerTableQR:
-        {            
+        {
             noteDataString = [NSString stringWithFormat:@"decryptedMessage=%@",data];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchAndCustomerTableQRGet]]];
         }
@@ -866,7 +866,7 @@
             UserAccount *userAccount = dataList[1];
             
             noteDataString = [Utility getNoteDataString:logIn];
-            noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:userAccount]];            
+            noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:userAccount]];
             url = [NSURL URLWithString:[Utility url:urlLogInUserAccountInsert]];
         }
             break;
@@ -1364,7 +1364,7 @@
                         }
                         else if([strTableName isEqualToString:@"OrderJoining"])
                         {
-                            arrClassName = @[@"OrderJoining"];
+                            arrClassName = @[@"OrderJoining",@"Message"];
                         }
                         
                         NSArray *items = [Utility jsonToArray:dataJson arrClassName:arrClassName];
@@ -1372,7 +1372,7 @@
                         {
                             [self.delegate itemsInsertedWithReturnData:items];
                         }
-                    }  
+                    }
                 }
                 else
                 {
@@ -2947,7 +2947,7 @@
                     if (self.delegate)
                     {
                         completionBlock(YES,arrItem);
-                    }                    
+                    }
                 }
             }
         }

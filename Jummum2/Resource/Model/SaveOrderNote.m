@@ -149,17 +149,11 @@
     return toSaveOrderNote;
 }
 
-+(NSMutableArray *)createSaveOrderNoteList:(NSMutableArray *)orderNoteList
++(SaveOrderNote *)createSaveOrderNote:(OrderNote *)orderNote
 {
-    NSMutableArray *saveOrderNoteList = [[NSMutableArray alloc]init];
-    for(OrderNote *item in orderNoteList)
-    {
-        SaveOrderNote *saveOrderNote = [[SaveOrderNote alloc]initWithSaveOrderTakingID:item.orderTakingID noteID:item.noteID quantity:item.quantity];
-        [saveOrderNoteList addObject:saveOrderNote];
-        [SaveOrderNote addObject:saveOrderNote];
-    }
+    SaveOrderNote *saveOrderNote = [[SaveOrderNote alloc]initWithSaveOrderTakingID:orderNote.orderTakingID noteID:orderNote.noteID quantity:orderNote.quantity];
     
-    return saveOrderNoteList;
+    return saveOrderNote;
 }
 
 +(NSMutableArray *)getOrderNoteListWithSaveOrderTakingID:(NSInteger)saveOrderTakingID

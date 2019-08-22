@@ -17,6 +17,7 @@
 #import "SpecialPriceProgram.h"
 #import "OrderTaking.h"
 #import "DiscountGroupMenuMap.h"
+#import "CreditCard.h"
 
 
 @interface HotDealDetailViewController ()
@@ -297,7 +298,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.lblRemarkHeight.constant = 0;
         
         
-        if(promotion.discountGroupMenuID)
+        if(promotion.mainBranchID)
         {
             cell.btnOrderNow.hidden = NO;
             cell.btnOrderNowTop.constant = 7;
@@ -374,6 +375,8 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         }
         else
         {
+            [OrderTaking removeCurrentOrderTakingList];
+            
             NSMutableArray *discountGroupMenuMapList = items[3];
             if(promotion.discountGroupMenuID && [discountGroupMenuMapList count]>0)
             {

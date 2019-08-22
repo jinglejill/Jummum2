@@ -17,6 +17,7 @@
 #import "SpecialPriceProgram.h"
 #import "Message.h"
 #import "DiscountGroupMenuMap.h"
+#import "CreditCard.h"
 
 
 @interface RewardRedemptionViewController ()
@@ -355,6 +356,8 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         }
         else
         {
+            [OrderTaking removeCurrentOrderTakingList];
+            
             NSMutableArray *discountGroupMenuMapList = items[3];
             if(rewardRedemption.discountGroupMenuID && [discountGroupMenuMapList count]>0)
             {

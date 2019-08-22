@@ -80,7 +80,7 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
     if(receipt.hasBuffetMenu || receipt.buffetReceiptID)
     {
         [self setButtonDesign:btnOrderBuffet];
-        [btnSaveToCameraRoll setTitle:[Language getText:@"บันทึกใบเสร็จ และสั่งบุฟเฟต์"] forState:UIControlStateNormal];
+        [btnSaveToCameraRoll setTitle:[Language getText:@"บันทึกใบเสร็จ และสั่งบุฟเฟ่ต์"] forState:UIControlStateNormal];
     }
     else
     {

@@ -122,6 +122,8 @@
     
     if(fromOrderNow)
     {
+        _saveOrderTakingList = nil;
+        _saveOrderNoteList = nil;
         fromOrderNow = NO;
         [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
         return;
