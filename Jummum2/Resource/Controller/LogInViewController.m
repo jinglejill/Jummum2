@@ -51,7 +51,9 @@
 @synthesize lblPipeLeading;
 @synthesize btnLangEn;
 @synthesize btnLangTH;
-
+@synthesize lblLogIn;
+@synthesize imgVwLogoTextWidth;
+@synthesize imgVwLogoTextHeight;
 
 -(void)viewDidLayoutSubviews
 {
@@ -76,7 +78,11 @@
     if(bottom+286+40>self.view.frame.size.height)
     {
         //hide jummum text
-        imgVwLogoText.hidden = YES;
+//        imgVwLogoText.hidden = YES;
+
+        imgVwLogoTextWidth.constant = 100;
+        imgVwLogoTextHeight.constant = 25;
+        lblLogIn.hidden = YES;
     }
     
     

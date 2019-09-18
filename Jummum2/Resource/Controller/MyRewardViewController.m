@@ -770,6 +770,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
         vc.rewardPointSpent = _rewardPointSpent;
         vc.promoCode = _promoCode;
         vc.fromMenuMyReward = 1;
+        vc.promoCodeType = segConValue.selectedSegmentIndex;
     }
 }
 

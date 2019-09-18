@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomLabelHeight;
 @property (nonatomic) BOOL goToMenuSelection;
 @property (strong, nonatomic) Branch *branch;
+@property (nonatomic) NSInteger promoCodeType;
 
 
 - (IBAction)goBack:(id)sender;

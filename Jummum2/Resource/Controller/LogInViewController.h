@@ -13,6 +13,7 @@
 @interface LogInViewController : CustomViewController<FBSDKLoginButtonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgVwLogoText;
+@property (strong, nonatomic) IBOutlet UILabel *lblLogIn;
 @property (strong, nonatomic) IBOutlet UITextField *txtEmail;
 @property (strong, nonatomic) IBOutlet UITextField *txtPassword;
 @property (strong, nonatomic) IBOutlet UIButton *btnRememberMe;
@@ -28,6 +29,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblPipeLeading;
 @property (strong, nonatomic) IBOutlet UIButton *btnLangEn;
 @property (strong, nonatomic) IBOutlet UIButton *btnLangTH;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwLogoTextWidth;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgVwLogoTextHeight;
 - (IBAction)switchToEN:(id)sender;
 - (IBAction)switchToTH:(id)sender;
 - (IBAction)rememberMe:(id)sender;

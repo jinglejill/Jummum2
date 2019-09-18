@@ -254,7 +254,10 @@
                         <outlet property="btnRememberMe" destination="9iM-JL-8ef" id="8ug-pK-8xG"/>
                         <outlet property="btnRememberMeWidth" destination="hgN-Mb-3Oq" id="1Nx-OO-Puq"/>
                         <outlet property="imgVwLogoText" destination="IKv-xd-xKz" id="vOy-eA-ayH"/>
+                        <outlet property="imgVwLogoTextHeight" destination="pFm-4O-MwP" id="C6g-0p-cXe"/>
+                        <outlet property="imgVwLogoTextWidth" destination="K9x-F4-D8n" id="fF8-u9-48f"/>
                         <outlet property="imgVwValueHeight" destination="lMx-ue-dyx" id="lwb-NK-GME"/>
+                        <outlet property="lblLogIn" destination="7bu-jx-Ubn" id="XIL-1Z-O2K"/>
                         <outlet property="lblLogInBottom" destination="myO-2o-Aaz" id="WR8-r4-2g3"/>
                         <outlet property="lblLogInTop" destination="vhN-sP-AAk" id="HX4-pq-dt2"/>
                         <outlet property="lblOrBottom" destination="0Je-QS-ZOe" id="Mbk-ux-hNA"/>
@@ -533,10 +536,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHC-bF-lj9">
-                                <rect key="frame" x="16" y="104" width="343" height="547"/>
+                                <rect key="frame" x="16" y="104" width="343" height="498"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="peekABoo.png" translatesAutoresizingMaskIntoConstraints="NO" id="V6s-DW-T8i">
-                                        <rect key="frame" x="0.0" y="284" width="240" height="240"/>
+                                        <rect key="frame" x="0.0" y="235" width="240" height="240"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="240" id="97e-Ub-zJT"/>
                                             <constraint firstAttribute="width" constant="240" id="zPS-9e-ttU"/>
@@ -3407,9 +3410,9 @@
                                     <constraint firstAttribute="height" constant="44" id="x1a-LJ-sh8"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-bO-qx7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-bO-qx7">
                                 <rect key="frame" x="0.0" y="88" width="375" height="579"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vun-r7-i9F">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -5108,7 +5111,7 @@
         <image name="white.png" width="226" height="132"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bhQ-mk-in8"/>
+        <segue reference="wZc-X3-jXt"/>
         <segue reference="aHo-2G-vPP"/>
         <segue reference="DCf-pC-0Ih"/>
         <segue reference="wrG-EY-VUV"/>
@@ -5119,9 +5122,9 @@
         <segue reference="iUw-Wp-Uz3"/>
         <segue reference="3fp-yp-yps"/>
         <segue reference="Kj7-hm-H17"/>
-        <segue reference="0UA-kM-pwb"/>
+        <segue reference="MmB-Bw-Sra"/>
         <segue reference="OAF-dr-auG"/>
-        <segue reference="iuD-G9-3D3"/>
-        <segue reference="aNU-Zf-Wbq"/>
+        <segue reference="lWr-Il-EsI"/>
+        <segue reference="ADg-WN-6Rq"/>
     </inferredMetricsTieBreakers>
 </document>
