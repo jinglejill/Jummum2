@@ -148,6 +148,8 @@
     UserAccount *userAccount = [[UserAccount alloc]init];
     userAccount.username = txtEmail.text;
     userAccount.password = [Utility hashTextSHA256:txtPassword.text];
+//    userAccount.username = @"aphinya.cho@gmail.com";
+//    userAccount.password = @"027f201cb236dbfa659b29f84cb45b18b05896533a5f9d2fcec51609f35b1e9a";//test
     
     
     LogIn *logIn = [[LogIn alloc]initWithUsername:userAccount.username status:1 deviceToken:[Utility deviceToken] model:[self deviceName]];
@@ -238,7 +240,7 @@
     //facebook
     _loginButton = [[FBSDKLoginButton alloc] init];
     _loginButton.delegate = self;
-    _loginButton.readPermissions = @[@"public_profile", @"email"];
+    _loginButton.permissions = @[@"public_profile", @"email"];
     //    _loginButton.readPermissions = @[@"public_profile", @"email",@"user_friends",@"user_birthday",@"user_about_me",@"user_likes",@"user_work_history"];
     
     
@@ -360,6 +362,7 @@
                  [Utility setModifiedUser:modifiedUser];
                  LogIn *logIn = [[LogIn alloc]initWithUsername:result[@"id"] status:1 deviceToken:[Utility deviceToken] model:[self deviceName]];
                  UserAccount *userAccount = [[UserAccount alloc]initWithUsername:result[@"id"] password:txtPassword.text deviceToken:[Utility deviceToken] firstName:result[@"first_name"] lastName:result[@"last_name"] fullName:result[@"name"] nickName:@"" birthDate:birthday email:result[@"email"] phoneNo:@"" lineID:@"" roleID:0];
+//                 [self.homeModel insertItems:dbLogInUserAccount2 withData:@[logIn,userAccount] actionScreen:@"insert login and useraccount if not exist in logIn screen"];//test
                  [self.homeModel insertItems:dbLogInUserAccount withData:@[logIn,userAccount] actionScreen:@"insert login and useraccount if not exist in logIn screen"];
                  [self loadingOverlayView];
              }
@@ -376,6 +379,7 @@
 -(void)itemsInsertedWithReturnData:(NSArray *)items;
 {
     [self removeOverlayViews];
+//    if(self.homeModel.propCurrentDBInsert == dbUserAccountValidate)//jummum login
     if(self.homeModel.propCurrentDBInsert == dbUserAccountValidate)//jummum login
     {
         if([items count] > 0 && [items[0] count] == 0)
@@ -437,6 +441,7 @@
         }
     }
     else if(self.homeModel.propCurrentDBInsert == dbLogInUserAccount)//facebook
+//    else if(self.homeModel.propCurrentDBInsert == dbLogInUserAccount2)//facebook test
     {
         //insert useraccount,receipt,ordertaking,ordernote,menu to sharedObject
         NSMutableArray *userAccountList = items[0];

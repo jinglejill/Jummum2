@@ -20,5 +20,6 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblCountDownTop;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblCountDownHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblRemarkWidth;
+@property (strong, nonatomic) IBOutlet UIImageView *imgChefHat;
 
 @end

@@ -32,7 +32,6 @@
         Language *language = [[Language alloc]initWithLanguageID:2 code:@"EN"];
         [[SharedLanguage sharedLanguage].languageList addObject:language];
     }
-    
 }
 
 +(void)setLanguage:(NSString *)code

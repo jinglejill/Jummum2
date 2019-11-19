@@ -664,6 +664,9 @@ extern NSString *globalBundleID;
         case urlTransferFormAndBankGetList:
             url = @"JMMTransferFormAndBankGetList.php";
             break;
+        case urlLuckyDrawBranchGetList:
+            url = @"JMMLuckyDrawBranchGetList.php";
+            break;
         default:
             break;
     }

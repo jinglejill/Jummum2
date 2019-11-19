@@ -113,13 +113,14 @@ static NSString * const reuseIdentifierLabelLabel = @"CustomTableViewCellLabelLa
         
         
         //uilabel
-        NSString *strTicket = numberOfGift==1?@"ticket":@"tickets";
+        NSString *strLuckyDraw = [Language getText:@"คุณมีสิทธิ์จับรางวัล"];
+        NSString *strTicket = [Language getText:@"times"];
         UILabel *lblGiftNum = [[UILabel alloc]init];
         lblGiftNum.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
         lblGiftNum.textColor = [UIColor whiteColor];
         lblGiftNum.textAlignment = NSTextAlignmentRight;        
         lblGiftNum.numberOfLines = 1;
-        lblGiftNum.text = [NSString stringWithFormat:@"You've got %ld %@",numberOfGift,strTicket];
+        lblGiftNum.text = [NSString stringWithFormat:@"%@ %ld %@",strLuckyDraw,numberOfGift,strTicket];
         [lblGiftNum sizeToFit];
         lblGiftNum.center = animatedImageView.center;
         CGRect frame = lblGiftNum.frame;

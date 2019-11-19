@@ -9,6 +9,7 @@
 #import "RewardViewController.h"
 #import "RewardDetailViewController.h"
 #import "MyRewardViewController.h"
+#import "LuckyDrawBranchViewController.h"
 #import "CustomTableViewCellSearchBar.h"
 #import "CustomTableViewCellReward.h"
 #import "CustomTableViewCellLabelDetailLabelWithImage.h"
@@ -31,6 +32,7 @@
     NSInteger _page;
     NSInteger _perPage;
     BOOL _viewDidLoad;
+    NSMutableArray *_luckyDrawTicketList;
 }
 
 @property (nonatomic)        BOOL           searchBarActive;
@@ -151,7 +153,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     }
     else if(section == 1)
     {
-        return 2;
+        return 3;
     }
     else
     {
@@ -205,11 +207,31 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
             cell.lblValue.textColor = cSystem2;
             [cell.lblValue sizeToFit];
             cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
-            
+            cell.imgChefHat.hidden = NO;
             
             return cell;
         }
-        else
+        else if(item == 1)
+        {
+            CustomTableViewCellLabelDetailLabelWithImage *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierLabelDetailLabelWithImage];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+
+            cell.lblText.text = [Language getText:@"สิทธิ์จับรางวัลของฉัน"];
+            cell.lblText.font = [UIFont fontWithName:@"Prompt-SemiBold" size:15.0f];
+            NSInteger luckyDrawCount = (int)floor([_luckyDrawTicketList count]);
+            NSString *strLuckyDrawCount = [Utility formatDecimal:luckyDrawCount];
+            NSString *msg = [Language getText:@"times"];
+            cell.lblValue.text = [NSString stringWithFormat:@"%@ %@",strLuckyDrawCount,msg];
+            cell.lblValue.textColor = cSystem2;
+            [cell.lblValue sizeToFit];
+            cell.lblValueWidth.constant = cell.lblValue.frame.size.width;
+            cell.imgChefHat.image = [UIImage imageNamed:@"jummumGiftBoxNormal.png"];
+//            cell.imgChefHat.hidden = YES;
+            
+            return cell;
+        }
+        else if(item == 2)
         {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
             if (!cell) {
@@ -344,6 +366,10 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     NSInteger item = indexPath.item;
     if(section == 1 && item == 1)
     {
+        [self performSegueWithIdentifier:@"segLuckyDrawBranch" sender:self];
+    }
+    else if(section == 1 && item == 2)
+    {
         [self performSegueWithIdentifier:@"segMyReward" sender:self];
     }
     else if(section == 2)
@@ -366,6 +392,10 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         MyRewardViewController *vc = segue.destinationViewController;
         vc.rewardPoint = _rewardPoint;
     }
+    else if([segue.identifier isEqualToString:@"segLuckyDrawBranch"])
+    {
+        
+    }
 }
 
 - (IBAction)goBack:(id)sender
@@ -386,11 +416,14 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         NSMutableArray *rewardPointList = items[0];
         _rewardPoint = rewardPointList[0];
         
-        NSRange range = NSMakeRange(1, 1);
-        NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
-        [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
         
-        
+        //luckyDrawTicket
+        _luckyDrawTicketList = items[3];
+        {
+            NSRange range = NSMakeRange(1, 1);
+            NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+            [tbvData reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+        }
         
         
         //rewardRedemptionList

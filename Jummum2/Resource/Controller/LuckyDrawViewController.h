@@ -12,5 +12,7 @@
 
 @interface LuckyDrawViewController : CustomViewController<CAAnimationDelegate>
 @property (strong, nonatomic) Receipt *receipt;
+@property (nonatomic) NSInteger fromLuckyDrawBranch;
+@property (nonatomic) NSInteger branchID;
 -(IBAction)unwindToLuckyDraw:(UIStoryboardSegue *)segue;
 @end

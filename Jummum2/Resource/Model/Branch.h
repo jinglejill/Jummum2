@@ -30,6 +30,7 @@
 
 
 @property (nonatomic) float luckyDrawSpend;
+@property (nonatomic) NSInteger luckyDrawTicketCount;
 @property (retain, nonatomic) NSString * wordAdd;
 @property (retain, nonatomic) NSString * wordNo;
 

@@ -111,9 +111,16 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-    
-        
-        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        NSString *noImageFileName;
+        Branch *mainBranch = [Branch getBranch:rewardRedemption.mainBranchID];
+        if(mainBranch)
+        {
+            noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+        }
+        else
+        {
+            noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        }
         NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Reward/%@",rewardRedemption.imageUrl];
         imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -123,7 +130,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+            [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:rewardRedemption.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
                  if (succeeded)
                  {
@@ -194,8 +201,16 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         CustomTableViewCellRewardDetail *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierRewardDetail];
         
         
-        
-        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        NSString *noImageFileName;
+        Branch *mainBranch = [Branch getBranch:rewardRedemption.mainBranchID];
+        if(mainBranch)
+        {
+            noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+        }
+        else
+        {
+            noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        }
         NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Reward/%@",rewardRedemption.imageUrl];
         imageFileName = [Utility isStringEmpty:rewardRedemption.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -205,7 +220,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         }
         else
         {
-            [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+            [self.homeModel downloadImageWithFileName:rewardRedemption.imageUrl type:4 branchID:rewardRedemption.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
              {
                  if (succeeded)
                  {
@@ -290,18 +305,10 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:title
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
                              {
-//                                 NSString *message = [Language getText:@"จำนวนแต้มสะสมไม่เพียงพอ"];
-//                                 if(rewardPoint.point < rewardRedemption.point)
-//                                 {
-//                                     [self showAlert:@"" message:message];
-//                                 }
-//                                 else
-                                 {
-                                     UserAccount *userAccount = [UserAccount getCurrentUserAccount];
-                                     _rewardPointSpent = [[RewardPoint alloc]initWithMemberID:userAccount.userAccountID receiptID:0 point:rewardRedemption.point status:-1 promoCodeID:0];
-                                     [self.homeModel insertItems:dbRewardPoint withData:@[_rewardPointSpent,rewardRedemption] actionScreen:@"insert rewardPointSpent"];
-                                     [self loadingOverlayView];
-                                 }
+                                 UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+                                 _rewardPointSpent = [[RewardPoint alloc]initWithMemberID:userAccount.userAccountID receiptID:0 point:rewardRedemption.point status:-1 promoCodeID:0];
+                                 [self.homeModel insertItems:dbRewardPoint withData:@[_rewardPointSpent,rewardRedemption] actionScreen:@"insert rewardPointSpent"];
+                                 [self loadingOverlayView];
                              }];
     
     [alert addAction:action1];

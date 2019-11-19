@@ -224,8 +224,16 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             cell.lblSubTitleHeight.constant = cell.lblSubTitle.frame.size.height>37?37:cell.lblSubTitle.frame.size.height;
             
             
-            
-            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *noImageFileName;
+            Branch *mainBranch = [Branch getBranch:promotion.mainBranchID];
+            if(mainBranch)
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+            }
+            else
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            }
             NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
             imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
             UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -235,7 +243,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             }
             else
             {
-                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:promotion.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {
@@ -270,7 +278,16 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             
             
             
-            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *noImageFileName;
+            Branch *mainBranch = [Branch getBranch:promotion.mainBranchID];
+            if(mainBranch)
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+            }
+            else
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            }
             NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
             imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
             UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -280,7 +297,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             }
             else
             {
-                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:promotion.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {
@@ -379,7 +396,16 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             
             
             
-            NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            NSString *noImageFileName;
+            Branch *mainBranch = [Branch getBranch:promotion.mainBranchID];
+            if(mainBranch)
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+            }
+            else
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            }
             NSString *imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
             imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
             UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -389,7 +415,7 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             }
             else
             {
-                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:promotion.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {

@@ -317,7 +317,8 @@ void myExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+//    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    NSString *token = [self stringFromDeviceToken:deviceToken];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"token---%@", token);
 
@@ -715,5 +716,16 @@ void myExceptionHandler(NSException *exception)
     [currentVc showAlert:title message:message];
 }
 
-
+- (NSString *)stringFromDeviceToken:(NSData *)deviceToken {
+    NSUInteger length = deviceToken.length;
+    if (length == 0) {
+        return nil;
+    }
+    const unsigned char *buffer = deviceToken.bytes;
+    NSMutableString *hexString  = [NSMutableString stringWithCapacity:(length * 2)];
+    for (int i = 0; i < length; ++i) {
+        [hexString appendFormat:@"%02x", buffer[i]];
+    }
+    return [hexString copy];
+}
 @end

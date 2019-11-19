@@ -26,6 +26,7 @@
     NSInteger _timeToCountDown;
     NSInteger _expandCollapse;//1=expand,0=collapse
     NSString *_promoCode;
+    BOOL _useVoucher;
 }
 
 @end
@@ -68,7 +69,7 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSString *title = [Language getText:@"แสดงโค้ด เพื่อรับสิทธิ์"];
+    NSString *title = [Language getText:@"โค้ดรางวัล"];
     lblNavTitle.text = title;
 }
 
@@ -225,16 +226,26 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         {
             if(promoCodeType == 0)
             {
-                if(rewardRedemption.mainBranchID)
+                if(rewardRedemption.type == 3)//ใช้สิทธิ์ Voucher
                 {
                     cell.btnCopy.hidden = NO;
-                    [cell.btnCopy setTitle:[Language getText:@"สั่งเลย"] forState:UIControlStateNormal];
+                    [cell.btnCopy setTitle:[Language getText:@"ใช้สิทธิ์"] forState:UIControlStateNormal];
                     [cell.btnCopy removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
-                    [cell.btnCopy addTarget:self action:@selector(goToCreditAndOrderSummary:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.btnCopy addTarget:self action:@selector(useVoucher:) forControlEvents:UIControlEventTouchUpInside];
                 }
                 else
                 {
-                    cell.btnCopy.hidden = YES;
+                    if(rewardRedemption.mainBranchID)
+                    {
+                        cell.btnCopy.hidden = NO;
+                        [cell.btnCopy setTitle:[Language getText:@"สั่งเลย"] forState:UIControlStateNormal];
+                        [cell.btnCopy removeTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+                        [cell.btnCopy addTarget:self action:@selector(goToCreditAndOrderSummary:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+                    else
+                    {
+                        cell.btnCopy.hidden = YES;
+                    }
                 }
             }
             else
@@ -343,15 +354,21 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
 
 - (IBAction)goBack:(id)sender
 {
-    if(fromMenuMyReward)
-    {
-        [self performSegueWithIdentifier:@"segUnwindToMyReward" sender:self];
-    }
-    else
+    if(_useVoucher)
     {
         [self performSegueWithIdentifier:@"segUnwindToReward" sender:self];
     }
-    
+    else
+    {
+        if(fromMenuMyReward)
+        {
+            [self performSegueWithIdentifier:@"segUnwindToMyReward" sender:self];
+        }
+        else
+        {
+            [self performSegueWithIdentifier:@"segUnwindToReward" sender:self];
+        }
+    }
 }
 
 -(void)updateTimer:(NSTimer *)timer {
@@ -394,6 +411,71 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
     [self.homeModel downloadItems:dbMenu withData:@[@(rewardRedemption.mainBranchID), @(rewardRedemption.discountGroupMenuID)]];
 }
 
+-(void)useVoucher:(id)sender
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+
+    
+    NSString *title = [Language getText:@"ยืนยันใช้สิทธิ์"];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:title
+                                                     style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+    {
+        [self loadingOverlayView];
+        self.homeModel = [[HomeModel alloc]init];
+        self.homeModel.delegate = self;
+        promoCode.status = 2;
+        promoCode.modifiedUser = [Utility modifiedUser];
+        promoCode.modifiedDate = [Utility currentDateTime];
+        [self.homeModel updateItems:dbPromoCode withData:promoCode actionScreen:@"rewardRedemption (use voucher)"];
+    }];
+    
+    [alert addAction:action1];
+    
+    
+    NSString *title2 = [Language getText:@"ยกเลิก"];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:title2
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                              {
+                              }];
+    [alert addAction:action2];
+    
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        UIButton *button = sender;
+        UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
+        popPresenter.sourceView = button;
+        popPresenter.sourceRect = button.bounds;
+    }
+    
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    
+    // this has to be set after presenting the alert, otherwise the internal property __representer is nil
+    UIFont *font = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color = cSystem1;
+    NSDictionary *attribute = @{NSForegroundColorAttributeName:color ,NSFontAttributeName: font};
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:title attributes:attribute];
+
+    UILabel *label = [[action1 valueForKey:@"__representer"] valueForKey:@"label"];
+    label.attributedText = attrString;
+
+
+
+    UIFont *font2 = [UIFont fontWithName:@"Prompt-SemiBold" size:15];
+    UIColor *color2 = cSystem4;
+    NSDictionary *attribute2 = @{NSForegroundColorAttributeName:color2 ,NSFontAttributeName: font2};
+    NSMutableAttributedString *attrString2 = [[NSMutableAttributedString alloc] initWithString:title2 attributes:attribute2];
+
+    UILabel *label2 = [[action2 valueForKey:@"__representer"] valueForKey:@"label"];
+    label2.attributedText = attrString2;
+    
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"segCreditCardAndOrderSummary"])
@@ -407,6 +489,37 @@ static NSString * const reuseIdentifierLabelDetailLabelWithImage = @"CustomTable
         vc.receipt = nil;
         vc.buffetReceipt = nil;
         vc.rewardRedemption = rewardRedemption;
+    }
+}
+
+-(void)itemsUpdatedWithManager:(NSObject *)objHomeModel items:(NSArray *)items
+{
+    HomeModel *homeModel = (HomeModel *)objHomeModel;
+    if(homeModel.propCurrentDBUpdate == dbPromoCode)
+    {
+        [self removeOverlayViews];
+        NSMutableArray *promoCodeList = items[0];
+        PromoCode *promoCode = promoCodeList[0];
+        
+        
+        //update lblRedeemDate
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        CustomTableViewCellRedemption *cell = [tbvData cellForRowAtIndexPath:indexPath];
+        cell.lblRedeemDate.text = [Utility dateToString:promoCode.modifiedDate toFormat:@"d MMM yyyy HH:mm"];
+        cell.btnCopy.enabled = NO;
+        
+        
+        //update lblCountDown
+        NSString *message = [Language getText:@"ใช้ไปเมื่อ %@"];
+        lblCountDown.text = [NSString stringWithFormat:message,[Utility dateToString:promoCode.modifiedDate toFormat:@"d MMM yyyy HH:mm"]];
+        
+        
+        {
+            NSString *message = [Language getText:@"ใช้สิทธิ์สำเร็จ"];
+            [self showAlert:@"" message:message];
+        }
+        
+        _useVoucher = 1;
     }
 }
 

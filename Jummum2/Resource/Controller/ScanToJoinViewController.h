@@ -17,5 +17,6 @@
 
 
 - (IBAction)goBack:(id)sender;
+- (IBAction)chooseFromExistingPhoto:(id)sender;
 
 @end

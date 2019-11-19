@@ -61,6 +61,49 @@
     alreadySeg = NO;
 }
 
+- (IBAction)chooseFromExistingPhoto:(id)sender
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+        controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        controller.allowsEditing = NO;
+        controller.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType: UIImagePickerControllerSourceTypePhotoLibrary];
+        controller.delegate = self;
+        [self presentViewController: controller animated: YES completion: nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+//    [self.navigationController dismissViewControllerAnimated: YES completion: nil];
+    [picker dismissViewControllerAnimated:NO completion:^{
+        UIImage *image = [info valueForKey: UIImagePickerControllerOriginalImage];
+        CIImage *ciImage = [[CIImage alloc] initWithCGImage:image.CGImage options:nil];
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode
+                           context:nil
+                           options:@{CIDetectorTracking: @YES,
+                                     CIDetectorAccuracy: CIDetectorAccuracyLow}];
+        NSString *qrCodeText = @"";
+        NSArray *arrFeature = [detector featuresInImage:ciImage];
+        for(CIQRCodeFeature *item in arrFeature)
+        {
+            qrCodeText = [NSString stringWithFormat:@"%@%@",qrCodeText,item.messageString];
+        }
+        
+        //scan qrcode
+        [self loadingOverlayView];
+        [self.homeModel downloadItems:dbBranchAndCustomerTableQR withData:qrCodeText];
+    }];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker;
+{
+    [picker dismissViewControllerAnimated:NO completion:nil];
+//    [self.navigationController dismissViewControllerAnimated: YES completion: nil];
+}
+
 - (IBAction)branchSearch:(id)sender
 {
     [self performSegueWithIdentifier:@"segBranchSearch" sender:self];
@@ -130,7 +173,6 @@
     }
     else if(fromOrderItAgain)
     {
-//        fromOrderItAgain = NO;
         [self loadingOverlayView];
         [self.homeModel downloadItems:dbOrderItAgain withData:orderItAgainReceipt];
     }
@@ -265,8 +307,6 @@
         vc.saveReceipt = _saveReceipt;
         vc.saveOrderTakingList = _saveOrderTakingList;
         vc.saveOrderNoteList = _saveOrderNoteList;
-//        vc.fromOrderItAgain = fromOrderItAgain;
-//        fromOrderItAgain = NO;
     }
 }
 
@@ -278,70 +318,81 @@
         [self removeOverlayViews];
         NSMutableArray *branchList = items[0];
         NSMutableArray *customerTableList = items[1];
-        if([branchList count] == 0 || [customerTableList count] == 0)
+        if([items count] > 7)//ใช้สิทธิ์ Voucher
         {
-            NSString *message = [Language getText:@"QR Code เลขโต๊ะไม่ถูกต้อง"];
-            [self showAlert:@"" message:message method:@selector(setAlreadySegToNo)];
+            NSMutableArray *messageList = items[7];
+            Message *message = messageList[0];
+            [self showAlert:@"" message:message.text method:@selector(setAlreadySegToNo)];            
         }
         else
         {
-            [Utility updateSharedObject:items];
-            selectedBranch = branchList[0];
-            
-            
-            
-            if([items count] > 2)
+            if([branchList count] == 0 || [customerTableList count] == 0)
             {
-                [OrderTaking removeCurrentOrderTakingList];
-                [CreditCard removeCurrentCreditCard];
-                [SaveReceipt removeCurrentSaveReceipt];
-                
-                NSMutableArray *saveReceiptList = items[2];
-                _saveReceipt = saveReceiptList[0];
-                _saveOrderTakingList = items[3];
-                _saveOrderNoteList = items[4];
+                NSString *message = [Language getText:@"QR Code เลขโต๊ะไม่ถูกต้อง"];
+                [self showAlert:@"" message:message method:@selector(setAlreadySegToNo)];
             }
             else
             {
-                [OrderTaking removeCurrentOrderTakingList];
-                [CreditCard removeCurrentCreditCard];
-                [SaveReceipt removeCurrentSaveReceipt];
+                [Utility updateSharedObject:items];
+                selectedBranch = branchList[0];
                 
-                _saveReceipt = nil;
-                _saveOrderTakingList = nil;
-                _saveOrderNoteList = nil;
-            }
-            
-            
-            if(fromCreditCardAndOrderSummaryMenu)
-            {
-                customerTable = customerTableList[0];
-                dispatch_async(dispatch_get_main_queue(), ^
-               {
-                    [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
-               });
-            }
-            else
-            {
-                if(fromOrderItAgain)
+                
+                
+                if([items count] > 2)
                 {
-                    fromOrderItAgain = NO;
-                    selectedCustomerTable = nil;
+                    [OrderTaking removeCurrentOrderTakingList];
+                    [CreditCard removeCurrentCreditCard];
+                    [SaveReceipt removeCurrentSaveReceipt];
+                    
+                    NSMutableArray *saveReceiptList = items[2];
+                    _saveReceipt = saveReceiptList[0];
+                    _saveOrderTakingList = items[3];
+                    _saveOrderNoteList = items[4];
+                }
+                else
+                {
+                    [OrderTaking removeCurrentOrderTakingList];
+                    [CreditCard removeCurrentCreditCard];
+                    [SaveReceipt removeCurrentSaveReceipt];
+                    
+                    _saveReceipt = nil;
+                    _saveOrderTakingList = nil;
+                    _saveOrderNoteList = nil;
+                }
+                
+                
+                if(fromCreditCardAndOrderSummaryMenu)
+                {
+                    customerTable = customerTableList[0];
                     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                        [self performSegueWithIdentifier:@"segMenuSelectionNoAnimate" sender:self];
+                        [self performSegueWithIdentifier:@"segUnwindToCreditCardAndOrderSummary" sender:self];
                    });
                 }
                 else
                 {
-                    selectedCustomerTable = customerTableList[0];
-                    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                        [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
-                   });
+                    if(fromOrderItAgain)
+                    {
+                        fromOrderItAgain = NO;
+                        selectedCustomerTable = nil;
+                        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                            [self performSegueWithIdentifier:@"segMenuSelectionNoAnimate" sender:self];
+                       });
+                    }
+                    else
+                    {
+                        selectedCustomerTable = customerTableList[0];
+                        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                            [self performSegueWithIdentifier:@"segMenuSelection" sender:self];
+                       });
+                    }
                 }
             }
         }
+        
+        
     }
 }
 

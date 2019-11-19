@@ -19,7 +19,6 @@
 #import "DiscountGroupMenuMap.h"
 #import "CreditCard.h"
 
-
 @interface LuckyDrawViewController ()
 {
     UIImageView* _imgVwWaiting;
@@ -52,7 +51,8 @@
 
 @implementation LuckyDrawViewController
 @synthesize receipt;
-
+@synthesize fromLuckyDrawBranch;
+@synthesize branchID;
 
 -(IBAction)unwindToLuckyDraw:(UIStoryboardSegue *)segue
 {
@@ -207,7 +207,16 @@
                 saveReceipt.voucherCode = _rewardRedemption.voucherCode;
                 [SaveReceipt setCurrentSaveReceipt:saveReceipt];
                 
-                [self performSegueWithIdentifier:@"segUnwindToMenuSelection" sender:self];
+                
+                if(fromLuckyDrawBranch)
+                {
+                    branchID = receipt.branchID;
+                    [self performSegueWithIdentifier:@"segUnwindToMainTabBar" sender:self];
+                }
+                else
+                {
+                    [self performSegueWithIdentifier:@"segUnwindToMenuSelection" sender:self];
+                }
             }
         }
     }

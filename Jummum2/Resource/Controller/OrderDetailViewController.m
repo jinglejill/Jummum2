@@ -807,11 +807,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         NSString *message;
                         if(priorStatusIsTwo)
                         {
-                            message = [Language getText:@"ร้านค้าทำเรื่องยกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"ร้านค้าทำเรื่องยกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         else//8
                         {
-                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืน ภายใน 48 ชม."];
+                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืน ภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         
                         cell.lblRemark.textColor = cSystem1;
@@ -883,11 +883,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         NSString *message;
                         if(priorStatusIsFiveOrSix)
                         {
-                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         else//8
                         {
-                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         
                         cell.lblRemark.textColor = cSystem1;
@@ -1175,7 +1175,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         
                         
                         
-                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         cell.lblRemark.textColor = cSystem1;
                         cell.lblRemark.text = message;
                         [cell.lblRemark sizeToFit];
@@ -1829,11 +1829,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         NSString *message;
                         if(priorStatusIsTwo)
                         {
-                            message = [Language getText:@"ร้านค้ายกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"ร้านค้ายกเลิกออเดอร์ให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         else//8
                         {
-                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"คำร้องขอยกเลิกออเดอร์สำเร็จแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         cell.lblRemark.textColor = cSystem1;
                         cell.lblRemark.text = message;
@@ -1892,11 +1892,11 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         NSString *message;
                         if(priorStatusIsFiveOrSix)
                         {
-                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"ร้านค้าทำเรื่องคืนเงินให้คุณแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         else//8
                         {
-                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                            message = [Language getText:@"Open dispute ที่ส่งไป ได้รับการยืนยันแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         }
                         cell.lblRemark.textColor = cSystem1;
                         cell.lblRemark.text = message;
@@ -2116,7 +2116,7 @@ static NSString * const reuseIdentifierLabelRemark = @"CustomTableViewCellLabelR
                         
                         
                         
-                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม."];
+                        NSString *message = [Language getText:@"Open dispute ที่ส่งไป ดำเนินการเสร็จสิ้นแล้ว คุณจะได้รับเงินคืนภายใน 48 ชม. หลังจากคุณแจ้งข้อมูลการโอนเงิน"];
                         cell.lblRemark.textColor = cSystem1;
                         cell.lblRemark.text = message;
                         [cell.lblRemark sizeToFit];

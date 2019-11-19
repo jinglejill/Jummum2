@@ -578,7 +578,7 @@ static NSString * const reuseIdentifierText = @"CustomTableViewCellText";
     
     if(![Utility validateStrongPassword:_userAccount.password])
     {
-        [self showAlert:@"" message:@"พาสเวิร์ดต้องประกอบไปด้วย\n1.อักษรตัวเล็กอย่างน้อย 1 ตัว\n2.อักษรตัวใหญ่อย่างน้อย 1 ตัว\n3.ตัวเลขหรืออักษรพิเศษอย่างน้อย 1 ตัว\n4.ความยาวขั้นต่ำ 8 ตัวอักษร"];
+        [self showAlert:@"พาสเวิร์ดต้องประกอบไปด้วย" message:@"อักษรตัวเล็ก อักษรตัวใหญ่ และตัวเลขหรืออักษรพิเศษ และมีความยาว 8 ตัวอักษรขึ้นไป (เช่น Abcdefg1, 12345678Aa เป็นต้น)"];
         return ;
     }
     

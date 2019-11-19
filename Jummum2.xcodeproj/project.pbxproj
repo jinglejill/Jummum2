@@ -246,6 +246,8 @@
 		EF1F4FC421F002A200915BFD /* Zone.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1F4FA421F002A100915BFD /* Zone.m */; };
 		EF26676C20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */; };
 		EF26676E20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */; };
+		EF578E3E23584B1900BECF0A /* LuckyDrawBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF578E3C23584B1900BECF0A /* LuckyDrawBranchViewController.m */; };
+		EF578E4023584B3400BECF0A /* pictureFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = EF578E3F23584B3400BECF0A /* pictureFrame.png */; };
 		EF5C2EDF2080BBB000084B7E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5C2EDE2080BBB000084B7E /* ViewController.m */; };
 		EF5C2EE42080BBB400084B7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2EE32080BBB400084B7E /* Assets.xcassets */; };
 		EF5C2EE72080BBB400084B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5C2EE52080BBB400084B7E /* LaunchScreen.storyboard */; };
@@ -811,6 +813,9 @@
 		EF26676A20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewHeaderFooterOkCancel.h; sourceTree = "<group>"; };
 		EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewHeaderFooterOkCancel.m; sourceTree = "<group>"; };
 		EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewHeaderFooterOkCancel.xib; sourceTree = "<group>"; };
+		EF578E3C23584B1900BECF0A /* LuckyDrawBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LuckyDrawBranchViewController.m; sourceTree = "<group>"; };
+		EF578E3D23584B1900BECF0A /* LuckyDrawBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuckyDrawBranchViewController.h; sourceTree = "<group>"; };
+		EF578E3F23584B3400BECF0A /* pictureFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pictureFrame.png; sourceTree = "<group>"; };
 		EF5C2ED72080BBB000084B7E /* Jummum2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jummum2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5C2EDD2080BBB000084B7E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF5C2EDE2080BBB000084B7E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -1572,6 +1577,7 @@
 		EF5C2F422080C00400084B7E /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EF578E3F23584B3400BECF0A /* pictureFrame.png */,
 				EF5D42A922981537003E5E09 /* changeLang.png */,
 				EFF109752204050C00DE0578 /* orderNowEng.png */,
 				EF5C2F702080C00400084B7E /* added.png */,
@@ -1680,8 +1686,8 @@
 		EF5C2F8C2080C00400084B7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EF5D429F229814F6003E5E09 /* ConfirmTransferFormViewController.h */,
-				EF5D42A0229814F7003E5E09 /* ConfirmTransferFormViewController.m */,
+				EF578E3D23584B1900BECF0A /* LuckyDrawBranchViewController.h */,
+				EF578E3C23584B1900BECF0A /* LuckyDrawBranchViewController.m */,
 				EF5C2F8D2080C00400084B7E /* BasketViewController.h */,
 				EF5C2FA52080C00400084B7E /* BasketViewController.m */,
 				EF5C2FB72080C00400084B7E /* BranchSearchViewController.h */,
@@ -1692,6 +1698,8 @@
 				EF02456520EC99630025B89D /* CommentViewController.m */,
 				EFAF78EF20A4217E0069D6DA /* ConfirmDisputeViewController.h */,
 				EFAF78F020A4217E0069D6DA /* ConfirmDisputeViewController.m */,
+				EF5D429F229814F6003E5E09 /* ConfirmTransferFormViewController.h */,
+				EF5D42A0229814F7003E5E09 /* ConfirmTransferFormViewController.m */,
 				EF5C2FB02080C00400084B7E /* CreditCardAndOrderSummaryViewController.h */,
 				EF5C2F952080C00400084B7E /* CreditCardAndOrderSummaryViewController.m */,
 				EF5C2F9C2080C00400084B7E /* CreditCardViewController.h */,
@@ -1783,12 +1791,6 @@
 			children = (
 				EF5D42AE22981547003E5E09 /* Bank.h */,
 				EF5D42B122981547003E5E09 /* Bank.m */,
-				EF5D42AB22981546003E5E09 /* SharedBank.h */,
-				EF5D42B222981547003E5E09 /* SharedBank.m */,
-				EF5D42AD22981546003E5E09 /* SharedTransferForm.h */,
-				EF5D42B022981547003E5E09 /* SharedTransferForm.m */,
-				EF5D42AC22981546003E5E09 /* TransferForm.h */,
-				EF5D42AF22981547003E5E09 /* TransferForm.m */,
 				EF5C2FD02080C00400084B7E /* Branch.h */,
 				EF5C2FFC2080C00500084B7E /* Branch.m */,
 				EF1F4F7721F0029C00915BFD /* BuffetMenuMap.h */,
@@ -1877,6 +1879,8 @@
 				EF1F4F8F21F0029F00915BFD /* SaveReceipt.m */,
 				EF5C301C2080C00500084B7E /* Setting.h */,
 				EF5C2FEC2080C00400084B7E /* Setting.m */,
+				EF5D42AB22981546003E5E09 /* SharedBank.h */,
+				EF5D42B222981547003E5E09 /* SharedBank.m */,
 				EF5C2FBE2080C00400084B7E /* SharedBranch.h */,
 				EF5C2FF72080C00500084B7E /* SharedBranch.m */,
 				EF1F4F7C21F0029C00915BFD /* SharedBuffetMenuMap.h */,
@@ -1969,6 +1973,8 @@
 				EF5C2FBF2080C00400084B7E /* SharedSubMenuType.m */,
 				EF5C30132080C00500084B7E /* SharedTableNo.h */,
 				EF5C2FD62080C00400084B7E /* SharedTableNo.m */,
+				EF5D42AD22981546003E5E09 /* SharedTransferForm.h */,
+				EF5D42B022981547003E5E09 /* SharedTransferForm.m */,
 				EF5C2FCE2080C00400084B7E /* SharedUserAccount.h */,
 				EF5C2FFF2080C00500084B7E /* SharedUserAccount.m */,
 				EF5C2FFB2080C00500084B7E /* SharedUserPromotionUsed.h */,
@@ -1989,6 +1995,8 @@
 				EF5C2FED2080C00400084B7E /* TableNo.m */,
 				EF1F4F6E21F0029B00915BFD /* Time.h */,
 				EF1F4F6F21F0029B00915BFD /* Time.m */,
+				EF5D42AC22981546003E5E09 /* TransferForm.h */,
+				EF5D42AF22981547003E5E09 /* TransferForm.m */,
 				EF5C30182080C00500084B7E /* UserAccount.h */,
 				EF5C2FEF2080C00400084B7E /* UserAccount.m */,
 				EF5C301F2080C00500084B7E /* UserPromotionUsed.h */,
@@ -2006,43 +2014,18 @@
 		EF5C30292080C00500084B7E /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
-				EF5D42A52298150A003E5E09 /* CustomTableViewCellImageLabelText.h */,
-				EF5D42A32298150A003E5E09 /* CustomTableViewCellImageLabelText.m */,
-				EF5D42A42298150A003E5E09 /* CustomTableViewCellImageLabelText.xib */,
-				EF5D42A22298150A003E5E09 /* TestSpecialPriceProgram.xib */,
-				EF1F4E7321F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.h */,
-				EF1F4E7421F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.m */,
-				EF1F4E6921F0019F00915BFD /* CustomCollectionViewCellNoteWithQuantity.xib */,
-				EF1F4E6F21F001A000915BFD /* CustomTableViewCellApplyVoucherCode.h */,
-				EF1F4E7521F001A100915BFD /* CustomTableViewCellApplyVoucherCode.m */,
-				EF1F4E7721F001A100915BFD /* CustomTableViewCellApplyVoucherCode.xib */,
-				EF1F4E7221F001A100915BFD /* CustomTableViewCellImageLabel.h */,
-				EF1F4E6621F0019F00915BFD /* CustomTableViewCellImageLabel.m */,
-				EF1F4E6721F0019F00915BFD /* CustomTableViewCellImageLabel.xib */,
-				EF1F4E6521F0019F00915BFD /* CustomTableViewCellQRToPay.h */,
-				EF1F4E6421F0019F00915BFD /* CustomTableViewCellQRToPay.m */,
-				EF1F4E6B21F001A000915BFD /* CustomTableViewCellQRToPay.xib */,
-				EF1F4E6E21F001A000915BFD /* CustomTableViewCellReceiptHeader.h */,
-				EF1F4E7021F001A100915BFD /* CustomTableViewCellReceiptHeader.m */,
-				EF1F4E6A21F001A000915BFD /* CustomTableViewCellReceiptHeader.xib */,
-				EF1F4E6C21F001A000915BFD /* CustomTableViewCellSquareThumbNail.h */,
-				EF1F4E7621F001A100915BFD /* CustomTableViewCellSquareThumbNail.m */,
-				EF1F4E6D21F001A000915BFD /* CustomTableViewCellSquareThumbNail.xib */,
-				EF1F4E6321F0019F00915BFD /* CustomTableViewHeaderFooterButtonButton.h */,
-				EF1F4E7121F001A100915BFD /* CustomTableViewHeaderFooterButtonButton.m */,
-				EF1F4E6821F0019F00915BFD /* CustomTableViewHeaderFooterButtonButton.xib */,
-				EF88005D213A6D520062D9D4 /* CustomTableViewCellVoucherCodeExist.h */,
-				EF88005E213A6D520062D9D4 /* CustomTableViewCellVoucherCodeExist.m */,
-				EF88005F213A6D530062D9D4 /* CustomTableViewCellVoucherCodeExist.xib */,
-				EF639DDF211EC90B00C70A98 /* CustomTableViewCellLabelRemark.h */,
-				EF639DE0211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m */,
-				EF639DE1211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib */,
 				EF5C303C2080C00500084B7E /* CustomCollectionReusableView.h */,
 				EF5C30592080C00500084B7E /* CustomCollectionReusableView.m */,
 				EF5C30412080C00500084B7E /* CustomCollectionReusableView.xib */,
 				EF5C305C2080C00500084B7E /* CustomCollectionViewCellNote.h */,
 				EF5C303B2080C00500084B7E /* CustomCollectionViewCellNote.m */,
 				EF5C30322080C00500084B7E /* CustomCollectionViewCellNote.xib */,
+				EF1F4E7321F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.h */,
+				EF1F4E7421F001A100915BFD /* CustomCollectionViewCellNoteWithQuantity.m */,
+				EF1F4E6921F0019F00915BFD /* CustomCollectionViewCellNoteWithQuantity.xib */,
+				EF1F4E6F21F001A000915BFD /* CustomTableViewCellApplyVoucherCode.h */,
+				EF1F4E7521F001A100915BFD /* CustomTableViewCellApplyVoucherCode.m */,
+				EF1F4E7721F001A100915BFD /* CustomTableViewCellApplyVoucherCode.xib */,
 				EFAF78FF20A540CE0069D6DA /* CustomTableViewCellButton.h */,
 				EFAF790020A540CE0069D6DA /* CustomTableViewCellButton.m */,
 				EFAF790120A540CE0069D6DA /* CustomTableViewCellButton.xib */,
@@ -2052,9 +2035,15 @@
 				EF1AD15820B0081600F6D223 /* CustomTableViewCellDisputeDetail.h */,
 				EF1AD15720B0081600F6D223 /* CustomTableViewCellDisputeDetail.m */,
 				EF1AD15620B0081500F6D223 /* CustomTableViewCellDisputeDetail.xib */,
+				EF1F4E7221F001A100915BFD /* CustomTableViewCellImageLabel.h */,
+				EF1F4E6621F0019F00915BFD /* CustomTableViewCellImageLabel.m */,
+				EF1F4E6721F0019F00915BFD /* CustomTableViewCellImageLabel.xib */,
 				EF5C30442080C00500084B7E /* CustomTableViewCellImageLabelRemove.h */,
 				EF5C30602080C00500084B7E /* CustomTableViewCellImageLabelRemove.m */,
 				EF5C30382080C00500084B7E /* CustomTableViewCellImageLabelRemove.xib */,
+				EF5D42A52298150A003E5E09 /* CustomTableViewCellImageLabelText.h */,
+				EF5D42A32298150A003E5E09 /* CustomTableViewCellImageLabelText.m */,
+				EF5D42A42298150A003E5E09 /* CustomTableViewCellImageLabelText.xib */,
 				EF5C303F2080C00500084B7E /* CustomTableViewCellImageText.h */,
 				EF5C30562080C00500084B7E /* CustomTableViewCellImageText.m */,
 				EF5C305A2080C00500084B7E /* CustomTableViewCellImageText.xib */,
@@ -2067,6 +2056,9 @@
 				EF5C30372080C00500084B7E /* CustomTableViewCellLabelLabel.h */,
 				EF5C30512080C00500084B7E /* CustomTableViewCellLabelLabel.m */,
 				EF5C30552080C00500084B7E /* CustomTableViewCellLabelLabel.xib */,
+				EF639DDF211EC90B00C70A98 /* CustomTableViewCellLabelRemark.h */,
+				EF639DE0211EC90B00C70A98 /* CustomTableViewCellLabelRemark.m */,
+				EF639DE1211EC90B00C70A98 /* CustomTableViewCellLabelRemark.xib */,
 				EFA9632B20A6922D00E2DB9C /* CustomTableViewCellLabelText.h */,
 				EFA9632C20A6922E00E2DB9C /* CustomTableViewCellLabelText.m */,
 				EFA9632D20A6922E00E2DB9C /* CustomTableViewCellLabelText.xib */,
@@ -2097,9 +2089,15 @@
 				EFB91855208D9F960079FC15 /* CustomTableViewCellPromoThumbNail.h */,
 				EFB91856208D9F960079FC15 /* CustomTableViewCellPromoThumbNail.m */,
 				EFB91857208D9F960079FC15 /* CustomTableViewCellPromoThumbNail.xib */,
+				EF1F4E6521F0019F00915BFD /* CustomTableViewCellQRToPay.h */,
+				EF1F4E6421F0019F00915BFD /* CustomTableViewCellQRToPay.m */,
+				EF1F4E6B21F001A000915BFD /* CustomTableViewCellQRToPay.xib */,
 				EFF44F2B20F1CC7B00D07770 /* CustomTableViewCellRating.h */,
 				EFF44F2C20F1CC7B00D07770 /* CustomTableViewCellRating.m */,
 				EFF44F2D20F1CC7B00D07770 /* CustomTableViewCellRating.xib */,
+				EF1F4E6E21F001A000915BFD /* CustomTableViewCellReceiptHeader.h */,
+				EF1F4E7021F001A100915BFD /* CustomTableViewCellReceiptHeader.m */,
+				EF1F4E6A21F001A000915BFD /* CustomTableViewCellReceiptHeader.xib */,
 				EF5C302C2080C00500084B7E /* CustomTableViewCellReceiptSummary.h */,
 				EF5C304C2080C00500084B7E /* CustomTableViewCellReceiptSummary.m */,
 				EF5C304D2080C00500084B7E /* CustomTableViewCellReceiptSummary.xib */,
@@ -2115,6 +2113,12 @@
 				EF5C305F2080C00500084B7E /* CustomTableViewCellSearchBar.h */,
 				EF5C30452080C00500084B7E /* CustomTableViewCellSearchBar.m */,
 				EF5C30402080C00500084B7E /* CustomTableViewCellSearchBar.xib */,
+				EF639DEB211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.h */,
+				EF639DEC211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m */,
+				EF639DED211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib */,
+				EF1F4E6C21F001A000915BFD /* CustomTableViewCellSquareThumbNail.h */,
+				EF1F4E7621F001A100915BFD /* CustomTableViewCellSquareThumbNail.m */,
+				EF1F4E6D21F001A000915BFD /* CustomTableViewCellSquareThumbNail.xib */,
 				EF5C30582080C00500084B7E /* CustomTableViewCellText.h */,
 				EF5C303D2080C00500084B7E /* CustomTableViewCellText.m */,
 				EF5C30422080C00500084B7E /* CustomTableViewCellText.xib */,
@@ -2124,9 +2128,15 @@
 				EFB918442086E8850079FC15 /* CustomTableViewCellVoucherCode.h */,
 				EFB918452086E8850079FC15 /* CustomTableViewCellVoucherCode.m */,
 				EFB918422086E8620079FC15 /* CustomTableViewCellVoucherCode.xib */,
+				EF88005D213A6D520062D9D4 /* CustomTableViewCellVoucherCodeExist.h */,
+				EF88005E213A6D520062D9D4 /* CustomTableViewCellVoucherCodeExist.m */,
+				EF88005F213A6D530062D9D4 /* CustomTableViewCellVoucherCodeExist.xib */,
 				EF5C304F2080C00500084B7E /* CustomTableViewHeaderFooterButton.h */,
 				EF5C302A2080C00500084B7E /* CustomTableViewHeaderFooterButton.m */,
 				EF5C302E2080C00500084B7E /* CustomTableViewHeaderFooterButton.xib */,
+				EF1F4E6321F0019F00915BFD /* CustomTableViewHeaderFooterButtonButton.h */,
+				EF1F4E7121F001A100915BFD /* CustomTableViewHeaderFooterButtonButton.m */,
+				EF1F4E6821F0019F00915BFD /* CustomTableViewHeaderFooterButtonButton.xib */,
 				EF26676A20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.h */,
 				EF26676B20A7E82700969AB2 /* CustomTableViewHeaderFooterOkCancel.m */,
 				EF26676D20A7E83500969AB2 /* CustomTableViewHeaderFooterOkCancel.xib */,
@@ -2135,11 +2145,9 @@
 				EF5C302F2080C00500084B7E /* CustomViewVoucher.h */,
 				EF5C304A2080C00500084B7E /* CustomViewVoucher.m */,
 				EF5C304B2080C00500084B7E /* CustomViewVoucher.xib */,
+				EF5D42A22298150A003E5E09 /* TestSpecialPriceProgram.xib */,
 				EFE882C520D80A22007509C3 /* UILabel+FontAppearance.h */,
 				EFE882C620D80A22007509C3 /* UILabel+FontAppearance.m */,
-				EF639DEB211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.h */,
-				EF639DEC211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.m */,
-				EF639DED211F14DC00C70A98 /* CustomTableViewCellSeparatorLine.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -2156,6 +2164,7 @@
 				EF5C2ED42080BBB000084B7E /* Frameworks */,
 				EFD9BA7520E33AEF00A0A874 /* ShellScript */,
 				EF5C2ED52080BBB000084B7E /* Resources */,
+				7701C6525CEBB76EF31F7B88 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2412,6 +2421,7 @@
 				EF1F4E7A21F001A200915BFD /* CustomTableViewCellImageLabel.xib in Resources */,
 				EF1F4F1621F0024000915BFD /* giftBoxGood00008.png in Resources */,
 				EF5C30E52080C00500084B7E /* removed.png in Resources */,
+				EF578E4023584B3400BECF0A /* pictureFrame.png in Resources */,
 				EF5C30DC2080C00500084B7E /* hotDeal.png in Resources */,
 				EF13B60020CECBC4008CF35C /* jummumLogoWithType.png in Resources */,
 				EF1F4F2221F0024000915BFD /* giftBoxGood00002.png in Resources */,
@@ -2597,6 +2607,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7701C6525CEBB76EF31F7B88 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Jummum2/Pods-Jummum2-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Jummum2/Pods-Jummum2-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EFD9BA7520E33AEF00A0A874 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2734,6 +2766,7 @@
 				EF1F4FC221F002A200915BFD /* SharedLanguage.m in Sources */,
 				EF5C310B2080C00500084B7E /* TosAndPrivacyPolicyViewController.m in Sources */,
 				EF02456920EC99720025B89D /* RecommendShopViewController.m in Sources */,
+				EF578E3E23584B1900BECF0A /* LuckyDrawBranchViewController.m in Sources */,
 				EFF44F3920F334D800D07770 /* CommentRatingViewController.m in Sources */,
 				EF1F4E5B21F0015100915BFD /* JoinOrderViewController.m in Sources */,
 				EF5C316B2080C00500084B7E /* CustomCollectionReusableView.m in Sources */,
@@ -2913,6 +2946,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2933,7 +2967,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2972,6 +3006,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2985,7 +3020,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2998,14 +3033,16 @@
 				CODE_SIGN_ENTITLEMENTS = Jummum2/Jummum2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DF8AZLDC5D;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Jummum2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JummumCo.Jummum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3018,14 +3055,16 @@
 				CODE_SIGN_ENTITLEMENTS = Jummum2/Jummum2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DF8AZLDC5D;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Jummum2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JummumCo.Jummum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

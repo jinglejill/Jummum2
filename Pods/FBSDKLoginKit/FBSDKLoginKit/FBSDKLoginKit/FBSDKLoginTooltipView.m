@@ -18,7 +18,11 @@
 
 #import "FBSDKLoginTooltipView.h"
 
+#ifdef COCOAPODS
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
 #import "FBSDKCoreKit+Internal.h"
+#endif
 
 @interface FBSDKLoginTooltipView ()
 @end
@@ -29,7 +33,7 @@
 {
   NSString *tooltipMessage =
   NSLocalizedStringWithDefaultValue(@"LoginTooltip.Message", @"FacebookSDK", [FBSDKInternalUtility bundleForStrings],
-                                    @"New! You're in control - choose what info you want to share with apps.",
+                                    @"You're in control - choose what info you want to share with apps.",
                                     @"The message of the FBSDKLoginTooltipView");
   return [super initWithTagline:nil message:tooltipMessage colorStyle:FBSDKTooltipColorStyleFriendlyBlue];
 }

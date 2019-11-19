@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblText;
 @property (strong, nonatomic) IBOutlet UILabel *lblValue;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *lblValueWidth;
+@property (strong, nonatomic) IBOutlet UIImageView *imgChefHat;
 
 @end

@@ -1,29 +1,67 @@
 PODS:
-  - Bolts (1.6.0):
-    - Bolts/AppLinks (= 1.6.0)
-    - Bolts/Tasks (= 1.6.0)
-  - Bolts/AppLinks (1.6.0):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.6.0)
-  - FBSDKCoreKit (4.10.1):
-    - Bolts (~> 1.5)
-  - FBSDKLoginKit (4.10.1):
-    - FBSDKCoreKit
+  - FacebookSDK (5.8.0):
+    - FacebookSDK/CoreKit (= 5.8.0)
+    - FacebookSDK/MarketingKit (= 5.8.0)
+  - FacebookSDK/CoreKit (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FacebookSDK/LoginKit (5.8.0):
+    - FacebookSDK/CoreKit
+    - FBSDKLoginKit (~> 5.0)
+  - FacebookSDK/MarketingKit (5.8.0):
+    - FacebookSDK/CoreKit
+    - FBSDKMarketingKit (~> 5.0)
+  - FacebookSDK/PlacesKit (5.8.0):
+    - FacebookSDK/CoreKit
+    - FBSDKPlacesKit (~> 5.0)
+  - FacebookSDK/ShareKit (5.8.0):
+    - FacebookSDK/CoreKit
+    - FBSDKShareKit (~> 5.0)
+  - FBSDKCoreKit (5.8.0):
+    - FBSDKCoreKit/Basics (= 5.8.0)
+    - FBSDKCoreKit/Core (= 5.8.0)
+  - FBSDKCoreKit/Basics (5.8.0)
+  - FBSDKCoreKit/Core (5.8.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.8.0):
+    - FBSDKLoginKit/Login (= 5.8.0)
+  - FBSDKLoginKit/Login (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKMarketingKit (5.5.0):
+    - FBSDKCoreKit (~> 5.5)
+  - FBSDKMessengerShareKit (1.3.2)
+  - FBSDKPlacesKit (5.3.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.8.0):
+    - FBSDKShareKit/Share (= 5.8.0)
+  - FBSDKShareKit/Share (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
 
 DEPENDENCIES:
-  - FBSDKLoginKit
+  - FacebookSDK
+  - FacebookSDK/LoginKit
+  - FacebookSDK/PlacesKit
+  - FacebookSDK/ShareKit
+  - FBSDKMessengerShareKit
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Bolts
+  https://github.com/cocoapods/specs.git:
+    - FacebookSDK
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FBSDKMarketingKit
+    - FBSDKMessengerShareKit
+    - FBSDKPlacesKit
+    - FBSDKShareKit
 
 SPEC CHECKSUMS:
-  Bolts: f52a250053bb517ca874523c3913776359ab3def
-  FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
-  FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
+  FacebookSDK: 01ce488e7399bae3e2689ed8416e94174836eaf9
+  FBSDKCoreKit: e7dcac0aabcfb09d0166998edd95fe3b05a0ce5d
+  FBSDKLoginKit: 1b0cf04df0370b37404213157b060d6666ede814
+  FBSDKMarketingKit: 570d0c2778a2166b0cd55b301160d662ccbe8927
+  FBSDKMessengerShareKit: bdd14265f5845e6d1c95a128ab33705a68ca1c21
+  FBSDKPlacesKit: 0388766304ff7a89630bcc211db9f500d549f403
+  FBSDKShareKit: abc29e1bb4f9f59f679adf1ae191006d68455f96
 
-PODFILE CHECKSUM: 6122d025cb293165f78ad2ca5ac9be39899e35a2
+PODFILE CHECKSUM: 724f1b972ff59f575e3644a388e7a3a9e22f79e1
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.6.1

@@ -12,7 +12,7 @@
 #import "CustomerTable.h"
 
 
-@interface QRCodeScanTableViewController : CustomViewController<AVCaptureMetadataOutputObjectsDelegate>
+@interface QRCodeScanTableViewController : CustomViewController<AVCaptureMetadataOutputObjectsDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *lblNavTitle;
 @property (strong, nonatomic) IBOutlet UIView *vwPreview;
 @property (nonatomic) NSInteger fromCreditCardAndOrderSummaryMenu;
@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imgPeekABoo;
 @property (strong, nonatomic) IBOutlet UIImageView *imgPeekABooFromRight;
 
+- (IBAction)chooseFromExistingPhoto:(id)sender;
 
 - (IBAction)branchSearch:(id)sender;
 - (IBAction)goBack:(id)sender;

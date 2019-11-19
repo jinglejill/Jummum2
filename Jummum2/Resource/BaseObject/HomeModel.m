@@ -162,7 +162,7 @@
             break;
         case dbRewardPoint:
         {
-            arrClassName = @[@"RewardPoint",@"RewardRedemption",@"Branch"];
+            arrClassName = @[@"RewardPoint",@"RewardRedemption",@"Branch",@"LuckyDrawTicket"];
         }
             break;
         case dbHotDeal:
@@ -206,7 +206,7 @@
         case dbBranchAndCustomerTableQR:
         case dbOrderItAgain:
         {
-            arrClassName = @[@"Branch",@"CustomerTable",@"SaveReceipt",@"SaveOrderTaking",@"SaveOrderNote",@"Receipt",@"Note"];
+            arrClassName = @[@"Branch",@"CustomerTable",@"SaveReceipt",@"SaveOrderTaking",@"SaveOrderNote",@"Receipt",@"Note",@"Message"];
         }
             break;
         case dbBranchSearch:
@@ -244,6 +244,10 @@
             arrClassName = @[@"TransferForm",@"Bank"];
         }
             break;
+        case dbLuckyDrawBranchList:
+        {
+            arrClassName = @[@"Branch"];
+        }
         default:
             break;
     }
@@ -333,14 +337,6 @@
                 // Ready to notify delegate that data is ready and pass back items
                 if (self.delegate)
                 {
-//                    if(propCurrentDB == dbHotDeal || propCurrentDB == dbReceiptSummaryPage || propCurrentDB == dbOrderJoining ||propCurrentDB == dbRewardPoint || propCurrentDB == dbReceipt || propCurrentDB == dbReceiptDisputeRating || propCurrentDB == dbReceiptDisputeRatingUpdateAndReload || propCurrentDB == dbReceiptBuffetEnded || propCurrentDB == dbMenuList || propCurrentDB == dbMenuNoteList || propCurrentDB == dbBranchAndCustomerTableQR || propCurrentDB == dbBranchSearch || propCurrentDB == dbCustomerTable || propCurrentDB == dbSettingWithKey || propCurrentDB == dbMenuBelongToBuffet || propCurrentDB == dbPromotionAndRewardRedemption || propCurrentDB == dbPromotion || propCurrentDB == dbMenu || propCurrentDB == dbRewardRedemptionLuckyDraw || propCurrentDB == dbOrderJoiningShareQr || propCurrentDB == dbOrderItAgain || propCurrentDB == dbReceiptAndLuckyDraw || propCurrentDB == dbRewardPointSpent || propCurrentDB == dbRewardPointSpentUsed || propCurrentDB == dbRewardPointSpentExpired)
-//                    {
-//                        [self.delegate itemsDownloaded:arrItem manager:self];
-//                    }
-//                    else
-//                    {
-//                        [self.delegate itemsDownloaded:arrItem];
-//                    }
                     [self.delegate itemsDownloaded:arrItem manager:self];
                 }
             }
@@ -632,7 +628,7 @@
             break;
         case dbBranchAndCustomerTableQR:
         {
-            noteDataString = [NSString stringWithFormat:@"decryptedMessage=%@",data];
+            noteDataString = [NSString stringWithFormat:@"decryptedMessage=%@&userAccountID=%ld",data,[UserAccount getCurrentUserAccount].userAccountID];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlBranchAndCustomerTableQRGet]]];
         }
             break;
@@ -745,6 +741,12 @@
         {
             noteDataString = [Utility getNoteDataString:data];
             url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlTransferFormAndBankGetList]]];
+        }
+            break;
+        case dbLuckyDrawBranchList:
+        {
+            noteDataString = [Utility getNoteDataString:data];
+            url = [NSURL URLWithString:[Utility appendRandomParam:[Utility url:urlLuckyDrawBranchGetList]]];
         }
             break;
         default:
@@ -1667,26 +1669,6 @@
     
     switch (currentDB)
     {
-        case dbPushSyncUpdateTimeSynced:
-        {
-            NSMutableArray *pushSyncList = (NSMutableArray *)data;
-            NSInteger countPushSync = 0;
-            
-            noteDataString = [NSString stringWithFormat:@"countPushSync=%ld",[pushSyncList count]];
-            for(PushSync *item in pushSyncList)
-            {
-                noteDataString = [NSString stringWithFormat:@"%@&%@",noteDataString,[Utility getNoteDataString:item withRunningNo:countPushSync]];
-                countPushSync++;
-            }
-            url = [NSURL URLWithString:[Utility url:urlPushSyncUpdateTimeSynced]];
-        }
-            break;
-        case dbPushSyncUpdateByDeviceToken:
-        {
-            noteDataString = [Utility getNoteDataString:data];
-            url = [NSURL URLWithString:[Utility url:urlPushSyncUpdateByDeviceToken]];
-        }
-            break;
         case dbMenu:
         {
             noteDataString = [Utility getNoteDataString:data];
@@ -2111,6 +2093,10 @@
                     else if([strTableName isEqualToString:@"ReceiptAndPromoCode"])
                     {
                         arrClassName = @[@"Receipt",@"Message"];
+                    }
+                    else if([strTableName isEqualToString:@"PromoCode"])
+                    {
+                        arrClassName = @[@"PromoCode"];
                     }
                     
                     NSArray *items = [Utility jsonToArray:dataJson arrClassName:arrClassName];

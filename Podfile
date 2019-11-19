@@ -6,7 +6,12 @@ target 'Jummum2' do
   # use_frameworks!
 
   # Pods for Jummum2
-  pod 'FBSDKLoginKit'
+  pod 'FacebookSDK'
+  pod 'FacebookSDK/LoginKit'
+  pod 'FacebookSDK/ShareKit'
+  pod 'FacebookSDK/PlacesKit'
+
+  pod 'FBSDKMessengerShareKit'
 
   target 'Jummum2Tests' do
     inherit! :search_paths

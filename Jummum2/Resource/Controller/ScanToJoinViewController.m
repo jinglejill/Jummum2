@@ -179,4 +179,48 @@
 {
     [self performSegueWithIdentifier:@"segUnwindToJoinOrder" sender:self];
 }
+
+- (IBAction)chooseFromExistingPhoto:(id)sender
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+        controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        controller.allowsEditing = NO;
+        controller.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType: UIImagePickerControllerSourceTypePhotoLibrary];
+        controller.delegate = self;
+        [self presentViewController: controller animated: YES completion: nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+//    [self.navigationController dismissViewControllerAnimated: YES completion: nil];
+    [picker dismissViewControllerAnimated:NO completion:^{
+        UIImage *image = [info valueForKey: UIImagePickerControllerOriginalImage];
+        CIImage *ciImage = [[CIImage alloc] initWithCGImage:image.CGImage options:nil];
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode
+                           context:nil
+                           options:@{CIDetectorTracking: @YES,
+                                     CIDetectorAccuracy: CIDetectorAccuracyLow}];
+        NSString *qrCodeText = @"";
+        NSArray *arrFeature = [detector featuresInImage:ciImage];
+        for(CIQRCodeFeature *item in arrFeature)
+        {
+            qrCodeText = [NSString stringWithFormat:@"%@%@",qrCodeText,item.messageString];
+        }
+        
+        //scan qrcode
+        UserAccount *userAccount = [UserAccount getCurrentUserAccount];
+        [self loadingOverlayView];
+        [self.homeModel insertItems:dbOrderJoiningScanQr withData:@[qrCodeText,@(userAccount.userAccountID)] actionScreen:@"insert order joining in scan to join screen"];
+    }];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker;
+{
+    [picker dismissViewControllerAnimated:NO completion:nil];
+//    [self.navigationController dismissViewControllerAnimated: YES completion: nil];
+}
 @end

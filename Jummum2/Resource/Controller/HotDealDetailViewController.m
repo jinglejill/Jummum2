@@ -110,16 +110,26 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
-        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        NSString *noImageFileName;
         NSString *imageFileName;
         if(promotion.shopType == 0)
         {
             imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+            Branch *mainBranch = [Branch getBranch:promotion.mainBranchID];
+            if(mainBranch)
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+            }
+            else
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            }
         }
         else
         {
             Branch *branch = [Branch getBranch:promotion.branchID];
             imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/DiscountProgram/%@",branch.dbName,promotion.imageUrl];
+            noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
         }
         imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -131,7 +141,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         {
             if(promotion.shopType == 0)
             {
-                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:promotion.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {
@@ -231,16 +241,26 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         
         
         
-        NSString *noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+        NSString *noImageFileName;
         NSString *imageFileName;
         if(promotion.shopType == 0)
         {
             imageFileName = [NSString stringWithFormat:@"/JMM/Image/Promotion/%@",promotion.imageUrl];
+            Branch *mainBranch = [Branch getBranch:promotion.mainBranchID];
+            if(mainBranch)
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",mainBranch.dbName];
+            }
+            else
+            {
+                noImageFileName = [NSString stringWithFormat:@"/JMM/Image/NoImage.jpg"];
+            }
         }
         else
         {
             Branch *branch = [Branch getBranch:promotion.branchID];
             imageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/DiscountProgram/%@",branch.dbName,promotion.imageUrl];
+            noImageFileName = [NSString stringWithFormat:@"/JMM/%@/Image/NoImage.jpg",branch.dbName];
         }
         imageFileName = [Utility isStringEmpty:promotion.imageUrl]?noImageFileName:imageFileName;
         UIImage *image = [Utility getImageFromCache:imageFileName];
@@ -252,7 +272,7 @@ static NSString * const reuseIdentifierLabel = @"CustomTableViewCellLabel";
         {
             if(promotion.shopType == 0)
             {
-                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:0 completionBlock:^(BOOL succeeded, UIImage *image)
+                [self.homeModel downloadImageWithFileName:promotion.imageUrl type:3 branchID:promotion.mainBranchID completionBlock:^(BOOL succeeded, UIImage *image)
                  {
                      if (succeeded)
                      {

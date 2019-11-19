@@ -209,7 +209,8 @@ enum enumDB
     dbTransferFormList,
     dbBank,
     dbBankList,
-    dbTransferFormAndBankList
+    dbTransferFormAndBankList,
+    dbLuckyDrawBranchList
 
     
 };
@@ -392,7 +393,8 @@ enum enumUrl
     urlBankUpdateList,
     urlBankDeleteList,
     urlBankGetList,
-    urlTransferFormAndBankGetList
+    urlTransferFormAndBankGetList,
+    urlLuckyDrawBranchGetList
 
     
 };

@@ -660,8 +660,16 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
             }
             else if(fromLuckyDraw)
             {
-                cell.lblValue.text = [NSString stringWithFormat:[Language getText:@"เลขโต๊ะ: %@"],customerTable.tableName];
-                cell.lblValue.textColor = cSystem4;
+                if(customerTable)
+                {
+                    cell.lblValue.text = [NSString stringWithFormat:[Language getText:@"เลขโต๊ะ: %@"],customerTable.tableName];
+                    cell.lblValue.textColor = cSystem4;
+                }
+                else
+                {
+                    cell.lblValue.text = [Language getText:@"เลือกโต๊ะ"];
+                    cell.lblValue.textColor = cSystem2;
+                }
             }
             else
             {
@@ -1191,8 +1199,7 @@ static NSString * const reuseIdentifierLabelTextView = @"CustomTableViewCellLabe
                     
                     cell.txtVoucherCode.tag = 31;
                     cell.txtVoucherCode.delegate = self;
-                    cell.txtVoucherCode.placeholder = [Language getText:@"Voucher code"];
-                    cell.txtVoucherCode.text = _selectedVoucherCode;
+                    cell.txtVoucherCode.placeholder = [Language getText:@"Voucher code"];                    cell.txtVoucherCode.text = _selectedVoucherCode;
                     [self setTextFieldDesign:cell.txtVoucherCode];
                     [cell.txtVoucherCode setInputAccessoryView:self.toolBar];
                     [cell.txtVoucherCode addTarget:self action:@selector(txtVoucherCodeChanged:) forControlEvents:UIControlEventEditingChanged];

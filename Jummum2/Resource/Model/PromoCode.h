@@ -13,6 +13,7 @@
 @property (retain, nonatomic) NSString * code;
 @property (nonatomic) NSInteger rewardRedemptionID;
 @property (nonatomic) NSInteger orderNo;
+@property (nonatomic) NSInteger status;
 @property (retain, nonatomic) NSString * modifiedUser;
 @property (retain, nonatomic) NSDate * modifiedDate;
 

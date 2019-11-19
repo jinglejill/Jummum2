@@ -603,44 +603,6 @@ static NSString * const reuseIdentifierReward = @"CustomTableViewCellReward";
             [_promoCodeList addObjectsFromArray:items[1]];
             [_rewardRedemptionList addObjectsFromArray:items[2]];
             
-            
-//            //set timer ของตัวที่มาใหม่
-//            NSMutableArray *rewardPointList = items[0];
-//            NSMutableArray *promoCodeList = items[1];
-//            NSMutableArray *rewardRedemptionList = items[2];
-//            for(int i=0; i<[rewardPointList count]; i++)
-//            {
-//                RewardRedemption *rewardRedemption = rewardRedemptionList[i];
-//                RewardPoint *rewardPoint = rewardPointList[i];
-//                PromoCode *promoCode = promoCodeList[i];
-//
-//
-//                if(rewardRedemption.withInPeriod == 0)//1 time trigger
-//                {
-//                    NSTimeInterval seconds2 = [[Utility setEndOfTheDay:rewardRedemption.usingEndDate] timeIntervalSinceDate:[Utility currentDateTime]];
-//                    NSInteger timeToCountDownUsingEndDate = seconds2>0?seconds2:0;
-//
-//
-//                    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-//                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeToCountDownUsingEndDate target:self selector:@selector(updateTimer2:) userInfo:@[rewardRedemption,rewardPoint,promoCode] repeats:NO];
-//                    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-//                }
-//                else//trigger every sec
-//                {
-//                    NSTimeInterval seconds = [[Utility currentDateTime] timeIntervalSinceDate:rewardPoint.modifiedDate];
-//                    NSInteger timeToCountDown = rewardRedemption.withInPeriod - seconds >= 0?rewardRedemption.withInPeriod - seconds:0;
-//
-//
-//
-//                    Time *time = [[Time alloc]init];
-//                    time.countDown = timeToCountDown;
-//
-//
-//                    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-//                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimer:) userInfo:@[rewardRedemption, time, rewardPoint, promoCode] repeats:YES];
-//                    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-//                }
-//            }
         }
         //set timer ของตัวที่มาใหม่
         NSMutableArray *rewardPointList = items[0];
